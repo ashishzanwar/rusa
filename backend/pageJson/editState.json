@@ -1,0 +1,57 @@
+{
+    "title": "Edit State",
+    "name": "State",
+    "jsonPage": "viewState",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "State Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter State Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, 
+     
+    {
+        "name": "User",
+        "type": "selectFromTable",
+        "dropDownType":"single",
+        "searchApi":"searchCall",
+        "tableRef": "users",
+        "placeholder": "Enter Category-Name",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "User/search"
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitState",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewState"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewState"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "State/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "State/getOne",
+        "params": "_id"
+    }
+
+}

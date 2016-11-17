@@ -1,0 +1,170 @@
+{
+    "title": "Edit Transaction",
+    "name": "Transaction",
+    "jsonPage": "viewTransaction",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [
+
+   {
+        "name": "Project",
+        "type": "text",
+        "tableRef": "project",
+        "placeholder": "Enter Project",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+            {
+        "name": "Installment",
+        "type": "text",
+        "tableRef": "installment",
+        "placeholder": "Enter Project",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+
+       {
+        "name": "Sub Installment",
+        "type": "text",
+        "tableRef": "subInstallment",
+        "placeholder": "Enter Sub Installment ",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+  {
+        "name": "Amount",
+        "type": "text",
+        "tableRef": "amount",
+        "placeholder": "Enter Amount",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+    {
+        "name": "From Center",
+        "type": "text",
+        "tableRef": "fromCenter",
+        "placeholder": "Enter From Center",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+    {
+        "name": "From State",
+        "type": "text",
+        "tableRef": "fromState",
+        "placeholder": "Enter From State",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },   {
+        "name": "From Institute",
+        "type": "text",
+        "tableRef": "fromInstitute",
+        "placeholder": "Enter From Institute",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+      {
+        "name": "From Vendor",
+        "type": "text",
+        "tableRef": "fromVendor",
+        "placeholder": "Enter From Vendor",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+{
+        "name": "To Center",
+        "type": "text",
+        "tableRef": "toCenter",
+        "placeholder": "Enter to Center",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+    {
+        "name": "To State",
+        "type": "text",
+        "tableRef": "toState",
+        "placeholder": "Enter to State",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },   {
+        "name": "To Institute",
+        "type": "text",
+        "tableRef": "toInstitute",
+        "placeholder": "Enter to Institute",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+      {
+        "name": "To Vendor",
+        "type": "text",
+        "tableRef": "toVendor",
+        "placeholder": "Enter to Vendor",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+    {
+        "name": "Reason",
+        "type": "text",
+        "tableRef": "reason",
+        "placeholder": "Enter Reason",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+     {
+        "name": "Image",
+        "type": "image",
+        "option": "single",
+         "size": "",
+        "tableRef": "image",
+        "placeholder": "Enter Image",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }
+
+
+
+
+    ],
+    "action": [{
+        "name": "submit",
+        "action": "submitTransaction",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewTransaction"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewTransaction"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Transaction/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "Transaction/getOne",
+        "params": "_id"
+    }
+
+}

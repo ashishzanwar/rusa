@@ -1,0 +1,86 @@
+{
+    "title": "State",
+    "description": "List of State",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "State Name",
+        "isSort": "",
+        "tableRef": "name"
+    },
+    {
+        "name": "User",
+        "type": "text",
+        "isSort": "",
+        "tableRef": {
+            "field": "users",
+            "tableRef": "name"
+        }
+    },
+    {
+        "name": "Email",
+        "type": "text",
+        "isSort": "",
+        "tableRef": {
+            "field": "users",
+            "tableRef": "email"
+        }
+    },
+
+    {
+        "name": "DOB",
+        "type": "text",
+        "isSort": "",
+        "tableRef": {
+            "field": "users",
+            "tableRef": "dob"
+        }
+    }
+    ],
+    "action": [{
+        "name": "edit",
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editState",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete State",
+        "content": "Are you sure you want to delete State?",
+        "api": "State/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+    "button": [{
+        "name": "Excel Export",
+        "icon": "print",
+        "class": "btn-danger",
+        "type": "redirect",
+        "action": "excelexport"
+    }, {
+        "name": "Upload Excel",
+        "icon": "delete",
+        "class": "btn-warning",
+        "type": "redirect",
+        "action": "uploadcsv"
+    }, {
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createState"
+    }],
+    "apiCall": {
+        "url": "State/search",
+        "params": "_id"
+    }
+}

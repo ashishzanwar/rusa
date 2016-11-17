@@ -1,0 +1,112 @@
+{
+  "title": "Create Milestones",
+  "name": "Milestones",
+  "jsonPage": "viewMilestones",
+  "desciption": "",
+  "pageType": "create",
+  "urlFields": ["Milestones"],
+    "fields": [{
+        "name": "Project",
+        "type": "text",
+        "tableRef": "project",
+        "placeholder": "Enter Project",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Status",
+        "type": "tags",
+        "tableRef": "status",
+        "placeholder": "Enter Sub Status",
+        "id": "status",
+        "validation": ["", "trim", ""],
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "dropDown": ["Pending", "Cancelled","Completed"]
+     }
+     ,
+      {
+        "name": "Image",
+        "type": "image",
+        "option": "single",
+        "tableRef": "photos",
+         "size": "",
+        "placeholder": "Enter Image",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+    {
+        "name": "Comment",
+        "type": "textarea",
+        "tableRef": "comment",
+        "placeholder": "Enter Comment",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },{
+        "name": "Timeline",
+        "type": "text",
+        "tableRef": "timeline",
+        "placeholder": "Enter Timeline",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+    {
+        "name": "Completion Date",
+        "type": "text",
+        "tableRef": "completionDate",
+        "placeholder": "Enter Timeline",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+     
+      {
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+     
+      {
+        "name": "Transaction",
+        "type": "text",
+        "tableRef": "transaction",
+        "placeholder": "Enter Transaction",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }
+     
+     
+     
+     ],
+    "action": [{
+        "name": "submit",
+        "action": "submitMilestones",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewMilestones"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewMilestones"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Milestones/save"
+    }
+}

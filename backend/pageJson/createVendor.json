@@ -1,0 +1,59 @@
+{
+  "title": "Create Vendor",
+  "name": "Vendor",
+  "jsonPage": "viewVendor",
+  "desciption": "",
+  "pageType": "create",
+  "urlFields": ["Vendor"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "User Name",
+        "type": "text",
+        "tableRef": "username",
+        "placeholder": "Enter User Name",
+        "id": "username",
+        "validation": ["", "trim", ""],
+        "url": ""
+    },
+     {
+        "name": "Password",
+        "type": "password",
+        "tableRef": "password",
+        "placeholder": "Enter Password",
+        "id": "password",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }
+    
+    
+    ],
+    "action": [{
+        "name": "submit",
+        "action": "submitVendor",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewVendor"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewVendor"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Vendor/save"
+    }
+}
