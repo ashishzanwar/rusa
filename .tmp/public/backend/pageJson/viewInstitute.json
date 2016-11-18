@@ -8,14 +8,6 @@
         "name": " Institute Name",
         "isSort": "",
         "tableRef": "name"
-    },{
-        "name": "User",
-        "type": "text",
-        "isSort": "",
-        "tableRef": {
-            "field": "users",
-            "tableRef": "name"
-        }
     },
     {
         "name": "State",

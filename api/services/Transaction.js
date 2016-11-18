@@ -52,7 +52,8 @@ reason: {
              },
              
 photo: {
-                type: String
+                type: String,
+                default:""
              },
 
 

@@ -31,10 +31,10 @@
         "type": "image",
         "option": "single",
         "tableRef": "photos",
-         "size": "",
         "placeholder": "Enter Image",
         "id": "input1",
-        "validation": ["", "trim", ""],
+        "view": true,
+        "validation": ["", "trim", "unique"],
         "url": ""
     },
     {
@@ -58,7 +58,7 @@
         "name": "Completion Date",
         "type": "text",
         "tableRef": "completionDate",
-        "placeholder": "Enter Timeline",
+        "placeholder": "Enter Completion Date",
         "id": "name",
         "validation": ["", "trim", ""],
         "url": ""

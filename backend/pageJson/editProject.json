@@ -174,7 +174,8 @@
         "placeholder": "Enter State Name",
         "id": "input1",
         "validation": ["", "trim", ""],
-        "url": "Milestones/search"
+        "url": "Milestones/search",
+        "view":true
     },
  {
         "name": "Milestones",

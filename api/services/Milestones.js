@@ -23,9 +23,11 @@ var schema = new Schema({
              },
     photos:[
     {
-        type:String
-    }
-    ],
+      
+      type:String,
+      default:""
+    }]
+    ,
     comment:[
     {
         type:String
