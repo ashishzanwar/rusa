@@ -5,24 +5,22 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Project Approved Board No",
-        "isSort": "",
-        "tableRef": "project_approved_board_no"
-    },
-    {
-        "name": "Title",
-        "type": "text",
-        "isSort": "",
-        "tableRef":"title"
-    },
-    {
-        "name": "Email",    
-        "type": "text",
-        "isSort": "",
-        "tableRef":"component"
-    }
-   
-    
+            "name": "Project Approved Board No",
+            "isSort": "",
+            "tableRef": "project_approved_board_no"
+        }, {
+            "name": "Title",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "title"
+        }, {
+            "name": "Component",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "component"
+        }
+
+
     ],
     "action": [{
         "name": "edit",

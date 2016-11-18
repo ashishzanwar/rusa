@@ -5,42 +5,11 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Center Name",
-        "isSort": "",
-        "tableRef": "name"
-    },
-    {
-        "name": "User",
-        "type": "text",
-        "isSort": "",
-        "tableRef": {
-            "field": "users",
+            "name": "Center Name",
+            "isSort": "",
             "tableRef": "name"
         }
-    },
-    {
-        "name": "Email",
-        "type": "text",
-        "isSort": "",
-        "tableRef": {
-            "field": "users",
-            "tableRef": "email"
-        }
-    },
-
-    {
-        "name": "DOB",
-        "type": "text",
-        "isSort": "",
-        "tableRef": {
-            "field": "users",
-            "tableRef": "dob"
-        }
-    }
-    
-   
-    
-    ],
+   ],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",

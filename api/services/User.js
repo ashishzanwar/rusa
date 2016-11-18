@@ -14,6 +14,9 @@ var schema = new Schema({
         type: String,
         default: ""
     },
+    username: {
+        type: String
+    },
     password: {
         type: String,
         default: ""

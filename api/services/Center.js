@@ -11,12 +11,12 @@ var Schema = mongoose.Schema;
 var schema = new Schema({
     name: {
         type: String
-         },
-       users : {
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            index: true
-        },
+    },
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        index: true
+    }],
 
 
 });
@@ -26,6 +26,6 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Center', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema,'users','users'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user', 'user'));
 var model = {};
 module.exports = _.assign(module.exports, exports, model);

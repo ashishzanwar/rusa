@@ -5,214 +5,210 @@
     "desciption": "",
     "pageType": "edit",
     "urlFields": ["_id"],
-    "fields": [
+    "fields": [{
+            "name": "Project Name",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter Title",
+            "id": "title",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
 
-{
-        "name": "Project Approved Board No",
-        "type": "text",
-        "tableRef": "project_approved_board_no",
-        "placeholder": "Enter Project Approved Board No",
-        "id": "project_approved_board_no",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "State Name",
-        "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
-        "tableRef": "state",
-        "placeholder": "Enter State Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "State/search"
-    }, {
-        "name": "Institute Name",
-        "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
-        "tableRef": "institute",
-        "placeholder": "Enter Institute Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Institute/search"
-    },{
-        "name": "Title",
-        "type": "text",
-        "tableRef": "title",
-        "placeholder": "Enter Title",
-        "id": "title",
-        "validation": ["", "trim", ""],
-        "url": ""
-    },{
-        "name": "Component",
-        "type": "text",
-        "tableRef": "component",
-        "placeholder": "Enter Component",
-        "id": "component",
-        "validation": ["", "trim", ""],
-        "url": ""
-    },
-    
-    {
-        "name": "Center Percent",
-        "type": "text",
-        "tableRef": "centerPercent",
-        "placeholder": "Enter Center Percent",
-        "id": "center percentage",
-        "validation": ["", "trim", ""],
-        "url": ""
-    },{
-        "name": "State Percent",
-        "type": "text",
-        "tableRef": "statePercent",
-        "placeholder": "Enter State Percent",
-        "id": "state percentage",
-        "validation": ["", "trim", ""],
-        "url": ""
-    },{
-        "name": "Total Amount",
-        "type": "text",
-        "tableRef": "totalAmount",
-        "placeholder": "Enter Total Amount",
-        "id": "total amount",
-        "validation": ["", "trim", ""],
-        "url": ""
-    },
+        {
+            "name": "Project Approved Board No",
+            "type": "text",
+            "tableRef": "project_approved_board_no",
+            "placeholder": "Enter Project Approved Board No",
+            "id": "project_approved_board_no",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "State Name",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "state",
+            "placeholder": "Enter State Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "State/search"
+        }, {
+            "name": "Institute Name",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "institute",
+            "placeholder": "Enter Institute Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Institute/search"
+        }, {
+            "name": "Title",
+            "type": "text",
+            "tableRef": "title",
+            "placeholder": "Enter Title",
+            "id": "title",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Component",
+            "type": "text",
+            "tableRef": "component",
+            "placeholder": "Enter Component",
+            "id": "component",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
 
-    {   
-        "name": "Amount Recieved by Country",
-        "type": "box",
-        "tableRef": "amountRecievedCountry",
-        "validation": ["", "trim", ""],
-        "fields": [
         {
-        "name": "Amount Recieved Country",
-        "type": "text",
-        "tableRef": "id",
-        "placeholder": "Enter Amount Recieved by Country",
-        "id": "name",
-        "onView":true,
-        "validation": ["", "trim", ""],
-        "url": ""}]
-        }
-    ,
-    {   
-        "name": "Amount Recieved by State",
-        "type": "box",
-        "tableRef": "amountRecievedState",
-        "validation": ["", "trim", ""],
-        "fields": [
-        {
-        "name": "Amount Recieved State",
-        "type": "text",
-        "tableRef": "id",
-        "placeholder": "Enter Amount Recieved by State",
-        "id": "name",
-        "onView":true,
-        "validation": ["", "trim", ""],
-        "url": ""}]
-        }
-    ,
-      {   
-        "name": "Amount Utilized ",
-        "type": "box",
-        "tableRef": "amountUtilized",
-        "validation": ["", "trim", ""],
-        "fields": [
-        {
-        "name": "Amount Utilized",
-        "type": "text",
-        "tableRef": "id",
-        "placeholder": "Enter Amount Utilized ",
-        "id": "name",
-        "onView":true,
-        "validation": ["", "trim", ""],
-        "url": ""}]
-        }
-    ,
+            "name": "Center Percent",
+            "type": "text",
+            "tableRef": "centerPercent",
+            "placeholder": "Enter Center Percent",
+            "id": "center percentage",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "State Percent",
+            "type": "text",
+            "tableRef": "statePercent",
+            "placeholder": "Enter State Percent",
+            "id": "state percentage",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Total Amount",
+            "type": "text",
+            "tableRef": "totalAmount",
+            "placeholder": "Enter Total Amount",
+            "id": "total amount",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
 
-      {   
-        "name": "Refund Canceled",
-        "type": "box",
-        "tableRef": "refundCanceled",
-        "validation": ["", "trim", ""],
-        "fields": [
         {
-        "name": "Refund Canceled",
-        "type": "text",
-        "tableRef": "id",
-        "placeholder": "Enter Refund Canceled",
-        "id": "name",
-        "onView":true,
-        "validation": ["", "trim", ""],
-        "url": ""}]
-        }
-    ,
-          {   
-        "name": "Refund Unutilized",
-        "type": "box",
-        "tableRef": "refundUnutilized",
-        "validation": ["", "trim", ""],
-        "fields": [
-        {
-        "name": "Refund Unutilized",
-        "type": "text",
-        "tableRef": "id",
-        "placeholder": "Enter Refund Unutilized",
-        "id": "name",
-        "onView":true,
-        "validation": ["", "trim", ""],
-        "url": ""}]
-        }
-    ,
- {
-        "name": "Photos",
-        "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
-        "tableRef": "milestones",
-        "placeholder": "Enter State Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Milestones/search",
-        "view":true
-    },
- {
-        "name": "Milestones",
-        "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
-        "tableRef": "milestones",
-        "placeholder": "Enter State Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Milestones/search"
-    },
+            "name": "Amount Recieved by Country",
+            "type": "box",
+            "tableRef": "amountRecievedCountry",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Amount Recieved Country",
+                "type": "text",
+                "tableRef": "id",
+                "placeholder": "Enter Amount Recieved by Country",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""],
+                "url": ""
+            }]
+        }, {
+            "name": "Amount Recieved by State",
+            "type": "box",
+            "tableRef": "amountRecievedState",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Amount Recieved State",
+                "type": "text",
+                "tableRef": "id",
+                "placeholder": "Enter Amount Recieved by State",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""],
+                "url": ""
+            }]
+        }, {
+            "name": "Amount Utilized ",
+            "type": "box",
+            "tableRef": "amountUtilized",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Amount Utilized",
+                "type": "text",
+                "tableRef": "id",
+                "placeholder": "Enter Amount Utilized ",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""],
+                "url": ""
+            }]
+        },
 
-{
-        "name": "Status",
-        "type": "tags",
-        "tableRef": "status",
-        "placeholder": "Enter Zone",
-        "id": "status",
-        "validation": ["", "trim", ""],
-        "url": "",
-        "dropDownField": "",
-        "dropDownType": "single",
-        "dropDown": ["Active","Complete","Cancelled","OnHold"]
-     },
-{
-        "name": "Status",
-        "type": "tags",
-        "tableRef": "subStatus",
-        "placeholder": "Enter Sub Status",
-        "id": "status",
-        "validation": ["", "trim", ""],
-        "url": "",
-        "dropDownField": "",
-        "dropDownType": "single",
-        "dropDown": ["InTime", "Delay"]
-     }
+        {
+            "name": "Refund Canceled",
+            "type": "box",
+            "tableRef": "refundCanceled",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Refund Canceled",
+                "type": "text",
+                "tableRef": "id",
+                "placeholder": "Enter Refund Canceled",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""],
+                "url": ""
+            }]
+        }, {
+            "name": "Refund Unutilized",
+            "type": "box",
+            "tableRef": "refundUnutilized",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Refund Unutilized",
+                "type": "text",
+                "tableRef": "id",
+                "placeholder": "Enter Refund Unutilized",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""],
+                "url": ""
+            }]
+        },  {
+            "name": "Photos",
+            "type": "image",
+            "option": "single",
+            "tableRef": "photos",
+            "placeholder": "Enter Image",
+            "id": "input1",
+            "view": true,
+            "validation": ["", "trim", "unique"],
+            "url": ""
+        }, {
+            "name": "Milestones",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "milestones",
+            "placeholder": "Enter State Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Milestones/search"
+        },
+
+        {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "status",
+            "placeholder": "Enter Zone",
+            "id": "status",
+            "validation": ["", "trim", ""],
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
+        }, {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "subStatus",
+            "placeholder": "Enter Sub Status",
+            "id": "status",
+            "validation": ["", "trim", ""],
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["InTime", "Delay"]
+        }
 
 
     ],

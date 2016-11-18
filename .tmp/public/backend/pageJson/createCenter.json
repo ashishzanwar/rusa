@@ -1,10 +1,10 @@
 {
-  "title": "Create Center",
-  "name": "Center",
-  "jsonPage": "viewCenter",
-  "desciption": "",
-  "pageType": "create",
-  "urlFields": ["Center"],
+    "title": "Create Center",
+    "name": "Center",
+    "jsonPage": "viewCenter",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["Center"],
     "fields": [{
         "name": "Center Name",
         "type": "text",
@@ -16,8 +16,8 @@
     }, {
         "name": "User",
         "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
         "tableRef": "users",
         "placeholder": "Enter Category-Name",
         "id": "input1",

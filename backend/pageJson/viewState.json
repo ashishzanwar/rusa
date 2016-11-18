@@ -8,36 +8,8 @@
         "name": "State Name",
         "isSort": "",
         "tableRef": "name"
-    },
-    {
-        "name": "User",
-        "type": "text",
-        "isSort": "",
-        "tableRef": {
-            "field": "users",
-            "tableRef": "name"
-        }
-    },
-    {
-        "name": "Email",
-        "type": "text",
-        "isSort": "",
-        "tableRef": {
-            "field": "users",
-            "tableRef": "email"
-        }
-    },
-
-    {
-        "name": "DOB",
-        "type": "text",
-        "isSort": "",
-        "tableRef": {
-            "field": "users",
-            "tableRef": "dob"
-        }
     }
-    ],
+        ],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",

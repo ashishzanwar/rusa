@@ -8,103 +8,93 @@ require('mongoose-middleware').initialize(mongoose);
 
 var Schema = mongoose.Schema;
 
-var schema = new Schema(
-    {
-     project_approved_board_no: {
-                type: String
-             },
-    state : {
-            type: Schema.Types.ObjectId,
-            ref: 'State',
-            index: true
-        },
-   institute : {
-            type: Schema.Types.ObjectId,
-            ref:'Institute',
-            index: true
-        },
-  title: {
+var schema = new Schema({
+
+    name: {
         type: String
-             },
-component: {
+    },
+    project_approved_board_no: {
+        type: Number
+    },
+    state: {
+        type: Schema.Types.ObjectId,
+        ref: 'State',
+        index: true
+    },
+    institute: {
+        type: Schema.Types.ObjectId,
+        ref: 'Institute',
+        index: true
+    },
+    title: {
         type: String
-             },
-  centerPercent: {
+    },
+    component: {
         type: String
-             },
-  statePercent: {
+    },
+    centerPercent: {
         type: String
-             },
- totalAmount: {
+    },
+    statePercent: {
         type: String
-             },
-
-    amountRecievedCountry:[{
-        id:{
-            type: Schema.Types.ObjectId,
-            ref: 'Transaction',
-            index: true
-    }}],
-    
-    amountRecievedState:[{
-        id:{
-            type: Schema.Types.ObjectId,
-            ref: 'Transaction',
-            index: true
-    }}],
-
-
-    amountUtilized:[{
-         id:{   type: Schema.Types.ObjectId,
-            ref: 'Transaction',
-            index: true
-    }}],
-
-
-     refundCanceled:[{
-         id:{
-            type: Schema.Types.ObjectId,
-            ref: 'Transaction',
-            index: true
-     }}],
-
-
-
-    refundUnutilized:[{
-        id:{
-            type: Schema.Types.ObjectId,
-            ref: 'Transaction',
-            index: true
-            }}],
-
-
-
-
-
-     photos : {
-            type: Schema.Types.ObjectId,
-            ref: 'Milestones',
-            index: true
-        },
-
-    milestones : {
-            type: Schema.Types.ObjectId,
-            ref: 'Milestones',
-            index: true
-        },
-    
-    status: {
-        type: String,
-        enum: ["Active","Complete","Cancelled","OnHold"]
+    },
+    totalAmount: {
+        type: String
     },
 
-        subStatus: {
+    amountReceivedCountry: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+
+    }],
+
+    amountReceivedState: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+    }],
+
+
+    amountUtilized: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+    }],
+
+    refundCanceled: [{
+
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+    }],
+
+    refundUnutilized: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+
+    }],
+
+    photos: [{
+        type: String
+    }],
+
+    milestones: {
+        type: Schema.Types.ObjectId,
+        ref: 'Milestones',
+        index: true
+    },
+
+    status: {
+        type: String,
+        enum: ["Active", "Complete", "Cancelled", "OnHold"]
+    },
+
+    subStatus: {
         type: String,
         enum: ["InTime", "Delay"]
     },
-
-
-    
 });
 
 schema.plugin(deepPopulate, {});
@@ -112,6 +102,6 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Project', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema,'users institute state transaction','users institute state transaction'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction ', 'user institute state transaction'));
 var model = {};
 module.exports = _.assign(module.exports, exports, model);

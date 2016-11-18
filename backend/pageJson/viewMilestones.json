@@ -8,30 +8,17 @@
         "name": "Milestones Name",
         "isSort": "",
         "tableRef": "name"
-    },
-    {
+    }, {
         "name": "Completion Date",
         "type": "text",
         "isSort": "",
-        "tableRef":"completionDate"
-    },
-    {
+        "tableRef": "completionDate"
+    }, {
         "name": "Timeline",
         "type": "text",
         "isSort": "",
-        "tableRef":"timeline"
-    },
-
-    {
-        "name": "Project",
-        "type": "text",
-        "isSort": "",
-        "tableRef":"project"
-    }
-    
-   
-    
-    ],
+        "tableRef": "timeline"
+    }],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",

@@ -8,8 +8,7 @@
         "name": " Institute Name",
         "isSort": "",
         "tableRef": "name"
-    },
-    {
+    }, {
         "name": "State",
         "type": "text",
         "isSort": "",

@@ -5,15 +5,16 @@
     "desciption": "",
     "pageType": "edit",
     "urlFields": ["_id"],
-    "fields": [
-{
+    "fields": [{
         "name": "Project",
-        "type": "text",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
         "tableRef": "project",
-        "placeholder": "Enter Project",
-        "id": "name",
+        "placeholder": "Enter Project Name",
+        "id": "input1",
         "validation": ["", "trim", ""],
-        "url": ""
+        "url": "Project/search"
     }, {
         "name": "Status",
         "type": "tags",
@@ -24,10 +25,8 @@
         "url": "",
         "dropDownField": "",
         "dropDownType": "single",
-        "dropDown": ["Pending", "Cancelled","Completed"]
-     }
-     ,
-      {
+        "dropDown": ["Pending", "Cancelled", "Completed"]
+    }, {
         "name": "Image",
         "type": "image",
         "option": "single",
@@ -38,8 +37,7 @@
         "id": "input1",
         "validation": ["", "trim", ""],
         "url": ""
-    },
-    {
+    }, {
         "name": "Comment",
         "type": "textarea",
         "tableRef": "comment",
@@ -47,26 +45,23 @@
         "id": "name",
         "validation": ["", "trim", ""],
         "url": ""
-    },{
+    }, {
         "name": "Timeline",
-        "type": "text",
+        "type": "date",
         "tableRef": "timeline",
         "placeholder": "Enter Timeline",
         "id": "name",
         "validation": ["", "trim", ""],
         "url": ""
-    },
-    {
+    }, {
         "name": "Completion Date",
-        "type": "text",
+        "type": "date",
         "tableRef": "completionDate",
         "placeholder": "Enter Timeline",
         "id": "name",
         "validation": ["", "trim", ""],
         "url": ""
-    },
-     
-      {
+    }, {
         "name": "Name",
         "type": "text",
         "tableRef": "name",
@@ -74,22 +69,17 @@
         "id": "name",
         "validation": ["", "trim", ""],
         "url": ""
-    },
-     
-      {
+    }, {
         "name": "Transaction",
-        "type": "text",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
         "tableRef": "transaction",
-        "placeholder": "Enter Transaction",
-        "id": "name",
+        "placeholder": "Enter Transaction Name",
+        "id": "input1",
         "validation": ["", "trim", ""],
-        "url": ""
-    }
-     
-
-
-    
-    ],
+        "url": "Transaction/search"
+    }],
     "action": [{
         "name": "submit",
         "action": "submitMilestones",

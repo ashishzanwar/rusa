@@ -9,42 +9,56 @@ require('mongoose-middleware').initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-
-
     project: {
-                type: String
-             },
+        type: Schema.Types.ObjectId,
+        ref: 'Project',
+        index: true
+    },
     status: {
         type: String,
-        enum: ["Pending", "Cancelled","Completed"]
-    },             
+        enum: ["Pending", "Cancelled", "Completed"]
+    },
     percentageCompleted: {
-                type: String
-             },
-    photos:[
-    {
-      
-      type:String,
-      default:""
-    }]
-    ,
-    comment:[
-    {
-        type:String
-    }
-    ],
-    timeline: {
-                type: String
-             },
+        type: String
+    },
+    photos: [{
+        type: String
+    }],
+    comment: [{
+
+        fromCenter: {
+            type: Schema.Types.ObjectId,
+            ref: 'Center',
+            index: true,
+            text: String
+        },
+        fromState: {
+            type: Schema.Types.ObjectId,
+            ref: 'State',
+            index: true,
+            text: String
+        },
+        fromInstitute: {
+            type: Schema.Types.ObjectId,
+            ref: 'Institute',
+            index: true,
+            text: String
+        }
+    }],
+   timeline: {
+        type: Date
+    },
     completionDate: {
-                type: String
-             },
+        type: Date
+    },
     name: {
-                type: String
-             },
+        type: String
+    },
     transaction: {
-                type: String
-             },
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true
+    }
 });
 
 schema.plugin(deepPopulate, {});

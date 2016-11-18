@@ -5,9 +5,10 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Project",
+        "name": "Transaction",
+        "type": "text",
         "isSort": "",
-        "tableRef": "project"
+        "tableRef":"name" 
     },    {
         "name": "Installment",
         "isSort": "",
@@ -23,11 +24,7 @@
         "type": "text",
         "isSort": "",
         "tableRef": "amount"
-    }
-   
-
-    
-    ],
+    }],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",
