@@ -8,30 +8,34 @@ require('mongoose-middleware').initialize(mongoose);
 
 var Schema = mongoose.Schema;
 
-var schema = new Schema(
-    {
-        name: {
+var schema = new Schema({
+    name: {
         type: String
-         },
-       users : [{
-            type: Schema.Types.ObjectId,
-            ref: 'User',
-            index: true
-        }],
+    },
+    users: [{
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        index: true
+    }],
 
-         state : {
-            type: Schema.Types.ObjectId,
-            ref: 'State',
-            index: true
-        },
+    state: {
+        type: Schema.Types.ObjectId,
+        ref: 'State',
+        index: true
+    },
+      project: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Project',
+        index: true
+    }]
 
-    });
+});
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Institute', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema,'user','state','user','state'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user state Project', 'user state Project'));
 var model = {};
 module.exports = _.assign(module.exports, exports, model);

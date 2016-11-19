@@ -1,10 +1,10 @@
 {
-  "title": "Create State",
-  "name": "State",
-  "jsonPage": "viewState",
-  "desciption": "",
-  "pageType": "create",
-  "urlFields": ["State"],
+    "title": "Create State",
+    "name": "State",
+    "jsonPage": "viewState",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["State"],
     "fields": [{
         "name": "Name",
         "type": "text",
@@ -16,13 +16,24 @@
     }, {
         "name": "User",
         "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
         "tableRef": "users",
         "placeholder": "Enter Category-Name",
         "id": "input1",
         "validation": ["", "trim", ""],
         "url": "User/search"
+    },
+     {
+        "name": "Project",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "tableRef": "project",
+        "placeholder": "Enter Category-Name",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "Project/search"
     }],
     "action": [{
         "name": "submit",

@@ -25,7 +25,7 @@
         "url": "Project/search"
     }, {
         "name": "Installment",
-        "type": "text",
+        "type": "number",
         "tableRef": "installment",
         "placeholder": "Enter Project",
         "id": "name",
@@ -33,7 +33,7 @@
         "url": ""
     }, {
         "name": "Sub Installment",
-        "type": "text",
+        "type": "number",
         "tableRef": "subInstallment",
         "placeholder": "Enter Sub Installment ",
         "id": "name",
@@ -41,7 +41,7 @@
         "url": ""
     }, {
         "name": "Amount",
-        "type": "text",
+        "type": "number",
         "tableRef": "amount",
         "placeholder": "Enter Amount",
         "id": "name",

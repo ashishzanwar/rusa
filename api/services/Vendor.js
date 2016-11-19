@@ -9,22 +9,16 @@ require('mongoose-middleware').initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-
         name: {
-        type: String
-         },
-         username: {
-        type: String
-         },
-         
+                type: String
+        },
+        username: {
+                type: String
+        },
+
         password: {
-        type: String
-         }
-         
-
-         
-
-
+                type: String
+        }
 });
 
 schema.plugin(deepPopulate, {});

@@ -27,6 +27,18 @@
             "dropDownType": "single",
             "dropDown": ["Pending", "Cancelled", "Completed"]
         }, {
+            "name": "Percentage Completed",
+            "type": "number",
+            "tableRef": "percentageCompleted",
+            "placeholder": "Enter Project",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+
+
+
+        {
             "name": "Image",
             "type": "image",
             "option": "single",
@@ -50,6 +62,14 @@
                     "onView": true,
                     "validation": ["", "trim", ""],
                     "url": ""
+                }, {
+                    "name": "Center Comment",
+                    "type": "text",
+                    "tableRef": "centerComment",
+                    "placeholder": "Enter Timeline",
+                    "id": "name",
+                    "validation": ["", "trim", ""],
+                    "url": ""
                 },
 
                 {
@@ -62,12 +82,28 @@
                     "validation": ["", "trim", ""],
                     "url": ""
                 }, {
+                    "name": "State Comment",
+                    "type": "text",
+                    "tableRef": "stateComment",
+                    "placeholder": "Comment by State",
+                    "id": "name",
+                    "validation": ["", "trim", ""],
+                    "url": ""
+                }, {
                     "name": "From Institute",
                     "type": "selectFromTable",
                     "tableRef": "fromInstitute",
                     "placeholder": "Comment by Center",
                     "id": "name",
                     "onView": true,
+                    "validation": ["", "trim", ""],
+                    "url": ""
+                }, {
+                    "name": "Institute Comment",
+                    "type": "text",
+                    "tableRef": "instituteComment",
+                    "placeholder": "Comment by State",
+                    "id": "name",
                     "validation": ["", "trim", ""],
                     "url": ""
                 }

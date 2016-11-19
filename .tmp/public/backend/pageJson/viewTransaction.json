@@ -8,18 +8,16 @@
         "name": "Transaction",
         "type": "text",
         "isSort": "",
-        "tableRef":"name" 
-    },    {
+        "tableRef": "name"
+    }, {
         "name": "Installment",
         "isSort": "",
         "tableRef": "amount"
-    },
-    {
+    }, {
         "name": "Sub Installment",
         "isSort": "",
         "tableRef": "amount"
-    },
-    {
+    }, {
         "name": "Amount",
         "type": "text",
         "isSort": "",

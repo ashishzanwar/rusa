@@ -8,8 +8,7 @@
         "name": "State Name",
         "isSort": "",
         "tableRef": "name"
-    }
-        ],
+    }],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",

@@ -17,7 +17,7 @@
 
         {
             "name": "Project Approved Board No",
-            "type": "text",
+            "type": "number",
             "tableRef": "project_approved_board_no",
             "placeholder": "Enter Project Approved Board No",
             "id": "project_approved_board_no",
@@ -63,7 +63,7 @@
 
         {
             "name": "Center Percent",
-            "type": "text",
+            "type": "number",
             "tableRef": "centerPercent",
             "placeholder": "Enter Center Percent",
             "id": "center percentage",
@@ -71,7 +71,7 @@
             "url": ""
         }, {
             "name": "State Percent",
-            "type": "text",
+            "type": "number",
             "tableRef": "statePercent",
             "placeholder": "Enter State Percent",
             "id": "state percentage",
@@ -79,7 +79,7 @@
             "url": ""
         }, {
             "name": "Total Amount",
-            "type": "text",
+            "type": "number",
             "tableRef": "totalAmount",
             "placeholder": "Enter Total Amount",
             "id": "total amount",
@@ -164,7 +164,7 @@
                 "validation": ["", "trim", ""],
                 "url": ""
             }]
-        },  {
+        }, {
             "name": "Photos",
             "type": "image",
             "option": "single",

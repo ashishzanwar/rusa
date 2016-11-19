@@ -1,10 +1,10 @@
 {
-  "title": "Create User",
-  "name": "User",
-  "jsonPage": "viewUser",
-  "desciption": "",
-  "pageType": "create",
-  "urlFields": ["User"],
+    "title": "Create User",
+    "name": "User",
+    "jsonPage": "viewUser",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["User"],
     "fields": [{
         "name": "Name",
         "type": "text",
@@ -39,7 +39,7 @@
         "disabled": true,
         "validation": ["required", "trim", "unique"],
         "url": ""
-    },{
+    }, {
         "name": "User Name",
         "type": "text",
         "tableRef": "username",

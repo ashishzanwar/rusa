@@ -9,7 +9,6 @@ require('mongoose-middleware').initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-
     name: {
         type: String
     },
@@ -70,9 +69,7 @@ var schema = new Schema({
 
     photo: {
         type: String
-    },
-
-
+    }
 });
 
 schema.plugin(deepPopulate, {});

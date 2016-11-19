@@ -13,8 +13,7 @@
             "id": "title",
             "validation": ["", "trim", ""],
             "url": ""
-        },
-      {
+        }, {
             "name": "Project",
             "type": "selectFromTable",
             "dropDownType": "single",
@@ -26,7 +25,7 @@
             "url": "Project/search"
         }, {
             "name": "Installment",
-            "type": "text",
+            "type": "number",
             "tableRef": "installment",
             "placeholder": "Enter Project",
             "id": "name",
@@ -36,7 +35,7 @@
 
         {
             "name": "Sub Installment",
-            "type": "text",
+            "type": "number",
             "tableRef": "subInstallment",
             "placeholder": "Enter Sub Installment ",
             "id": "name",
@@ -44,7 +43,7 @@
             "url": ""
         }, {
             "name": "Amount",
-            "type": "text",
+            "type": "number",
             "tableRef": "amount",
             "placeholder": "Enter Amount",
             "id": "name",

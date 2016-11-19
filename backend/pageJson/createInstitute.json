@@ -1,10 +1,10 @@
 {
-  "title": "Create Institute",
-  "name": "Institute",
-  "jsonPage": "viewInstitute",
-  "desciption": "",
-  "pageType": "create",
-  "urlFields": ["Institute"],
+    "title": "Create Institute",
+    "name": "Institute",
+    "jsonPage": "viewInstitute",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["Institute"],
     "fields": [{
         "name": "Institute Name",
         "type": "text",
@@ -16,8 +16,8 @@
     }, {
         "name": "User",
         "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
         "tableRef": "users",
         "placeholder": "Enter Category-Name",
         "id": "input1",
@@ -26,16 +26,24 @@
     }, {
         "name": "State",
         "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
         "tableRef": "state",
         "placeholder": "Enter Category-Name",
         "id": "input1",
         "validation": ["", "trim", ""],
         "url": "State/search"
-    }
-    
-    ],
+    }, {
+        "name": "Project",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "tableRef": "project",
+        "placeholder": "Enter Category-Name",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "Project/search"
+    }],
     "action": [{
         "name": "submit",
         "action": "submitInstitute",

@@ -21,8 +21,7 @@
         "id": "username",
         "validation": ["", "trim", "unique"],
         "url": ""
-    },
-     {
+    }, {
         "name": "Password",
         "type": "password",
         "tableRef": "password",

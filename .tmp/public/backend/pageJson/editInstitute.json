@@ -6,41 +6,48 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Institute Name",
-        "type": "text",
-        "tableRef": "name",
-        "placeholder": "Enter Name",
-        "id": "name",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, 
-    {
-        "name": "User",
-        "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
-        "tableRef": "users",
-        "placeholder": "Enter Category-Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "User/search"
-    },
-     
-    
-    
-    {
-        "name": "State",
-        "type": "selectFromTable",
-        "dropDownType":"single",
-        "searchApi":"searchCall",
-        "tableRef": "state",
-        "placeholder": "Enter Category-Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "State/search"
-    }
-    
-    
+            "name": "Institute Name",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter Name",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "User",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "users",
+            "placeholder": "Enter Category-Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "User/search"
+        },
+
+        {
+            "name": "State",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "state",
+            "placeholder": "Enter Category-Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "State/search"
+        }, {
+            "name": "Project",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "project",
+            "placeholder": "Enter Category-Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Project/search"
+        }
+
+
     ],
     "action": [{
         "name": "submit",

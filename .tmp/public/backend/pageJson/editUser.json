@@ -13,7 +13,7 @@
         "id": "name",
         "validation": ["required", "trim", "unique"],
         "url": ""
-    },{
+    }, {
         "name": "Email",
         "type": "text",
         "tableRef": "email",
@@ -21,7 +21,7 @@
         "id": "email",
         "validation": ["", "trim", "unique"],
         "url": ""
-    },{
+    }, {
         "name": "DOB",
         "type": "date",
         "tableRef": "dob",
@@ -47,7 +47,7 @@
         "id": "name",
         "validation": ["", "trim", "unique"],
         "url": ""
-    },{
+    }, {
         "name": "Password",
         "type": "password",
         "tableRef": "password",
@@ -80,7 +80,7 @@
         "disabled": false,
         "validation": ["required", "trim", "unique"],
         "url": ""
-    },{
+    }, {
         "name": "AccessLevel",
         "type": "tags",
         "tableRef": "accessLevel",
@@ -91,7 +91,7 @@
         "dropDownField": "",
         "dropDownType": "single",
         "onView": true,
-        "dropDown": ["User","Admin"]
+        "dropDown": ["User", "Admin"]
     }],
     "action": [{
         "name": "submit",
