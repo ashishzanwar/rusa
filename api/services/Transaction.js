@@ -44,7 +44,6 @@ var schema = new Schema({
     fromVendor: {
         type: String
     },
-
     toCenter: {
         type: Schema.Types.ObjectId,
         ref: 'Center',
@@ -66,7 +65,6 @@ var schema = new Schema({
     reason: {
         type: String
     },
-
     photo: {
         type: String
     }

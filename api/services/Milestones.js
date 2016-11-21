@@ -12,7 +12,8 @@ var schema = new Schema({
     project: {
         type: Schema.Types.ObjectId,
         ref: 'Project',
-        index: true
+        index: true,
+        key:"milestones"
     },
     status: {
         type: String,
@@ -44,20 +45,8 @@ var schema = new Schema({
             index: true,
             text: String
         },
-
-        centerComment: {
+        text: {
             type: String
-
-        },
-
-        stateComment: {
-            type: String
-
-        },
-
-        instituteComment: {
-            type: String
-
         }
     }],
     timeline: {

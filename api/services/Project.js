@@ -18,13 +18,15 @@ var schema = new Schema({
     state: {
         type: Schema.Types.ObjectId,
         ref: 'State',
-        index: true
+        index: true,
+        key: "project"
     },
     institute: {
         type: Schema.Types.ObjectId,
         ref: 'Institute',
-        index: true
-    },
+        index: true,
+        key: "project"
+        },
     title: {
         type: String
     },
@@ -40,11 +42,10 @@ var schema = new Schema({
     totalAmount: {
         type: Number
     },
-    amountReceivedCountry: [{
+    amountReceivedCenter: [{
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
         index: true
-
     }],
     amountReceivedState: [{
         type: Schema.Types.ObjectId,
@@ -57,7 +58,6 @@ var schema = new Schema({
         index: true
     }],
     refundCanceled: [{
-
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
         index: true
@@ -66,16 +66,15 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
         index: true
-
     }],
     photos: [{
         type: String
     }],
-    milestones: {
+    milestones: [{
         type: Schema.Types.ObjectId,
         ref: 'Milestones',
         index: true
-    },
+    }],
     status: {
         type: String,
         enum: ["Active", "Complete", "Cancelled", "OnHold"]

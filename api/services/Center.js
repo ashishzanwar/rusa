@@ -15,9 +15,9 @@ var schema = new Schema({
     users: [{
         type: Schema.Types.ObjectId,
         ref: 'User',
-        index: true
-    }],
+        index: true,
 
+    }],
 
 });
 

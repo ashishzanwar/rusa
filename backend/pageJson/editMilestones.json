@@ -46,14 +46,6 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Comment",
-        "type": "textarea",
-        "tableRef": "comment",
-        "placeholder": "Enter Comment",
-        "id": "name",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
         "name": "Timeline",
         "type": "date",
         "tableRef": "timeline",

@@ -13,21 +13,7 @@
             "id": "name",
             "validation": ["", "trim", ""],
             "url": ""
-        },
-
-
-        {
-            "name": "User",
-            "type": "selectFromTable",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "users",
-            "placeholder": "Enter Category-Name",
-            "id": "input1",
-            "validation": ["", "trim", ""],
-            "url": "User/search"
         }
-
     ],
     "action": [{
         "name": "submit",

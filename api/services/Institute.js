@@ -15,7 +15,8 @@ var schema = new Schema({
     users: [{
         type: Schema.Types.ObjectId,
         ref: 'User',
-        index: true
+        index: true,
+
     }],
 
     state: {
@@ -23,7 +24,7 @@ var schema = new Schema({
         ref: 'State',
         index: true
     },
-      project: [{
+    project: [{
         type: Schema.Types.ObjectId,
         ref: 'Project',
         index: true

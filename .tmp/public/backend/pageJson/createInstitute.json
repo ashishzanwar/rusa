@@ -14,16 +14,6 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "User",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "users",
-        "placeholder": "Enter Category-Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "User/search"
-    }, {
         "name": "State",
         "type": "selectFromTable",
         "dropDownType": "single",
@@ -33,16 +23,6 @@
         "id": "input1",
         "validation": ["", "trim", ""],
         "url": "State/search"
-    }, {
-        "name": "Project",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "project",
-        "placeholder": "Enter Category-Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Project/search"
     }],
     "action": [{
         "name": "submit",

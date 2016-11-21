@@ -48,30 +48,7 @@
             "view": true,
             "validation": ["", "trim", "unique"],
             "url": ""
-        }, {
-            "name": "Comment",
-            "type": "box",
-            "tableRef": "comment",
-            "validation": ["", "trim", ""],
-            "fields": [{
-                    "name": "From Center",
-                    "type": "selectFromTable",
-                    "tableRef": "fromCenter",
-                    "placeholder": "Comment by Center",
-                    "id": "name",
-                    "onView": true,
-                    "validation": ["", "trim", ""],
-                    "url": ""
-                }, {
-                    "name": "Center Comment",
-                    "type": "text",
-                    "tableRef": "centerComment",
-                    "placeholder": "Enter Timeline",
-                    "id": "name",
-                    "validation": ["", "trim", ""],
-                    "url": ""
-                },
-
+        },
                 {
                     "name": "From State",
                     "type": "selectFromTable",
