@@ -98,18 +98,6 @@
             "validation": ["", "trim", "unique"],
             "url": ""
         }, {
-            "name": "Milestones",
-            "type": "selectFromTable",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "milestones",
-            "placeholder": "Enter State Name",
-            "id": "input1",
-            "validation": ["", "trim", ""],
-            "url": "Milestones/search"
-        },
-
-        {
             "name": "Status",
             "type": "tags",
             "tableRef": "status",

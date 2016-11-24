@@ -49,43 +49,6 @@
             "validation": ["", "trim", "unique"],
             "url": ""
         },
-                {
-                    "name": "From State",
-                    "type": "selectFromTable",
-                    "tableRef": "fromState",
-                    "placeholder": "Comment by Center",
-                    "id": "name",
-                    "onView": true,
-                    "validation": ["", "trim", ""],
-                    "url": ""
-                }, {
-                    "name": "State Comment",
-                    "type": "text",
-                    "tableRef": "stateComment",
-                    "placeholder": "Comment by State",
-                    "id": "name",
-                    "validation": ["", "trim", ""],
-                    "url": ""
-                }, {
-                    "name": "From Institute",
-                    "type": "selectFromTable",
-                    "tableRef": "fromInstitute",
-                    "placeholder": "Comment by Center",
-                    "id": "name",
-                    "onView": true,
-                    "validation": ["", "trim", ""],
-                    "url": ""
-                }, {
-                    "name": "Institute Comment",
-                    "type": "text",
-                    "tableRef": "instituteComment",
-                    "placeholder": "Comment by State",
-                    "id": "name",
-                    "validation": ["", "trim", ""],
-                    "url": ""
-                }
-            ]
-        },
 
         {
             "name": "Timeline",
