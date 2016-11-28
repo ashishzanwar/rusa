@@ -1,5 +1,5 @@
 apps:
   - script: "app.js"
-    name: "Node App"
+    name: "Rusa Fund Tracker"
     watch: true
     args: "--prod"
