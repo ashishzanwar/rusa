@@ -13,9 +13,7 @@
             "id": "title",
             "validation": ["", "trim", ""],
             "url": ""
-        },
-
-        {
+        }, {
             "name": "Project Approved Board No",
             "type": "number",
             "tableRef": "project_approved_board_no",
@@ -85,23 +83,38 @@
             "id": "total amount",
             "validation": ["", "trim", ""],
             "url": ""
-        },
-
-        {
+        }, {
             "name": "Photos",
-            "type": "image",
-            "option": "single",
+            "type": "box",
             "tableRef": "photos",
-            "placeholder": "Enter Image",
-            "id": "input1",
-            "view": true,
-            "validation": ["", "trim", "unique"],
-            "url": ""
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Tags",
+                "type": "text",
+                "tableRef": "tags",
+                "placeholder": "Enter Tags",
+                "id": "input1",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }, {
+                "name": "Photo",
+                "type": "image",
+                "tableRef": "photo",
+                "option": "single",
+                "size": "width = 413",
+                "placeholder": "Enter Photo",
+                "id": "input1",
+                "onView": true,
+                "validation": ["", "trim", ""],
+                "url": ""
+
+            }]
+
         }, {
             "name": "Status",
             "type": "tags",
             "tableRef": "status",
-            "placeholder": "Enter Zone",
+            "placeholder": "Enter Status",
             "id": "status",
             "validation": ["", "trim", ""],
             "url": "",
@@ -119,8 +132,41 @@
             "dropDownField": "",
             "dropDownType": "single",
             "dropDown": ["InTime", "Delay"]
-        }
+        }, {
+            "name": "Quantity",
+            "type": "number",
+            "tableRef": "quantity",
+            "placeholder": "Enter Quantity",
+            "id": "quantity",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Status Logs",
+            "type": "box",
+            "tableRef": "statusLogs",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Timestamp",
+                "type": "date",
+                "tableRef": "timestamp",
+                "placeholder": "Enter TimeStamp",
+                "id": "input1",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }, {
+                "name": "Status",
+                "type": "tags",
+                "tableRef": "status",
+                "placeholder": "Enter status",
+                "id": "status",
+                "validation": ["", "trim", ""],
+                "dropDownField": "",
+                "dropDownType": "single",
+                "onView": true,
+                "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
+            }]
 
+        }
 
     ],
     "action": [{

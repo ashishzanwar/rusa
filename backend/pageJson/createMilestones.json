@@ -88,6 +88,14 @@
             "id": "input1",
             "validation": ["", "trim", ""],
             "url": "Transaction/search"
+        }, {
+            "name": "Quantity",
+            "type": "number",
+            "tableRef": "quantity",
+            "placeholder": "Enter Quantity",
+            "id": "quantity",
+            "validation": ["", "trim", ""],
+            "url": ""
         }
     ],
     "action": [{

@@ -23,7 +23,10 @@ var schema = new Schema({
         type: Number
     },
     photos: [{
-        type: String
+        tag:[String],
+        photo: {
+            type:String
+        }
     }],
     comment: [{
 
@@ -62,7 +65,10 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
         index: true
-    }
+    },
+    quantity: {
+        type: Number
+    },
 });
 
 schema.plugin(deepPopulate, {});

@@ -26,7 +26,7 @@ var schema = new Schema({
         ref: 'Institute',
         index: true,
         key: "project"
-        },
+    },
     title: {
         type: String
     },
@@ -68,7 +68,8 @@ var schema = new Schema({
         index: true
     }],
     photos: [{
-        type: String
+        tags: String,
+        photo: String     
     }],
     milestones: [{
         type: Schema.Types.ObjectId,
@@ -82,7 +83,25 @@ var schema = new Schema({
     subStatus: {
         type: String,
         enum: ["InTime", "Delay"]
-    }
+    },
+    statusLogs: [{
+        timestamp: {
+            type: Date,
+            default: Date.now
+        },
+        status: {
+            type: String,
+            enum: ["Active", "Complete", "Cancelled", "OnHold"]
+        }
+    }],
+
+    quantity: {
+        type: Number
+    },
+    tags: [{
+        type: String
+    }]
+
 });
 
 schema.plugin(deepPopulate, {});

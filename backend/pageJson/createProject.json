@@ -85,17 +85,32 @@
             "url": ""
         }, {
             "name": "Photos",
-            "type": "image",
-            "option": "single",
+            "type": "box",
             "tableRef": "photos",
-            "placeholder": "Enter Image",
-            "id": "input1",
-            "view": true,
-            "validation": ["", "trim", "unique"],
-            "url": ""
-        }, 
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Tags",
+                "type": "text",
+                "tableRef": "tags",
+                "placeholder": "Enter Tags",
+                "id": "input1",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }, {
+                "name": "Photo",
+                "type": "image",
+                "tableRef": "photo",
+                "option": "single",
+                "size": "width = 413",
+                "placeholder": "Enter Photo",
+                "id": "input1",
+                "onView": true,
+                "validation": ["", "trim", ""],
+                "url": ""
 
-        {
+            }]
+
+        }, {
             "name": "Status",
             "type": "tags",
             "tableRef": "status",
@@ -117,6 +132,33 @@
             "dropDownField": "",
             "dropDownType": "single",
             "dropDown": ["InTime", "Delay"]
+        }, {
+            "name": "Quantity",
+            "type": "number",
+            "tableRef": "quantity",
+            "placeholder": "Enter Quantity",
+            "id": "quantity",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Status Logs",
+            "type": "box",
+            "tableRef": "statusLogs",
+            "validation": ["", "trim", ""],
+            "fields": [ {
+                "name": "Status",
+                "type": "tags",
+                "tableRef": "status",
+                "placeholder": "Enter status",
+                "id": "status",
+                "validation": ["", "trim", ""],
+                "url": "",
+                "dropDownField": "",
+                "dropDownType": "single",
+                "onView": true,
+                "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
+            }]
+
         }
 
     ],
