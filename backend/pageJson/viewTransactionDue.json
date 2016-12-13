@@ -1,0 +1,71 @@
+{
+    "title": "TransactionDue",
+    "description": "List of TransactionDue",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "TransactionDue",
+        "type": "text",
+        "isSort": "",
+        "tableRef": "name"
+    }, {
+        "name": "Installment",
+        "isSort": "",
+        "tableRef": "amount"
+    }, {
+        "name": "Sub Installment",
+        "isSort": "",
+        "tableRef": "amount"
+    }, {
+        "name": "Amount",
+        "type": "text",
+        "isSort": "",
+        "tableRef": "amount"
+    }],
+    "action": [{
+        "name": "edit",
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editTransactionDue",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete TransactionDue",
+        "content": "Are you sure you want to delete TransactionDue?",
+        "api": "TransactionDue/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+    "button": [{
+        "name": "Excel Export",
+        "icon": "print",
+        "class": "btn-danger",
+        "type": "redirect",
+        "action": "excelexport"
+    }, {
+        "name": "Upload Excel",
+        "icon": "delete",
+        "class": "btn-warning",
+        "type": "redirect",
+        "action": "uploadcsv"
+    }, {
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createTransactionDue"
+    }],
+    "apiCall": {
+        "url": "TransactionDue/search",
+        "params": "_id"
+    }
+}

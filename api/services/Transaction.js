@@ -66,9 +66,9 @@ var schema = new Schema({
         type: String
     },
     photos: [{
-        tag:[String],
+        tags: [String],
         photo: {
-            type:String
+            type: String
         }
     }],
 });

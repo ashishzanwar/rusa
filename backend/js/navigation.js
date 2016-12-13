@@ -7,50 +7,50 @@ var navigationservice = angular.module('navigationservice', [])
 
 .factory('NavigationService', function ($http) {
     var navigation = [{
-        name: "Users",
-        classis: "active",
-        sref: "#/page/viewUser//",
-        icon: "phone"
-    },
-    {
-        name: "Center",
-        classis: "active",
-        sref: "#/page/viewCenter//",
-        icon: "phone"
-    },
-    {
-        name: "State",
-        classis: "active",
-        sref: "#/page/viewState//",
-        icon: "phone"
-    },
-    {
-        name: "Institute",
-        classis: "active",
-        sref: "#/page/viewInstitute//",
-        icon: "phone"
-    },
-    
-    {
-        name: "Project",
-        classis: "active",
-        sref: "#/page/viewProject//",
-        icon: "phone"
-    },
-    {
-        name: "Transaction",
-        classis: "active",
-        sref: "#/page/viewTransaction//",
-        icon: "phone"
-    },
-    {
-        name: "Milestones",
-        classis: "active",
-        sref: "#/page/viewMilestones//",
-        icon: "phone"
-    }
+            name: "Users",
+            classis: "active",
+            sref: "#/page/viewUser//",
+            icon: "phone"
+        }, {
+            name: "Center",
+            classis: "active",
+            sref: "#/page/viewCenter//",
+            icon: "phone"
+        }, {
+            name: "State",
+            classis: "active",
+            sref: "#/page/viewState//",
+            icon: "phone"
+        }, {
+            name: "Institute",
+            classis: "active",
+            sref: "#/page/viewInstitute//",
+            icon: "phone"
+        },
 
-    
+        {
+            name: "Project",
+            classis: "active",
+            sref: "#/page/viewProject//",
+            icon: "phone"
+        }, {
+            name: "Transaction",
+            classis: "active",
+            sref: "#/page/viewTransaction//",
+            icon: "phone"
+        }, {
+            name: "Milestones",
+            classis: "active",
+            sref: "#/page/viewMilestones//",
+            icon: "phone"
+        }, {
+            name: "Transaction Due",
+            classis: "active",
+            sref: "#/page/viewTransactionDue//",
+            icon: "phone"
+        }
+
+
     ];
 
     return {

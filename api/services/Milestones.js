@@ -23,7 +23,7 @@ var schema = new Schema({
         type: Number
     },
     photos: [{
-        tag:[String],
+        tags:[String],
         photo: {
             type:String
         }

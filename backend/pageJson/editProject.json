@@ -146,20 +146,13 @@
             "tableRef": "statusLogs",
             "validation": ["", "trim", ""],
             "fields": [{
-                "name": "Timestamp",
-                "type": "date",
-                "tableRef": "timestamp",
-                "placeholder": "Enter TimeStamp",
-                "id": "input1",
-                "onView": true,
-                "validation": ["", "trim", ""]
-            }, {
                 "name": "Status",
                 "type": "tags",
                 "tableRef": "status",
                 "placeholder": "Enter status",
                 "id": "status",
                 "validation": ["", "trim", ""],
+                "url": "",
                 "dropDownField": "",
                 "dropDownType": "single",
                 "onView": true,

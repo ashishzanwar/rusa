@@ -1,12 +1,12 @@
 {
-    "title": "Create Transaction",
-    "name": "Transaction",
-    "jsonPage": "viewTransaction",
+    "title": "Edit TransactionDue",
+    "name": "TransactionDue",
+    "jsonPage": "viewTransactionDue",
     "desciption": "",
-    "pageType": "create",
-    "urlFields": ["Transaction"],
+    "pageType": "edit",
+    "urlFields": ["_id"],
     "fields": [{
-        "name": "Transaction Name",
+        "name": "TransactionDue Name",
         "type": "text",
         "tableRef": "name",
         "placeholder": "Enter Title",
@@ -131,41 +131,41 @@
         "id": "name",
         "validation": ["", "trim", ""],
         "url": ""
-    },  {
-            "name": "Photos",
-            "type": "box",
-            "tableRef": "photos",
+    }, {
+        "name": "Photos",
+        "type": "box",
+        "tableRef": "photos",
+        "validation": ["", "trim", ""],
+        "fields": [{
+            "name": "Tags",
+            "type": "text",
+            "tableRef": "tags",
+            "placeholder": "Enter Tags",
+            "id": "input1",
+            "onView": true,
+            "validation": ["", "trim", ""]
+        }, {
+            "name": "Photo",
+            "type": "image",
+            "tableRef": "photo",
+            "option": "single",
+            "size": "width = 413",
+            "placeholder": "Enter Photo",
+            "id": "input1",
+            "onView": true,
             "validation": ["", "trim", ""],
-            "fields": [{
-                "name": "Tags",
-                "type": "text",
-                "tableRef": "tags",
-                "placeholder": "Enter Tags",
-                "id": "input1",
-                "onView": true,
-                "validation": ["", "trim", ""]
-            }, {
-                "name": "Photo",
-                "type": "image",
-                "tableRef": "photo",
-                "option": "single",
-                "size": "width = 413",
-                "placeholder": "Enter Photo",
-                "id": "input1",
-                "onView": true,
-                "validation": ["", "trim", ""],
-                "url": ""
+            "url": ""
 
-            }]
+        }]
 
-        }],
+    }],
     "action": [{
         "name": "submit",
-        "action": "submitTransaction",
+        "action": "submitTransactionDue",
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewTransaction"
+                "id": "viewTransactionDue"
             }
         }
     }, {
@@ -174,11 +174,17 @@
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewTransaction"
+                "id": "viewTransactionDue"
             }
         }
     }],
     "apiCall": {
-        "url": "Transaction/save"
+        "url": "TransactionDue/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "TransactionDue/getOne",
+        "params": "_id"
     }
+
 }

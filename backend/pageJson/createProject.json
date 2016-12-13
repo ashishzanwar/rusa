@@ -107,7 +107,6 @@
                 "onView": true,
                 "validation": ["", "trim", ""],
                 "url": ""
-
             }]
 
         }, {
@@ -145,7 +144,7 @@
             "type": "box",
             "tableRef": "statusLogs",
             "validation": ["", "trim", ""],
-            "fields": [ {
+            "fields": [{
                 "name": "Status",
                 "type": "tags",
                 "tableRef": "status",
@@ -158,7 +157,6 @@
                 "onView": true,
                 "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
             }]
-
         }
 
     ],

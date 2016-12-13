@@ -1,12 +1,12 @@
 {
-    "title": "Create Transaction",
-    "name": "Transaction",
-    "jsonPage": "viewTransaction",
+    "title": "Create TransactionDue",
+    "name": "TransactionDue",
+    "jsonPage": "viewTransactionDue",
     "desciption": "",
     "pageType": "create",
-    "urlFields": ["Transaction"],
+    "urlFields": ["TransactionDue"],
     "fields": [{
-        "name": "Transaction Name",
+        "name": "TransactionDue Name",
         "type": "text",
         "tableRef": "name",
         "placeholder": "Enter Title",
@@ -161,11 +161,11 @@
         }],
     "action": [{
         "name": "submit",
-        "action": "submitTransaction",
+        "action": "submitTransactionDue",
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewTransaction"
+                "id": "viewTransactionDue"
             }
         }
     }, {
@@ -174,11 +174,11 @@
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewTransaction"
+                "id": "viewTransactionDue"
             }
         }
     }],
     "apiCall": {
-        "url": "Transaction/save"
+        "url": "TransactionDue/save"
     }
 }
