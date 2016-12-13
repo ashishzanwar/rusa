@@ -65,12 +65,10 @@ var schema = new Schema({
     reason: {
         type: String
     },
-    photos: [{
+       photos: [{
         tags: [String],
-        photo: {
-            type: String
-        }
-    }],
+        photo: String
+    }]
 });
 
 schema.plugin(deepPopulate, {});

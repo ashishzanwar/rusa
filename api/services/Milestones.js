@@ -22,11 +22,9 @@ var schema = new Schema({
     percentageCompleted: {
         type: Number
     },
-    photos: [{
-        tags:[String],
-        photo: {
-            type:String
-        }
+      photos: [{
+        tags: [String],
+        photo: String
     }],
     comment: [{
 

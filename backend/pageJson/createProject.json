@@ -139,24 +139,18 @@
             "id": "quantity",
             "validation": ["", "trim", ""],
             "url": ""
-        }, {
-            "name": "Status Logs",
-            "type": "box",
-            "tableRef": "statusLogs",
+        },
+        {
+            "name": "Tags",
+            "type": "tags",
+            "tableRef": "tags",
+            "placeholder": "Enter Sub Status",
+            "id": "status",
             "validation": ["", "trim", ""],
-            "fields": [{
-                "name": "Status",
-                "type": "tags",
-                "tableRef": "status",
-                "placeholder": "Enter status",
-                "id": "status",
-                "validation": ["", "trim", ""],
-                "url": "",
-                "dropDownField": "",
-                "dropDownType": "single",
-                "onView": true,
-                "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
-            }]
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["InTime", "Delay"]
         }
 
     ],
