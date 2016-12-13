@@ -95,7 +95,7 @@
                 "placeholder": "Enter Tags",
                 "id": "input1",
                 "onView": true,
-                "validation": ["", "trim", ""]
+                "validation": [ "trim"]
             }, {
                 "name": "Photo",
                 "type": "image",
@@ -105,7 +105,7 @@
                 "placeholder": "Enter Photo",
                 "id": "input1",
                 "onView": true,
-                "validation": ["", "trim", ""],
+                "validation": [ "trim"],
                 "url": ""
             }]
 

@@ -81,18 +81,18 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
 });
 
 
-firstapp.directive('dateModel', function ($filter,$timeout) {
+firstapp.directive('dateModel', function ($filter, $timeout) {
     return {
         scope: {
             model: '=ngModel'
         },
         link: function ($scope, element, attrs) {
             console.log("in date model");
-            $timeout(function(){
-console.log($filter('date')(new Date($scope.model),'dd/MM/yyyy'));
-            $scope.model = new Date($scope.model);
-            },100)
-            
+            $timeout(function () {
+                console.log($filter('date')(new Date($scope.model), 'dd/MM/yyyy'));
+                $scope.model = new Date($scope.model);
+            }, 100)
+
         }
     };
 });
@@ -364,7 +364,7 @@ firstapp.filter('serverimage', function () {
             }
 
         } else {
-            return "frontend/img/logo.png";
+            return "../frontend/img/logo.png";
         }
     };
 });
@@ -380,7 +380,7 @@ firstapp.filter('downloadImage', function () {
         if (input) {
             return adminurl + "download/" + input;
         } else {
-            return "frontend/img/logo.png";
+            return "../frontend/img/logo.png";
         }
     };
 });
