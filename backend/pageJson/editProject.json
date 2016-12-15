@@ -83,34 +83,36 @@
             "id": "total amount",
             "validation": ["", "trim", ""],
             "url": ""
-        }, {
-            "name": "Photos",
-            "type": "box",
-            "tableRef": "photos",
+        }, 
+        {
+        "name": "Photos",
+        "type": "box",
+        "tableRef": "photos",
+        "validation": ["", "trim", ""],
+         "onView":true,
+        "fields": [{
+            "onView": true,
+            "name": "Tags",
+            "type": "text",
+            "tableRef": "tags",
+            "placeholder": "Enter Tags",
+            "id": "tag",
             "validation": ["", "trim", ""],
-            "fields": [{
-                "name": "Tags",
-                "type": "text",
-                "tableRef": "tags",
-                "placeholder": "Enter Tags",
-                "id": "input1",
-                "onView": true,
-                "validation": ["", "trim", ""]
-            }, {
-                "name": "Photo",
-                "type": "image",
-                "tableRef": "photo",
-                "option": "single",
-                "size": "width = 413",
-                "placeholder": "Enter Photo",
-                "id": "input1",
-                "onView": true,
-                "validation": ["", "trim", ""],
-                "url": ""
-
-            }]
-
+            "url": ""
         }, {
+            
+            "name": "Image",
+            "type": "image",
+            "size": "100 x 100",
+            "option": "single",
+            "tableRef": "photo",
+            "placeholder": "Enter Image",
+            "id": "input1",
+            "onView":true,
+            "validation": ["", "trim", ""],
+            "url": ""
+        }]
+    }, {
             "name": "Status",
             "type": "tags",
             "tableRef": "status",
@@ -140,26 +142,16 @@
             "id": "quantity",
             "validation": ["", "trim", ""],
             "url": ""
-        }, {
-            "name": "Status Logs",
-            "type": "box",
-            "tableRef": "statusLogs",
-            "validation": ["", "trim", ""],
-            "fields": [{
-                "name": "Status",
-                "type": "tags",
-                "tableRef": "status",
-                "placeholder": "Enter status",
-                "id": "status",
-                "validation": ["", "trim", ""],
-                "url": "",
-                "dropDownField": "",
-                "dropDownType": "single",
-                "onView": true,
-                "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
-            }]
-
-        }
+        },
+        {
+        "name": "Tags", 
+        "type": "text",
+        "tableRef": "tags",
+        "placeholder": "Enter Tags",
+        "id": "tags",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }
 
     ],
     "action": [{

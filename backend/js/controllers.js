@@ -363,6 +363,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
 
     $scope.saveData = function (formData) {
+        console.log("in save");
+        console.log("ABC",formData);
+        // console.log("PIC",formData.photos[0].photo);
         NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
             if (data.value === true) {
                 $scope.json.json.action[0].stateName.json.keyword = "";
@@ -493,6 +496,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.editBox = function (state, data) {
         $scope.state = state;
         $scope.data = data;
+        $scope.formData[$scope.type.tableRef] = data;
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: '/backend/views/modal/modal.html',

@@ -1,0 +1,66 @@
+{
+    "title": "Edit Project",
+    "name": "Project",
+    "jsonPage": "viewProject",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+            "name": "Photos",
+            "type": "box",
+            "tableRef": "photos",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Tags",
+                "type": "text",
+                "tableRef": "tags",
+                "placeholder": "Enter Hotel Name",
+                "id": "input1",
+                "validation": ["", "trim", ""],
+                "onView": true,
+                "url": ""
+            }
+            ,{
+            "name": "Image",
+            "type": "image",
+            "size": "545 x 413",
+            "option": "single",
+            "tableRef": "image",
+            "onView":true,
+            "placeholder": "Enter Image",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }]
+        }
+
+    ],
+    "action": [{
+        "name": "submit",
+        "action": "submitProject",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewProject"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewProject"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Project/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "Project/getOne",
+        "params": "_id"
+    }
+
+}

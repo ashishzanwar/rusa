@@ -68,9 +68,11 @@ var schema = new Schema({
         index: true
     }],
     photos: [{
-        tags: [String],
-        photo: String
+        photo: String,
+        tags: String
+
     }],
+
     milestones: [{
         type: Schema.Types.ObjectId,
         ref: 'Milestones',
@@ -100,7 +102,8 @@ var schema = new Schema({
     },
     tags: [
         String
-    ]
+    ],
+
 
 });
 
