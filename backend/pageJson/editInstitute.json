@@ -115,15 +115,13 @@
             "name": "Status",
             "type": "tags",
             "tableRef": "status",
-            "tableVal": "project.status",
             "onView": true,
             "placeholder": "Enter Status",
             "id": "status",
             "validation": ["", "trim", ""],
             "dropDownField": "",
             "dropDownType": "single",
-            "dropDown": ["Active", "Complete", "Cancelled", "OnHold"],
-            "url":"Project/search"
+            "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
         }, {
             "name": "Sub Status",
             "type": "tags",
