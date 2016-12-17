@@ -486,7 +486,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     if ($scope.type.type == "box") {
 
         if (!_.isArray($scope.formData[$scope.type.tableRef]) && $scope.formData[$scope.type.tableRef] === '') {
-            $scope.formData[$scope.type.tableRef] = [];
+            $
+            scope.formData[$scope.type.tableRef] = [];
+            $scope.model = [];
+        } else {
+            if ($scope.formData[$scope.type.tableRef]) {
+                $scope.model = $scope.formData[$scope.type.tableRef];
+            }
+        }
+        $scope.search = {
+            text: ""
+        };
+    }
+    if ($scope.type.type == "box2") {
+
+        if (!_.isArray($scope.formData[$scope.type.tableRef]) && $scope.formData[$scope.type.tableRef] === '') {
+            $
+            scope.formData[$scope.type.tableRef] = [];
             $scope.model = [];
         } else {
             if ($scope.formData[$scope.type.tableRef]) {
@@ -503,81 +519,81 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.model.push({});
         $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
     };
-    // $scope.editBox = function (state, data) {
-    //     $scope.state = state;
-    //     $scope.data = data;
-    //     $scope.formData[$scope.type.tableRef] = data;
-    //     var modalInstance = $uibModal.open({
-    //         animation: $scope.animationsEnabled,
-    //         templateUrl: '/backend/views/modal/modal.html',
-    //         size: 'lg',
-    //         scope: $scope,
-    //         formData:$scope.data
-    //     });
-
-    /////////////////////////////////////
-    // vm.updateUser = function(selectedUser) {
-    //     $scope.selectedUser = selectedUser;
-    //     var modalInstance = $uibModal.open({
-    //         animation: true,
-    //         templateUrl: 'app/views/pages/modal.html',
-    //         resolve: {
-    //             user: function () {
-    //                 return $scope.selectedUser;
-    //             }
-    //         },
-    //         controller: function($scope, user) {
-    //             $scope.user = user;
-    //         }
-    //     });
-    //     modalInstance.result.then(function(selectedUser) {
-    //         $scope.selected = selectedUser;
-    //     });
-    //};
-
     $scope.editBox = function (state, data) {
-        $scope.state = state;
-        $scope.data = data;
-        $scope.selectedUser = data;
+            $scope.state = state;
+            $scope.data = data;
+            $scope.formData[$scope.type.tableRef] = data;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '/backend/views/modal/modal.html',
+                size: 'lg',
+                scope: $scope,
+                formData: $scope.data
+            });
+        },
+        /////////////////////////////////////
+        // vm.updateUser = function(selectedUser) {
+        //     $scope.selectedUser = selectedUser;
+        //     var modalInstance = $uibModal.open({
+        //         animation: true,
+        //         templateUrl: 'app/views/pages/modal.html',
+        //         resolve: {
+        //             user: function () {
+        //                 return $scope.selectedUser;
+        //             }
+        //         },
+        //         controller: function($scope, user) {
+        //             $scope.user = user;
+        //         }
+        //     });
+        //     modalInstance.result.then(function(selectedUser) {
+        //         $scope.selected = selectedUser;
+        //     });
+        //};
 
-        $scope.formData[$scope.type.tableRef] = data;
-        var modalInstance = $uibModal.open({
-            animation: $scope.animationsEnabled,
-            templateUrl: '/backend/views/modal/modal.html',
-            size: 'lg',
-            scope: $scope,
-            formData: $scope.data,
-            resolve: {
-                user: function () {
-                    console.log("DATA", $scope.selectedUser);
-                    return $scope.selectedUser;
+        $scope.editBoxTable = function (state, data) {
+            $scope.state = state;
+            $scope.data = data;
+            $scope.selectedUser = data;
+
+            $scope.formData[$scope.type.tableRef] = data;
+            var modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: '/backend/views/modal/modalData.html',
+                size: 'lg',
+                scope: $scope,
+                formData: $scope.data,
+                resolve: {
+                    user: function () {
+                        console.log("DATA", $scope.selectedUser);
+                        return $scope.selectedUser;
+                    }
+                },
+                controller: function ($scope, user) {
+                    $scope.user = user;
+                },
+                close: function (result) {
+                    $modalStack.close(modalInstance, result);
+                    console.log("RESULT", result);
                 }
-            },
-            controller: function ($scope, user) {
-                $scope.user = user;
-            },
-            close: function (result) {
-                $modalStack.close(modalInstance, result);
-                console.log("RESULT", result);
-            }
-        });
-        modalInstance.result.then(function (result) {
-            console.log(result.name);
-
-        });
-        /////////////////////////
-        $scope.close = function (value) {
-            // callback(value);
-            console.log("DATA", value);
-            NavigationService.boxCall("Project/saveProject", value, function (data) {
-                $scope.data = data.data;
-                $scope.generateField = true;
+            });
+            modalInstance.result.then(function (result) {
+                console.log(result.name);
 
             });
+            /////////////////////////
+            $scope.close = function (value) {
+                // callback(value);
+                console.log("DATA", value);
+                NavigationService.boxCall("Project/saveProject", value, function (data) {
+                    $scope.data = data.data;
+                    $scope.generateField = true;
 
-            modalInstance.close("cancel");
+                });
+
+                modalInstance.close("cancel");
+            };
         };
-    };
     $scope.deleteBox = function (index, data) {
         console.log(data);
         data.splice(index, 1);

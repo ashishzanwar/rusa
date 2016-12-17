@@ -10,16 +10,12 @@
     <div class="modal-body" ng-init="">
         <div class="row">
             <div class="col-md-12">
-                <detail-field type="field" form="modalForm" value="item"  ng-model="selecteduser"  ng-repeat="field in type.fields" data="data" >
-                         
+                <detail-field type="field" form="modalForm" value="item" ng-model="selecteduser" ng-repeat="field in type.fields" data="data">
                 </detail-field>
-
-      
             </div>
         </div>
-
         <div class="text-center">
-            <button class="btn btn-primary btn-save" type="submit" ng-disabled="modalForm.$invalid">{{state}}</button>
+            <button class="btn btn-primary btn-save" type="submit" ng-click="close(data)">Save Project </button>
         </div>
     </div>
 </form>

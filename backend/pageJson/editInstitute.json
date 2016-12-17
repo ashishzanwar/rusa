@@ -25,7 +25,7 @@
         "url": "State/search"
     }, {
         "name": "Project",
-        "type": "box",
+        "type": "box2",
         "tableRef": "project",
         "validation": ["", "trim", ""],
         "fields": [{
