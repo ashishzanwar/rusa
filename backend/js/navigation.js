@@ -107,6 +107,10 @@ var navigationservice = angular.module('navigationservice', [])
         apiCall: function (url, formData, callback) {
             $http.post(adminurl + url, formData).success(callback);
         },
+
+        boxCall: function (url, formData, callback) {
+            $http.post(adminurl + url, formData).success(callback);
+        },
         searchCall: function (url, formData, i, callback) {
             $http.post(adminurl + url, formData).success(function (data) {
                 callback(data, i);

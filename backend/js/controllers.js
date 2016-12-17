@@ -364,7 +364,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.saveData = function (formData) {
         console.log("in save");
-        console.log("ABC",formData);
+        console.log("ABC", formData);
         // console.log("PIC",formData.photos[0].photo);
         NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
             if (data.value === true) {
@@ -385,6 +385,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
         });
     };
+})
+
+.controller('SaveModelData', function ($scope, data) {
+    console.log("IN CNTROL OD SAVE DTAA");
 })
 
 .controller('DetailFieldCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
@@ -438,6 +442,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.template = "views/field/" + $scope.type.type + ".html";
 
     // BOX
+
+
+    $scope.saveDataBox = function () {
+        console.log("IN CNTROL OD SAVE DTAA");
+    };
+
     if ($scope.type.type == "date") {
         $scope.formData[$scope.type.tableRef] = moment($scope.formData[$scope.type.tableRef]).toDate();
     }
@@ -493,18 +503,78 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.model.push({});
         $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
     };
+    // $scope.editBox = function (state, data) {
+    //     $scope.state = state;
+    //     $scope.data = data;
+    //     $scope.formData[$scope.type.tableRef] = data;
+    //     var modalInstance = $uibModal.open({
+    //         animation: $scope.animationsEnabled,
+    //         templateUrl: '/backend/views/modal/modal.html',
+    //         size: 'lg',
+    //         scope: $scope,
+    //         formData:$scope.data
+    //     });
+
+    /////////////////////////////////////
+    // vm.updateUser = function(selectedUser) {
+    //     $scope.selectedUser = selectedUser;
+    //     var modalInstance = $uibModal.open({
+    //         animation: true,
+    //         templateUrl: 'app/views/pages/modal.html',
+    //         resolve: {
+    //             user: function () {
+    //                 return $scope.selectedUser;
+    //             }
+    //         },
+    //         controller: function($scope, user) {
+    //             $scope.user = user;
+    //         }
+    //     });
+    //     modalInstance.result.then(function(selectedUser) {
+    //         $scope.selected = selectedUser;
+    //     });
+    //};
+
     $scope.editBox = function (state, data) {
         $scope.state = state;
         $scope.data = data;
+        $scope.selectedUser = data;
+
         $scope.formData[$scope.type.tableRef] = data;
         var modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: '/backend/views/modal/modal.html',
             size: 'lg',
-            scope: $scope
+            scope: $scope,
+            formData: $scope.data,
+            resolve: {
+                user: function () {
+                    console.log("DATA", $scope.selectedUser);
+                    return $scope.selectedUser;
+                }
+            },
+            controller: function ($scope, user) {
+                $scope.user = user;
+            },
+            close: function (result) {
+                $modalStack.close(modalInstance, result);
+                console.log("RESULT", result);
+            }
         });
+        modalInstance.result.then(function (result) {
+            console.log(result.name);
+
+        });
+        /////////////////////////
         $scope.close = function (value) {
-            callback(value);
+            // callback(value);
+            console.log("DATA", value);
+            NavigationService.boxCall("Project/saveProject", value, function (data) {
+                $scope.data = data.data;
+                $scope.generateField = true;
+
+            });
+
             modalInstance.close("cancel");
         };
     };

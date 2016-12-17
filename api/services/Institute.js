@@ -18,7 +18,6 @@ var schema = new Schema({
         index: true,
 
     }],
-
     state: {
         type: Schema.Types.ObjectId,
         ref: 'State',
@@ -32,11 +31,24 @@ var schema = new Schema({
 
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        'project': {
+            select: '_id name component project_approved_board_no title  statePercent centerPercent totalAmount quantity status subStatus'
+        }
+    }
+
+
+
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Institute', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user state Project', 'user state Project'));
-var model = {};
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'project user state Project', 'project user state Project'));
+var model = {
+
+   
+
+};
 module.exports = _.assign(module.exports, exports, model);

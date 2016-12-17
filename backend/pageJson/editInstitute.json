@@ -6,28 +6,138 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
-            "name": "Institute Name",
-            "type": "text",
-            "tableRef": "name",
-            "placeholder": "Enter Name",
-            "id": "name",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-
-        {
-            "name": "State",
-            "type": "selectFromTable",
+        "name": "Institute Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "State",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "tableRef": "state",
+        "placeholder": "Enter Category-Name",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "State/search"
+    }, {
+        "name": "Project",
+        "type": "box",
+        "tableRef": "project",
+        "validation": ["", "trim", ""],
+        "fields": [{
+            "name": "Project",
+            "viewType": "viewType",
             "dropDownType": "single",
             "searchApi": "searchCall",
-            "tableRef": "state",
-            "placeholder": "Enter Category-Name",
+            "tableRef": "name",
+            "onView": true,
+            "placeholder": "Enter Project Name",
             "id": "input1",
-            "validation": ["", "trim", ""],
-            "url": "State/search"
-        }
+            "validation": ["", "trim", ""]
 
-    ],
+        }, {
+            "name": "Title",
+            "type": "text",
+            "viewType": "viewType",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "title",
+            "onView": true,
+            "placeholder": "Enter Title",
+            "id": "input1",
+            "validation": ["", "trim", ""]
+
+        }, {
+            "name": "Component",
+            "type": "text",
+            "viewType": "viewType",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "component",
+            "onView": true,
+            "placeholder": "Enter Component",
+            "id": "input1",
+            "validation": ["", "trim", ""]
+
+        }, {
+            "name": "Center Percent",
+            "type": "number",
+            "viewType": "viewType",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "centerPercent",
+            "onView": true,
+            "placeholder": "Enter Center Percent",
+            "id": "input1",
+            "validation": ["", "trim", ""]
+
+        }, {
+            "name": "State Percent",
+            "type": "number",
+            "viewType": "viewType",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "statePercent",
+            "onView": true,
+            "placeholder": "Enter State Percent",
+            "id": "input1",
+            "validation": ["", "trim", ""]
+
+        }, {
+            "name": "Total Amount",
+            "type": "number",
+            "viewType": "viewType",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "totalAmount",
+            "onView": true,
+            "placeholder": "Enter Total Amount",
+            "id": "input1",
+            "validation": ["", "trim", ""]
+
+        }, {
+            "name": "Quantity",
+            "type": "number",
+            "viewType": "viewType",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "quantity",
+            "onView": true,
+            "placeholder": "Enter Quantity",
+            "id": "input1",
+            "validation": ["", "trim", ""]
+
+        }, {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "status",
+            "tableVal": "project.status",
+            "onView": true,
+            "placeholder": "Enter Status",
+            "id": "status",
+            "validation": ["", "trim", ""],
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["Active", "Complete", "Cancelled", "OnHold"],
+            "url":"Project/search"
+        }, {
+            "name": "Sub Status",
+            "type": "tags",
+            "tableRef": "subStatus",
+            "onView": true,
+            "placeholder": "Enter Sub Status",
+            "id": "subStatus",
+            "validation": ["", "trim", ""],
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["InTime", "Delay"],
+            "url":"Project/search"
+        }]
+    }],
     "action": [{
         "name": "submit",
         "action": "submitInstitute",

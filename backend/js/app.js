@@ -499,6 +499,16 @@ firstapp.directive('addressForm', function ($document) {
 //     };
 // });
 
+firstapp.directive('box', function ($uibModal) {
+    console.log("I AM HERE IN BOX");
+    $scope.submitModal = function (moddata) {
+        console.log(moddata);
+    };
+
+
+});
+
+
 var aa = {};
 firstapp.directive('multipleSelect', function ($document, $timeout) {
     return {

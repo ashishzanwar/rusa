@@ -113,5 +113,49 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Project', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction', 'user institute state transaction'));
-var model = {};
+var model = {
+
+    saveProject: function (data, callback) {
+        var myprojectdata = data;
+        console.log(data._id);
+
+        myprojectdata = this(myprojectdata);
+
+        var data2 = {};
+
+            data2.project_approved_board_no = data.project_approved_board_no,
+            data2.centerPercent = data.centerPercent,
+            data2.component = data.component,
+            data2.name = data.name,
+            data2.quantity = data.quantity,
+            data2.statePercent = data.statePercent,
+            data2.status = data.status,
+            data2.subStatus = data.subStatus,
+            data2.title = data.title,
+            data2.totalAmount = data.totalAmount
+
+        Project.findOneAndUpdate({
+            _id: data._id
+        }, data2, {
+            new: true
+        }).exec(function (err, found) {
+            if (err) {
+
+                // console.log("err", err);
+                //   callback(err);
+            } else {
+                console.log("reply", found);
+                callback(null, found);
+            }
+
+        });
+
+
+
+    }
+
+
+
+
+};
 module.exports = _.assign(module.exports, exports, model);
