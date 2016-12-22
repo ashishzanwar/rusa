@@ -133,7 +133,10 @@ var navigationservice = angular.module('navigationservice', [])
     getOneCountry: function(id, callback) {
       $http.post(adminurl + 'country/getOne', {
         _id: id
-      }).then(callback);
+      }).then(function(data) {
+        data = data.data;
+        callback(data);
+      });
     },
     getLatLng: function(address, i, callback) {
       $http({
@@ -141,6 +144,7 @@ var navigationservice = angular.module('navigationservice', [])
         method: 'GET',
         withCredentials: false,
       }).then(function(data) {
+          data = data.data;
         callback(data, i);
       });
     }
