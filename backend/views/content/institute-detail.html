@@ -1,0 +1,94 @@
+<div>
+  <div class="heading-sec">
+    <div class="row">
+      <div class="col-md-4 column">
+        <div class="heading-profile">
+          <h2>Edit Institute</h2>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="panel-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="widget">
+          <div class="form-elements-sec">
+            <form name="detailForm" role="form" class="sec">
+              <div class="row">
+                <div class="col-md-12">
+                  <div>
+                    <div class="form-group">
+                      <label>Institute Name </label>
+                      <input type="text" name="name" placeholder="Enter Name" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required" ng-disabled="">
+                      <div class="erng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Institute Name</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="form-group">
+                      <label>State</label>
+                      <!-- MultipleSelect -->
+                      <multiple-select name="state" required="" ng-model="formData[type.tableRef]" ng-name="name[type.tableRef]" url="Project/search" api="searchCall" ng-if="!type.filterField">
+                      </multipleSelect>
+                        <!-- End MultipleSelect -->
+                        <div class="erng-hide " ng-show="detailForm[type.tableRef].$invalid ">Please Select State</div>
+                    </div>
+                  </div>
+                  <div>
+                    <div>
+                      <a class=" btn btn-primary pull-right ml-10" ng-click="editBoxProject() ">Add New</a>
+                      <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
+                    </div>
+                    <div class="sec">
+                      <div>
+                        <table class="table table-input ">
+                          <thead>
+                            <tr>
+                              <th>Project</th>
+                              <th>Title</th>
+                              <th>Component</th>
+                              <th>Center Percent</th>
+                              <th>State Percent</th>
+                              <th>Total Amount</th>
+                              <th>Quantity</th>
+                              <th>Status</th>
+                              <th>Sub Status</th>
+                              <th width="150px ">Actions</th>
+                            </tr>
+                            <thead>
+                              <tr>
+                                <td>Library Books</td>
+                                <td>Library Books Put</td>
+                                <td>Library Books</td>
+                                <td>50</td>
+                                <td>10</td>
+                                <td>800000</td>
+                                <td>25</td>
+                                <td>Active</td>
+                                <td>Delay</td>
+                                <td>
+                                  <a class="btn btn-primary">
+                                    <i class="fa fa-pencil"></i>
+                                  </a>
+                                  <a class="btn btn-danger">
+                                    <i class="fa fa-trash"></i>
+                                  </a>
+                                </td>
+                              </tr>
+                              <tbody>
+                              </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="text-center mt20 odd-even-button ">
+                  <button class="btn btn-default " type="submit " ng-click="saveData(data) " ng-disabled="detailForm.$invalid ">Save</button>
+                  <button class="btn btn-default " ng-click="onCancel(json.json.action[1].stateName) ">Cancel</button>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,38 @@
+<form name="modalForm" ng-submit="modalOptions.submit()" class="min-hit">
+  <div class="modal-header blue-bg">
+    <div class="pull-right">
+      <a class="btn btn-clear" ng-click="$dismiss()">
+        <i class="ln-cross"></i>
+      </a>
+    </div>
+    <h5 class="modal-title">Create Project</h5>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-12">
+
+        <div>
+          <div class="form-group">
+            <label>Institute Name</label>
+            <input type="text" name="name" placeholder="Enter Institute Name" ng-model="formData[type.tableRef]" class="form-control">
+          </div>
+        </div>
+
+        <div>
+          <div class="form-group">
+            <label>State</label>
+            <!-- MultipleSelect -->
+            <multiple-select name="state" required="" ng-model="formData[type.tableRef]" ng-name="name[type.tableRef]" url="Project/search" api="searchCall" ng-if="!type.filterField">
+            </multipleSelect>
+              <!-- End MultipleSelect -->
+              <div class="erng-hide " ng-show="detailForm[type.tableRef].$invalid ">Please Select State</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-center">
+      <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid">Create</button>
+    </div>
+  </div>
+</form>
+</div>

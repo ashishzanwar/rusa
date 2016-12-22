@@ -106,8 +106,10 @@ a,
 
 .logo {
     padding: 10px 0 10px 25px;
+ h1 {
+    margin: 5px 18px;
 }
-
+}
 .account-form>form .feild>.login-w {
     background: #125daa none repeat scroll 0 0;
     border: medium none;
@@ -1174,7 +1176,9 @@ body {
 .account-user-sec {
     z-index: 9999;
 }
-
+.ml-10{
+  margin-left: 10px;
+}
 
 /* Start writing sass here */
 
