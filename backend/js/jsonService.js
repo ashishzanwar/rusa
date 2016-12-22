@@ -13,7 +13,8 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
     }
   };
   this.getJson = function (page, callback) {
-    $http.get("pageJson/" + page + ".json").success(function (data) {
+    $http.get("pageJson/" + page + ".json").then(function (data) {
+      data= data.data;
       JsonService.json = data;
       switch (data.pageType) {
         case "view":

@@ -9,44 +9,44 @@ var navigationservice = angular.module('navigationservice', [])
     var navigation = [{
             name: "Users",
             classis: "active",
-            sref: "#/page/viewUser//",
+            sref: "#!/page/viewUser//",
             icon: "phone"
         }, {
             name: "Center",
             classis: "active",
-            sref: "#/page/viewCenter//",
+            sref: "#!/page/viewCenter//",
             icon: "phone"
         }, {
             name: "State",
             classis: "active",
-            sref: "#/page/viewState//",
+            sref: "#!/page/viewState//",
             icon: "phone"
         }, {
             name: "Institute",
             classis: "active",
-            sref: "#/page/viewInstitute//",
+            sref: "#!/page/viewInstitute//",
             icon: "phone"
         },
 
         {
             name: "Project",
             classis: "active",
-            sref: "#/page/viewProject//",
+            sref: "#!/page/viewProject//",
             icon: "phone"
         }, {
             name: "Transaction",
             classis: "active",
-            sref: "#/page/viewTransaction//",
+            sref: "#!/page/viewTransaction//",
             icon: "phone"
         }, {
             name: "Milestones",
             classis: "active",
-            sref: "#/page/viewMilestones//",
+            sref: "#!/page/viewMilestones//",
             icon: "phone"
         }, {
             name: "Transaction Due",
             classis: "active",
-            sref: "#/page/viewTransactionDue//",
+            sref: "#!/page/viewTransactionDue//",
             icon: "phone"
         }
 
@@ -96,7 +96,8 @@ var navigationservice = angular.module('navigationservice', [])
             });
         },
         delete: function (url, formData, callback) {
-            $http.post(adminurl + url, formData).success(function (data) {
+            $http.post(adminurl + url, formData).then(function (data) {
+              data = data.data;
                 callback(data);
             });
         },
