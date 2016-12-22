@@ -10,7 +10,6 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-md-12">
-
         <div>
           <div class="form-group">
             <label>Project</label>
@@ -70,19 +69,20 @@
 
           <div class="form-group ">
             <label>Status</label>
-            <multiple-select my-enter name="status" required ng-model="formData.status" ng-name="name.company" api="searchCompany"></multiple-select>
+            <multiple-select name="state" required="" ng-model="formData[type.tableRef]" ng-name="name[type.tableRef]" url="Project/search" api="searchCall" ng-if="!type.filterField"></multiple-select>
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Status</div>
           </div>
-         <div>
-          <div class="form-group ">
-            <label>Sub Status</label>
+          <div>
+            <div class="form-group ">
+              <label>Sub Status</label>
+              <multiple-select name="state" required="" ng-model="formData[type.tableRef]" ng-name="name[type.tableRef]" url="Project/search" api="searchCall" ng-if="!type.filterField"></multiple-select>
+            </div>
           </div>
         </div>
       </div>
+      <div class="text-center">
+        <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid">Create</button>
+      </div>
     </div>
-    <div class="text-center">
-      <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid">Create</button>
-    </div>
-  </div>
 </form>
 </div>
