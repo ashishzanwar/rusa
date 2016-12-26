@@ -21,7 +21,7 @@
         "name": "edit",
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
-        "type": "page",
+        "type": "custompage",
         "action": "editInstitute",
         "fieldsToSend": {
             "_id": "_id"

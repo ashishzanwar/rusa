@@ -1,7 +1,7 @@
 var globalfunction = {};
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', "jsonservicemod", 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable'])
 
-.controller('DashboardCtrl', function($scope, TemplateService, NavigationService, $timeout, $state) {
+.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("dashboard");
   $scope.menutitle = NavigationService.makeactive("Dashboard");
@@ -10,7 +10,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 })
 
 
-.controller('AccessController', function($scope, TemplateService, NavigationService, $timeout, $state) {
+.controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
   if ($.jStorage.get("accessToken")) {
 
   } else {
@@ -18,7 +18,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   }
 })
 
-.controller('JagzCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, $interval) {
+.controller('JagzCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $interval) {
 
   function toColor(num, red) {
     num >>>= 0;
@@ -34,7 +34,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     return "rgba(" + [r, g, b, a].join(",") + ")";
   }
 
-  $scope.circles = _.times(360, function(n) {
+  $scope.circles = _.times(360, function (n) {
 
     var radius = _.random(0, 10);
     return {
@@ -47,7 +47,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   });
 
   function generateCircle() {
-    _.each($scope.circles, function(n, index) {
+    _.each($scope.circles, function (n, index) {
       var radius = _.random(0, 10);
       n.width = radius;
       n.height = radius;
@@ -72,7 +72,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   var count = 0;
 
-  $interval(function() {
+  $interval(function () {
     count++;
     console.log("Version 1.1");
     generateCircle();
@@ -80,9 +80,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('MultipleSelectCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $filter, toastr) {
+.controller('MultipleSelectCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $filter, toastr) {
   var i = 0;
-  $scope.getValues = function(filter, insertFirst) {
+  $scope.getValues = function (filter, insertFirst) {
     var dataSend = {
       keyword: $scope.search.modelData,
       filter: filter,
@@ -91,12 +91,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     if (dataSend.keyword === null || dataSend.keyword === undefined) {
       dataSend.keyword = "";
     }
-    NavigationService[$scope.api]($scope.url, dataSend, ++i, function(data) {
+    NavigationService[$scope.api]($scope.url, dataSend, ++i, function (data) {
       if (data.value) {
         $scope.list = data.data.results;
         if ($scope.search.modelData) {
           $scope.showCreate = true;
-          _.each($scope.list, function(n) {
+          _.each($scope.list, function (n) {
             // if (n.name) {
             if (_.lowerCase(n.name) == _.lowerCase($scope.search.modelData)) {
               $scope.showCreate = false;
@@ -135,7 +135,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
   };
 
-  $scope.$watch('model', function(newVal, oldVal) {
+  $scope.$watch('model', function (newVal, oldVal) {
     if (newVal && oldVal === undefined) {
       $scope.getValues({
         _id: $scope.model
@@ -144,7 +144,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   });
 
 
-  $scope.$watch('filter', function(newVal, oldVal) {
+  $scope.$watch('filter', function (newVal, oldVal) {
     var filter = {};
     if ($scope.filter) {
       filter = JSON.parse($scope.filter);
@@ -155,7 +155,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       page: 1
     };
 
-    NavigationService[$scope.api](dataSend, ++i, function(data) {
+    NavigationService[$scope.api](dataSend, ++i, function (data) {
       if (data.value) {
         $scope.list = data.data.results;
         $scope.showCreate = false;
@@ -183,19 +183,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.listview = false;
   $scope.showCreate = false;
   $scope.typeselect = "";
-  $scope.showList = function() {
+  $scope.showList = function () {
     $scope.listview = true;
     $scope.searchNew(true);
   };
-  $scope.closeList = function() {
+  $scope.closeList = function () {
     $scope.listview = false;
   };
-  $scope.closeListSlow = function() {
-    $timeout(function() {
+  $scope.closeListSlow = function () {
+    $timeout(function () {
       $scope.closeList();
     }, 500);
   };
-  $scope.searchNew = function(dontFlush) {
+  $scope.searchNew = function (dontFlush) {
     if (!dontFlush) {
       $scope.model = "";
     }
@@ -205,7 +205,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
     $scope.getValues(filter);
   };
-  $scope.createNew = function(create) {
+  $scope.createNew = function (create) {
     var newCreate = $filter("capitalize")(create);
     var data = {
       name: newCreate
@@ -214,7 +214,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       data = _.assign(data, JSON.parse($scope.filter));
     }
     console.log(data);
-    NavigationService[$scope.create](data, function(data) {
+    NavigationService[$scope.create](data, function (data) {
       if (data.value) {
         toastr.success($scope.name + " Created Successfully", "Creation Success");
         $scope.model = data.data._id;
@@ -225,7 +225,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
     $scope.listview = false;
   };
-  $scope.sendData = function(val, name) {
+  $scope.sendData = function (val, name) {
     $scope.search.modelData = name;
     $scope.ngName = name;
     $scope.model = val;
@@ -233,165 +233,294 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 })
 
-.controller('PageJsonCtrl', function($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal) {
-  $scope.json = JsonService;
-  $scope.template = TemplateService.changecontent("none");
-  $scope.menutitle = NavigationService.makeactive("Country List");
-  TemplateService.title = $scope.menutitle;
-  $scope.navigation = NavigationService.getnav();
-  JsonService.getJson($stateParams.id, function() {});
+.controller('PageJsonCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal) {
+    $scope.json = JsonService;
+    $scope.template = TemplateService.changecontent("none");
+    $scope.menutitle = NavigationService.makeactive("Country List");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    console.log("JSONSERVICE START get");
+    console.log("ORGIN-------->", $stateParams.id);
+    JsonService.getJson($stateParams.id, function () {});
+    console.log("JSONSERVICE END get");
 
-  globalfunction.confDel = function(callback) {
-    var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: '/backend/views/modal/conf-delete.html',
-      size: 'sm',
-      scope: $scope
-    });
-    $scope.close = function(value) {
-      callback(value);
-      modalInstance.close("cancel");
+    globalfunction.confDel = function (callback) {
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/conf-delete.html',
+        size: 'sm',
+        scope: $scope
+      });
+      $scope.close = function (value) {
+        callback(value);
+        modalInstance.close("cancel");
+      };
     };
-  };
 
-  globalfunction.openModal = function(callback) {
-    var modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: '/backend/views/modal/modal.html',
-      size: 'lg',
-      scope: $scope
-    });
-    $scope.close = function(value) {
-      callback(value);
-      modalInstance.close("cancel");
+    globalfunction.openModal = function (callback) {
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/modal.html',
+        size: 'lg',
+        scope: $scope
+      });
+      $scope.close = function (value) {
+        callback(value);
+        modalInstance.close("cancel");
+      };
     };
-  };
 
-  // globalfunction.confDel(function (value) {
-  //     console.log(value);
-  //     if (value) {
-  //         NavigationService.apiCall(id, function (data) {
-  //             if (data.value) {
-  //                 $scope.showAllCountries();
-  //                 toastr.success("Country deleted successfully.", "Country deleted");
-  //             } else {
-  //                 toastr.error("There was an error while deleting country", "Country deleting error");
-  //             }
-  //         });
-  //     }
-  // });
+    // globalfunction.confDel(function (value) {
+    //     console.log(value);
+    //     if (value) {
+    //         NavigationService.apiCall(id, function (data) {
+    //             if (data.value) {
+    //                 $scope.showAllCountries();
+    //                 toastr.success("Country deleted successfully.", "Country deleted");
+    //             } else {
+    //                 toastr.error("There was an error while deleting country", "Country deleting error");
+    //             }
+    //         });
+    //     }
+    // });
 
-})
+  })
+  .controller('CustomPageJsonCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal) {
+    //$scope.json = JsonService;
+    $scope.template = TemplateService.changecontent("none");
+    $scope.menutitle = NavigationService.makeactive("Country List");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    console.log("IN CUSTOM PAGE CTRLLER");
+    console.log("CUSTOM JSONSERVICE START get");
+    console.log("CUSTOM-------->", $stateParams.id);
+    JsonService.getJson($stateParams.id, function () {});
 
-.controller('ViewCtrl', function($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
-  $scope.json = JsonService;
-  $scope.template = TemplateService;
-  var i = 0;
-  if ($stateParams.page && !isNaN(parseInt($stateParams.page))) {
-    $scope.currentPage = $stateParams.page;
-  } else {
-    $scope.currentPage = 1;
-  }
+    console.log("CUSTOM JSONSERVICE END get");
+    globalfunction.confDel = function (callback) {
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/conf-delete.html',
+        size: 'sm',
+        scope: $scope
+      });
+      $scope.close = function (value) {
+        callback(value);
+        modalInstance.close("cancel");
+      };
+    };
 
-  $scope.search = {
-    keyword: ""
-  };
-  if ($stateParams.keyword) {
-    $scope.search.keyword = $stateParams.keyword;
-  }
-  $scope.changePage = function(page) {
-    var goTo = "page";
-    if ($scope.search.keyword) {
-      goTo = "page";
-    }
-    $state.go(goTo, {
-      id: $stateParams.id,
-      page: page,
-      keyword: $scope.search.keyword
-    });
-  };
+    globalfunction.openModal = function (callback) {
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/modal.html',
+        size: 'lg',
+        scope: $scope
+      });
+      $scope.close = function (value) {
+        callback(value);
+        modalInstance.close("cancel");
+      };
+    };
 
-  $scope.getAllItems = function(keywordChange) {
-    $scope.totalItems = undefined;
-    if (keywordChange) {
+    // globalfunction.confDel(function (value) {
+    //     console.log(value);
+    //     if (value) {
+    //         NavigationService.apiCall(id, function (data) {
+    //             if (data.value) {
+    //                 $scope.showAllCountries();
+    //                 toastr.success("Country deleted successfully.", "Country deleted");
+    //             } else {
+    //                 toastr.error("There was an error while deleting country", "Country deleting error");
+    //             }
+    //         });
+    //     }
+    // });
+
+  })
+  .controller('ViewCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
+    $scope.json = JsonService;
+    $scope.template = TemplateService;
+    var i = 0;
+    if ($stateParams.page && !isNaN(parseInt($stateParams.page))) {
+      $scope.currentPage = $stateParams.page;
+    } else {
       $scope.currentPage = 1;
     }
-    NavigationService.search($scope.json.json.apiCall.url, {
-        page: $scope.currentPage,
+
+    $scope.search = {
+      keyword: ""
+    };
+    if ($stateParams.keyword) {
+      $scope.search.keyword = $stateParams.keyword;
+    }
+    $scope.changePage = function (page) {
+      var goTo = "page";
+      if ($scope.search.keyword) {
+        goTo = "page";
+      }
+      $state.go(goTo, {
+        id: $stateParams.id,
+        page: page,
         keyword: $scope.search.keyword
-      }, ++i,
-      function(data, ini) {
-        if (ini == i) {
-          $scope.items = data.data.results;
-          $scope.totalItems = data.data.total;
-          $scope.maxRow = data.data.options.count;
+      });
+    };
+
+    $scope.getAllItems = function (keywordChange) {
+      $scope.totalItems = undefined;
+      if (keywordChange) {
+        $scope.currentPage = 1;
+      }
+      NavigationService.search($scope.json.json.apiCall.url, {
+          page: $scope.currentPage,
+          keyword: $scope.search.keyword
+        }, ++i,
+        function (data, ini) {
+          if (ini == i) {
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+          }
+        });
+    };
+    JsonService.refreshView = $scope.getAllItems;
+    $scope.getAllItems();
+
+  })
+
+.controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, toastr) {
+    $scope.json = JsonService;
+    JsonService.setKeyword($stateParams.keyword);
+    $scope.template = TemplateService;
+    $scope.data = {};
+    console.log("IN Detail controller");
+    console.log("SCOPE JSON", $scope.json);
+
+    //  START FOR EDIT
+    if ($scope.json.json.preApi) {
+
+      NavigationService.apiCall($scope.json.json.preApi.url, {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.data = data.data;
+        $scope.generateField = true;
+
+      });
+    } else {
+      $scope.generateField = true;
+    }
+    //  END FOR EDIT
+
+    $scope.onCancel = function (sendTo) {
+      $scope.json.json.action[1].stateName.json.keyword = "";
+      $scope.json.json.action[1].stateName.json.page = "";
+      $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
+    };
+
+    $scope.saveData = function (formData) {
+      console.log("in save");
+      console.log("ABC", formData);
+      // console.log("PIC",formData.photos[0].photo);
+      NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+        if (data.value === true) {
+          $scope.json.json.action[0].stateName.json.keyword = "";
+          $scope.json.json.action[0].stateName.json.page = "";
+          $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
+          var messText = "created";
+          if ($scope.json.keyword._id) {
+            messText = "edited";
+          }
+          toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
+        } else {
+          var messText = "creating";
+          if ($scope.json.keyword._id) {
+            messText = "editing";
+          }
+          toastr.error("Failed " + messText + " " + $scope.json.json.name);
         }
       });
-  };
-  JsonService.refreshView = $scope.getAllItems;
-  $scope.getAllItems();
+    };
+  })
+  .controller('InstituteDetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+    $scope.json = JsonService;
+    JsonService.setKeyword($stateParams.keyword);
+    $scope.template = TemplateService;
+    $scope.data = {};
+    console.log("IN InstituteDetail controller");
+    console.log("SCOPE JSON", $scope.json);
+    $scope.tableData = {};
 
-})
-
-.controller('DetailCtrl', function($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, toastr) {
-  $scope.json = JsonService;
-  JsonService.setKeyword($stateParams.keyword);
-  $scope.template = TemplateService;
-  $scope.data = {};
-  console.log("detail controller");
-  console.log($scope.json);
-
-  //  START FOR EDIT
-  if ($scope.json.json.preApi) {
-
-    NavigationService.apiCall($scope.json.json.preApi.url, {
+    NavigationService.apiCall("Institute/findOneInstitute", {
       [$scope.json.json.preApi.params]: $scope.json.keyword._id
-    }, function(data) {
-      $scope.data = data.data;
+    }, function (data) {
+      $scope.tableData = data.data;
       $scope.generateField = true;
-
+      console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
     });
-  } else {
-    $scope.generateField = true;
-  }
-  //  END FOR EDIT
 
-  $scope.onCancel = function(sendTo) {
-    $scope.json.json.action[1].stateName.json.keyword = "";
-    $scope.json.json.action[1].stateName.json.page = "";
-    $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
-  };
+    //  START FOR EDIT
+    if ($scope.json.json.preApi) {
 
-  $scope.saveData = function(formData) {
-    console.log("in save");
-    console.log("ABC", formData);
-    // console.log("PIC",formData.photos[0].photo);
-    NavigationService.apiCall($scope.json.json.apiCall.url, formData, function(data) {
-      if (data.value === true) {
-        $scope.json.json.action[0].stateName.json.keyword = "";
-        $scope.json.json.action[0].stateName.json.page = "";
-        $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
-        var messText = "created";
-        if ($scope.json.keyword._id) {
-          messText = "edited";
+      NavigationService.apiCall($scope.json.json.preApi.url, {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.data = data.data;
+        $scope.generateField = true;
+        console.log("DATA IS FOUND HERE-->", $scope.data);
+
+      });
+    } else {
+      $scope.generateField = true;
+    }
+
+
+    //  END FOR EDIT
+
+    $scope.editBoxProject = function () {
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/project-detail.html',
+        size: 'lg',
+        scope: $scope,
+        tableData:$scope.tableData
+      });
+    };
+
+    $scope.onCancel = function (sendTo) {
+      $scope.json.json.action[1].stateName.json.keyword = "";
+      $scope.json.json.action[1].stateName.json.page = "";
+      $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
+    };
+
+    $scope.saveData = function (formData) {
+      console.log("in save");
+      console.log("ABC", formData);
+      // console.log("PIC",formData.photos[0].photo);
+      NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+        if (data.value === true) {
+          $scope.json.json.action[0].stateName.json.keyword = "";
+          $scope.json.json.action[0].stateName.json.page = "";
+          $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
+          var messText = "created";
+          if ($scope.json.keyword._id) {
+            messText = "edited";
+          }
+          toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
+        } else {
+          var messText = "creating";
+          if ($scope.json.keyword._id) {
+            messText = "editing";
+          }
+          toastr.error("Failed " + messText + " " + $scope.json.json.name);
         }
-        toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
-      } else {
-        var messText = "creating";
-        if ($scope.json.keyword._id) {
-          messText = "editing";
-        }
-        toastr.error("Failed " + messText + " " + $scope.json.json.name);
-      }
-    });
-  };
-})
+      });
+    };
+  })
+  .controller('SaveModelData', function ($scope, data) {
+    console.log("IN CNTROL OD SAVE DTAA");
+  })
 
-.controller('SaveModelData', function($scope, data) {
-  console.log("IN CNTROL OD SAVE DTAA");
-})
-
-.controller('DetailFieldCtrl', function($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+.controller('DetailFieldCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
   if (!$scope.type.type) {
     $scope.type.type = "text";
   }
@@ -427,7 +556,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     ]
   };
   if ($scope.type.validation) {
-    var isRequired = _.findIndex($scope.type.validation, function(n) {
+    var isRequired = _.findIndex($scope.type.validation, function (n) {
       return n == "required";
     });
     if (isRequired >= 0) {
@@ -444,7 +573,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   // BOX
 
 
-  $scope.saveDataBox = function() {
+  $scope.saveDataBox = function () {
     console.log("IN CNTROL OD SAVE DTAA");
   };
 
@@ -462,7 +591,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       var returnval = {};
       if (obj.length >= 2) {
         obj = _.split(obj[1], '&');
-        _.each(obj, function(n) {
+        _.each(obj, function (n) {
           var newn = _.split(n, "=");
           returnval[newn[0]] = newn[1];
           return;
@@ -471,7 +600,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       }
 
     }
-    $scope.changeYoutubeUrl = function(string) {
+    $scope.changeYoutubeUrl = function (string) {
       if (string) {
         $scope.formData[$scope.type.tableRef] = "";
         var result = getJsonFromUrl(string);
@@ -514,12 +643,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
   }
   $scope.state = "";
-  $scope.createBox = function(state) {
+  $scope.createBox = function (state) {
     $scope.state = state;
     $scope.model.push({});
     $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
   };
-  $scope.editBox = function(state, data) {
+  $scope.editBox = function (state, data) {
       $scope.state = state;
       $scope.data = data;
       $scope.formData[$scope.type.tableRef] = data;
@@ -551,7 +680,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     //     });
     //};
 
-    $scope.editBoxTable = function(state, data) {
+    $scope.editBoxTable = function (state, data) {
       $scope.state = state;
       $scope.data = data;
       $scope.selectedUser = data;
@@ -564,28 +693,28 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         scope: $scope,
         formData: $scope.data,
         resolve: {
-          user: function() {
+          user: function () {
             console.log("DATA", $scope.selectedUser);
             return $scope.selectedUser;
           }
         },
-        controller: function($scope, user) {
+        controller: function ($scope, user) {
           $scope.user = user;
         },
-        close: function(result) {
+        close: function (result) {
           $modalStack.close(modalInstance, result);
           console.log("RESULT", result);
         }
       });
-      modalInstance.result.then(function(result) {
+      modalInstance.result.then(function (result) {
         console.log(result.name);
 
       });
       /////////////////////////
-      $scope.close = function(value) {
+      $scope.close = function (value) {
         // callback(value);
         console.log("DATA", value);
-        NavigationService.boxCall("Project/saveProject", value, function(data) {
+        NavigationService.boxCall("Project/saveProject", value, function (data) {
           $scope.data = data.data;
           $scope.generateField = true;
 
@@ -594,17 +723,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         modalInstance.close("cancel");
       };
     };
-  $scope.deleteBox = function(index, data) {
+  $scope.deleteBox = function (index, data) {
     console.log(data);
     data.splice(index, 1);
   };
 
   //  TAGS STATIC AND FROM TABLE
-  $scope.refreshTags = function(search) {
+  $scope.refreshTags = function (search) {
     if ($scope.type.url !== "") {
       NavigationService.searchCall($scope.type.url, {
         keyword: search
-      }, 1, function(data1) {
+      }, 1, function (data1) {
         $scope.tags[$scope.type.tableRef] = data1.data.results;
       });
     } else {
@@ -615,10 +744,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.refreshTags();
   }
 
-  $scope.tagClicked = function(select, index) {
+  $scope.tagClicked = function (select, index) {
     if ($scope.type.fieldType === "array") {
       $scope.formData[$scope.type.tableRef] = [];
-      _.each(select, function(n) {
+      _.each(select, function (n) {
         $scope.formData[$scope.type.tableRef].push(n._id);
       });
     } else {
@@ -627,7 +756,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 })
 
-.controller('LoginCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+.controller('LoginCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
   $scope.menutitle = NavigationService.makeactive("Login");
   TemplateService.title = $scope.menutitle;
@@ -636,10 +765,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     if ($stateParams.id === "AccessNotAvailable") {
       toastr.error("You do not have access for the Backend.");
     } else {
-      NavigationService.parseAccessToken($stateParams.id, function() {
-        NavigationService.profile(function() {
+      NavigationService.parseAccessToken($stateParams.id, function () {
+        NavigationService.profile(function () {
           $state.go("dashboard");
-        }, function() {
+        }, function () {
           $state.go("login");
         });
       });
@@ -650,7 +779,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('CountryCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+.controller('CountryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("country-list");
   $scope.menutitle = NavigationService.makeactive("Country List");
@@ -664,7 +793,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   if ($stateParams.keyword) {
     $scope.search.keyword = $stateParams.keyword;
   }
-  $scope.showAllCountries = function(keywordChange) {
+  $scope.showAllCountries = function (keywordChange) {
     $scope.totalItems = undefined;
     if (keywordChange) {
       $scope.currentPage = 1;
@@ -672,7 +801,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     NavigationService.searchCountry({
       page: $scope.currentPage,
       keyword: $scope.search.keyword
-    }, ++i, function(data, ini) {
+    }, ++i, function (data, ini) {
       if (ini == i) {
         $scope.countries = data.data.results;
         $scope.totalItems = data.data.total;
@@ -681,7 +810,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
   };
 
-  $scope.changePage = function(page) {
+  $scope.changePage = function (page) {
     var goTo = "country-list";
     if ($scope.search.keyword) {
       goTo = "country-list";
@@ -692,11 +821,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
   };
   $scope.showAllCountries();
-  $scope.deleteCountry = function(id) {
-    globalfunction.confDel(function(value) {
+  $scope.deleteCountry = function (id) {
+    globalfunction.confDel(function (value) {
       console.log(value);
       if (value) {
-        NavigationService.deleteCountry(id, function(data) {
+        NavigationService.deleteCountry(id, function (data) {
           if (data.value) {
             $scope.showAllCountries();
             toastr.success("Country deleted successfully.", "Country deleted");
@@ -709,7 +838,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 })
 
-.controller('CreateCountryCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, toastr) {
+.controller('CreateCountryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, toastr) {
   //Used to name the .html file
 
   $scope.template = TemplateService.changecontent("country-detail");
@@ -721,9 +850,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     "name": "Create Country"
   };
   $scope.formData = {};
-  $scope.saveCountry = function(formData) {
+  $scope.saveCountry = function (formData) {
     console.log($scope.formData);
-    NavigationService.countrySave($scope.formData, function(data) {
+    NavigationService.countrySave($scope.formData, function (data) {
       if (data.value === true) {
         $state.go('country-list');
         toastr.success("Country " + formData.name + " created successfully.", "Country Created");
@@ -735,7 +864,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('CreateAssignmentCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
+.controller('CreateAssignmentCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
   //Used to name the .html file
 
   $scope.template = TemplateService.changecontent("assignment-detail");
@@ -757,7 +886,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.modalData = {};
   $scope.modalIndex = "";
   $scope.wholeObj = [];
-  $scope.addModels = function(dataArray, data) {
+  $scope.addModels = function (dataArray, data) {
     dataArray.push(data);
   };
 
@@ -765,28 +894,28 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   //     $scope.natureLoss = data.data.results;
   // });
 
-  $scope.refreshShareWith = function(data, office) {
+  $scope.refreshShareWith = function (data, office) {
     var formdata = {};
     formdata.search = data;
     formdata.filter = {
       "postedAt": office
     };
-    NavigationService.searchEmployee(formdata, 1, function(data) {
+    NavigationService.searchEmployee(formdata, 1, function (data) {
       $scope.shareWith = data.data.results;
     });
   };
-  $scope.refreshNature = function(data, causeloss) {
+  $scope.refreshNature = function (data, causeloss) {
     var formdata = {};
     formdata.search = data;
     formdata.filter = {
       "_id": causeloss
     };
-    NavigationService.getNatureLoss(formdata, 1, function(data) {
+    NavigationService.getNatureLoss(formdata, 1, function (data) {
       $scope.natureLoss = data.data.results;
     });
   };
 
-  $scope.addModal = function(filename, index, holdobj, data, current, wholeObj) {
+  $scope.addModal = function (filename, index, holdobj, data, current, wholeObj) {
     if (index !== "") {
       $scope.modalData = data;
       $scope.modalIndex = index;
@@ -804,7 +933,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
   };
 
-  $scope.addElements = function(moddata) {
+  $scope.addElements = function (moddata) {
     if ($scope.modalIndex !== "") {
       $scope.wholeObj[$scope.modalIndex] = moddata;
     } else {
@@ -814,7 +943,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         case "invoice":
           {
             var newmod = a.invoiceNumber.split(',');
-            _.each(newmod, function(n) {
+            _.each(newmod, function (n) {
               $scope.newjson.invoiceNumber = n;
               $scope.wholeObj.push($scope.newjson);
             });
@@ -823,7 +952,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         case "products":
           {
             var newmod1 = a.item.split(',');
-            _.each(newmod1, function(n) {
+            _.each(newmod1, function (n) {
               $scope.newjson.item = n;
               $scope.wholeObj.push($scope.newjson);
             });
@@ -831,14 +960,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
           break;
         case "LRs":
           var newmod2 = a.lrNumber.split(',');
-          _.each(newmod2, function(n) {
+          _.each(newmod2, function (n) {
             $scope.newjson.lrNumber = n;
             $scope.wholeObj.push($scope.newjson);
           });
           break;
         case "Vehicle":
           var newmod3 = a.vehicleNumber.split(',');
-          _.each(newmod3, function(n) {
+          _.each(newmod3, function (n) {
             $scope.newjson.vehicleNumber = n;
             $scope.wholeObj.push($scope.newjson);
           });
@@ -854,14 +983,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
   };
 
-  $scope.deleteElements = function(index, data) {
+  $scope.deleteElements = function (index, data) {
     data.splice(index, 1);
   };
 
 
-  $scope.submit = function(formData) {
+  $scope.submit = function (formData) {
     console.log($scope.formData);
-    NavigationService.assignmentSave($scope.formData, function(data) {
+    NavigationService.assignmentSave($scope.formData, function (data) {
       if (data.value === true) {
         $state.go('assignment-list');
         toastr.success("Assignment " + formData.name + " created successfully.", "Assignment Created");
@@ -873,7 +1002,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('EditAssignmentCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
+.controller('EditAssignmentCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
   //Used to name the .html file
 
   $scope.template = TemplateService.changecontent("assignment-detail");
@@ -895,11 +1024,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.modalData = {};
   $scope.modalIndex = "";
   $scope.wholeObj = [];
-  $scope.addModels = function(dataArray, data) {
+  $scope.addModels = function (dataArray, data) {
     dataArray.push(data);
   };
 
-  NavigationService.getOneModel("Assignment", $stateParams.id, function(data) {
+  NavigationService.getOneModel("Assignment", $stateParams.id, function (data) {
     $scope.formData = data.data;
     $scope.formData.dateOfIntimation = new Date(data.data.dateOfIntimation);
     $scope.formData.dateOfAppointment = new Date(data.data.dateOfAppointment);
@@ -914,28 +1043,28 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   });
 
 
-  $scope.refreshShareWith = function(data, office) {
+  $scope.refreshShareWith = function (data, office) {
     var formdata = {};
     formdata.search = data;
     formdata.filter = {
       "postedAt": office
     };
-    NavigationService.searchEmployee(formdata, 1, function(data) {
+    NavigationService.searchEmployee(formdata, 1, function (data) {
       $scope.shareWith = data.data.results;
     });
   };
-  $scope.refreshNature = function(data, causeloss) {
+  $scope.refreshNature = function (data, causeloss) {
     var formdata = {};
     formdata.search = data;
     formdata.filter = {
       "_id": causeloss
     };
-    NavigationService.getNatureLoss(formdata, 1, function(data) {
+    NavigationService.getNatureLoss(formdata, 1, function (data) {
       $scope.natureLoss = data.data.results;
     });
   };
 
-  $scope.addModal = function(filename, index, holdobj, data, current, wholeObj) {
+  $scope.addModal = function (filename, index, holdobj, data, current, wholeObj) {
     if (index !== "") {
       $scope.modalData = data;
       $scope.modalIndex = index;
@@ -953,7 +1082,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
   };
 
-  $scope.addElements = function(moddata) {
+  $scope.addElements = function (moddata) {
     if ($scope.modalIndex !== "") {
       $scope.wholeObj[$scope.modalIndex] = moddata;
     } else {
@@ -963,7 +1092,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         case "invoice":
           {
             var newmod = a.invoiceNumber.split(',');
-            _.each(newmod, function(n) {
+            _.each(newmod, function (n) {
               $scope.newjson.invoiceNumber = n;
               $scope.wholeObj.push($scope.newjson);
             });
@@ -972,7 +1101,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         case "products":
           {
             var newmod1 = a.item.split(',');
-            _.each(newmod1, function(n) {
+            _.each(newmod1, function (n) {
               $scope.newjson.item = n;
               $scope.wholeObj.push($scope.newjson);
             });
@@ -980,14 +1109,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
           break;
         case "LRs":
           var newmod2 = a.lrNumber.split(',');
-          _.each(newmod2, function(n) {
+          _.each(newmod2, function (n) {
             $scope.newjson.lrNumber = n;
             $scope.wholeObj.push($scope.newjson);
           });
           break;
         case "Vehicle":
           var newmod3 = a.vehicleNumber.split(',');
-          _.each(newmod3, function(n) {
+          _.each(newmod3, function (n) {
             $scope.newjson.vehicleNumber = n;
             $scope.wholeObj.push($scope.newjson);
           });
@@ -1003,14 +1132,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
   };
 
-  $scope.deleteElements = function(index, data) {
+  $scope.deleteElements = function (index, data) {
     data.splice(index, 1);
   };
 
 
-  $scope.submit = function(formData) {
+  $scope.submit = function (formData) {
     console.log($scope.formData);
-    NavigationService.assignmentSave($scope.formData, function(data) {
+    NavigationService.assignmentSave($scope.formData, function (data) {
       if (data.value === true) {
         $state.go('assignment-list');
         toastr.success("Assignment " + formData.name + " created successfully.", "Assignment Created");
@@ -1022,7 +1151,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('EditCountryCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+.controller('EditCountryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
 
   $scope.template = TemplateService.changecontent("country-detail");
@@ -1034,14 +1163,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     "name": "Edit Country"
   };
 
-  NavigationService.getOneCountry($stateParams.id, function(data) {
+  NavigationService.getOneCountry($stateParams.id, function (data) {
     $scope.formData = data.data;
     console.log('$scope.oneCountry', $scope.oneCountry);
 
   });
 
-  $scope.saveCountry = function(formValid) {
-    NavigationService.countryEditSave($scope.formData, function(data) {
+  $scope.saveCountry = function (formValid) {
+    NavigationService.countryEditSave($scope.formData, function (data) {
       if (data.value === true) {
         $state.go('country-list');
         console.log("Check this one");
@@ -1054,7 +1183,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('SchemaCreatorCtrl', function($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+.controller('SchemaCreatorCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("schema-creator");
   $scope.menutitle = NavigationService.makeactive("Schema Creator");
@@ -1165,13 +1294,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     items: [{}, {}]
   }];
 
-  $scope.addHead = function() {
+  $scope.addHead = function () {
     $scope.formData.forms.push({
       head: $scope.formData.forms.length + 1,
       items: [{}]
     });
   };
-  $scope.removeHead = function(index) {
+  $scope.removeHead = function (index) {
     if ($scope.formData.forms.length > 1) {
       $scope.formData.forms.splice(index, 1);
     } else {
@@ -1182,12 +1311,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     }
   };
 
-  $scope.addItem = function(obj) {
+  $scope.addItem = function (obj) {
     var index = $scope.formData.forms.indexOf(obj);
     $scope.formData.forms[index].items.push({});
   };
 
-  $scope.removeItem = function(obj, indexItem) {
+  $scope.removeItem = function (obj, indexItem) {
     var indexHead = $scope.formData.forms.indexOf(obj);
     if ($scope.formData.forms[indexHead].items.length > 1) {
       $scope.formData.forms[indexHead].items.splice(indexItem, 1);
@@ -1198,12 +1327,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 })
 
-.controller('EditInstituteCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
+.controller('EditInstituteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
   $scope.template = TemplateService.changecontent("institute-detail");
   $scope.menutitle = NavigationService.makeactive("Institute");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  $scope.editBoxProject = function() {
+  $scope.editBoxProject = function () {
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: '/backend/views/modal/project-detail.html',
@@ -1213,12 +1342,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 })
 
-.controller('EditStateCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
+.controller('EditStateCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, toastr, $stateParams, $uibModal) {
   $scope.template = TemplateService.changecontent("state-detail");
   $scope.menutitle = NavigationService.makeactive("State");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
-  $scope.editBoxInstitute = function() {
+  $scope.editBoxInstitute = function () {
     var modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: '/backend/views/modal/institute-detail.html',
@@ -1228,17 +1357,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 })
 
-.controller('headerctrl', function($scope, TemplateService, $uibModal) {
+.controller('headerctrl', function ($scope, TemplateService, $uibModal) {
   $scope.template = TemplateService;
-  $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+  $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
     $(window).scrollTop(0);
   });
 
 })
 
-.controller('languageCtrl', function($scope, TemplateService, $translate, $rootScope) {
+.controller('languageCtrl', function ($scope, TemplateService, $translate, $rootScope) {
 
-  $scope.changeLanguage = function() {
+  $scope.changeLanguage = function () {
     console.log("Language CLicked");
 
     if (!$.jStorage.get("language")) {

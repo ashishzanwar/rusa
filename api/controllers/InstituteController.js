@@ -1,6 +1,6 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
-   
+
     saveProject: function (req, res) {
         if (req.body) {
             req.body.myCart = req.session.cart;
@@ -15,6 +15,21 @@ var controller = {
             });
         }
     },
+
+
+    findOneInstitute: function (req, res) {
+        if (req.body) {
+            Institute.findOneInstitute(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);

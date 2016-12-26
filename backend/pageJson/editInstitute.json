@@ -3,7 +3,7 @@
     "name": "Institute",
     "jsonPage": "viewInstitute",
     "desciption": "",
-    "pageType": "edit",
+    "pageType": "customedit",
     "urlFields": ["_id"],
     "fields": [{
         "name": "Institute Name",
@@ -23,119 +23,8 @@
         "id": "input1",
         "validation": ["", "trim", ""],
         "url": "State/search"
-    }, {
-        "name": "Project",
-        "type": "box2",
-        "tableRef": "project",
-        "validation": ["", "trim", ""],
-        "fields": [{
-            "name": "Project",
-            "viewType": "viewType",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "name",
-            "onView": true,
-            "placeholder": "Enter Project Name",
-            "id": "input1",
-            "validation": ["", "trim", ""]
-
-        }, {
-            "name": "Title",
-            "type": "text",
-            "viewType": "viewType",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "title",
-            "onView": true,
-            "placeholder": "Enter Title",
-            "id": "input1",
-            "validation": ["", "trim", ""]
-
-        }, {
-            "name": "Component",
-            "type": "text",
-            "viewType": "viewType",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "component",
-            "onView": true,
-            "placeholder": "Enter Component",
-            "id": "input1",
-            "validation": ["", "trim", ""]
-
-        }, {
-            "name": "Center Percent",
-            "type": "number",
-            "viewType": "viewType",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "centerPercent",
-            "onView": true,
-            "placeholder": "Enter Center Percent",
-            "id": "input1",
-            "validation": ["", "trim", ""]
-
-        }, {
-            "name": "State Percent",
-            "type": "number",
-            "viewType": "viewType",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "statePercent",
-            "onView": true,
-            "placeholder": "Enter State Percent",
-            "id": "input1",
-            "validation": ["", "trim", ""]
-
-        }, {
-            "name": "Total Amount",
-            "type": "number",
-            "viewType": "viewType",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "totalAmount",
-            "onView": true,
-            "placeholder": "Enter Total Amount",
-            "id": "input1",
-            "validation": ["", "trim", ""]
-
-        }, {
-            "name": "Quantity",
-            "type": "number",
-            "viewType": "viewType",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "quantity",
-            "onView": true,
-            "placeholder": "Enter Quantity",
-            "id": "input1",
-            "validation": ["", "trim", ""]
-
-        }, {
-            "name": "Status",
-            "type": "tags",
-            "tableRef": "status",
-            "onView": true,
-            "placeholder": "Enter Status",
-            "id": "status",
-            "validation": ["", "trim", ""],
-            "dropDownField": "",
-            "dropDownType": "single",
-            "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
-        }, {
-            "name": "Sub Status",
-            "type": "tags",
-            "tableRef": "subStatus",
-            "onView": true,
-            "placeholder": "Enter Sub Status",
-            "id": "subStatus",
-            "validation": ["", "trim", ""],
-            "dropDownField": "",
-            "dropDownType": "single",
-            "dropDown": ["InTime", "Delay"],
-            "url":"Project/search"
-        }]
-    }],
+    }
+    ],
     "action": [{
         "name": "submit",
         "action": "submitInstitute",
@@ -160,7 +49,7 @@
         "params": "_id"
     },
     "preApi": {
-        "url": "Institute/getOne",
+        "url": "Institute/findOneInstitute",
         "params": "_id"
     }
 

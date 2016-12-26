@@ -16,6 +16,9 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
     $http.get("pageJson/" + page + ".json").then(function (data) {
       data= data.data;
       JsonService.json = data;
+      console.log("DATA---->",data);
+      console.log("DATA-PAGETYPE--->",data.pageType);
+      
       switch (data.pageType) {
         case "view":
           {
@@ -31,7 +34,14 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
 
         case "edit":
           {
+            console.log("IN EDIT");
             TemplateService.changecontent("detail");
+          }
+          break;
+          case "customedit":
+          {
+            console.log("IN CUSTOM EDIT");
+            TemplateService.changecontent("institute-detail");
           }
           break;
       }
@@ -75,7 +85,11 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
     var sendTo = {
       id: action.action
     };
-    console.log(action);
+    console.log("ACTION-->",action);
+    console.log("ACTION.ACTION-->",action);
+    console.log("VALUE-->",value);
+
+
     if (action.type == "box") {
       JsonService.modal = action;
       globalfunction.openModal(function (data) {
@@ -90,8 +104,15 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
         sendTo.keyword = JSON.stringify(keyword);
       }
       if (action && action.type == "page") {
-        $state.go("page", sendTo);
-      } else if (action && action.type == "apiCallConfirm") {
+        console.log("IN PAGE TYPE");
+       $state.go("page", sendTo);
+      } else if (action && action.type == "custompage"){
+        console.log("IN CUSTOMPAGE TYPE");
+       $state.go("custompage", sendTo);
+      }
+      
+      
+       else if (action && action.type == "apiCallConfirm") {
         globalfunction.confDel(function (value2) {
           if (value2) {
             NavigationService.delete(action.api, value, function (data) {
