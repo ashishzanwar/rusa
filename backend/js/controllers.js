@@ -476,13 +476,35 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     //  END FOR EDIT
 
+    $scope.editBoxCustomProject = function (data) {
+
+      console.log("DATADATA", data);
+      $scope.info = data;
+
+      $scope.status = [
+        "Active", "Complete", "Cancelled", "OnHold"
+      ];
+
+      $scope.subStatus = [
+        "InTime", "Delay"
+      ];
+
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/project-edit-detail.html',
+        size: 'lg',
+        scope: $scope,
+
+      });
+    };
+
     $scope.editBoxProject = function () {
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
         templateUrl: '/backend/views/modal/project-detail.html',
         size: 'lg',
         scope: $scope,
-        tableData:$scope.tableData
+        tableData: $scope.tableData
       });
     };
 
@@ -491,6 +513,23 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.json.json.action[1].stateName.json.page = "";
       $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
     };
+
+
+    $scope.saveProject = function (value) {
+
+      console.log("DATA", value);
+      NavigationService.boxCall("Project/saveProject", value, function (data) {
+        $scope.data = data.data;
+        $scope.generateField = true;
+        $scope.modalInstance.close();
+      })
+
+    };
+
+     $scope.closeBox = function () {
+        $scope.modalInstance.close();
+    };
+
 
     $scope.saveData = function (formData) {
       console.log("in save");
