@@ -519,7 +519,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
       console.log("DATA", value);
       NavigationService.boxCall("Project/saveProject", value, function (data) {
-        $scope.data = data.data;
+        $scope.projectData = data.data;
         $scope.generateField = true;
         $scope.modalInstance.close();
       })
@@ -555,9 +555,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     };
   })
-  .controller('SaveModelData', function ($scope, data) {
-    console.log("IN CNTROL OD SAVE DTAA");
-  })
+
 
 .controller('DetailFieldCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
   if (!$scope.type.type) {
