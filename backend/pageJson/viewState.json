@@ -13,7 +13,7 @@
         "name": "edit",
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
-        "type": "state-detail",
+        "type": "page",
         "action": "editState",
         "fieldsToSend": {
             "_id": "_id"

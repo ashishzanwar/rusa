@@ -123,7 +123,7 @@ var model = {
 
         var data2 = {};
 
-            data2.project_approved_board_no = data.project_approved_board_no,
+        data2.project_approved_board_no = data.project_approved_board_no,
             data2.centerPercent = data.centerPercent,
             data2.component = data.component,
             data2.name = data.name,
@@ -149,10 +149,44 @@ var model = {
             }
 
         });
+    },
+    addNewProject: function (data, callback) {
+        var projectdata = data;
+        projectdata = this(projectdata);
+        projectdata.save(function (err, respo) {
+            if (err) {
+                callback(err, null);
+            } else {
+                console.log("respo", respo);
+                console.log("respo id --->", respo._id);
+
+                Institute.findOneAndUpdate({
+                    _id: data.institute
+                }, {
+                    $push: {
+                        project: respo._id
+                    }
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (found) {
+                            console.log("FOUND-->", found);
+                            callback(null, found);
+                        } else {
+                            callback(null, {
+                                message: "No Data Found"
+                            });
+                        }
+                    }
+                });
+
+            }
+        });
+    },
+    
 
 
-
-    }
 
 
 

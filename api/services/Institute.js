@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var objectid = require("mongodb").ObjectId;
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var uniqueValidator = require('mongoose-unique-validator');
 var timestamps = require('mongoose-timestamp');
@@ -34,14 +35,14 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         'project': {
-            select: '_id name component project_approved_board_no title  statePercent centerPercent totalAmount quantity status subStatus'
+            select: '_id name component project_approved_board_no title  statePercent centerPercent totalAmount quantity status institute  subStatus'
         }
     }
 });
 schema.plugin(deepPopulate, {
     populate: {
         'project': {
-            select: '_id project_approved_board_no title component centerPercent statePercent totalAmount subStatus status'
+            select: '_id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status'
         }
     }
 });
@@ -52,32 +53,51 @@ module.exports = mongoose.model('Institute', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'project user state Project', 'project user state Project'));
 var model = {
 
- findOneInstitute: function (data, callback) {
+    findOneInstitute: function (data, callback) {
 
 
-    Institute.findOne({
-      _id:data._id
-    }).populate("project").exec(function (err, found) {
+        Institute.findOne({
+            _id: data._id
+        }).populate("project").exec(function (err, found) {
 
-      if (err) {
+            if (err) {
 
-        callback(err, null);
-      } else {
+                callback(err, null);
+            } else {
 
-        if (found) {
-           console.log("Found",found); 
-          callback(null, found);
-        } else {
-          callback(null, {
-            message: "No Data Found"
-          });
-        }
-      }
+                if (found) {
+                    console.log("Found", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
 
-    })
-  },
+        })
+    },
+    removeProject: function (data, callback) {
+        console.log("Institute ID", data.institute);
+        console.log("Project ID", data._id);
+        Institute.update({
 
+            "_id": data.institute,
+        }, {
+            $pull: {
+                "project": objectid(data._id)
 
-    
+            }
+        }, function (err, updated) {
+            console.log(updated);
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
+                callback(null, updated);
+            }
+        });
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);

@@ -480,6 +480,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
       console.log("DATADATA", data);
       $scope.info = data;
+      $scope.newinfo = {};
 
       $scope.status = [
         "Active", "Complete", "Cancelled", "OnHold"
@@ -508,6 +509,32 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     };
 
+    $scope.addBoxProject = function (data) {
+      // $scope.newinfo = newdata;
+      $scope.newprojectinfo = {
+        "institute": data
+      };
+
+
+      $scope.status = [
+        "Active", "Complete", "Cancelled", "OnHold"
+      ];
+
+      $scope.subStatus = [
+        "InTime", "Delay"
+      ];
+
+
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/project-add.html',
+        size: 'lg',
+        scope: $scope,
+        tableData: $scope.tableData
+      });
+    };
+
+
     $scope.onCancel = function (sendTo) {
       $scope.json.json.action[1].stateName.json.keyword = "";
       $scope.json.json.action[1].stateName.json.page = "";
@@ -522,12 +549,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.projectData = data.data;
         $scope.generateField = true;
         $scope.modalInstance.close();
+
+      })
+
+    };
+    $scope.addNewProject = function (value) {
+
+      console.log("DATA", value);
+      NavigationService.boxCall("Institute/addNewProject", value, function (data) {
+        $scope.newProjectData = data.data;
+        $scope.generateField = true;
+        $scope.modalInstance.close();
+        $state.reload();
       })
 
     };
 
-     $scope.closeBox = function () {
-        $scope.modalInstance.close();
+    $scope.closeBox = function () {
+      $scope.modalInstance.close();
     };
 
 

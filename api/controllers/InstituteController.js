@@ -30,6 +30,31 @@ var controller = {
         }
     },
 
+    removeProject: function (req, res) {
+        if (req.body) {
+            Institute.removeProject(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+     addNewProject: function (req, res) {
+        if (req.body) {
+            Project.addNewProject(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);
