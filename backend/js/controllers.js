@@ -449,7 +449,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN InstituteDetail controller");
     console.log("SCOPE JSON", $scope.json);
     $scope.tableData = {};
-
+$scope.findInstitute = function(){
     NavigationService.apiCall("Institute/findOneInstitute", {
       [$scope.json.json.preApi.params]: $scope.json.keyword._id
     }, function (data) {
@@ -457,6 +457,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.generateField = true;
       console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
     });
+}
+$scope.findInstitute();
 
     //  START FOR EDIT
     if ($scope.json.json.preApi) {
@@ -560,7 +562,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.newProjectData = data.data;
         $scope.generateField = true;
         $scope.modalInstance.close();
-        $state.reload();
+       $state.reload();
+      })
+
+    };
+    $scope.removeProject = function (value) {
+
+      console.log("REMOVE DATA", value);
+      NavigationService.boxCall("Institute/removeProject", value, function (data) {
+        $scope.newProjectData = data.data;
+        $scope.generateField = true;
+        // $state.reload();
+         $scope.findInstitute();
       })
 
     };

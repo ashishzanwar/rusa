@@ -8,11 +8,17 @@
         <h5 class="modal-title">Create Project</h5>
     </div>
     <div class="modal-body">
-        <div class="row"> 
+        <div class="row">
             <div class="col-md-12">
-                <div>{{newprojectinfo}}  
+                <div>
                     <div class="form-group">
-                        <label>Project ABBCBCBCBCBCBCBCCB</label>
+                        <label>Project No. </label>
+                        <input type="number" name="name" placeholder="Enter Project Approved Board  No" ng-model="newprojectinfo.project_approved_board_no" class="form-control"
+                            ng-required="type.required" ng-disabled="">
+                        <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Project</div>
+                    </div>
+                    <div class="form-group">
+                        <label>Project </label>
                         <input type="text" name="name" placeholder="Enter Project Name" ng-model="newprojectinfo.name" class="form-control" ng-required="type.required"
                             ng-disabled="">
                         <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Project</div>
@@ -29,8 +35,8 @@
                 <div>
                     <div class="form-group">
                         <label>Component</label>
-                        <input type="text" name="component" placeholder="Enter Component" ng-model="newprojectinfo.component" class="form-control" ng-required="type.required"
-                            ng-disabled="">
+                        <input type="text" name="component" placeholder="Enter Component" ng-model="newprojectinfo.component" class="form-control"
+                            ng-required="type.required" ng-disabled="">
                         <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Component</div>
                     </div>
                 </div>
@@ -67,8 +73,8 @@
                     </select>
                     <div class="form-group ">
                         <label>Quantity</label>
-                        <input type="number" name="quantity" placeholder="Enter Quantity" ng-model="newprojectinfo.quantity" class="form-control" ng-required="type.required"
-                            ng-disabled="" only-digits="">
+                        <input type="number" name="quantity" placeholder="Enter Quantity" ng-model="newprojectinfo.quantity" class="form-control"
+                            ng-required="type.required" ng-disabled="" only-digits="">
                         <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Quantity</div>
                     </div>
                 </div>
@@ -94,7 +100,6 @@
                         </div>
                     </div>
                 </div>
-                {{json.keyword._id}}
                 <div class="text-center mt20 odd-even-button">
                     <button class="btn btn-primary btn-save" type="submit" ng-click="addNewProject(newprojectinfo)">Save</button>
                     <button class="btn btn-primary btn-danger" type="submit" ng-click="closeBox()">Cancel</button>

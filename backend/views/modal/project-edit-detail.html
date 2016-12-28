@@ -8,9 +8,15 @@
         <h5 class="modal-title">Create Project</h5>
     </div>
     <div class="modal-body">
-        <div class="row"> 
+        <div class="row">
             <div class="col-md-12">
                 <div>
+                    <div class="form-group">
+                        <label>Project No. </label>
+                        <input type="number" name="name" placeholder="Enter Project Approved Board  No" ng-model="info.project_approved_board_no" class="form-control"
+                            ng-required="type.required" ng-disabled="">
+                        <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Project</div>
+                    </div>
                     <div class="form-group">
                         <label>Project</label>
                         <input type="text" name="name" placeholder="Enter Project Name" ng-model="info.name" class="form-control" ng-required="type.required"
@@ -94,7 +100,6 @@
                         </div>
                     </div>
                 </div>
-                {{json.keyword._id}}
                 <div class="text-center mt20 odd-even-button">
                     <button class="btn btn-primary btn-save" type="submit" ng-click="saveProject(info)">Save</button>
                     <button class="btn btn-primary btn-danger" type="submit" ng-click="closeBox()">Cancel</button>

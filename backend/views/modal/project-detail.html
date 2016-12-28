@@ -12,70 +12,78 @@
       <div class="col-md-12">
         <div>
           <div class="form-group">
+            <label>Project No. </label>
+            <input type="number" name="name" placeholder="Enter Project Approved Board  No ng-model="info.project_approved_board_no" class="form-control"
+              ng-required="type.required" ng-disabled="">
+            <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Project</div>
+          </div>
+          <div class="form-group">
             <label>Project</label>
-            <input type="text" name="name" placeholder="Enter Project Name" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required" ng-disabled="">
+            <input type="text" name="name" placeholder="Enter Project Name" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required"
+              ng-disabled="">
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Project</div>
           </div>
         </div>
-
         <div>
           <div class="form-group ">
             <label>Title</label>
-            <input type="text" name="title" placeholder="Enter Title" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required" ng-disabled="">
+            <input type="text" name="title" placeholder="Enter Title" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required"
+              ng-disabled="">
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Title</div>
           </div>
         </div>
-
         <div>
           <div class="form-group">
             <label>Component</label>
-            <input type="text" name="component" placeholder="Enter Component" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required" ng-disabled="">
+            <input type="text" name="component" placeholder="Enter Component" ng-model="formData[type.tableRef]" class="form-control"
+              ng-required="type.required" ng-disabled="">
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Component</div>
           </div>
         </div>
-
         <div>
           <div class="form-group">
             <label>Center Percent</label>
-            <input type="number" name="centerPercent" placeholder="Enter Center Percent" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required" ng-disabled="" only-digits="">
+            <input type="number" name="centerPercent" placeholder="Enter Center Percent" ng-model="formData[type.tableRef]" class="form-control"
+              ng-required="type.required" ng-disabled="" only-digits="">
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Center Percent</div>
           </div>
         </div>
-
         <div>
           <div class="form-group">
             <label>State Percent</label>
-            <input type="number" name="statePercent" placeholder="Enter State Percent" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required" ng-disabled="" only-digits="">
+            <input type="number" name="statePercent" placeholder="Enter State Percent" ng-model="formData[type.tableRef]" class="form-control"
+              ng-required="type.required" ng-disabled="" only-digits="">
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid State Percent</div>
           </div>
         </div>
-
         <div>
           <div class="form-group ">
             <label>Total Amount</label>
-            <input type="number" name="totalAmount" placeholder="Enter Total Amount" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required" ng-disabled="" only-digits="">
+            <input type="number" name="totalAmount" placeholder="Enter Total Amount" ng-model="formData[type.tableRef]" class="form-control"
+              ng-required="type.required" ng-disabled="" only-digits="">
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Total Amount</div>
           </div>
         </div>
-
         <div>
           <div class="form-group ">
             <label>Quantity</label>
-            <input type="number" name="quantity" placeholder="Enter Quantity" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required" ng-disabled="" only-digits="">
+            <input type="number" name="quantity" placeholder="Enter Quantity" ng-model="formData[type.tableRef]" class="form-control"
+              ng-required="type.required" ng-disabled="" only-digits="">
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Quantity</div>
           </div>
         </div>
         <div>
-
           <div class="form-group ">
             <label>Status</label>
-            <multiple-select name="state" required="" ng-model="formData[type.tableRef]" ng-name="name[type.tableRef]" url="Project/search" api="searchCall" ng-if="!type.filterField"></multiple-select>
+            <multiple-select name="state" required="" ng-model="formData[type.tableRef]" ng-name="name[type.tableRef]" url="Project/search"
+              api="searchCall" ng-if="!type.filterField"></multiple-select>
             <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Status</div>
           </div>
           <div>
             <div class="form-group ">
               <label>Sub Status</label>
-              <multiple-select name="state" required="" ng-model="formData[type.tableRef]" ng-name="name[type.tableRef]" url="Project/search" api="searchCall" ng-if="!type.filterField"></multiple-select>
+              <multiple-select name="state" required="" ng-model="formData[type.tableRef]" ng-name="name[type.tableRef]" url="Project/search"
+                api="searchCall" ng-if="!type.filterField"></multiple-select>
             </div>
           </div>
         </div>

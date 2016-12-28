@@ -7,7 +7,7 @@
         </div>
       </div>
     </div>
-  </div>{{json}}
+  </div>
   <div class="panel-content">
     <div class="row">
       <div class="col-md-12">
@@ -57,6 +57,7 @@
                           <table class="table table-input ">
                             <thead>
                               <tr>
+                                <th>Project No.</th>
                                 <th>Project</th>
                                 <th>Title</th>
                                 <th>Component</th>
@@ -70,6 +71,7 @@
                               </tr>
                               <thead>
                                 <tr ng-repeat="project in tableData.project">
+                                  <td>{{project.project_approved_board_no}}</td>
                                   <td>{{project.name}}</td>
                                   <td>{{project.title}}</td>
                                   <td>{{project.component}}</td>
@@ -79,12 +81,11 @@
                                   <td>{{project.quantity}}</td>
                                   <td>{{project.status}}</td>
                                   <td>{{project.subStatus}}</td>
-                                                                    <td>{{project}}</td>
                                   <td>
                                     <a class="btn btn-primary" ng-click="editBoxCustomProject(project)">
                                       <i class="fa fa-pencil"></i>
                                     </a>
-                                    <a class="btn btn-danger">
+                                    <a class="btn btn-danger" ng-click="removeProject(project)">
                                       <i class="fa fa-trash"></i>
                                     </a>
                                   </td>
