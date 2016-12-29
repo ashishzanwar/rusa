@@ -117,6 +117,7 @@ var model = {
 
     saveProject: function (data, callback) {
         var myprojectdata = data;
+        console.log("Data in ADD PROJECT", data);
         console.log(data._id);
 
         myprojectdata = this(myprojectdata);
@@ -172,7 +173,30 @@ var model = {
                     } else {
                         if (found) {
                             console.log("FOUND-->", found);
-                            callback(null, found);
+                            State.findOneAndUpdate({
+                                _id: data.state
+                            }, {
+                                $push: {
+                                    project: respo._id
+                                }
+                            }).exec(function (err, found) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (found) {
+                                        console.log("FOUND-->", found);
+                                          callback(null, found);
+                                    } else {
+                                        callback(null, {
+                                            message: "No Data Found"
+                                        });
+                                    }
+                                }
+                            });
+
+
+
+                            //  callback(null, found);
                         } else {
                             callback(null, {
                                 message: "No Data Found"
@@ -184,7 +208,7 @@ var model = {
             }
         });
     },
-    
+
 
 
 

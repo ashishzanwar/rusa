@@ -26,10 +26,59 @@ var schema = new Schema({
 });
 
 schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+        populate: {
+                'project': {
+                        select: '_id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status'
+                }
+        }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('State', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user Project', 'user Project'));
-var model = {};
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user Project _id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status institute.name', 'user Project _id project_approved_board_no title component centerPercent statePercent institute.name totalAmount institute subStatus status'));
+var model = {
+
+        findOneState: function (data, callback) {
+                State.findOne({
+                        _id: data._id
+                }).select('project').deepPopulate("project.institute  project.institute.state", "name name").exec(function (err, found) {
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+                                if (found) {
+                                        console.log("IN FOUND", found);
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+                })
+        },
+        findState: function (data, callback) {
+                State.find().exec(function (err, found) {
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+                                if (found) {
+                                        console.log("IN  STATE FOUND", found);
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+                })
+        },
+        
+
+
+
+};
 module.exports = _.assign(module.exports, exports, model);

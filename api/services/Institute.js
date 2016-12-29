@@ -35,14 +35,17 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         'project': {
-            select: '_id name component project_approved_board_no title  statePercent centerPercent totalAmount quantity status institute  subStatus'
+            select: '_id name component project_approved_board_no title  state statePercent centerPercent totalAmount quantity status institute  subStatus'
         }
     }
 });
 schema.plugin(deepPopulate, {
     populate: {
         'project': {
-            select: '_id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status'
+            select: '_id project_approved_board_no title component  centerPercent statePercent totalAmount institute subStatus status'
+        },
+                'state': {
+            select: '_id name'
         }
     }
 });
@@ -58,7 +61,7 @@ var model = {
 
         Institute.findOne({
             _id: data._id
-        }).populate("project").exec(function (err, found) {
+        }).populate("project state").exec(function (err, found) {
 
             if (err) {
 
@@ -79,6 +82,7 @@ var model = {
     },
     removeProject: function (data, callback) {
         console.log("Institute ID", data.institute);
+
         console.log("Project ID", data._id);
         Institute.update({
 
@@ -94,10 +98,47 @@ var model = {
                 console.log(err);
                 callback(err, null);
             } else {
+
+                 State.update({
+
+            "_id": data.state,
+        }, {
+            $pull: {
+                "project": objectid(data._id)
+
+            }
+        }, function (err, updated) {
+            console.log(updated);
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
                 callback(null, updated);
             }
         });
+            //    callback(null, updated);
+            }
+        });
     },
+    findInstitute: function (data, callback) {
+                Institute.find({
+                        state: data._id
+                }).populate('state').exec(function (err, found) {
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+                                if (found) {
+                                        console.log("IN  STATE FOUND", found);
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+                })
+        }
 
 };
 module.exports = _.assign(module.exports, exports, model);

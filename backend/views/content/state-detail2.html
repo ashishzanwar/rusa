@@ -6,7 +6,7 @@
           <h2>{{json.json.title}}</h2>
         </div>
       </div>
-    </div>{{json}}
+    </div>
   </div>
   <div class="panel-content">
     <div class="row">
@@ -16,7 +16,7 @@
             <form name="detailForm" role="form" class="sec">
               <div class="row">
                 <div class="col-md-12">
-                  <div>{{tableData}}
+                  <div>
                     <!--<h1>WANTED</h1>-->
                     <!---->
                     <form name="detailForm" role="form" class="sec ng-pristine ng-valid">
@@ -54,10 +54,10 @@
                               <th width="150px ">Actions</th>
                             </tr>
                             <thead>
-                              <tr ng-repeat="institute in tableData.project">
+                              <tr ng-repeat="project in tableData">
                                 <td>{{$index+1}}</td>
-                                <td>{{institute.institute.name}}</td>
-                                <td> {{institute.institute.state.name}}</td>
+                                <td>{{project.name}}</td>
+                                <td> {{project.state.name}}</td>
                                 <td>
                                   <a class="btn btn-primary" ng-click="editBoxCustomInstitute(institute)">
                                     <i class="fa fa-pencil"></i>
