@@ -16,9 +16,8 @@
             <form name="detailForm" role="form" class="sec">
               <div class="row">
                 <div class="col-md-12">
-                  <div>
-                    <!--<h1>WANTED</h1>-->
-                    <!---->
+                  <div>{{json}}
+                  
                     <form name="detailForm" role="form" class="sec ng-pristine ng-valid">
                       <div class="row">
                         <div class="col-md-12">
@@ -39,8 +38,8 @@
                   <div>
                   </div>
                   <div>
-                    <div>
-                      <a class=" btn btn-primary pull-right ml-10" ng-click="editBoxProject()">Add New</a>
+                    <div>{{project}}
+                      <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxInstitute(json.keyword._id)">Add New</a>
                       <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
                     </div>
                     <div class="sec">
@@ -59,7 +58,7 @@
                                 <td>{{project.name}}</td>
                                 <td> {{project.state.name}}</td>
                                 <td>
-                                  <a class="btn btn-primary" ng-click="editBoxCustomInstitute(institute)">
+                                  <a class="btn btn-primary" ng-click="editBoxCustomInstitute(project)">
                                     <i class="fa fa-pencil"></i>
                                   </a>
                                   <a class="btn btn-danger">

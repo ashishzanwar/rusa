@@ -572,12 +572,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.addBoxProject = function (data) {
       // $scope.newinfo = newdata;
       console.log("STATEID", $scope.tableData.state._id);
-        console.log("STATEID", $scope.tableData.state.name);
- $scope.STATE= $scope.tableData.state.name;
+      console.log("STATEID", $scope.tableData.state.name);
+      $scope.STATE = $scope.tableData.state.name;
 
       $scope.newprojectinfo = {
         "institute": data,
-        "state":$scope.tableData.state._id
+        "state": $scope.tableData.state._id
       };
 
 
@@ -629,18 +629,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       })
 
     };
-    $scope.removeProject = function (value,state) {
+    $scope.removeProject = function (value, state) {
 
-      console.log("VALUE<<<<<<<<<<<<<<<",value);
-      console.log("STATE<<<<<<<<<<<<<<<",state);
-      
-      
-     console.log("REMOVE DATA", value);
+      console.log("VALUE<<<<<<<<<<<<<<<", value);
+      console.log("STATE<<<<<<<<<<<<<<<", state);
+
+
+      console.log("REMOVE DATA", value);
       NavigationService.boxCall("Institute/removeProject", value, function (data) {
         $scope.newProjectData = data.data;
         $scope.generateField = true;
         $state.reload();
-       $scope.findInstitute();
+        $scope.findInstitute();
       })
 
     };
@@ -685,6 +685,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.tableData = {};
   $scope.stateData = {};
   $scope.stateName = [];
+  $scope.stateIds = [];
 
   $scope.findInstitute = function () {
     NavigationService.apiCall("State/findInstitute", {
@@ -695,6 +696,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
     });
   }
+  // $scope.index;
+
+$scope.changeState = function(data){
+
+console.log("INDEX",data);
+// $scope.info.state._id = "ABC";
+
+  
+}
+
 
   $scope.findState = function () {
     NavigationService.apiCall("State/findState", {
@@ -709,23 +720,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       var n = 0;
       _.each($scope.stateData, function (n) {
         console.log("LODASH", n.name);
-        $scope.stateName.push(n.name);
+        console.log("innnnnnn");
+        $scope.stateName.push({
+          "state": n.name,
+          "_id": n._id
+        });
+        $scope.stateIds.push(n._id);
+        console.log("after", $scope.stateName);
+
         console.log("STATE NAME", $scope.stateName);
       });
 
-
-      // angular.forEach(abc,function(){
-      //   console.log("Foreach--->",abc[n].name);
-      //   // stateName.push(abc[n].name);
-      //   $scope.stateName.push(abc[n].name);
-      //   // console.log("ABC");
-      //   console.log("THE ARRAY OF DATA",$scope.stateName);
-      // })
-
-
-
     });
   }
+
 
 
   $scope.findInstitute();
@@ -751,6 +759,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   $scope.editBoxCustomProject = function (data) {
 
+  
     console.log("DATADATA", data);
     $scope.info = data;
     $scope.newinfo = {};
@@ -776,15 +785,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("DATADATA", data);
     $scope.info = data;
     $scope.newinfo = {};
-    $scope.stateName;
+
 
     // $scope.stateData;
-
-
-
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
-      templateUrl: '/backend/views/modal/institute-edit-detail.html',
+      templateUrl: '/backend/views/modal/institute-edit2-detail.html',
       size: 'lg',
       scope: $scope,
 
@@ -803,11 +809,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
   };
 
-  $scope.addBoxProject = function (data) {
+  $scope.addBoxInstitute = function (data) {
     // $scope.newinfo = newdata;
-    $scope.newprojectinfo = {
-      "institute": data
+    $scope.newinstituteinfo = {
+      "state": data
     };
+    $scope.info;
 
 
     $scope.status = [
@@ -821,7 +828,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
-      templateUrl: '/backend/views/modal/project-add.html',
+      templateUrl: '/backend/views/modal/institute-add.html',
       size: 'lg',
       scope: $scope,
       tableData: $scope.tableData
@@ -836,10 +843,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 
 
-  $scope.saveProject = function (value) {
+  $scope.saveInstiute = function (value) {
 
     console.log("DATA", value);
-    NavigationService.boxCall("Project/saveProject", value, function (data) {
+    NavigationService.boxCall("Institute/save", value, function (data) {
       $scope.projectData = data.data;
       $scope.generateField = true;
       $scope.modalInstance.close();
@@ -847,6 +854,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     })
 
   };
+
+
+
   $scope.addNewProject = function (value) {
 
     console.log("DATA", value);

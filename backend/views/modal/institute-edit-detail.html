@@ -34,7 +34,7 @@
                         <!--<multiple-select name="state" required="" ng-model="" ng-name="name[type.tableRef]" url="Project/search" api="searchCall"
                             ng-if="!type.filterField"></multiple-select>
                         <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Status</div>-->
-                        <select ng-model="info.institute.state.name" class="form-control">{{info.institute.state.name}} 
+                        <select ng-model="info.state.name" class="form-control">{{info.institute.state.name}} 
                             <option ng-repeat="x in stateName" value="{{x}}"> {{x}}</option>
                         </select>
                     </div>
