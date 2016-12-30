@@ -42,6 +42,10 @@ var controller = {
             })
         }
     },
+
+
+
+
      addNewProject: function (req, res) {
         if (req.body) {
             Project.addNewProject(req.body, res.callback);

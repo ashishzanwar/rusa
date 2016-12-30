@@ -686,27 +686,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.stateData = {};
   $scope.stateName = [];
   $scope.stateIds = [];
+  $scope.STATE;
 
   $scope.findInstitute = function () {
-    NavigationService.apiCall("State/findInstitute", {
-      [$scope.json.json.preApi.params]: $scope.json.keyword._id
-    }, function (data) {
-      $scope.tableData = data.data;
-      $scope.generateField = true;
-      console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
-    });
-  }
-  // $scope.index;
-
-$scope.changeState = function(data){
-
-console.log("INDEX",data);
-// $scope.info.state._id = "ABC";
-
-  
-}
-
-
+      NavigationService.apiCall("State/findInstitute", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.tableData = data.data;
+        $scope.generateField = true;
+        console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
+      });
+    }
   $scope.findState = function () {
     NavigationService.apiCall("State/findState", {
       [$scope.json.json.preApi.params]: $scope.json.keyword._id
@@ -733,12 +723,8 @@ console.log("INDEX",data);
 
     });
   }
-
-
-
   $scope.findInstitute();
   $scope.findState();
-
   //  START FOR EDIT
   if ($scope.json.json.preApi) {
 
@@ -756,37 +742,19 @@ console.log("INDEX",data);
 
 
   //  END FOR EDIT
-
-  $scope.editBoxCustomProject = function (data) {
-
-  
-    console.log("DATADATA", data);
-    $scope.info = data;
-    $scope.newinfo = {};
-
-    $scope.status = [
-      "Active", "Complete", "Cancelled", "OnHold"
-    ];
-
-    $scope.subStatus = [
-      "InTime", "Delay"
-    ];
-
-    $scope.modalInstance = $uibModal.open({
-      animation: $scope.animationsEnabled,
-      templateUrl: '/backend/views/modal/project-edit-detail.html',
-      size: 'lg',
-      scope: $scope,
-
-    });
-  };
   $scope.editBoxCustomInstitute = function (data) {
 
     console.log("DATADATA", data);
     $scope.info = data;
     $scope.newinfo = {};
 
-
+    NavigationService.apiCall("State/findAllState", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.AllState = data.data;
+        $scope.generateField = true;
+        console.log("AllState DATA IS FOUND HERE-->", $scope.AllState);
+      });
     // $scope.stateData;
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
@@ -811,22 +779,18 @@ console.log("INDEX",data);
 
   $scope.addBoxInstitute = function (data) {
     // $scope.newinfo = newdata;
-    $scope.newinstituteinfo = {
+  NavigationService.apiCall("State/findAllState", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.AllState = data.data;
+        $scope.generateField = true;
+        console.log("AllState DATA IS FOUND HERE-->", $scope.AllState);
+      });
+
+      $scope.newinstituteinfo = {
       "state": data
     };
-    $scope.info;
-
-
-    $scope.status = [
-      "Active", "Complete", "Cancelled", "OnHold"
-    ];
-
-    $scope.subStatus = [
-      "InTime", "Delay"
-    ];
-
-
-    $scope.modalInstance = $uibModal.open({
+  $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: '/backend/views/modal/institute-add.html',
       size: 'lg',
@@ -843,14 +807,14 @@ console.log("INDEX",data);
   };
 
 
-  $scope.saveInstiute = function (value) {
-
+  $scope.saveInstitute = function (value) {
     console.log("DATA", value);
     NavigationService.boxCall("Institute/save", value, function (data) {
       $scope.projectData = data.data;
       $scope.generateField = true;
       $scope.modalInstance.close();
-
+       $scope.findInstitute();
+      toastr.success(value.name +" Institute" + " " +"added" + " successfully.");
     })
 
   };
@@ -868,10 +832,10 @@ console.log("INDEX",data);
     })
 
   };
-  $scope.removeProject = function (value) {
+  $scope.removeInstitute = function (value) {
 
-    console.log("REMOVE DATA", value);
-    NavigationService.boxCall("Institute/removeProject", value, function (data) {
+    console.log("Institute REMOVE DATA", value);
+    NavigationService.boxCall("State/removeInstitute", value, function (data) {
       $scope.newProjectData = data.data;
       $scope.generateField = true;
       // $state.reload();
@@ -882,6 +846,7 @@ console.log("INDEX",data);
 
   $scope.closeBox = function () {
     $scope.modalInstance.close();
+     $scope.findInstitute();
   };
 
 

@@ -107,7 +107,15 @@ var schema = new Schema({
 
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+
+        'state': {
+            select: '_id name project'
+        }
+    }
+
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Project', schema);
@@ -185,7 +193,7 @@ var model = {
                                 } else {
                                     if (found) {
                                         console.log("FOUND-->", found);
-                                          callback(null, found);
+                                        callback(null, found);
                                     } else {
                                         callback(null, {
                                             message: "No Data Found"
@@ -208,6 +216,24 @@ var model = {
             }
         });
     },
+    findAllState: function (data, callback) {
+        Project.find().select("state").deepPopulate("state").exec(function (err, found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("IN  STATE FOUND", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
+
 
 
 

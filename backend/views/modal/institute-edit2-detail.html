@@ -10,6 +10,7 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
+                
                 {{info}}
                 <div>
                     <div class="form-group">
@@ -17,32 +18,32 @@
                         <input type="text" name="name" placeholder="Enter Institute Name" ng-model="info.name" class="form-control">
                     </div>
                 </div>
-
-
-                 <div>
-                    <div class="form-group">
-                        <label>State Name</label>
-                        <input type="text" name="name" ng-disabled="true" placeholder="Enter State Name" ng-model="info.state.name" class="form-control">
-                    </div>
+                <div class="form-group ">
+                    <label>State</label>    <label><h6>{{info.state.name}}</h6></label>
+                    <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Status</div>
+                    <select ng-model="info.state"   class="form-control">
+                            <option ng-repeat="x in AllState"    value="{{x._id}}"  >{{x.name}}</option>
+                        </select>
                 </div>
-                <!--{{info.name}} {{info.state.name}} STATE :: {{stateName}}
+            </div>
+            <!--{{info.name}} {{info.state.name}} STATE :: {{stateName}}
                 <hr> {{info.state._id}}-->
-                <!--<div>-->
-                    <!--<div class="form-group ">-->
-                        <!--<label>State</label>-->
-                        <!--<multiple-select name="state" required="" ng-model="" ng-name="name[type.tableRef]" url="Project/search" api="searchCall"
+            <!--<div>-->
+            <!--<div class="form-group ">-->
+            <!--<label>State</label>-->
+            <!--<multiple-select name="state" required="" ng-model="" ng-name="name[type.tableRef]" url="Project/search" api="searchCall"
                             ng-if="!type.filterField"></multiple-select>
                         <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Status</div>-->
-                        <!--<select ng-model="info.state.name" class="form-control"  >-->
-                            <!--<option ng-repeat="x in stateName"    value="{{x.state}}"  >{{x.state}}</option>-->
-                        <!--</select>-->
-                    <!--</div>-->
-                <!--</div>-->
+            <!--<select ng-model="info.state.name" class="form-control"  >-->
+            <!--<option ng-repeat="x in stateName"    value="{{x.state}}"  >{{x.state}}</option>-->
+            <!--</select>-->
+            <!--</div>-->
+            <!--</div>-->
             <!--</div>-->
         </div>
         <div class="text-center">
-            <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid" ng-click="saveInstiute(info)">Save</button>
-        <button class="btn btn-primary btn-danger" type="submit" ng-click="closeBox()">Cancel</button>
+            <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid" ng-click="saveInstitute(info)">Save</button>
+            <button class="btn btn-primary btn-danger" type="submit" ng-click="closeBox()">Cancel</button>
         </div>
     </div>
 </form>

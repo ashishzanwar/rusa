@@ -59,8 +59,8 @@ var model = {
                         }
                 })
         },
-        findState: function (data, callback) {
-                State.find().exec(function (err, found) {
+        findAllState: function (data, callback) {
+                State.find().select("name _id").exec(function (err, found) {
                         if (err) {
                                 // console.log(err);
                                 callback(err, null);

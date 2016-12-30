@@ -44,7 +44,7 @@ schema.plugin(deepPopulate, {
         'project': {
             select: '_id project_approved_board_no title component  centerPercent statePercent totalAmount institute subStatus status'
         },
-                'state': {
+        'state': {
             select: '_id name'
         }
     }
@@ -99,46 +99,79 @@ var model = {
                 callback(err, null);
             } else {
 
-                 State.update({
+                State.update({
 
-            "_id": data.state,
-        }, {
-            $pull: {
-                "project": objectid(data._id)
+                    "_id": data.state,
+                }, {
+                    $pull: {
+                        "project": objectid(data._id)
 
-            }
-        }, function (err, updated) {
-            console.log(updated);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
-                callback(null, updated);
-            }
-        });
-            //    callback(null, updated);
+                    }
+                }, function (err, updated) {
+                    console.log(updated);
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else {
+                        Project.update({
+
+                            "_id": data._id,
+                        }, {
+
+                            "institute": null,
+                            "state": null
+
+                        }, function (err, updated) {
+                            console.log(updated);
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else {
+                                callback(null, updated);
+                            }
+                        });
+                    }
+                });
+                //    callback(null, updated);
             }
         });
     },
     findInstitute: function (data, callback) {
-                Institute.find({
-                        state: data._id
-                }).populate('state').exec(function (err, found) {
-                        if (err) {
-                                // console.log(err);
-                                callback(err, null);
-                        } else {
-                                if (found) {
-                                        console.log("IN  STATE FOUND", found);
-                                        callback(null, found);
-                                } else {
-                                        callback(null, {
-                                                message: "No Data Found"
-                                        });
-                                }
-                        }
-                })
-        }
+        Institute.find({
+            state: data._id
+        }).populate('state').exec(function (err, found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("IN  STATE FOUND", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
+    removeInstitute: function (data, callback) {
+
+        Institute.findOneAndUpdate({
+            _id: data._id
+
+        }, {
+            state: null
+        }).exec(function (err, found) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
+                console.log("Institute", found);
+                callback(null, found);
+            }
+        });
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);
