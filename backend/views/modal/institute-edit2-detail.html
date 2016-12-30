@@ -10,8 +10,6 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
-                
-                {{info}}
                 <div>
                     <div class="form-group">
                         <label>Institute Name</label>
@@ -19,9 +17,9 @@
                     </div>
                 </div>
                 <div class="form-group ">
-                    <label>State</label>    <label><h6>{{info.state.name}}</h6></label>
+                    <label>State</label> <label><h6>{{info.state.name}}</h6></label>
                     <div class="error-msg " ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched &amp;&amp; type.required">Please enter valid Status</div>
-                    <select ng-model="info.state"   class="form-control">
+                    <select ng-model="info.state" class="form-control">
                             <option ng-repeat="x in AllState"    value="{{x._id}}"  >{{x.name}}</option>
                         </select>
                 </div>

@@ -503,10 +503,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN InstituteDetail controller");
     console.log("SCOPE JSON", $scope.json);
     $scope.tableData = {};
+    $scope.instituteData = {};
 
 
-    $scope.findInstitute = function () {
-      NavigationService.apiCall("Institute/findOneInstitute", {
+
+
+    $scope.getInstitute = function () {
+      NavigationService.apiCall("Institute/getInstitute", {
         [$scope.json.json.preApi.params]: $scope.json.keyword._id
       }, function (data) {
         $scope.tableData = data.data;
@@ -516,7 +519,22 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log("STATEID", $scope.tableData.state.name);
       });
     }
+
+    $scope.findInstitute = function () {
+      NavigationService.apiCall("Institute/findOneInstitute", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.tableDatas = data.data;
+        $scope.generateField = true;
+        console.log("TABLEDATAs IS FOUND HERE-->", $scope.tableDatas);
+        console.log("STATEID", $scope.tableDatas.state._id);
+        console.log("STATEID", $scope.tableDatas.state.name);
+      });
+    }
     $scope.findInstitute();
+    $scope.getInstitute();
+
+
 
     //  START FOR EDIT
     if ($scope.json.json.preApi) {
@@ -571,13 +589,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.addBoxProject = function (data) {
       // $scope.newinfo = newdata;
-      console.log("STATEID", $scope.tableData.state._id);
-      console.log("STATEID", $scope.tableData.state.name);
-      $scope.STATE = $scope.tableData.state.name;
+      // console.log("STATEID", $scope.tableData.state._id);
+      // console.log("STATEID", $scope.tableData.state.name);
+      // $scope.STATE = $scope.tableData.state.name;
 
       $scope.newprojectinfo = {
-        "institute": data,
-        "state": $scope.tableData.state._id
+        "institute": data
       };
 
 
@@ -610,7 +627,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.saveProject = function (value) {
 
       console.log("DATA", value);
-      NavigationService.boxCall("Project/saveProject", value, function (data) {
+      NavigationService.boxCall("Project/save", value, function (data) {
         $scope.projectData = data.data;
         $scope.generateField = true;
         $scope.modalInstance.close();
@@ -689,14 +706,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.STATE;
 
   $scope.findInstitute = function () {
-      NavigationService.apiCall("State/findInstitute", {
-        [$scope.json.json.preApi.params]: $scope.json.keyword._id
-      }, function (data) {
-        $scope.tableData = data.data;
-        $scope.generateField = true;
-        console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
-      });
-    }
+    NavigationService.apiCall("State/findInstitute", {
+      [$scope.json.json.preApi.params]: $scope.json.keyword._id
+    }, function (data) {
+      $scope.tableData = data.data;
+      $scope.generateField = true;
+      console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
+    });
+  }
   $scope.findState = function () {
     NavigationService.apiCall("State/findState", {
       [$scope.json.json.preApi.params]: $scope.json.keyword._id
@@ -749,12 +766,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.newinfo = {};
 
     NavigationService.apiCall("State/findAllState", {
-        [$scope.json.json.preApi.params]: $scope.json.keyword._id
-      }, function (data) {
-        $scope.AllState = data.data;
-        $scope.generateField = true;
-        console.log("AllState DATA IS FOUND HERE-->", $scope.AllState);
-      });
+      [$scope.json.json.preApi.params]: $scope.json.keyword._id
+    }, function (data) {
+      $scope.AllState = data.data;
+      $scope.generateField = true;
+      console.log("AllState DATA IS FOUND HERE-->", $scope.AllState);
+    });
     // $scope.stateData;
     $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
@@ -779,18 +796,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   $scope.addBoxInstitute = function (data) {
     // $scope.newinfo = newdata;
-  NavigationService.apiCall("State/findAllState", {
-        [$scope.json.json.preApi.params]: $scope.json.keyword._id
-      }, function (data) {
-        $scope.AllState = data.data;
-        $scope.generateField = true;
-        console.log("AllState DATA IS FOUND HERE-->", $scope.AllState);
-      });
+    NavigationService.apiCall("State/findAllState", {
+      [$scope.json.json.preApi.params]: $scope.json.keyword._id
+    }, function (data) {
+      $scope.AllState = data.data;
+      $scope.generateField = true;
+      console.log("AllState DATA IS FOUND HERE-->", $scope.AllState);
+    });
 
-      $scope.newinstituteinfo = {
+    $scope.newinstituteinfo = {
       "state": data
     };
-  $scope.modalInstance = $uibModal.open({
+    $scope.modalInstance = $uibModal.open({
       animation: $scope.animationsEnabled,
       templateUrl: '/backend/views/modal/institute-add.html',
       size: 'lg',
@@ -813,8 +830,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.projectData = data.data;
       $scope.generateField = true;
       $scope.modalInstance.close();
-       $scope.findInstitute();
-      toastr.success(value.name +" Institute" + " " +"added" + " successfully.");
+      $scope.findInstitute();
+      toastr.success(value.name + " Institute" + " " + "added" + " successfully.");
     })
 
   };
@@ -846,7 +863,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   $scope.closeBox = function () {
     $scope.modalInstance.close();
-     $scope.findInstitute();
+    $scope.findInstitute();
   };
 
 

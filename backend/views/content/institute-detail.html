@@ -70,7 +70,7 @@
                                 <th width="150px ">Actions</th>
                               </tr>
                               <thead>
-                                <tr ng-repeat="project in tableData.project">
+                                <tr ng-repeat="project in tableData">
                                   <td>{{project.project_approved_board_no}}</td>
                                   <td>{{project.name}}</td>
                                   <td>{{project.title}}</td>
@@ -81,7 +81,7 @@
                                   <td>{{project.quantity}}</td>
                                   <td>{{project.status}}</td>
                                   <td>{{project.subStatus}}</td>
-                                                                    <td>{{project}}</td>
+                                                                 
                                   <td>
                                     <a class="btn btn-primary" ng-click="editBoxCustomProject(project)">
                                       <i class="fa fa-pencil"></i>
