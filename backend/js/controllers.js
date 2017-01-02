@@ -531,9 +531,22 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         console.log("STATEID", $scope.tableDatas.state.name);
       });
     }
+
+
+
+        $scope.getOne = function () {
+      NavigationService.apiCall("Institute/getOne", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.ownData = data.data;
+        $scope.generateField = true;
+        console.log("TABLEDATAs IS FOUND HERE-->", $scope.ownData);
+ 
+      });
+    }
     $scope.findInstitute();
     $scope.getInstitute();
-
+    $scope.getOne();
 
 
     //  START FOR EDIT
@@ -587,14 +600,15 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     };
 
-    $scope.addBoxProject = function (data) {
+    $scope.addBoxProject = function (data,state) {
       // $scope.newinfo = newdata;
       // console.log("STATEID", $scope.tableData.state._id);
       // console.log("STATEID", $scope.tableData.state.name);
       // $scope.STATE = $scope.tableData.state.name;
 
       $scope.newprojectinfo = {
-        "institute": data
+        "institute": data,
+        "state":state
       };
 
 

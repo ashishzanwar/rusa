@@ -6,7 +6,7 @@
           <h2>{{json.json.title}}</h2>
         </div>
       </div>
-    </div>
+    </div>{{json}}
   </div>
   <div class="panel-content">
     <div class="row">
@@ -49,7 +49,7 @@
                     </div>
                     <div>
                       <div>
-                        <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxProject(json.keyword._id)">Add New</a>
+                        <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxProject(json.keyword._id,ownData.state._id)">Add New</a>
                         <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
                       </div>
                       <div class="sec">
@@ -69,7 +69,7 @@
                                 <th>Sub Status</th>
                                 <th width="150px ">Actions</th>
                               </tr>
-                              <thead>
+                              <thead>  
                                 <tr ng-repeat="project in tableData">
                                   <td>{{project.project_approved_board_no}}</td>
                                   <td>{{project.name}}</td>
@@ -81,7 +81,7 @@
                                   <td>{{project.quantity}}</td>
                                   <td>{{project.status}}</td>
                                   <td>{{project.subStatus}}</td>
-                                                                 
+                                                  
                                   <td>
                                     <a class="btn btn-primary" ng-click="editBoxCustomProject(project)">
                                       <i class="fa fa-pencil"></i>

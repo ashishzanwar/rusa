@@ -239,7 +239,7 @@ var model = {
 
         Project.find({
             institute: data._id
-        }).exec(function (err, found) {
+        }).deepPopulate("state").exec(function (err, found) {
             if (err) {
                 console.log("Err", err);
                 callback(err, null);
