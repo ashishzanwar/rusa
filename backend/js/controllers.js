@@ -392,6 +392,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     // });
 
   })
+
+
+  
   .controller('ViewCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
     $scope.json = JsonService;
     $scope.template = TemplateService;
@@ -463,6 +466,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     } else {
       $scope.generateField = true;
     }
+
+
+
+
     //  END FOR EDIT
 
     $scope.onCancel = function (sendTo) {
@@ -906,6 +913,228 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 })
 
+.controller('ProjectDetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+  $scope.json = JsonService;
+  JsonService.setKeyword($stateParams.keyword);
+  $scope.template = TemplateService;
+  $scope.data = {};
+  console.log("IN PROJECT controller");
+  console.log("SCOPE JSON", $scope.json);
+  $scope.tableData = {};
+  $scope.stateData = {};
+    $scope.projectDATA={};
+  $scope.stateName = [];
+  $scope.stateIds = [];
+  $scope.STATE;
+
+  // $scope.findInstitute = function () {
+  //   NavigationService.apiCall("State/findInstitute", {
+  //     [$scope.json.json.preApi.params]: $scope.json.keyword._id
+  //   }, function (data) {
+  //     $scope.tableData = data.data;
+  //     $scope.generateField = true;
+  //     console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
+  //   });
+  // }
+  // $scope.findState = function () {
+  //   NavigationService.apiCall("State/findState", {
+  //     [$scope.json.json.preApi.params]: $scope.json.keyword._id
+  //   }, function (data) {
+  //     $scope.stateData = data.data;
+  //     $scope.generateField = true;
+  //     console.log("STATEDATA IS FOUND HERE-->", $scope.stateData);
+  //     // console.log("STATEDATA IS FOUND HERE-->", $scope.stateData[0].name);
+  //     var abc = $scope.stateData;
+  //     var log = [];
+  //     var n = 0;
+  //     _.each($scope.stateData, function (n) {
+  //       console.log("LODASH", n.name);
+  //       console.log("innnnnnn");
+  //       $scope.stateName.push({
+  //         "state": n.name,
+  //         "_id": n._id
+  //       });
+  //       $scope.stateIds.push(n._id);
+  //       console.log("after", $scope.stateName);
+
+  //       console.log("STATE NAME", $scope.stateName);
+  //     });
+
+  //   });
+  // }
+
+  $scope.findProject = function () {
+    console.log('datttttttta1111');
+    NavigationService.apiCall("Project/findOneProject", {
+      [$scope.json.json.preApi.params]: $scope.json.keyword._id
+    }, function (data) {
+      var mydata = _.cloneDeep(data.data);
+      console.log('mydatatttttttttttt',mydata);
+      $scope.projectDATA = mydata;
+      $scope.tableData = mydata;
+      $scope.generateField = true;
+      console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
+    });
+  }
+
+   
+
+  $scope.findProject();
+  // $scope.findState();
+  //  START FOR EDIT
+  if ($scope.json.json.preApi) {
+
+    NavigationService.apiCall($scope.json.json.preApi.url, {
+      [$scope.json.json.preApi.params]: $scope.json.keyword._id
+    }, function (data) {
+      $scope.data = data.data;
+      $scope.generateField = true;
+      console.log("DATA IS FOUND HERE-->", $scope.data);
+
+    });
+  } else {
+    $scope.generateField = true;
+  }
+
+
+  //  END FOR EDIT
+  $scope.editBoxCustomProjectPhotos = function (data) {
+
+    console.log("DATADATA", data);
+    $scope.datainfo = data;
+    $scope.newinfo = {};
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: '/backend/views/modal/image-edit-edit.html',
+      size: 'lg',
+      scope: $scope,
+
+    });
+  };
+
+  $scope.editBoxInstitute = function () {
+
+
+    var modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: '/backend/views/modal/institute-edit-detail.html',
+      size: 'lg',
+      scope: $scope,
+      tableData: $scope.tableData
+    });
+  };
+
+  $scope.addBoxProjectImage = function (data) {
+   console.log("DATADATA", data);
+    
+    $scope.projectinfo = {
+      _id:data
+
+    };
+  
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: '/backend/views/modal/image-edit.html',
+      size: 'lg',
+      scope: $scope,
+      tableData: $scope.tableData
+    });
+  };
+
+
+  $scope.onCancel = function (sendTo) {
+    $scope.json.json.action[1].stateName.json.keyword = "";
+    $scope.json.json.action[1].stateName.json.page = "";
+    $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
+  };
+
+
+  $scope.saveProjectPhotos = function (value) {
+    console.log("DATA", value);
+    NavigationService.boxCall("Project/saveProjectPhotos", value, function (data) {
+      $scope.projectData = data.data;
+      $scope.generateField = true;
+      $scope.modalInstance.close();
+     $scope.findProject();
+      toastr.success(value.name + " Project" + " " + "added" + " successfully.");
+    })
+
+  };
+
+$scope.updateProjectPhotos = function (value) {
+    console.log("DATA", value);
+    NavigationService.boxCall("Project/save", value, function (data) {
+      $scope.projectData = data.data;
+      $scope.generateField = true;
+      $scope.modalInstance.close();
+     $scope.findProject();
+      toastr.success( " Project" + " " + "updated" + " successfully.");
+    })
+
+  };
+
+
+  $scope.addNewProject = function (value) {
+
+    console.log("DATA", value);
+    NavigationService.boxCall("Institute/addNewProject", value, function (data) {
+      $scope.newProjectData = data.data;
+      $scope.generateField = true;
+      $scope.modalInstance.close();
+      $state.reload();
+    })
+
+  };
+  $scope.removeProjectPhotos = function (value,project) {
+
+    // var abc ={};
+    // abc = value;
+    // abc.project=project;
+    // console.log("PROJECT ",project);
+    console.log("PROJECT IMAGE afdadfdaTA", value);
+
+    NavigationService.boxCall("Project/removeProjectPhotos", value, function (data) {
+      $scope.newProjectData = data.data;
+      $scope.generateField = true;
+      // $state.reload();
+      $scope.findProject();
+    })
+
+  };
+
+  $scope.closeBox = function () {
+    $scope.modalInstance.close();
+    $scope.findInstitute();
+  };
+
+
+  $scope.saveData = function (formData) {
+    console.log("in save");
+    console.log("ABC", formData);
+    // console.log("PIC",formData.photos[0].photo);
+    NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+      if (data.value === true) {
+        $scope.json.json.action[0].stateName.json.keyword = "";
+        $scope.json.json.action[0].stateName.json.page = "";
+        $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
+        var messText = "created";
+        if ($scope.json.keyword._id) {
+          messText = "edited";
+        }
+        toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
+      } else {
+        var messText = "creating";
+        if ($scope.json.keyword._id) {
+          messText = "editing";
+        }
+        toastr.error("Failed " + messText + " " + $scope.json.json.name);
+      }
+    });
+  };
+})
+
+
+
 .controller('DetailFieldCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
   if (!$scope.type.type) {
     $scope.type.type = "text";
@@ -1037,6 +1266,22 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.editBox = function (state, data) {
       $scope.state = state;
       $scope.data = data;
+      $scope.formData[$scope.type.tableRef] = data;
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/modal.html',
+        size: 'lg',
+        scope: $scope,
+        formData: $scope.data
+      });
+    },
+
+    $scope.editBox2 = function (state, data) {
+      $scope.state = state;
+      $scope.data = data;
+      $scope.data2 = data;
+      $scope.data = data2.concat(data);
+      $scope.data3 = data2.concat(data);
       $scope.formData[$scope.type.tableRef] = data;
       var modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,

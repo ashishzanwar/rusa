@@ -1,5 +1,6 @@
 <div class="form-group" fields>
     <label>{{type.name}} <span ng-show="type.required">*</span></label>
+      <img ng-if="formData[type.tableRef]"  style="width:150px; padding:2px " ng-src="http://wohlig.io/api/upload/readFile?file={{formData[type.tableRef]}}"  alt="">
     <upload-image ng-model="formData[type.tableRef]" ng-disabled="type.disabled" no-view ng-if="!type.view"></upload-image>
     <upload-image ng-model="formData[type.tableRef]" ng-disabled="type.disabled" ng-if="type.view"></upload-image>
 </div>

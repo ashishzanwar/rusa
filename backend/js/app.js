@@ -48,6 +48,12 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
     controller: 'CustomStatePageJsonCtrl'
   })
 
+  .state('projectpage', {
+    url: "/page/:id/{page:.*}/{keyword:.*}",
+    templateUrl: "views/template.html",
+    controller: 'CustomStatePageJsonCtrl'
+  })
+
 
   .state('loginapp', {
     url: "/login/:id",
@@ -222,7 +228,8 @@ firstapp.directive('uploadImage', function($http, $filter) {
             'Content-Type': undefined
           },
           transformRequest: angular.identity
-        }).success(function(data) {
+        }).then(function(data) {
+            data=data.data;
           if ($scope.callback) {
             $scope.callback(data);
           } else {

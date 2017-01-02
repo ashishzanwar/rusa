@@ -112,10 +112,25 @@ var navigationservice = angular.module('navigationservice', [])
 
     apiCall: function(url, formData, callback) {
       $http.post(adminurl + url, formData).then(function(data) {
+        console.log('inside Navvvvvvvi',data);
         data = data.data;
         callback(data);
       });
     },
+
+      // apiCall: function(url, formData,callback) {
+      //      $http({
+      //          url: adminurl + url,
+      //          method: 'POST',
+      //          withCredentials: true,
+      //          data:formData
+      //      }).then(function(data) {
+      //   console.log('inside Navvvvvvvi',data);
+      //   console.log('inside Navvvvvvvi',data.data.photos[0]);
+      //   data = data.data;
+      //   callback(data);
+      // });
+      //  },
 
     boxCall: function(url, formData, callback) {
       $http.post(adminurl + url, formData).then(function(data) {

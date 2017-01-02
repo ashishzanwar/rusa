@@ -50,6 +50,13 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
             TemplateService.changecontent("state-detail2");
           }
           break;
+
+           case "projectedit":
+          {
+            console.log("IN PROJECT EDIT");
+            TemplateService.changecontent("project-detail");
+          }
+          break;
       }
       callback();
     });
@@ -119,6 +126,10 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
       else if (action && action.type == "statepage"){
         console.log("IN statePAGE TYPE");
        $state.go("statepage", sendTo);
+      }
+      else if (action && action.type == "projectpage"){
+        console.log("IN PROJECT TYPE");
+       $state.go("projectpage", sendTo);
       }
       
        else if (action && action.type == "apiCallConfirm") {

@@ -9,6 +9,11 @@
             "isSort": "",
             "tableRef": "project_approved_board_no"
         }, {
+            "name": "Project Name",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "name"
+        }, {
             "name": "Title",
             "type": "text",
             "isSort": "",
@@ -20,13 +25,12 @@
             "tableRef": "component"
         }
 
-
     ],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
-        "type": "page",
+        "type": "projectpage",
         "action": "editProject",
         "fieldsToSend": {
             "_id": "_id"

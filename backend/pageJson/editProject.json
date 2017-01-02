@@ -3,7 +3,7 @@
     "name": "Project",
     "jsonPage": "viewProject",
     "desciption": "",
-    "pageType": "edit",
+    "pageType": "projectedit",
     "urlFields": ["_id"],
     "fields": [{
             "name": "Project Name",
@@ -86,7 +86,7 @@
         }, 
         {
         "name": "Photos",
-        "type": "box",
+        "type": "box2",
         "tableRef": "photos",
         "validation": ["", "trim", ""],
          "onView":true,
@@ -104,7 +104,6 @@
             "name": "Image",
             "type": "image",
             "size": "100 x 100",
-            "option": "single",
             "tableRef": "photo",
             "placeholder": "Enter Image",
             "id": "input1",

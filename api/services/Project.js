@@ -112,7 +112,13 @@ schema.plugin(deepPopulate, {
 
         'state': {
             select: '_id name project'
+        },
+
+        'photos': {
+            select: '_id photo tags'
         }
+
+
     }
 
 });
@@ -159,6 +165,102 @@ var model = {
 
         });
     },
+
+saveProjectPhotos: function (data, callback) {
+
+    console.log(data);
+    Project.findOneAndUpdate({
+      _id: data._id
+    }, {
+      $push: {
+       
+        photos: {
+            $each:[{
+            photo: data.photo,
+            tags: data.tags
+
+            }]
+           }
+      }
+    }).exec(function (err, found) {
+
+      if (err) {
+        // console.log(err);
+        callback(err, null);
+      } else {
+
+        if (found) {
+
+          callback(null, found);
+        } else {
+          callback(null, {
+            message: "No Data Found"
+          });
+        }
+      }
+
+    })
+  },
+
+ addNewProject: function (data, callback) {
+        var projectdata = data;
+        projectdata = this(projectdata);
+        projectdata.save(function (err, respo) {
+            if (err) {
+                callback(err, null);
+            } else {
+                console.log("respo", respo);
+                console.log("respo id --->", respo._id);
+
+                Institute.findOneAndUpdate({
+                    _id: data.institute
+                }, {
+                    $push: {
+                        project: respo._id
+                    }
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (found) {
+                            console.log("FOUND-->", found);
+                            State.findOneAndUpdate({
+                                _id: data.state
+                            }, {
+                                $push: {
+                                    project: respo._id
+                                }
+                            }).exec(function (err, found) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (found) {
+                                        console.log("FOUND-->", found);
+                                        callback(null, found);
+                                    } else {
+                                        callback(null, {
+                                            message: "No Data Found"
+                                        });
+                                    }
+                                }
+                            });
+
+
+
+                            //  callback(null, found);
+                        } else {
+                            callback(null, {
+                                message: "No Data Found"
+                            });
+                        }
+                    }
+                });
+
+            }
+        });
+    },
+
+
     addNewProject: function (data, callback) {
         var projectdata = data;
         projectdata = this(projectdata);
@@ -216,6 +318,33 @@ var model = {
             }
         });
     },
+
+    findOneProject: function (data, callback) {
+
+
+        Project.findOne({
+            _id: data._id
+        }).deepPopulate("photos").exec(function (err, found) {
+
+            if (err) {
+
+                callback(err, null);
+            } else {
+
+                if (found) {
+                    console.log("Found", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+    
     findAllState: function (data, callback) {
         Project.find().select("state").deepPopulate("state").exec(function (err, found) {
             if (err) {
@@ -249,7 +378,40 @@ var model = {
             }
         });
 
-    }
+    },
+
+
+
+    
+     removeProjectPhotos: function (data, callback) {
+        
+        console.log("DATA",data);
+        Project.update({
+            
+            "_id": data._id
+        }, {
+            $pull: {
+               photos: {
+            
+            photo: data.photo,
+            tags: data.tags
+
+           
+           }
+            }
+        }, function (err, updated) {
+            console.log(updated);
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
+
+                
+               callback(null, updated);
+            }
+        });
+    },
+    
 
 };
 module.exports = _.assign(module.exports, exports, model);

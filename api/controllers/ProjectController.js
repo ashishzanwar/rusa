@@ -29,5 +29,43 @@ var controller = {
         }
     },
 
+      saveProjectPhotos: function (req, res) {
+        if (req.body) {
+            Project.saveProjectPhotos(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+  removeProjectPhotos: function (req, res) {
+        if (req.body) {
+            Project.removeProjectPhotos(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+   
+  findOneProject: function (req, res) {
+        if (req.body) {
+            Project. findOneProject(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+
 };
 module.exports = _.assign(module.exports, controller);
