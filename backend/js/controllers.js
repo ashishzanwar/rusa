@@ -922,7 +922,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   console.log("SCOPE JSON", $scope.json);
   $scope.tableData = {};
   $scope.stateData = {};
-    $scope.projectDATA={};
+  $scope.projectDATA={};
   $scope.stateName = [];
   $scope.stateIds = [];
   $scope.STATE;
@@ -970,10 +970,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     NavigationService.apiCall("Project/findOneProject", {
       [$scope.json.json.preApi.params]: $scope.json.keyword._id
     }, function (data) {
-      var mydata = _.cloneDeep(data.data);
-      console.log('mydatatttttttttttt',mydata);
-      $scope.projectDATA = mydata;
-      $scope.tableData = mydata;
+      // var mydata = _.cloneDeep(data.data);
+      // console.log('mydatatttttttttttt',mydata);
+       $scope.projectDATA = data.data;
+      $scope.tableData = data.data;
       $scope.generateField = true;
       console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
     });
@@ -1115,13 +1115,13 @@ $scope.saveEditProjectPhotos = function (value) {
       $scope.generateField = true;
       // $state.reload();
       $scope.findProject();
-    })
+    })  
 
   };
 
   $scope.closeBox = function () {
     $scope.modalInstance.close();
-    $scope.findProject  ();
+    $scope.findProject();
   };
 
 

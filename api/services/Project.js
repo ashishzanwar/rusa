@@ -143,7 +143,7 @@ var model = {
             data2.component = data.component,
             data2.name = data.name,
             data2.quantity = data.quantity,
-        data2.statePercent = data.statePercent,
+            data2.statePercent = data.statePercent,
             data2.status = data.status,
             data2.subStatus = data.subStatus,
             data2.title = data.title,
@@ -166,43 +166,43 @@ var model = {
         });
     },
 
-saveProjectPhotos: function (data, callback) {
+    saveProjectPhotos: function (data, callback) {
 
-    console.log(data);
-    Project.findOneAndUpdate({
-      _id: data._id
-    }, {
-      $push: {
-       
-        photos: {
-            $each:[{
-            photo: data.photo,
-            tags: data.tags
+        console.log(data);
+        Project.findOneAndUpdate({
+            _id: data._id
+        }, {
+            $push: {
 
-            }]
-           }
-      }
-    }).exec(function (err, found) {
+                photos: {
+                    $each: [{
+                        photo: data.photo,
+                        tags: data.tags
 
-      if (err) {
-        // console.log(err);
-        callback(err, null);
-      } else {
+                    }]
+                }
+            }
+        }).exec(function (err, found) {
 
-        if (found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
 
-          callback(null, found);
-        } else {
-          callback(null, {
-            message: "No Data Found"
-          });
-        }
-      }
+                if (found) {
 
-    })
-  },
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
 
- addNewProject: function (data, callback) {
+        })
+    },
+
+    addNewProject: function (data, callback) {
         var projectdata = data;
         projectdata = this(projectdata);
         projectdata.save(function (err, respo) {
@@ -344,7 +344,7 @@ saveProjectPhotos: function (data, callback) {
         })
     },
 
-    
+
     findAllState: function (data, callback) {
         Project.find().select("state").deepPopulate("state").exec(function (err, found) {
             if (err) {
@@ -382,23 +382,23 @@ saveProjectPhotos: function (data, callback) {
 
 
 
-    
-     removeProjectPhotos: function (data, callback) {
-        
-        console.log("DATA",data);
+
+    removeProjectPhotos: function (data, callback) {
+
+        console.log("DATA", data);
         Project.update({
-            
+
             "_id": data._id
         }, {
             $pull: {
-               photos: {
-            
-            photo: data.photo,
-            tags: data.tags
-        
+                photos: {
 
-           
-           }
+                    photo: data.photo,
+                    tags: data.tags
+
+
+
+                }
             }
         }, function (err, updated) {
             console.log(updated);
@@ -407,12 +407,12 @@ saveProjectPhotos: function (data, callback) {
                 callback(err, null);
             } else {
 
-                
-               callback(null, updated);
+
+                callback(null, updated);
             }
         });
     },
-    
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

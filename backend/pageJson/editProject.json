@@ -84,34 +84,7 @@
             "validation": ["", "trim", ""],
             "url": ""
         }, 
-        {
-        "name": "Photos",
-        "type": "box2",
-        "tableRef": "photos",
-        "validation": ["", "trim", ""],
-         "onView":true,
-        "fields": [{
-            "onView": true,
-            "name": "Tags",
-            "type": "text",
-            "tableRef": "tags",
-            "placeholder": "Enter Tags",
-            "id": "tag",
-            "validation": ["", "trim", ""],
-            "url": ""
-        }, {
-            
-            "name": "Image",
-            "type": "image",
-            "size": "100 x 100",
-            "tableRef": "photo",
-            "placeholder": "Enter Image",
-            "id": "input1",
-            "onView":true,
-            "validation": ["", "trim", ""],
-            "url": ""
-        }]
-    }, {
+         {
             "name": "Status",
             "type": "tags",
             "tableRef": "status",
