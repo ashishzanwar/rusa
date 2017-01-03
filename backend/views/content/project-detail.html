@@ -6,7 +6,9 @@
                     <h2>{{json.json.title}}</h2>
                 </div>
             </div>
-        </div>{{tableData}}
+        </div>{{tableData._id}}
+
+        {{projectID}}dafbhdfhvj
     </div>
     <div class="panel-content">
         <div class="row">
@@ -73,7 +75,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center mt20 odd-even-button ">
-                                        <button class="btn btn-default " type="submit " ng-click="saveData(data) " ng-disabled="detailForm.$invalid ">Save</button>
+                                        <button class="btn btn-default " type="submit " ng-click="saveData(tableData) " ng-disabled="detailForm.$invalid ">Save</button>
                                         <button class="btn btn-default " ng-click="onCancel(json.json.action[1].stateName) ">Cancel</button>
                                     </div>
                         </form>

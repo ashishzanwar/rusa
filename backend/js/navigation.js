@@ -112,7 +112,7 @@ var navigationservice = angular.module('navigationservice', [])
 
     apiCall: function(url, formData, callback) {
       $http.post(adminurl + url, formData).then(function(data) {
-        console.log('inside Navvvvvvvi',data);
+        console.log('inside Navvvvvvvi',data);  
         data = data.data;
         callback(data);
       });

@@ -142,7 +142,7 @@ var model = {
             data2.centerPercent = data.centerPercent,
             data2.component = data.component,
             data2.name = data.name,
-            data2.quantity = data.quantity, findAllState
+            data2.quantity = data.quantity,
         data2.statePercent = data.statePercent,
             data2.status = data.status,
             data2.subStatus = data.subStatus,
@@ -395,6 +395,7 @@ saveProjectPhotos: function (data, callback) {
             
             photo: data.photo,
             tags: data.tags
+        
 
            
            }

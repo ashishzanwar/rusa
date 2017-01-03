@@ -927,6 +927,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   $scope.stateIds = [];
   $scope.STATE;
 
+  $scope.projectID = {};
+
   // $scope.findInstitute = function () {
   //   NavigationService.apiCall("State/findInstitute", {
   //     [$scope.json.json.preApi.params]: $scope.json.keyword._id
@@ -1051,6 +1053,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   $scope.saveProjectPhotos = function (value) {
     console.log("DATA", value);
+
+    console.log("INSIDE SPP");
     NavigationService.boxCall("Project/saveProjectPhotos", value, function (data) {
       $scope.projectData = data.data;
       $scope.generateField = true;
@@ -1062,6 +1066,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   };
 
 $scope.updateProjectPhotos = function (value) {
+    console.log("DATA", value);
+    NavigationService.boxCall("Project/save", value, function (data) {
+      $scope.projectData = data.data;
+      $scope.generateField = true;
+      $scope.modalInstance.close();
+     $scope.findProject();
+      toastr.success( " Project" + " " + "updated" + " successfully.");
+    })
+
+  };
+
+
+$scope.saveEditProjectPhotos = function (value) {
     console.log("DATA", value);
     NavigationService.boxCall("Project/save", value, function (data) {
       $scope.projectData = data.data;
@@ -1104,7 +1121,7 @@ $scope.updateProjectPhotos = function (value) {
 
   $scope.closeBox = function () {
     $scope.modalInstance.close();
-    $scope.findInstitute();
+    $scope.findProject  ();
   };
 
 
