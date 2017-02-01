@@ -6,51 +6,7 @@ var uploadurl = imgurl;
 var navigationservice = angular.module('navigationservice', [])
 
 .factory('NavigationService', function($http) {
-  var navigation = [{
-      name: "Users",
-      classis: "active",
-      sref: "#!/page/viewUser//",
-      icon: "phone"
-    }, {
-      name: "Center",
-      classis: "active",
-      sref: "#!/page/viewCenter//",
-      icon: "phone"
-    }, {
-      name: "State",
-      classis: "active",
-      sref: "#!/page/viewState//",
-      icon: "phone"
-    }, {
-      name: "Institute",
-      classis: "active",
-      sref: "#!/page/viewInstitute//",
-      icon: "phone"
-    },
-
-    {
-      name: "Project",
-      classis: "active",
-      sref: "#!/page/viewProject//",
-      icon: "phone"
-    }, {
-      name: "Transaction",
-      classis: "active",
-      sref: "#!/page/viewTransaction//",
-      icon: "phone"
-    }, {
-      name: "Milestones",
-      classis: "active",
-      sref: "#!/page/viewMilestones//",
-      icon: "phone"
-    }, {
-      name: "Transaction Due",
-      classis: "active",
-      sref: "#!/page/viewTransactionDue//",
-      icon: "phone"
-    }
-
-
+  var navigation = [
   ];
 
   return {
@@ -141,6 +97,17 @@ var navigationservice = angular.module('navigationservice', [])
     searchCall: function(url, formData, i, callback) {
       $http.post(adminurl + url, formData).then(function(data) {
         data = data.data;
+        console.log("DATAA",data);
+        callback(data, i);
+      });
+    },
+
+    searchCall2: function(url, formData, i, callback) {
+      $http.post(adminurl + url, formData).then(function(data) {
+        // $scope.CENTRE={};
+        data = data.data;
+        // $scope.CENTRE =data;
+        console.log("DATAA",data);
         callback(data, i);
       });
     },

@@ -1,12 +1,12 @@
 {
-    "title": "Edit Center",
+    "title": "Edit Centre",
     "name": "Center",
     "jsonPage": "viewCenter",
     "desciption": "",
-    "pageType": "edit",
+    "pageType": "centreedit",
     "urlFields": ["_id"],
     "fields": [{
-            "name": "Center Name",
+            "name": "Centre Name",
             "type": "text",
             "tableRef": "name",
             "placeholder": "Enter Name",

@@ -1,11 +1,11 @@
 {
-    "title": "Center",
-    "description": "List of Center",
+    "title": "Centre",
+    "description": "List of Centre",
     "pageType": "view",
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Center Name",
+        "name": "Centre Name",
         "isSort": "",
         "tableRef": "name"
     }],
@@ -13,7 +13,7 @@
         "name": "edit",
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
-        "type": "page",
+        "type": "centrepage",
         "action": "editCenter",
         "fieldsToSend": {
             "_id": "_id"

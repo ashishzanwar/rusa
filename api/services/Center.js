@@ -16,7 +16,6 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'User',
         index: true,
-
     }],
 
 });
@@ -27,5 +26,95 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Center', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user', 'user'));
-var model = {};
+var model = {
+
+    addUserToCenter: function (data, callback) {
+
+        console.log(data);
+        Center.findOneAndUpdate({
+            _id: data._id
+        }, {
+            $push: {
+                users: data.user_id
+            }
+        }).exec(function (err, found) {
+
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+    removeUserFromCenter: function (data, callback) {
+
+        console.log(data);
+        Center.findOneAndUpdate({
+            _id: data._id
+        }, {
+            $pull: {
+                users: data.user_id
+            }
+        }).exec(function (err, found) {
+
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+
+        findOneCenter: function (data, callback) {
+
+        console.log(data);
+        Center.findOne({
+            _id: data._id
+        }).populate("users").exec(function (err, found) {
+
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+
+  
+
+
+};
 module.exports = _.assign(module.exports, exports, model);

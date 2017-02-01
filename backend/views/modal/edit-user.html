@@ -1,0 +1,53 @@
+<form name="modalForm" ng-submit="modalOptions.submit()" class="min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div> {{UserEditData.name}}
+        <h5 class="modal-title">Edit User</h5>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">JSON{{UserEditData}} 
+                <div>DATATA{{user_id}} {{user_name}}
+                    <div class="form-group">
+                        <label>User Name  {{UserEditData.name}}</label>
+                        <multiple-select name="state" required="" ng-model="" ng-name="name[type.tableRef]" url="User/search" api="searchCall"
+                            ng-if="!type.filterField">  
+                            </multiple-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- -->
+
+                        <div class="">
+                            <ui-select ng-model="movie.selected" ng-change="DoSearch(movie.selected.name,movie.selected._id)" style="width: 100%;" title="Search Movie" class="search-drop">
+                                <ui-select-match placeholder="Search for a Movie">{{$select.selected.name}}</ui-select-match>
+                                <ui-select-choices repeat="movie in allMovieName | filter: {name:$select.search}">
+                                    <div class="movi-src-rslt">
+                                        <div class="display-inline w60">
+                                            <!-- <img src="frontend/img/movie-search.png" alt=""> -->
+                                            <img ng-src="{{movie.smallImage|uploadpath}}" alt="" ng-if="movie.releaseType=='Past'">
+                                            <img ng-src="{{movie.recentSmall|uploadpath}}" alt="" ng-if="movie.releaseType=='Recent'">
+                                            <img ng-src="{{movie.upcomingSmall|uploadpath}}" alt="" ng-if="movie.releaseType=='Upcoming'">
+                                        </div>
+                                        <div class="display-inline ml15">
+                                            <span ng-bind-html="movie.name | highlight: $select.search"></span>
+                                            <span ng-if="movie.year">({{movie.year}})</span>
+                                        </div>
+                                    </div>
+                                </ui-select-choices>
+                            </ui-select>
+                        </div>
+        <!-- -->
+
+
+        <div class="text-center">
+            <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid" ng-click="addNewUser(UserEditData);">Save</button>
+            <button class="btn btn-primary btn-danger" type="submit" ng-click="closeBox()">Cancel</button>
+        </div>
+    </div>
+</form>
+</div>

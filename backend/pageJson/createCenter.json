@@ -1,12 +1,12 @@
 {
-    "title": "Create Center",
-    "name": "Center",
+    "title": "Create Centre",
+    "name": "Centre",
     "jsonPage": "viewCenter",
     "desciption": "",
     "pageType": "create",
     "urlFields": ["Center"],
     "fields": [{
-        "name": "Center Name",
+        "name": "Centre Name",
         "type": "text",
         "tableRef": "name",
         "placeholder": "Enter Name",

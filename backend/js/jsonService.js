@@ -57,6 +57,12 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
             TemplateService.changecontent("project-detail");
           }
           break;
+         case "centreedit":
+          {
+            console.log("IN Centre EDIT");
+            TemplateService.changecontent("centre-detail");
+          }
+          break;
       }
       callback();
     });
@@ -131,7 +137,11 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
         console.log("IN PROJECT TYPE");
        $state.go("projectpage", sendTo);
       }
-      
+      else if(action && action.type=="centrepage"){
+        console.log("IN Centre TYPE");
+       $state.go("centrepage", sendTo);
+        
+      }
        else if (action && action.type == "apiCallConfirm") {
         globalfunction.confDel(function (value2) {
           if (value2) {

@@ -48,6 +48,12 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
     controller: 'CustomStatePageJsonCtrl'
   })
 
+   .state('centrepage', {
+    url: "/page/:id/{page:.*}/{keyword:.*}",
+    templateUrl: "views/template.html",
+    controller: 'CustomStatePageJsonCtrl'
+  })
+
   .state('projectpage', {
     url: "/page/:id/{page:.*}/{keyword:.*}",
     templateUrl: "views/template.html",
@@ -548,20 +554,20 @@ firstapp.directive('multipleSelect', function($document, $timeout) {
     scope: {
       model: '=ngModel',
       api: "@api",
-      url: "@url",
+        url: "@url",
       name: "@name",
       required: "@required",
       filter: "@filter",
       ngName: "=ngName",
       create: "@ngCreate",
       disabled: "=ngDisabled"
-
     },
     restrict: 'EA',
     replace: false,
     controller: 'MultipleSelectCtrl',
     link: function(scope, element, attr, NavigationService) {
       var $element = $(element);
+
       scope.activeKey = 0;
       scope.isRequired = true;
       if (scope.required === undefined) {
@@ -573,10 +579,9 @@ firstapp.directive('multipleSelect', function($document, $timeout) {
       var maxItemLength = 40;
       var maxBoxLength = 200;
       $timeout(function() {
-
         $element.find(".typeText").keyup(function(event) {
           var scrollTop = $element.find("ul.allOptions").scrollTop();
-          var optionLength = $element.find("ul.allOptions li").length;
+          var optionLength = $element.find("ul.allOptions li").length;  
           if (event.keyCode == 40) {
             scope.activeKey++;
           } else if (event.keyCode == 38) {
@@ -595,7 +600,6 @@ firstapp.directive('multipleSelect', function($document, $timeout) {
           var currentItemPosition = scope.activeKey * maxItemLength;
           if (currentItemPosition < scrollTop) {
             newScroll = (maxItemLength * scope.activeKey);
-
           } else if (currentItemPosition > scrollVisibility) {
             newScroll = (maxItemLength * scope.activeKey);
 
@@ -603,7 +607,6 @@ firstapp.directive('multipleSelect', function($document, $timeout) {
           if (newScroll != -1) {
             $element.find("ul.allOptions").scrollTop(newScroll);
           }
-
           scope.$apply();
         });
 
