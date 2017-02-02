@@ -4,13 +4,16 @@
             <a class="btn btn-clear" ng-click="$dismiss()">
                 <i class="ln-cross"></i>
             </a>
-        </div> {{UserEditData.name}}
+        </div> 
+        <!--{{UserEditData.name}}-->
         <h5 class="modal-title">Edit User</h5>
     </div>
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-12">JSON{{UserEditData}} 
-                <div>DATATA{{user_id}} {{user_name}}
+            <div class="col-md-12">
+                <!--JSON{{UserEditData}} -->
+                <div>
+                    <!--DATATA{{user_id}} {{user_name}}-->
                     <div class="form-group">
                         <label>User Name  {{UserEditData.name}}</label>
                         <multiple-select name="state" required="" ng-model="" ng-name="name[type.tableRef]" url="User/search" api="searchCall"

@@ -12,10 +12,45 @@ var navigationservice = angular.module('navigationservice', [])
       classis: "active",
       sref: "#!/page/viewUser//",
       icon: "phone"
+    }, {
+      name: "Centre",
+      classis: "active",
+      sref: "#!/page/viewCenter//",
+      icon: "phone"
+    }, {
+      name: "State",
+      classis: "active",
+      sref: "#!/page/viewState//",
+      icon: "phone"
+    }, {
+      name: "Institute",
+      classis: "active",
+      sref: "#!/page/viewInstitute//",
+      icon: "phone"
+    }, {
+      name: "Project",
+      classis: "active",
+      sref: "#!/page/viewProject//",
+      icon: "phone"
+    }, {
+      name: "Transaction",
+      classis: "active",
+      sref: "#!/page/viewTransaction//",
+      icon: "phone"
+    }, {
+      name: "Milestones",
+      classis: "active",
+      sref: "#!/page/viewMilestones//",
+      icon: "phone"
+    }, {
+      name: "Transaction Due",
+      classis: "active",
+      sref: "#!/page/viewTransactionDue//",
+      icon: "phone"
     }
   ];
 
-  return {
+  return { 
     getnav: function() {
       return navigation;
     },
