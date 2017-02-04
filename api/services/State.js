@@ -30,6 +30,9 @@ schema.plugin(deepPopulate, {
         populate: {
                 'project': {
                         select: '_id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status'
+                },
+                'users':{
+                        select: 'name _id'           
                 }
         }
 });
@@ -37,8 +40,99 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('State', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user Project _id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status institute.name', 'user Project _id project_approved_board_no title component centerPercent statePercent institute.name totalAmount institute subStatus status'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'users Project _id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status institute.name', 'users Project _id project_approved_board_no title component centerPercent statePercent institute.name totalAmount institute subStatus status'));
 var model = {
+
+        findOneStateUser: function (data, callback) {
+
+                console.log(data);
+                State.findOne({
+                        _id: data._id
+                }).populate("users").exec(function (err, found) {
+
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+
+                                if (found) {
+
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+
+                })
+        },
+
+        addUserToState: function (data, callback) {
+
+                console.log(data);
+                State.findOneAndUpdate({
+                        _id: data._id
+                }, {
+                        $addToSet: {
+                                // $push: {
+                                users: data.user_id
+                                // }
+                        },
+                }, {
+                        upsert: true
+                }).exec(function (err, found) {
+
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+
+                                if (found) {
+
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+
+                })
+        },
+
+
+
+    removeUserFromState: function (data, callback) {
+
+        console.log(data);
+        State.findOneAndUpdate({
+            _id: data._id
+        }, {
+            $pull: {
+                users: data.user_id
+            }
+        }).exec(function (err, found) {
+
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+
 
         findOneState: function (data, callback) {
                 State.findOne({
@@ -77,6 +171,30 @@ var model = {
                 })
         },
 
+
+        updateUser: function (data, callback) {
+        console.log("DATA", data);
+        State.update({
+            _id: data._id,
+            "users": data.user_id
+        }, {
+            $set: {
+                // $set: {
+                "users.$": data.change_id
+                // }
+            }
+        }, function (err, data) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else if (data) {
+                callback(null, data);
+            } else {
+                callback(null, "Invalid data");
+            }
+        });
+
+    },
 
 
 

@@ -73,6 +73,68 @@
                     </div>
                   </div>
                 </div>
+                <div class="form-elements-sec">
+                  <form name="detailForm" role="form" class="sec">
+                    <div class="row">
+                      <div class="col-md-12">
+                        <div>
+                          <form name="detailForm" role="form" class="sec ng-pristine ng-valid">
+                            <div class="row">
+                              <!--<div class="col-md-12">
+                                <detail-field type="field" form="detailForm" value="item" ng-repeat="field in json.json.fields" data="data">
+                                </detail-field>
+                              </div>-->
+                            </div>
+                          </form>
+                          <!---->
+                          <!--<h1>WANTED</h1>-->
+                          <!--<div class="form-group">
+                      <label>State Name </label>
+                      <input type="text" name="name" placeholder="Enter Name" ng-model="formData[type.tableRef]" class="form-control" ng-required="type.required"
+                        ng-disabled="">
+                      <div class="erng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid Institute Name</div>
+                    </div>-->
+                        </div>
+                        <div>
+                        </div>
+                        <div> {{stateUserData}} KJKLHKHk
+                            <div>
+                                <!--<div ng-init="STATE"></div>-->
+                                <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxState();">Add New</a>
+                                <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
+                              </div>
+                          <div class="sec">
+                            <div>
+                              <table class="table table-input ">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>User </th>
+                                    <th width="150px ">Actions</th>
+                                  </tr>
+                                  <thead>
+                                    <tr ng-repeat="user in stateUserData.users">
+                                      <td>{{$index+1}}</td>
+                                      <td>{{user.name}}</td>
+                                      <td>
+                                        <a class="btn btn-primary" ng-click="editBoxCustomState(user,stateUserData._id)">
+                                          <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a class="btn btn-danger" ng-click="removeUser(user)">
+                                          <i class="fa fa-trash"></i>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                    <tbody>
+                                    </tbody>
+                              </table>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </form>
+                  </div>
+                </div>
                 <div class="text-center mt20 odd-even-button ">
                   <button class="btn btn-default " type="submit " ng-click="saveData(data) " ng-disabled="detailForm.$invalid ">Save</button>
                   <button class="btn btn-default " ng-click="onCancel(json.json.action[1].stateName) ">Cancel</button>

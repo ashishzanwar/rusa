@@ -46,6 +46,9 @@ schema.plugin(deepPopulate, {
         },
         'state': {
             select: '_id name'
+        },
+        'users': {
+            select: 'name _id'
         }
     }
 });
@@ -53,8 +56,66 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Institute', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'project user state Project', 'project user state Project'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'project users state Project', 'project users state Project'));
 var model = {
+    findOneInstituteUser: function (data, callback) {
+
+        console.log(data);
+        Institute.findOne({
+            _id: data._id
+        }).populate("users").exec(function (err, found) {
+
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+    addUserToInstitute: function (data, callback) {
+
+        console.log(data);
+        Institute.findOneAndUpdate({
+            _id: data._id
+        }, {
+            $addToSet: {
+                // $push: {
+                users: data.user_id
+                // }
+            },
+        }, {
+            upsert: true
+        }).exec(function (err, found) {
+
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+
 
     findOneInstitute: function (data, callback) {
 

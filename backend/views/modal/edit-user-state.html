@@ -8,7 +8,7 @@
         <!--{{UserEditData.name}}-->
         <h5 class="modal-title">Edit User</h5>
     </div>
-    <div class="modal-body">CENTER ID {{centerData._id}}
+    <div class="modal-body">CENTER ID {{stateUserData}}
         <div class="row">   
             <div class="col-md-12">
 
@@ -24,7 +24,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid" ng-click="editNewUser(UserEditData._id,centerData._id);">Save</button>
+            <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid" ng-click="editNewState(UserEditData._id,stateUserData._id);">Save</button>
             <button class="btn btn-primary btn-danger" type="submit" ng-click="closeBox()">Cancel</button>
         </div>
     </div>

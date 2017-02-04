@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+var objectid = require("mongodb").ObjectId;
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var uniqueValidator = require('mongoose-unique-validator');
 var timestamps = require('mongoose-timestamp');
@@ -28,15 +29,49 @@ module.exports = mongoose.model('Center', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user', 'user'));
 var model = {
 
+    // addUserToCenter: function (data, callback) {
+
+    //     console.log(data);
+    //     Center.findOneAndUpdate({
+    //         _id: data._id
+    //     }, {
+    //         $push: {
+    //             users: data.user_id
+    //         }
+    //     }).exec(function (err, found) {
+
+    //         if (err) {
+    //             // console.log(err);
+    //             callback(err, null);
+    //         } else {
+
+    //             if (found) {
+
+    //                 callback(null, found);
+    //             } else {
+    //                 callback(null, {
+    //                     message: "No Data Found"
+    //                 });
+    //             }
+    //         }
+
+    //     })
+    // },
+
+
     addUserToCenter: function (data, callback) {
 
         console.log(data);
         Center.findOneAndUpdate({
             _id: data._id
         }, {
-            $push: {
+            $addToSet: {
+                // $push: {
                 users: data.user_id
-            }
+                // }
+            },
+        }, {
+            upsert: true
         }).exec(function (err, found) {
 
             if (err) {
@@ -67,14 +102,11 @@ var model = {
                 users: data.user_id
             }
         }).exec(function (err, found) {
-
             if (err) {
                 // console.log(err);
                 callback(err, null);
             } else {
-
                 if (found) {
-
                     callback(null, found);
                 } else {
                     callback(null, {
@@ -87,7 +119,7 @@ var model = {
     },
 
 
-        findOneCenter: function (data, callback) {
+    findOneCenter: function (data, callback) {
 
         console.log(data);
         Center.findOne({
@@ -111,9 +143,78 @@ var model = {
 
         })
     },
+    updateUser: function (data, callback) {
+        console.log("DATA", data);
+        Center.update({
+            _id: data._id,
+            "users": data.user_id
+        }, {
+            $set: {
+                // $set: {
+                "users.$": data.change_id
+                // }
+            }
+        }, function (err, data) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else if (data) {
+                callback(null, data);
+            } else {
+                callback(null, "Invalid data");
+            }
+        });
+
+    },
+
+    //////////
+    // updateUser: function (data, callback) {
+    //     console.log("DATA", data);
+    //     Center.find({
+    //         "users.$": data.change_id
+
+    //     }).exec(function (err, data) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else if (data) {
+    //             console.log(data);
+
+    //             if (_.isEmpty(data)) {
+    //                 console.log("DATA EMPTY", data);
+    //             } else {
+    //                 console.log("EMPTY", data);
+    //             }
+
+    //             callback(null, data);
 
 
-  
+    //         } else {
+    //             callback(null, "Invalid data");
+    //         }
+    //     })
+
+
+    //     // Center.update({
+    //     //     _id: data._id,
+    //     //     "users": data.user_id
+    //     // }, {
+    //     //     $set: {
+    //     //         // $set: {
+    //     //         "users.$": data.change_id
+    //     //         // }
+    //     //     }
+    //     // }, function (err, data) {
+    //     //     if (err) {
+    //     //         console.log(err);
+    //     //         callback(err, null);
+    //     //     } else if (data) {
+    //     //         callback(null, data);
+    //     //     } else {
+    //     //         callback(null, "Invalid data");
+    //     //     }
+    //     // });
+
+    // }
 
 
 };

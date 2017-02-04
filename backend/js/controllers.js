@@ -509,7 +509,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     };
   })
-  .controller('InstituteDetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+  .controller('InstituteDetailCtrl', function ($scope, TemplateService,$rootScope, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);
     $scope.template = TemplateService;
@@ -518,6 +518,43 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("SCOPE JSON", $scope.json);
     $scope.tableData = {};
     $scope.instituteData = {};
+    $scope.getUser = function () {
+        NavigationService.apiCall("Institute/findOneInstituteUser", {
+          [$scope.json.json.preApi.params]: $scope.json.keyword._id
+        }, function (data) {
+          $scope.stateUserData = data.data;
+          // $scope.generateField = true;
+          console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
+          // console.log("STATEID", $scope.tableData.state._id);
+          // console.log("STATEID", $scope.tableData.state.name);
+        });
+      },
+
+ $scope.addBoxInstituteUser = function () {
+      $scope.addNewState = function () {
+        $scope.newuserinfo = {
+          "_id": $scope.json.keyword._id,
+          "user_id": $rootScope.user_id,
+          "user_name": $rootScope.user_name
+        };
+        value = $scope.newuserinfo;
+
+        console.log("DATA TO BE SEND", value);
+        NavigationService.boxCall("Institute/addUserToInstitute", value, function (data) {
+          toastr.success(value.user_name + " User " + " " + "added" + " successfully.");
+          $scope.closeBox();
+          $scope.getUser();
+        })
+      };
+
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/add-user-institute.html',
+        size: 'lg',
+        scope: $scope,
+        tableData: $scope.tableData
+      });
+    };
 
 
 
@@ -720,7 +757,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
   })
 
-  .controller('StateDetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+  .controller('StateDetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr, $rootScope) {
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);
     $scope.template = TemplateService;
@@ -732,6 +769,79 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.stateName = [];
     $scope.stateIds = [];
     $scope.STATE;
+    $rootScope.user_id;
+    $rootScope.user_name;
+    $scope.stateUserData={};
+
+    $scope.editNewState = function (userId, centerId) {
+
+      console.log("USER ID", userId);
+      $scope.edituserinfo = {
+        "_id": centerId,
+        "user_id": userId,
+        "change_id": $rootScope.user_id
+      };
+      value = $scope.edituserinfo;
+
+      NavigationService.boxCall("State/updateUser", value, function (data) {
+        toastr.success(" User " + " " + "updated" + " successfully.");
+        $scope.closeBox();
+      });
+
+      $scope.closeBox = function () {
+        $scope.modalInstance.close();
+        $scope.getUser();
+      };
+
+    };
+
+
+
+    $scope.editBoxCustomState = function (data, index) {
+      $scope.UserEditData = data;
+      $scope.index = index;
+
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/edit-user-state.html',
+        size: 'lg',
+        scope: $scope,
+        stateUserData: $scope.stateUserData
+      });
+    };
+
+
+    $scope.removeUser = function (value) {
+      console.log("USER REMOVE DATA", $scope.json.keyword._id);
+
+      var dataUser = {
+        _id: $scope.json.keyword._id,
+        user_id: value._id
+      };
+
+      NavigationService.boxCall("State/removeUserFromState", dataUser, function (data) {
+        $scope.newProjectData = data.data;
+        $scope.generateField = true;
+        // $state.reload();
+        $scope.getUser();
+      })
+
+    };
+
+
+    $scope.getUser = function () {
+        NavigationService.apiCall("State/findOneStateUser", {
+          [$scope.json.json.preApi.params]: $scope.json.keyword._id
+        }, function (data) {
+          $scope.stateUserData = data.data;
+          // $scope.generateField = true;
+          console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
+          // console.log("STATEID", $scope.tableData.state._id);
+          // console.log("STATEID", $scope.tableData.state.name);
+        });
+      },
+
+      $scope.getUser();
 
     $scope.findInstitute = function () {
       NavigationService.apiCall("State/findInstitute", {
@@ -784,6 +894,43 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     } else {
       $scope.generateField = true;
     }
+
+    $scope.addBoxState = function () {
+      $scope.addNewState = function () {
+        $scope.newuserinfo = {
+          "_id": $scope.json.keyword._id,
+          "user_id": $rootScope.user_id,
+          "user_name": $rootScope.user_name
+        };
+        value = $scope.newuserinfo;
+
+        console.log("DATA TO BE SEND", value);
+        NavigationService.boxCall("State/addUserToState", value, function (data) {
+          toastr.success(value.user_name + " User " + " " + "added" + " successfully.");
+          $scope.closeBox();
+          $scope.getUser();
+        })
+      };
+
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/add-user-state.html',
+        size: 'lg',
+        scope: $scope,
+        tableData: $scope.tableData
+      });
+    };
+
+
+
+
+
+
+
+
+
+
+
 
 
     //  END FOR EDIT
@@ -960,6 +1107,29 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     }
 
+
+    $scope.editNewUser = function (userId, centerId) {
+
+      console.log("USER ID", userId);
+      $scope.edituserinfo = {
+        "_id": centerId,
+        "user_id": userId,
+        "change_id": $rootScope.user_id
+      };
+      value = $scope.edituserinfo;
+
+      NavigationService.boxCall("Center/updateUser", value, function (data) {
+        toastr.success(" User " + " " + "updated" + " successfully.");
+        $scope.closeBox();
+      });
+
+      $scope.closeBox = function () {
+        $scope.modalInstance.close();
+        $scope.getCenter();
+      };
+
+    };
+
     $scope.getCenter();
     $scope.addBoxUser = function (data) {
       // $scope.newinfo = newdata;
@@ -1015,10 +1185,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     };
 
- $scope.addNewUser = function (value) {
+    $scope.addNewUser = function (value) {
 
       console.log("DATA", value);
-      
+
       // NavigationService.boxCall("Institute/addNewUser", value, function (data) {
       //   $scope.newProjectData = data.data;
       //   $scope.generateField = true;
@@ -1036,8 +1206,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
     };
 
-    $scope.editBoxCustomUser = function (data) {
+    $scope.editBoxCustomUser = function (data, index) {
       $scope.UserEditData = data;
+      $scope.index = index;
 
       $scope.modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
@@ -1048,11 +1219,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     };
 
-
-
-
     //  END FOR EDIT
-
     $scope.onCancel = function (sendTo) {
       $scope.json.json.action[1].stateName.json.keyword = "";
       $scope.json.json.action[1].stateName.json.page = "";
@@ -1099,6 +1266,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.STATE;
 
     $scope.projectID = {};
+
+
+
 
     // $scope.findInstitute = function () {
     //   NavigationService.apiCall("State/findInstitute", {

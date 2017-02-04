@@ -7,7 +7,7 @@
         </div>
       </div>
     </div>
-  </div>{{centerData}} USER DATA
+  </div>
   <div class="panel-content">
     <div class="row">
       <div class="col-md-12">
@@ -16,7 +16,7 @@
             <form name="detailForm" role="form" class="sec">
               <div class="row">
                 <div class="col-md-12">
-                  <div>{{AllState}}BJHKJ
+                  <div>
                     <form name="detailForm" role="form" class="sec ng-pristine ng-valid">
                       <div class="row">
                         <div class="col-md-12">
@@ -49,15 +49,14 @@
                             <tr>
                               <th>#</th>
                               <th>User </th>
-                            
                               <th width="150px ">Actions</th>
                             </tr>
-                            <thead> 
-                              <tr ng-repeat="user in centerData.users" >
+                            <thead>
+                              <tr ng-repeat="user in centerData.users">
                                 <td>{{$index+1}}</td>
                                 <td>{{user.name}}</td>
-                                                            <td>
-                                  <a class="btn btn-primary" ng-click="editBoxCustomUser(user)">
+                                <td>
+                                  <a class="btn btn-primary" ng-click="editBoxCustomUser(user,centerData._id)">
                                     <i class="fa fa-pencil"></i>
                                   </a>
                                   <a class="btn btn-danger" ng-click="removeUser(user)">

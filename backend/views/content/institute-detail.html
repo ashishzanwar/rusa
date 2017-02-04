@@ -69,7 +69,7 @@
                                 <th>Sub Status</th>
                                 <th width="150px ">Actions</th>
                               </tr>
-                              <thead>  
+                              <thead>
                                 <tr ng-repeat="project in tableData">
                                   <td>{{project.project_approved_board_no}}</td>
                                   <td>{{project.name}}</td>
@@ -81,7 +81,6 @@
                                   <td>{{project.quantity}}</td>
                                   <td>{{project.status}}</td>
                                   <td>{{project.subStatus}}</td>
-                                                  
                                   <td>
                                     <a class="btn btn-primary" ng-click="editBoxCustomProject(project)">
                                       <i class="fa fa-pencil"></i>
@@ -98,14 +97,52 @@
                       </div>
                     </div>
                   </div>
-                  <div class="text-center mt20 odd-even-button ">
-                    <button class="btn btn-default " type="submit " ng-click="saveData(data) " ng-disabled="detailForm.$invalid ">Save</button>
-                    <button class="btn btn-default " ng-click="onCancel(json.json.action[1].stateName) ">Cancel</button>
+                  <div> {{stateUserData}} KJKLHKHk
+                    <div>
+                      <!--<div ng-init="STATE"></div>-->
+                      <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxInstituteUser();">Add New</a>
+                      <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
+                    </div>
+                    <div class="sec">
+                      <div>
+                        <table class="table table-input ">
+                          <thead>
+                            <tr>
+                              <th>#</th>
+                              <th>User </th>
+                              <th width="150px ">Actions</th>
+                            </tr>
+                            <thead>
+                              <tr ng-repeat="user in stateUserData.users">
+                                <td>{{$index+1}}</td>
+                                <td>{{user.name}}</td>
+                                <td>
+                                  <a class="btn btn-primary" ng-click="editBoxCustomState(user,stateUserData._id)">
+                                    <i class="fa fa-pencil"></i>
+                                  </a>
+                                  <a class="btn btn-danger" ng-click="removeUser(user)">
+                                    <i class="fa fa-trash"></i>
+                                  </a>
+                                </td>
+                              </tr>
+                              <tbody>
+                              </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
+                </div>
             </form>
             </div>
-            </div>
           </div>
+          <div class="text-center mt20 odd-even-button ">
+            <button class="btn btn-default " type="submit " ng-click="saveData(data) " ng-disabled="detailForm.$invalid ">Save</button>
+            <button class="btn btn-default " ng-click="onCancel(json.json.action[1].stateName) ">Cancel</button>
+          </div>
+          </form>
         </div>
       </div>
     </div>
+  </div>
+</div>
+</div>

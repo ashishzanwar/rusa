@@ -44,7 +44,18 @@ var controller = {
     },
 
 
-
+addUserToInstitute: function (req, res) {
+        if (req.body) {
+            Institute.addUserToInstitute(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
 
      addNewProject: function (req, res) {
         if (req.body) {
