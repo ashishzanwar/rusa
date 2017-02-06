@@ -22,11 +22,19 @@
             "validation": ["", "trim", ""],
             "url": ""
         }, {
-            "name": "Password",
-            "type": "password",
-            "tableRef": "password",
-            "placeholder": "Enter Password",
-            "id": "password",
+            "name": "PAN",
+            "type": "text",
+            "tableRef": "pan",
+            "placeholder": "Enter PAN",
+            "id": "pan",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Organization",
+            "type": "text",
+            "tableRef": "organization",
+            "placeholder": "Enter Organization",
+            "id": "organization",
             "validation": ["", "trim", ""],
             "url": ""
         }

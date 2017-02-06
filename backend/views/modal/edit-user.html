@@ -8,16 +8,14 @@
         <!--{{UserEditData.name}}-->
         <h5 class="modal-title">Edit User</h5>
     </div>
-    <div class="modal-body">CENTER ID {{centerData._id}}
-        <div class="row">   
+    <div class="modal-body">
+        <div class="row">
             <div class="col-md-12">
-
-                USER     ID {{UserEditData._id}} 
                 <div>
                     <!--DATATA{{user_id}} {{user_name}}-->
                     <div class="form-group">
-                        <label>User Name </label>  {{UserEditData.name}}
-                          <multiple-select name="state" required="" ng-model="" ng-name="name[type.tableRef]" url="User/search" api="searchCall" ng-if="!type.filterField">
+                        <label> Current User Name : </label> <label> {{UserEditData.name}}</label>
+                        <multiple-select name="state" required="" ng-model="" ng-name="name[type.tableRef]" url="User/search" api="searchCall" ng-if="!type.filterField">
                         </multiple-select>
                     </div>
                 </div>

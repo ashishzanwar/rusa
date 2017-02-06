@@ -5,17 +5,15 @@
                 <i class="ln-cross"></i>
             </a>
         </div>
-        <!--{{UserEditData.name}}-->
         <h5 class="modal-title">Edit User</h5>
     </div>
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
                 <div>
-                    <!--DATATA{{user_id}} {{user_name}}-->
                     <div class="form-group">
-                        <label> Current User Name : </label> <label> {{UserEditData.name}}</label>
-                        <!--<label>User Name </label>  {{UserEditData.name}}-->
+                        <!--<label>User Name </label>-->
+                           <label> Current User Name : </label> <label> {{UserEditData.name}}</label>
                         <multiple-select name="state" required="" ng-model="" ng-name="name[type.tableRef]" url="User/search" api="searchCall" ng-if="!type.filterField">
                         </multiple-select>
                     </div>
@@ -23,7 +21,7 @@
             </div>
         </div>
         <div class="text-center">
-            <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid" ng-click="editNewState(UserEditData._id,stateUserData._id);">Save</button>
+            <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid" ng-click="editNewVendor(UserEditData._id,stateUserData._id);">Save</button>
             <button class="btn btn-primary btn-danger" type="submit" ng-click="closeBox()">Cancel</button>
         </div>
     </div>

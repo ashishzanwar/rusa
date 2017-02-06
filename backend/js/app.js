@@ -60,6 +60,11 @@ firstapp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $loc
     controller: 'CustomStatePageJsonCtrl'
   })
 
+.state('vendorpage', {
+    url: "/page/:id/{page:.*}/{keyword:.*}",
+    templateUrl: "views/template.html",
+    controller: 'CustomStatePageJsonCtrl'
+  })
 
   .state('loginapp', {
     url: "/login/:id",

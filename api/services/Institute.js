@@ -82,6 +82,61 @@ var model = {
 
         })
     },
+
+    removeUserFromInstitute: function (data, callback) {
+
+        console.log(data);
+        Institute.findOneAndUpdate({
+            _id: data._id
+        }, {
+            $pull: {
+                users: data.user_id
+            }
+        }).exec(function (err, found) {
+
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+    updateUser: function (data, callback) {
+        console.log("DATA", data);
+        Institute.update({
+            _id: data._id,
+            "users": data.user_id
+        }, {
+            $set: {
+                // $set: {
+                "users.$": data.change_id
+                // }
+            }
+        }, function (err, data) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else if (data) {
+                callback(null, data);
+            } else {
+                callback(null, "Invalid data");
+            }
+        });
+
+    },
+
+
     addUserToInstitute: function (data, callback) {
 
         console.log(data);

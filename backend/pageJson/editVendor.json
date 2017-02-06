@@ -3,7 +3,7 @@
     "name": "Vendor",
     "jsonPage": "viewVendor",
     "desciption": "",
-    "pageType": "edit",
+    "pageType": "vendoredit",
     "urlFields": ["_id"],
     "fields": [{
         "name": "Name",
@@ -14,20 +14,28 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Username",
+        "name": "User Name",
         "type": "text",
         "tableRef": "username",
-        "placeholder": "Enter Username",
+        "placeholder": "Enter User Name",
         "id": "username",
-        "validation": ["", "trim", "unique"],
+        "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Password",
-        "type": "password",
-        "tableRef": "password",
-        "placeholder": "Enter password",
-        "id": "password",
-        "validation": ["", "trim", "unique"],
+        "name": "PAN",
+        "type": "text",
+        "tableRef": "pan",
+        "placeholder": "Enter PAN",
+        "id": "pan",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Organization",
+        "type": "text",
+        "tableRef": "organization",
+        "placeholder": "Enter Organization",
+        "id": "organization",
+        "validation": ["", "trim", ""],
         "url": ""
     }],
     "action": [{

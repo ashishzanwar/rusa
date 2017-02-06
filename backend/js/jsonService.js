@@ -14,11 +14,11 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
   };
   this.getJson = function (page, callback) {
     $http.get("pageJson/" + page + ".json").then(function (data) {
-      data= data.data;
+      data = data.data;
       JsonService.json = data;
-      console.log("DATA---->",data);
-      console.log("DATA-PAGETYPE--->",data.pageType);
-      
+      console.log("DATA---->", data);
+      console.log("DATA-PAGETYPE--->", data.pageType);
+
       switch (data.pageType) {
         case "view":
           {
@@ -38,29 +38,36 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
             TemplateService.changecontent("detail");
           }
           break;
-          case "customedit":
+        case "customedit":
           {
             console.log("IN CUSTOM EDIT");
             TemplateService.changecontent("institute-detail");
           }
           break;
-           case "stateedit":
+        case "stateedit":
           {
             console.log("IN STATE EDIT");
             TemplateService.changecontent("state-detail2");
           }
           break;
 
-           case "projectedit":
+        case "projectedit":
           {
             console.log("IN PROJECT EDIT");
             TemplateService.changecontent("project-detail");
           }
           break;
-         case "centreedit":
+        case "centreedit":
           {
             console.log("IN Centre EDIT");
             TemplateService.changecontent("centre-detail");
+          }
+          break;
+
+        case "vendoredit":
+          {
+            console.log("IN Centre EDIT");
+            TemplateService.changecontent("vendor-detail");
           }
           break;
       }
@@ -104,9 +111,9 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
     var sendTo = {
       id: action.action
     };
-    console.log("ACTION-->",action);
-    console.log("ACTION.ACTION-->",action);
-    console.log("VALUE-->",value);
+    console.log("ACTION-->", action);
+    console.log("ACTION.ACTION-->", action);
+    console.log("VALUE-->", value);
 
 
     if (action.type == "box") {
@@ -124,24 +131,27 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
       }
       if (action && action.type == "page") {
         console.log("IN PAGE TYPE");
-       $state.go("page", sendTo);
-      } else if (action && action.type == "custompage"){
+        $state.go("page", sendTo);
+      } else if (action && action.type == "custompage") {
         console.log("IN CUSTOMPAGE TYPE");
-       $state.go("custompage", sendTo);
-      }
-      else if (action && action.type == "statepage"){
+        $state.go("custompage", sendTo);
+      } else if (action && action.type == "statepage") {
         console.log("IN statePAGE TYPE");
-       $state.go("statepage", sendTo);
-      }
-      else if (action && action.type == "projectpage"){
+        $state.go("statepage", sendTo);
+      } else if (action && action.type == "projectpage") {
         console.log("IN PROJECT TYPE");
-       $state.go("projectpage", sendTo);
-      }
-      else if(action && action.type=="centrepage"){
+        $state.go("projectpage", sendTo);
+      } else if (action && action.type == "centrepage") {
         console.log("IN Centre TYPE");
-       $state.go("centrepage", sendTo);
-        
+        $state.go("centrepage", sendTo);
+
       }
+       else if (action && action.type == "vendorpage") {
+        console.log("IN Vendor TYPE");
+        $state.go("vendorpage", sendTo);
+
+      }
+      
        else if (action && action.type == "apiCallConfirm") {
         globalfunction.confDel(function (value2) {
           if (value2) {

@@ -13,11 +13,13 @@
         "isSort": "",
         "tableRef": "username"
     }],
+
+
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
-        "type": "page",
+        "type": "vendorpage",
         "action": "editVendor",
         "fieldsToSend": {
             "_id": "_id"

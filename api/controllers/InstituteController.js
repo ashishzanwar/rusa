@@ -16,7 +16,43 @@ var controller = {
         }
     },
 
+    removeUserFromInstitute: function (req, res) {
+        if (req.body) {
+            Institute.removeUserFromInstitute(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+ updateUser: function (req, res) {
+        if (req.body) {
+            Institute.updateUser(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
 
+  findOneInstituteUser: function (req, res) {
+        if (req.body) {
+            Institute.findOneInstituteUser(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
     findOneInstitute: function (req, res) {
         if (req.body) {
             Institute.findOneInstitute(req.body, res.callback);
