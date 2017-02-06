@@ -5,10 +5,16 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "State Name",
-        "isSort": "",
-        "tableRef": "name"
-    }],
+            "name": "State Name",
+            "isSort": "",
+            "tableRef": "name"
+        },
+        {
+            "name": "Abbreviation",
+            "isSort": "",
+            "tableRef": "abbreviation"
+        }
+    ],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",

@@ -5,26 +5,70 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-            "name": "Project Approved Board No",
+            "name": "Project Id",
+            "isSort": "",
+            "tableRef": "project_id"
+        },
+        {
+            "name": "PAB#",
             "isSort": "",
             "tableRef": "project_approved_board_no"
         }, {
-            "name": "Project Name",
+            "name": "Institute",
             "type": "text",
             "isSort": "",
-            "tableRef": "name"
-        }, {
-            "name": "Title",
+            "tableRef": "institute.name",
+            "tableVal": "institute.name"
+        },
+        {
+            "name": "State",
             "type": "text",
             "isSort": "",
-            "tableRef": "title"
-        }, {
-            "name": "Component",
+            "tableRef": "state.name",
+            "tableVal": "state.name"
+        },
+        {
+            "name": "Key Component",
             "type": "text",
             "isSort": "",
             "tableRef": "component"
+        },
+        {
+            "name": "Allocation Type",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "allocationType"
+        },
+        {
+            "name": "Fund Released (Lacs)",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "fundReleased"
+        },
+        {
+            "name": "Ultization (%)",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "ultilization"
+        },
+        {
+            "name": "Project Status",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "projectStatus"
+        },
+        {
+            "name": "Fund Status",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "fundStatus"
+        },
+        {
+            "name": "Work Status",
+            "type": "text",
+            "isSort": "",
+            "tableRef": "workStatus"
         }
-
     ],
     "action": [{
         "name": "edit",

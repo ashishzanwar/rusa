@@ -6,39 +6,50 @@
     "pageType": "create",
     "urlFields": ["Vendor"],
     "fields": [{
-            "name": "Name",
+            "name": "PAN No.",
+            "type": "text",
+            "tableRef": "pan",
+            "placeholder": "Enter PAN number",
+            "id": "pan",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Name of Company",
+            "type": "text",
+            "tableRef": "organization",
+            "placeholder": "Enter Name of Company/Organization",
+            "id": "organization",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
+            "name": "Person Name",
             "type": "text",
             "tableRef": "name",
             "placeholder": "Enter Name",
             "id": "name",
             "validation": ["", "trim", ""],
             "url": ""
-        }, {
-            "name": "User Name",
+        },
+
+        {
+            "name": "Mobile",
             "type": "text",
-            "tableRef": "username",
-            "placeholder": "Enter User Name",
-            "id": "username",
+            "tableRef": "mobile",
+            "placeholder": "Enter Mobile",
+            "id": "mobile",
             "validation": ["", "trim", ""],
             "url": ""
-        }, {
-            "name": "PAN",
+        },
+        {
+            "name": "Email",
             "type": "text",
-            "tableRef": "pan",
-            "placeholder": "Enter PAN",
-            "id": "pan",
-            "validation": ["", "trim", ""],
-            "url": ""
-        }, {
-            "name": "Organization",
-            "type": "text",
-            "tableRef": "organization",
-            "placeholder": "Enter Organization",
-            "id": "organization",
-            "validation": ["", "trim", ""],
+            "tableRef": "email",
+            "placeholder": "Enter Email",
+            "id": "email",
+            "validation": ["", "trim", "unique"],
             "url": ""
         }
-
 
     ],
     "action": [{

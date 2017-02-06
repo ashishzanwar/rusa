@@ -683,7 +683,8 @@ firstapp.directive('viewField', function($http, $filter) {
         $scope.storeValue = $scope.value;
         $scope.objectDepth();
 
-      } else {
+      }
+      else {
         $scope.form.model = $scope.value[$scope.type.tableRef];
       }
 

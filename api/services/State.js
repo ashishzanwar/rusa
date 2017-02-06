@@ -12,6 +12,10 @@ var schema = new Schema({
         name: {
                 type: String
         },
+
+        abbreviation: {
+                type: String
+        },
         users: [{
                 type: Schema.Types.ObjectId,
                 ref: 'User',
@@ -31,8 +35,8 @@ schema.plugin(deepPopulate, {
                 'project': {
                         select: '_id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status'
                 },
-                'users':{
-                        select: 'name _id'           
+                'users': {
+                        select: 'name _id'
                 }
         }
 });
@@ -103,34 +107,34 @@ var model = {
 
 
 
-    removeUserFromState: function (data, callback) {
+        removeUserFromState: function (data, callback) {
 
-        console.log(data);
-        State.findOneAndUpdate({
-            _id: data._id
-        }, {
-            $pull: {
-                users: data.user_id
-            }
-        }).exec(function (err, found) {
+                console.log(data);
+                State.findOneAndUpdate({
+                        _id: data._id
+                }, {
+                        $pull: {
+                                users: data.user_id
+                        }
+                }).exec(function (err, found) {
 
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
 
-                if (found) {
+                                if (found) {
 
-                    callback(null, found);
-                } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
-                }
-            }
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
 
-        })
-    },
+                })
+        },
 
 
 
@@ -173,28 +177,28 @@ var model = {
 
 
         updateUser: function (data, callback) {
-        console.log("DATA", data);
-        State.update({
-            _id: data._id,
-            "users": data.user_id
-        }, {
-            $set: {
-                // $set: {
-                "users.$": data.change_id
-                // }
-            }
-        }, function (err, data) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else if (data) {
-                callback(null, data);
-            } else {
-                callback(null, "Invalid data");
-            }
-        });
+                console.log("DATA", data);
+                State.update({
+                        _id: data._id,
+                        "users": data.user_id
+                }, {
+                        $set: {
+                                // $set: {
+                                "users.$": data.change_id
+                                // }
+                        }
+                }, function (err, data) {
+                        if (err) {
+                                console.log(err);
+                                callback(err, null);
+                        } else if (data) {
+                                callback(null, data);
+                        } else {
+                                callback(null, "Invalid data");
+                        }
+                });
 
-    },
+        },
 
 
 

@@ -28,7 +28,17 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Project',
         index: true
-    }]
+    }],
+    institute_type: {
+        type: String,
+        enum: ["Central Universities",
+            "State Universities",
+            "Institutes of National Importance",
+            "Deemed to be Universities",
+            "Affiliated Colleges",
+            "Autonomous Colleges"
+        ]
+    },
 
 });
 

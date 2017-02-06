@@ -19,7 +19,12 @@ var schema = new Schema({
                 type: String,
                 validate: validators.isEmail()
         },
+        mobile: {
+                type: String,
+                default: ""
+        },
         pan: String,
+
         organization: String,
 
         users: [{
@@ -102,58 +107,58 @@ var model = {
 
                 })
         },
-removeUserFromVendor: function (data, callback) {
+        removeUserFromVendor: function (data, callback) {
 
-        console.log(data);
-        Vendor.findOneAndUpdate({
-            _id: data._id
-        }, {
-            $pull: {
-                users: data.user_id
-            }
-        }).exec(function (err, found) {
+                console.log(data);
+                Vendor.findOneAndUpdate({
+                        _id: data._id
+                }, {
+                        $pull: {
+                                users: data.user_id
+                        }
+                }).exec(function (err, found) {
 
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
 
-                if (found) {
+                                if (found) {
 
-                    callback(null, found);
-                } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
-                }
-            }
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
 
-        })
-    },
+                })
+        },
 
-   updateUser: function (data, callback) {
-        console.log("DATA", data);
-        Vendor.update({
-            _id: data._id,
-            "users": data.user_id
-        }, {
-            $set: {
-                // $set: {
-                "users.$": data.change_id
-                // }
-            }
-        }, function (err, data) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else if (data) {
-                callback(null, data);
-            } else {
-                callback(null, "Invalid data");
-            }
-        });
+        updateUser: function (data, callback) {
+                console.log("DATA", data);
+                Vendor.update({
+                        _id: data._id,
+                        "users": data.user_id
+                }, {
+                        $set: {
+                                // $set: {
+                                "users.$": data.change_id
+                                // }
+                        }
+                }, function (err, data) {
+                        if (err) {
+                                console.log(err);
+                                callback(err, null);
+                        } else if (data) {
+                                callback(null, data);
+                        } else {
+                                callback(null, "Invalid data");
+                        }
+                });
 
-    },
+        },
 
 };
 module.exports = _.assign(module.exports, exports, model);

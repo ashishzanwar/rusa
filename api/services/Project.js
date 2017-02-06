@@ -4,11 +4,17 @@ var uniqueValidator = require('mongoose-unique-validator');
 var timestamps = require('mongoose-timestamp');
 var validators = require('mongoose-validators');
 var monguurl = require('monguurl');
+var autoIncrement = require('mongoose-auto-increment');
 require('mongoose-middleware').initialize(mongoose);
+autoIncrement.initialize(mongoose);
 
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
+    project_id: {
+        type: String
+    },
+
     name: {
         type: String
     },
@@ -41,6 +47,25 @@ var schema = new Schema({
     },
     totalAmount: {
         type: Number
+    },
+    allocationType: String,
+    fundReleased: String,
+    ultilization: String,
+    projectStatus:  {
+        type: String,
+        enum: ["Active", "Complete", "Cancelled", "OnHold"]
+    },
+    fundStatus:  {
+        type: String,
+        enum: ["InTime", "Delay"]
+    },
+    workStatus: {
+        type: String,
+        enum: ["InTime", "Delay"]
+    },
+    totalAllocation: Number,
+    endPoint: {
+        type: String,
     },
     amountReceivedCenter: [{
         type: Schema.Types.ObjectId,
@@ -87,15 +112,18 @@ var schema = new Schema({
         enum: ["InTime", "Delay"]
     },
     statusLogs: [{
-        timestamp: {
-            type: Date,
-            default: Date.now
-        },
-        status: {
-            type: String,
-            enum: ["Active", "Complete", "Cancelled", "OnHold"]
+            timestamp: {
+                type: Date,
+                default: Date.now
+            },
+            status: {
+                type: String,
+                enum: ["Active", "Complete", "Cancelled", "OnHold"]
+            }
         }
-    }],
+
+
+    ],
 
     quantity: {
         type: Number
@@ -124,6 +152,13 @@ schema.plugin(deepPopulate, {
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
+
+schema.plugin(autoIncrement.plugin, {
+    model: 'Project',
+    field: 'project_id',
+    startAt: 1,
+    incrementBy: 1
+});
 module.exports = mongoose.model('Project', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction', 'user institute state transaction'));

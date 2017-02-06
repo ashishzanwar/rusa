@@ -8,10 +8,16 @@
         "name": "Name",
         "isSort": "",
         "tableRef": "name"
-    }, {
-        "name": "Username",
+    },
+     {
+        "name": "Email",
         "isSort": "",
-        "tableRef": "username"
+        "tableRef": "email"
+    },
+     {
+        "name": "Organization",
+        "isSort": "",
+        "tableRef": "organization"
     }],
 
 

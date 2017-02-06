@@ -49,7 +49,7 @@
                     </div>
                     <div>
                       <div>
-                        <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxProject(json.keyword._id,ownData.state._id)">Add New</a>
+                        <a class=" btn btn-primaryaddBoxProject pull-right ml-10" ng-click="addBoxProject(json.keyword._id,ownData.state._id)">Add New</a>
                         <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
                       </div>
                       <div class="sec">
@@ -57,30 +57,34 @@
                           <table class="table table-input ">
                             <thead>
                               <tr>
-                                <th>Project No.</th>
-                                <th>Project</th>
-                                <th>Title</th>
-                                <th>Component</th>
-                                <th>Center Percent</th>
-                                <th>State Percent</th>
-                                <th>Total Amount</th>
-                                <th>Quantity</th>
-                                <th>Status</th>
-                                <th>Sub Status</th>
+                                <th>Project ID</th>
+                                <th>PAB</th>
+                                <th>Key Component</th>
+                                <th>Allocation Type</th>
+                                <th>End Point</th>
+                                <th>Allocation (Lacs)</th>
+                                <th>Fund Released(Lacs)</th>
+                                <th>Fund Ultilized(%)</th>
+                                <th>Project Status</th>
+                                <th>Fund Status</th>
+                                <th>Work Status</th>
+                                <!--<th>Sub Status</th>-->
                                 <th width="150px ">Actions</th>
                               </tr>
                               <thead>
                                 <tr ng-repeat="project in tableData">
+                                  <td>{{project.project_id}}</td>
                                   <td>{{project.project_approved_board_no}}</td>
-                                  <td>{{project.name}}</td>
-                                  <td>{{project.title}}</td>
                                   <td>{{project.component}}</td>
-                                  <td>{{project.centerPercent}}</td>
-                                  <td>{{project.statePercent}}</td>
-                                  <td>{{project.totalAmount}}</td>
-                                  <td>{{project.quantity}}</td>
-                                  <td>{{project.status}}</td>
-                                  <td>{{project.subStatus}}</td>
+                                  <td>{{project.allocationType}}</td>
+                                  <td>{{project.endPoint}}</td>
+                                  <td>{{project.totalAllocation}}</td>
+                                  <td>{{project.fundReleased}}</td>
+                                  <td>{{project.ultilization}}</td>
+                                  <td>{{project.projectStatus}}</td>
+                                  <td>{{project.fundStatus}}</td>
+                                  <td>{{project.workStatus}}</td>
+                                  <!--<td>{{project.subStatus}}</td>-->
                                   <td>
                                     <a class="btn btn-primary" ng-click="editBoxCustomProject(project)">
                                       <i class="fa fa-pencil"></i>
@@ -97,9 +101,8 @@
                       </div>
                     </div>
                   </div>
-                  <div> 
+                  <div>
                     <div>
-                      
                       <!--{{instituteUserData}}-->
                       <!--<div ng-init="STATE"></div>-->
                       <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxInstituteUser();">Add New</a>

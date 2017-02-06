@@ -5,18 +5,29 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": " Institute Name",
-        "isSort": "",
-        "tableRef": "name"
-    }, {
-        "name": "State",
-        "type": "text",
-        "isSort": "",
-        "tableRef": {
-            "field": "state",
+            "name": " Institute Name",
+            "isSort": "",
             "tableRef": "name"
+        },
+
+        {
+            "name": " Institute Type",
+            "isSort": "",
+            "tableRef": "institute_type"
+        },
+
+        {
+            "name": "State",
+            "type": "text",
+            "isSort": "",
+            "tableRef": {
+                "field": "state",
+                "tableRef": "name"
+            }
+
+
         }
-    }],
+    ],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",

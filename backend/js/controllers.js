@@ -693,7 +693,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         "Active", "Complete", "Cancelled", "OnHold"
       ];
 
+      $scope.projectStatus = [
+        "Active", "Complete", "Cancelled", "OnHold"
+      ];
       $scope.subStatus = [
+        "InTime", "Delay"
+      ];
+
+            $scope.workStatus = [
+        "InTime", "Delay"
+      ];
+            $scope.fundStatus = [
         "InTime", "Delay"
       ];
 
@@ -728,18 +738,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       };
 
 
-      $scope.status = [
+      $scope.projectStatus = [
         "Active", "Complete", "Cancelled", "OnHold"
       ];
 
       $scope.subStatus = [
         "InTime", "Delay"
       ];
+            $scope.workStatus = [
+        "InTime", "Delay"
+      ];
 
+      $scope.fundStatus = [
+        "InTime", "Delay"
+      ];
 
       $scope.modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
-        templateUrl: '/backend/views/modal/project-add.html',
+        templateUrl: '/backend/views/modal/project-add2.html',
         size: 'lg',
         scope: $scope,
         tableData: $scope.tableData

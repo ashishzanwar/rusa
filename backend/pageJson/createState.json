@@ -6,14 +6,24 @@
     "pageType": "create",
     "urlFields": ["State"],
     "fields": [{
-        "name": "Name",
-        "type": "text",
-        "tableRef": "name",
-        "placeholder": "Enter State Name",
-        "id": "name",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }],
+            "name": "Name",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter State Name",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
+            "name": "Abbreviation",
+            "type": "text",
+            "tableRef": "abbreviation",
+            "placeholder": "Enter Abbreviation",
+            "id": "abbreviation",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }
+    ],
     "action": [{
         "name": "submit",
         "action": "submitState",

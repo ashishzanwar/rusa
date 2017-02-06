@@ -6,24 +6,42 @@
     "pageType": "customedit",
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Institute Name",
-        "type": "text",
-        "tableRef": "name",
-        "placeholder": "Enter Name",
-        "id": "name",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "State",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "state",
-        "placeholder": "Enter Category-Name",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "State/search"
-    }
+            "name": "Institute Name",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter Name",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "State",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "state",
+            "placeholder": "Enter Category-Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "State/search"
+        },
+        {
+            "name": "Institute Type",
+            "type": "tags",
+            "tableRef": "institute_type",
+            "placeholder": "Enter Institute Type",
+            "id": "institute_type",
+            "validation": ["", "trim", ""],
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["Central Universities",
+                "State Universities",
+                "Institutes of National Importance",
+                "Deemed to be Universities",
+                "Affiliated Colleges",
+                "Autonomous Colleges"
+            ]
+        }
     ],
     "action": [{
         "name": "submit",
