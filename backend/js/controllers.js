@@ -604,6 +604,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
         value = $scope.newuserinfo;
 
+
+      $scope.projectStatus2 = [
+        "Active"
+      ];
+     
+
+            $scope.workStatus2 = [
+        "InTime"
+      ];
+            $scope.fundStatus2 = [
+        "InTime"
+      ];
         console.log("DATA TO BE SEND", value);
         NavigationService.boxCall("Institute/addUserToInstitute", value, function (data) {
           toastr.success(value.user_name + " User " + " " + "added" + " successfully.");
@@ -693,12 +705,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         "Active", "Complete", "Cancelled", "OnHold"
       ];
 
+ $scope.subStatus = [
+        "InTime", "Delay"
+      ];
       $scope.projectStatus = [
         "Active", "Complete", "Cancelled", "OnHold"
       ];
-      $scope.subStatus = [
-        "InTime", "Delay"
-      ];
+     
 
             $scope.workStatus = [
         "InTime", "Delay"
@@ -706,6 +719,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.fundStatus = [
         "InTime", "Delay"
       ];
+
+
+
 
       $scope.modalInstance = $uibModal.open({
         animation: $scope.animationsEnabled,
@@ -1052,6 +1068,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.addBoxInstitute = function (data) {
       // $scope.newinfo = newdata;
+
+      $scope.instiType=["Central Universities",
+            "State Universities",
+            "Institutes of National Importance",
+            "Deemed to be Universities",
+            "Affiliated Colleges",
+            "Autonomous Colleges"];
       NavigationService.apiCall("State/findAllState", {
         [$scope.json.json.preApi.params]: $scope.json.keyword._id
       }, function (data) {

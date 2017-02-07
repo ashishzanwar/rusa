@@ -79,12 +79,14 @@
         "url": "Institute/search"
     }, {
         "name": "From Vendor",
-        "type": "text",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
         "tableRef": "fromVendor",
-        "placeholder": "Enter From Vendor",
-        "id": "name",
+        "placeholder": "Enter from Vendor",
+        "id": "input1",
         "validation": ["", "trim", ""],
-        "url": ""
+        "url": "Vendor/search"
     }, {
         "name": "To Center",
         "type": "selectFromTable",
@@ -117,12 +119,14 @@
         "url": "Institute/search"
     }, {
         "name": "To Vendor",
-        "type": "text",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
         "tableRef": "toVendor",
         "placeholder": "Enter to Vendor",
-        "id": "name",
+        "id": "input1",
         "validation": ["", "trim", ""],
-        "url": ""
+        "url": "Vendor/search"
     }, {
         "name": "Reason",
         "type": "text",

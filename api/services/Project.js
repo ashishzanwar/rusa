@@ -51,11 +51,11 @@ var schema = new Schema({
     allocationType: String,
     fundReleased: String,
     ultilization: String,
-    projectStatus:  {
+    projectStatus: {
         type: String,
         enum: ["Active", "Complete", "Cancelled", "OnHold"]
     },
-    fundStatus:  {
+    fundStatus: {
         type: String,
         enum: ["InTime", "Delay"]
     },
@@ -174,15 +174,31 @@ var model = {
         var data2 = {};
 
         data2.project_approved_board_no = data.project_approved_board_no,
-            data2.centerPercent = data.centerPercent,
+
+
+            data2.project_id = data.project_id,
+            data2.project_approved_board_no = data.project_approved_board_no,
             data2.component = data.component,
-            data2.name = data.name,
-            data2.quantity = data.quantity,
-            data2.statePercent = data.statePercent,
-            data2.status = data.status,
-            data2.subStatus = data.subStatus,
-            data2.title = data.title,
-            data2.totalAmount = data.totalAmount
+            data2.allocationType = data.allocationType,
+            data2.endPoint = data.endPoint,
+            data2.totalAllocation = data.totalAllocation,
+            data2.fundReleased = data.fundReleased,
+            data2.ultilization = data.ultilization,
+            data2.projectStatus = data.projectStatus,
+            data2.fundStatus = data.fundStatus,
+            data2.workStatus = data.workStatus
+
+
+        // data2.project_approved_board_no = data.project_approved_board_no,
+        //     data2.centerPercent = data.centerPercent,
+        //     data2.component = data.component,
+        //     data2.name = data.name,
+        //     data2.quantity = data.quantity,
+        //     data2.statePercent = data.statePercent,
+        //     data2.status = data.status,
+        //     data2.subStatus = data.subStatus,
+        //     data2.title = data.title,
+        //     data2.totalAmount = data.totalAmount
 
         Project.findOneAndUpdate({
             _id: data._id
@@ -403,7 +419,7 @@ var model = {
 
         Project.find({
             institute: data._id
-        }).deepPopulate("state").exec(function (err, found) {
+        }).deepPopulate("state institute").exec(function (err, found) {
             if (err) {
                 console.log("Err", err);
                 callback(err, null);

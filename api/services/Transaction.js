@@ -41,9 +41,13 @@ var schema = new Schema({
         ref: 'Institute',
         index: true
     },
-    fromVendor: {
-        type: String
+
+        fromVendor: {
+        type: Schema.Types.ObjectId,
+        ref: 'Vendor',
+        index: true
     },
+
     toCenter: {
         type: Schema.Types.ObjectId,
         ref: 'Center',
@@ -59,9 +63,12 @@ var schema = new Schema({
         ref: 'Institute',
         index: true
     },
-    toVendor: {
-        type: String
+     toVendor: {
+        type: Schema.Types.ObjectId,
+        ref: 'Vendor',
+        index: true
     },
+
     reason: {
         type: String
     },

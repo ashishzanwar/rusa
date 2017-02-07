@@ -9,11 +9,17 @@ require('mongoose-middleware').initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
+
+    workOrder: String,
+    itemDetail: String,
+    dueDate: {
+        type: Date
+    },
     project: {
         type: Schema.Types.ObjectId,
         ref: 'Project',
         index: true,
-        key:"milestones"
+        key: "milestones"
     },
     status: {
         type: String,
@@ -22,7 +28,7 @@ var schema = new Schema({
     percentageCompleted: {
         type: Number
     },
-      photos: [{
+    photos: [{
         tags: [String],
         photo: String
     }],

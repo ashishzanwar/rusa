@@ -13,19 +13,6 @@
             "name": "PAB#",
             "isSort": "",
             "tableRef": "project_approved_board_no"
-        }, {
-            "name": "Institute",
-            "type": "text",
-            "isSort": "",
-            "tableRef": "institute.name",
-            "tableVal": "institute.name"
-        },
-        {
-            "name": "State",
-            "type": "text",
-            "isSort": "",
-            "tableRef": "state.name",
-            "tableVal": "state.name"
         },
         {
             "name": "Key Component",

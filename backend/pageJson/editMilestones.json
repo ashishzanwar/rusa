@@ -6,6 +6,35 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
+            "name": "Work Order",
+            "type": "checkbox",
+            "tableRef": "workOrder",
+            "placeholder": "Enter Work Order",
+            "id": "workOrder",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+
+        {
+            "name": "Item Detail",
+            "type": "text",
+            "tableRef": "itemDetail",
+            "placeholder": "Enter Item Detail",
+            "id": "itemDetail",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
+            "name": "Due Date",
+            "type": "date",
+            "tableRef": "dueDate",
+            "placeholder": "Enter Due Date",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+
+        {
             "name": "Project",
             "type": "selectFromTable",
             "dropDownType": "single",
@@ -27,10 +56,10 @@
             "dropDownType": "single",
             "dropDown": ["Pending", "Cancelled", "Completed"]
         }, {
-            "name": "Percentage Completed",
+            "name": "Amount of Work(%)",
             "type": "number",
             "tableRef": "percentageCompleted",
-            "placeholder": "Enter Project",
+            "placeholder": "Enter Amount of Work(%)",
             "id": "name",
             "validation": ["", "trim", ""],
             "url": ""

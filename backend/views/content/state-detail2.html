@@ -49,6 +49,7 @@
                             <tr>
                               <th>#</th>
                               <th>Institute Name</th>
+                              <!--<th>Institute Type</th>-->
                               <th> State</th>
                               <th width="150px ">Actions</th>
                             </tr>
@@ -56,6 +57,7 @@
                               <tr ng-repeat="project in tableData" ng-value="STATE=project.state.name">
                                 <td>{{$index+1}}</td>
                                 <td>{{project.name}}</td>
+                                <!--<td>{{project.institute_type}}</td>-->
                                 <td> {{project.state.name}}</td>
                                 <td>
                                   <a class="btn btn-primary" ng-click="editBoxCustomInstitute(project)">
@@ -97,13 +99,13 @@
                         </div>
                         <div>
                         </div>
-                        <div> 
+                        <div>
                           <!--{{stateUserData}} KJKLHKHk-->
-                            <div>
-                                <!--<div ng-init="STATE"></div>-->
-                                <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxState();">Add New</a>
-                                <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
-                              </div>
+                          <div>
+                            <!--<div ng-init="STATE"></div>-->
+                            <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxState();">Add New</a>
+                            <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
+                          </div>
                           <div class="sec">
                             <div>
                               <table class="table table-input ">
