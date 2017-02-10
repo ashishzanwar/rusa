@@ -1,0 +1,86 @@
+{
+    "title": "Edit Project Expense",
+    "name": "ProjectExpense",
+    "jsonPage": "viewProjectExpense",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+            "name": "Project",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "project",
+            "placeholder": "Enter Project Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Project/search"
+        }, {
+            "name": "Vendor",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "vendor",
+            "placeholder": "Enter Vendor Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Vendor/search"
+        },
+        {
+            "name": "Allocated Amount",
+            "type": "number",
+            "tableRef": "allocatedAmount",
+            "placeholder": "Enter Allocated Amount",
+            "id": "allocatedAmount",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
+            "name": "Amount Released",
+            "type": "number",
+            "tableRef": "amountReleased",
+            "placeholder": "Enter Amount Released",
+            "id": "amountReleased",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+
+        {
+            "name": "Work Completed Percent",
+            "type": "number",
+            "tableRef": "workcompletedpercent",
+            "placeholder": "Enter Work Completed Percent",
+            "id": "workcompletedpercent",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }
+    ],
+    "action": [{
+        "name": "submit",
+        "action": "submitProjectExpense",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewProjectExpense"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewProjectExpense"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "ProjectExpense/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "ProjectExpense/getOne",
+        "params": "_id"
+    }
+
+}

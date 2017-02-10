@@ -49,7 +49,7 @@
         },
         {
             "name": "Allocation",
-            "type": "text",
+            "type": "number",
             "tableRef": "allocation",
             "placeholder": "Enter Allocation",
             "id": "allocation",

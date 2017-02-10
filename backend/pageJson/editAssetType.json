@@ -1,0 +1,45 @@
+{
+    "title": "Edit Asset Type",
+    "name": "AssetType",
+    "jsonPage": "viewAssetType",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitAssetType",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewAssetType"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewAssetType"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "AssetType/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "AssetType/getOne",
+        "params": "_id"
+    }
+
+}

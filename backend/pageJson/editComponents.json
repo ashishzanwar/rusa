@@ -13,7 +13,7 @@
             "id": "component",
             "validation": ["", "trim", ""],
             "url": ""
-        },{
+        }, {
             "name": "Institute Name",
             "type": "selectFromTable",
             "dropDownType": "single",
@@ -44,11 +44,11 @@
             "placeholder": "Enter Key Components ",
             "id": "input1",
             "validation": ["", "trim", ""],
-            "url": "Keycomponents/search"
+            "url": "KeyComponents/search"
         },
         {
             "name": "Allocation",
-            "type": "text",
+            "type": "number",
             "tableRef": "allocation",
             "placeholder": "Enter Allocation",
             "id": "allocation",

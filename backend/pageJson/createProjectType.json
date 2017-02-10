@@ -1,0 +1,39 @@
+{
+    "title": "Create Project Type",
+    "name": "ProjectType",
+    "jsonPage": "viewProjectType",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["ProjectType"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitProjectType",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewProjectType"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewProjectType"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "ProjectType/save"
+    }
+}

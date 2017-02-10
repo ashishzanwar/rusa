@@ -1,5 +1,5 @@
 var schema = new Schema({
-    name:String,
+    name: String,
     institute: {
         type: Schema.Types.ObjectId,
         ref: 'Institute',
@@ -12,10 +12,10 @@ var schema = new Schema({
     },
     keycomponents: {
         type: Schema.Types.ObjectId,
-        ref: 'Keycomponents',
+        ref: 'KeyComponents',
         index: true
     },
-    allocation:String,
+    allocation: Number,
     project: [{
         type: Schema.Types.ObjectId,
         ref: 'Project',

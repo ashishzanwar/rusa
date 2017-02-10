@@ -59,26 +59,26 @@
             "type": "selectFromTable",
             "dropDownType": "single",
             "searchApi": "searchCall",
-            "tableRef": "projecttype",
+            "tableRef": "projectType",
             "placeholder": "Enter Project Type",
             "id": "input1",
             "validation": ["", "trim", ""],
-            "url": "Projecttype/search"
+            "url": "ProjectType/search"
         },
         {
             "name": "Asset Type",
             "type": "selectFromTable",
             "dropDownType": "single",
             "searchApi": "searchCall",
-            "tableRef": "assettype",
+            "tableRef": "assetType",
             "placeholder": "Enter Asset Type",
             "id": "input1",
             "validation": ["", "trim", ""],
-            "url": "Assettype/search"
+            "url": "AssetType/search"
         },
         {
             "name": "Value of Project",
-            "type": "text",
+            "type": "number",
             "tableRef": "valueOfProject",
             "placeholder": "Enter Value of Project",
             "id": "valueOfProject",

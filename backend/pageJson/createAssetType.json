@@ -1,0 +1,39 @@
+{
+    "title": "Create Asset Type",
+    "name": "AssetType",
+    "jsonPage": "viewAssetType",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["AssetType"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitAssetType",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewAssetType"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewAssetType"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "AssetType/save"
+    }
+}

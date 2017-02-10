@@ -1,0 +1,39 @@
+{
+    "title": "Create Key Components",
+    "name": "KeyComponents",
+    "jsonPage": "viewKeyComponents",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["KeyComponents"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitKeyComponents",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewKeyComponents"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewKeyComponents"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "KeyComponents/save"
+    }
+}

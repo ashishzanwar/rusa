@@ -12,7 +12,6 @@ var schema = new Schema({
         name: {
                 type: String
         },
-
         abbreviation: {
                 type: String
         },
@@ -20,7 +19,6 @@ var schema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'User',
                 index: true,
-
         }],
         project: [{
                 type: Schema.Types.ObjectId,

@@ -11,13 +11,6 @@ autoIncrement.initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    project_id: {
-        type: String
-    },
-
-    name: {
-        type: String
-    },
     project_approved_board_no: {
         type: Number
     },
@@ -38,51 +31,59 @@ var schema = new Schema({
         ref: 'Components',
         index: true
     },
-    projecttype: {
+    projectType: {
         type: Schema.Types.ObjectId,
-        ref: 'Projecttype',
+        ref: 'ProjectType',
         index: true
     },
-    assettype: {
+    assetType: {
         type: Schema.Types.ObjectId,
-        ref: 'Assettype',
+        ref: 'AssetType',
         index: true
     },
     valueOfProject: {
-        type: String
+        type: Number
     },
-
-
     transaction: [{
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
         index: true,
         key: "project"
     }],
-
-    photos2: [{
-        payment: {
-            photo: String
-        },
-        instageWork: {
-            photo: String
-        },
-        completedWork: {
-            photo: String
-        },
-        others: {
-            photo: String
-        }
-    }],
     notes: [{
-            text: String,
+
             timestamp: {
                 type: Date,
                 default: Date.now
             },
-            from: {
-                type: String,
-                enum: ["fromCenter", "fromState", "fromInstitute", "fromVendor"]
+
+            fromCenter: {
+                type: Schema.Types.ObjectId,
+                ref: 'Center',
+                index: true,
+                text: String
+            },
+            fromState: {
+                type: Schema.Types.ObjectId,
+                ref: 'State',
+                index: true,
+                text: String
+            },
+            fromInstitute: {
+                type: Schema.Types.ObjectId,
+                ref: 'Institute',
+                index: true,
+                text: String
+            },
+
+            fromVendor: {
+                type: Schema.Types.ObjectId,
+                ref: 'Vendor',
+                index: true,
+                text: String
+            },
+            text: {
+                type: String
             }
         }
 
@@ -92,101 +93,17 @@ var schema = new Schema({
     dueDate: {
         type: Date
     },
-    title: {
-        type: String
-    },
-    component: {
-        type: String
-    },
-    centerPercent: {
-        type: Number
-    },
-    statePercent: {
-        type: Number
-    },
-    totalAmount: {
-        type: Number
-    },
-    allocationType: String,
-    fundReleased: String,
-    ultilization: String,
-    projectStatus: {
-        type: String,
-        enum: ["Active", "Complete", "Cancelled", "OnHold"]
-    },
-    fundStatus: {
-        type: String,
-        enum: ["InTime", "Delay"]
-    },
-    workStatus: {
-        type: String,
-        enum: ["InTime", "Delay"]
-    },
-    totalAllocation: Number,
-    endPoint: {
-        type: String,
-    },
-    amountReceivedCenter: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Transaction',
-        index: true
-    }],
-    amountReceivedState: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Transaction',
-        index: true
-    }],
-    amountUtilized: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Transaction',
-        index: true
-    }],
-    refundCanceled: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Transaction',
-        index: true
-    }],
-    refundUnutilized: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Transaction',
-        index: true
-    }],
+
     photos: [{
         photo: String,
-        tags: String
-
-    }],
-
-    milestones: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Milestones',
-        index: true
-    }],
-    status: {
-        type: String,
-        enum: ["Active", "Complete", "Cancelled", "OnHold"]
-    },
-    subStatus: {
-        type: String,
-        enum: ["InTime", "Delay"]
-    },
-    statusLogs: [{
-            timestamp: {
-                type: Date,
-                default: Date.now
-            },
-            status: {
-                type: String,
-                enum: ["Active", "Complete", "Cancelled", "OnHold"]
-            }
+        types: {
+            type: String,
+            enum: ["Payment", "Instage Work", "Completed Work", "Others"]
         }
 
+    }],
 
-    ],
 
-    quantity: {
-        type: Number
-    },
     tags: [
         String
     ],

@@ -49,9 +49,7 @@ var schema = new Schema({
     installment: {
         type: Number
     },
-    subInstallment: {
-        type: Number
-    },
+
     amount: {
         type: Number
     },

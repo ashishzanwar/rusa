@@ -24,13 +24,12 @@ var schema = new Schema({
         ref: 'State',
         index: true
     },
-    project: [{
+    components: [{
         type: Schema.Types.ObjectId,
-        ref: 'Project',
+        ref: 'Components',
         index: true
     }],
-
-     district: {
+    district: {
         type: Schema.Types.ObjectId,
         ref: 'District',
         index: true

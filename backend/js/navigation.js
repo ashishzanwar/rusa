@@ -34,7 +34,7 @@ var navigationservice = angular.module('navigationservice', [])
       }, {
         name: "Project Expenses",
         classis: "active",
-        sref: "#!/page/viewProjectexpense//",
+        sref: "#!/page/viewProjectExpense//",
         icon: "phone"
       }, {
         name: "Transaction",
@@ -63,8 +63,7 @@ var navigationservice = angular.module('navigationservice', [])
         classis: "active",
         sref: "#!/page/viewComponents//",
         icon: "phone"
-      }
-      ,
+      },
       {
         name: "PAB",
         classis: "active",
@@ -74,19 +73,19 @@ var navigationservice = angular.module('navigationservice', [])
       {
         name: "Key Components",
         classis: "active",
-        sref: "#!/page/viewKeycomponents//",
+        sref: "#!/page/viewKeyComponents//",
         icon: "phone"
       },
       {
         name: "Project Type",
         classis: "active",
-        sref: "#!/page/viewProjecttype//",
+        sref: "#!/page/viewProjectType//",
         icon: "phone"
       },
       {
-        name: "Asset type",
+        name: "Asset Type",
         classis: "active",
-        sref: "#!/page/viewAssettype//",
+        sref: "#!/page/viewAssetType//",
         icon: "phone"
       },
       {
