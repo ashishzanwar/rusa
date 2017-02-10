@@ -14,34 +14,6 @@
             "validation": ["", "trim", ""],
             "url": ""
 
-        }, {
-            "name": "Project Approved Board No",
-            "type": "number",
-            "tableRef": "project_approved_board_no",
-            "placeholder": "Enter Project Approved Board No",
-            "id": "project_approved_board_no",
-            "validation": ["", "trim", ""],
-            "url": ""
-        }, {
-            "name": "State Name",
-            "type": "selectFromTable",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "state",
-            "placeholder": "Enter State Name",
-            "id": "input1",
-            "validation": ["", "trim", ""],
-            "url": "State/search"
-        }, {
-            "name": "Institute Name",
-            "type": "selectFromTable",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "institute",
-            "placeholder": "Enter Institute Name",
-            "id": "input1",
-            "validation": ["", "trim", ""],
-            "url": "Institute/search"
         },
         {
             "name": "Components Name",
@@ -92,143 +64,6 @@
             "id": "name",
             "validation": ["", "trim", ""],
             "url": ""
-        },
-
-        {
-            "name": "Key Component",
-            "type": "text",
-            "tableRef": "component",
-            "placeholder": "Enter Component",
-            "id": "component",
-            "validation": ["", "trim", ""],
-            "url": ""
-        }, {
-            "name": "Allocation Type",
-            "type": "text",
-            "tableRef": "allocationType",
-            "placeholder": "Enter Allocation",
-            "id": "allocation",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-        {
-            "name": "End Point",
-            "type": "text",
-            "tableRef": "endPoint",
-            "placeholder": "Enter End Point",
-            "id": "endPoint",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-        {
-            "name": "Total Allocation (in Rs.)",
-            "type": "number",
-            "tableRef": "totalAllocation",
-            "placeholder": "Enter Total Allocation",
-            "id": "totalAllocation",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-        {
-            "name": "Center Share",
-            "type": "number",
-            "tableRef": "centerPercent",
-            "placeholder": "Enter Center Percent",
-            "id": "center percentage",
-            "validation": ["", "trim", ""],
-            "url": ""
-        }, {
-            "name": "State Share",
-            "type": "number",
-            "tableRef": "statePercent",
-            "placeholder": "Enter State Percent",
-            "id": "state percentage",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-        {
-            "name": "Fund Released",
-            "type": "text",
-            "tableRef": "fundReleased",
-            "placeholder": "Enter Fund Released",
-            "id": "fundReleased",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-
-        {
-            "name": "Ultililzation",
-            "type": "text",
-            "tableRef": "ultilization",
-            "placeholder": "Enter Ultilization",
-            "id": "ultilization",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-        {
-            "name": "Project Status",
-            "type": "tags",
-            "tableRef": "projectStatus",
-            "placeholder": "Enter Project Status",
-            "id": "status",
-            "validation": ["", "trim", ""],
-            "url": "",
-            "dropDownField": "",
-            "dropDownType": "single",
-            "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
-
-        },
-
-        {
-            "name": "Fund Status",
-            "type": "tags",
-            "tableRef": "fundStatus",
-            "placeholder": "Enter Fund Status",
-            "id": "fundStatus",
-            "validation": ["", "trim", ""],
-            "url": "",
-            "dropDownField": "",
-            "dropDownType": "single",
-            "dropDown": ["InTime", "Delay"]
-        },
-        {
-            "name": "Work Status",
-            "type": "tags",
-            "tableRef": "workStatus",
-            "placeholder": "Enter Work Status",
-            "id": "workStatus",
-            "validation": ["", "trim", ""],
-            "url": "",
-            "dropDownField": "",
-            "dropDownType": "single",
-            "dropDown": ["InTime", "Delay"]
-        },
-        {
-            "name": "Tags",
-            "type": "text",
-            "tableRef": "tags",
-            "placeholder": "Enter Tags",
-            "id": "tags",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-        {
-            "name": "Title",
-            "type": "text",
-            "tableRef": "title",
-            "placeholder": "Enter Title",
-            "id": "title",
-            "validation": ["", "trim", ""],
-            "url": ""
-        },
-        {
-            "name": "Total Amount",
-            "type": "number",
-            "tableRef": "totalAmount",
-            "placeholder": "Enter Total Amount",
-            "id": "total amount",
-            "validation": ["", "trim", ""],
-            "url": ""
         }, {
             "name": "Status",
             "type": "tags",
@@ -240,25 +75,6 @@
             "dropDownField": "",
             "dropDownType": "single",
             "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
-        }, {
-            "name": "Status",
-            "type": "tags",
-            "tableRef": "subStatus",
-            "placeholder": "Enter Sub Status",
-            "id": "status",
-            "validation": ["", "trim", ""],
-            "url": "",
-            "dropDownField": "",
-            "dropDownType": "single",
-            "dropDown": ["InTime", "Delay"]
-        }, {
-            "name": "Quantity",
-            "type": "number",
-            "tableRef": "quantity",
-            "placeholder": "Enter Quantity",
-            "id": "quantity",
-            "validation": ["", "trim", ""],
-            "url": ""
         }
 
     ],

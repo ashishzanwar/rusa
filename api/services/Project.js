@@ -11,21 +11,6 @@ autoIncrement.initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    project_approved_board_no: {
-        type: Number
-    },
-    state: {
-        type: Schema.Types.ObjectId,
-        ref: 'State',
-        index: true,
-        key: "project"
-    },
-    institute: {
-        type: Schema.Types.ObjectId,
-        ref: 'Institute',
-        index: true,
-        key: "project"
-    },
     components: {
         type: Schema.Types.ObjectId,
         ref: 'Components',
@@ -50,6 +35,19 @@ var schema = new Schema({
         index: true,
         key: "project"
     }],
+    photos: [{
+        photo: String,
+        types: {
+            type: String,
+            enum: ["Payment", "Instage Work", "Completed Work", "Others"]
+        }
+
+    }],
+
+    status: {
+        type: String,
+        enum: ["Active", "Complete", "Cancelled", "OnHold"]
+    },
     notes: [{
 
             timestamp: {
@@ -92,21 +90,9 @@ var schema = new Schema({
 
     dueDate: {
         type: Date
-    },
-
-    photos: [{
-        photo: String,
-        types: {
-            type: String,
-            enum: ["Payment", "Instage Work", "Completed Work", "Others"]
-        }
-
-    }],
+    }
 
 
-    tags: [
-        String
-    ],
 
 
 });
@@ -120,8 +106,10 @@ schema.plugin(deepPopulate, {
 
         'photos': {
             select: '_id photo tags'
+        },
+        'components': {
+            select: '_id name'
         }
-
 
     }
 
@@ -137,7 +125,7 @@ schema.plugin(autoIncrement.plugin, {
 });
 module.exports = mongoose.model('Project', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction', 'user institute state transaction'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction components', 'user institute state transaction components'));
 var model = {
 
     saveProject: function (data, callback) {

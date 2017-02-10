@@ -5,56 +5,23 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-            "name": "Project Id",
-            "isSort": "",
-            "tableRef": "project_id"
-        },
-        {
-            "name": "PAB#",
-            "isSort": "",
-            "tableRef": "project_approved_board_no"
-        },
-        {
-            "name": "Key Component",
+            "name": "Project Name",
             "type": "text",
             "isSort": "",
-            "tableRef": "component"
+            "tableRef": "name"
         },
+
         {
-            "name": "Allocation Type",
+            "name": "Status",
             "type": "text",
             "isSort": "",
-            "tableRef": "allocationType"
+            "tableRef": "status"
         },
         {
-            "name": "Fund Released (Lacs)",
+            "name": "Due Date",
             "type": "text",
             "isSort": "",
-            "tableRef": "fundReleased"
-        },
-        {
-            "name": "Ultization (%)",
-            "type": "text",
-            "isSort": "",
-            "tableRef": "ultilization"
-        },
-        {
-            "name": "Project Status",
-            "type": "text",
-            "isSort": "",
-            "tableRef": "projectStatus"
-        },
-        {
-            "name": "Fund Status",
-            "type": "text",
-            "isSort": "",
-            "tableRef": "fundStatus"
-        },
-        {
-            "name": "Work Status",
-            "type": "text",
-            "isSort": "",
-            "tableRef": "workStatus"
+            "tableRef": "dueDate"
         }
     ],
     "action": [{
