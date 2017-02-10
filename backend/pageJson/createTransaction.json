@@ -6,138 +6,233 @@
     "pageType": "create",
     "urlFields": ["Transaction"],
     "fields": [{
-        "name": "Transaction Name",
-        "type": "text",
-        "tableRef": "name",
-        "placeholder": "Enter Title",
-        "id": "title",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Project",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "project",
-        "placeholder": "Enter Project",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Project/search"
-    }, {
-        "name": "Installment",
-        "type": "number",
-        "tableRef": "installment",
-        "placeholder": "Enter Project",
-        "id": "name",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Sub Installment",
-        "type": "number",
-        "tableRef": "subInstallment",
-        "placeholder": "Enter Sub Installment ",
-        "id": "name",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Amount",
-        "type": "number",
-        "tableRef": "amount",
-        "placeholder": "Enter Amount",
-        "id": "name",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "From Center",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "fromCenter",
-        "placeholder": "Enter from Center",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Center/search"
-    }, {
-        "name": "From State",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "fromState",
-        "placeholder": "Enter from State",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "State/search"
-    }, {
-        "name": "From Institute",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "fromInstitute",
-        "placeholder": "Enter from Institute",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Institute/search"
-    }
-    , {
-        "name": "From Vendor",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "fromVendor",
-        "placeholder": "Enter from Vendor",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Vendor/search"
-    }
-    , {
-        "name": "To Center",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "toCenter",
-        "placeholder": "Enter to Center",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Center/search"
-    }, {
-        "name": "To State",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "toState",
-        "placeholder": "Enter to State",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "State/search"
-    }, {
-        "name": "To Institute",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "toInstitute",
-        "placeholder": "Enter to Institute",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Institute/search"
-    }, {
-        "name": "To Vendor",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "searchApi": "searchCall",
-        "tableRef": "toVendor",
-        "placeholder": "Enter to Vendor",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "Vendor/search"
-    }, {
-        "name": "Reason",
-        "type": "text",
-        "tableRef": "reason",
-        "placeholder": "Enter Reason",
-        "id": "name",
-        "validation": ["", "trim", ""],
-        "url": ""
-    },  {
+            "name": "Transaction Name",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter Title",
+            "id": "title",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
+            "name": "Components",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "components",
+            "placeholder": "Enter Components",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Components/search"
+        },
+
+
+        {
+            "name": "Project",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "project",
+            "placeholder": "Enter Project",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Project/search"
+        },
+
+
+
+        {
+            "name": "Installment no",
+            "type": "number",
+            "tableRef": "installment",
+            "placeholder": "Enter Project",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Sub Installment",
+            "type": "number",
+            "tableRef": "subInstallment",
+            "placeholder": "Enter Sub Installment ",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Amount",
+            "type": "number",
+            "tableRef": "amount",
+            "placeholder": "Enter Amount",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "From Center",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "fromCenter",
+            "placeholder": "Enter from Center",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Center/search"
+        }, {
+            "name": "From State",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "fromState",
+            "placeholder": "Enter from State",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "State/search"
+        }, {
+            "name": "From Institute",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "fromInstitute",
+            "placeholder": "Enter from Institute",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Institute/search"
+        }, {
+            "name": "From Vendor",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "fromVendor",
+            "placeholder": "Enter from Vendor",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Vendor/search"
+        }, {
+            "name": "To Center",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "toCenter",
+            "placeholder": "Enter to Center",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Center/search"
+        }, {
+            "name": "To State",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "toState",
+            "placeholder": "Enter to State",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "State/search"
+        }, {
+            "name": "To Institute",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "toInstitute",
+            "placeholder": "Enter to Institute",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Institute/search"
+        }, {
+            "name": "To Vendor",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "toVendor",
+            "placeholder": "Enter to Vendor",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Vendor/search"
+        },
+        {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "status",
+            "placeholder": "Enter Project Status",
+            "id": "status",
+            "validation": ["", "trim", ""],
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["Pending", "Completed"]
+
+        },
+
+        {
+            "name": "Type",
+            "type": "tags",
+            "tableRef": "type",
+            "placeholder": "Enter Type ",
+            "id": "type",
+            "validation": ["", "trim", ""],
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["Center To State", "State To Intitute", "Institute To Vendor", "Vendor To Institute", "Institute To State", "Institute To Center", "State To Vendor", "State To Center", "Center To Institute"]
+   
+        },
+
+        {
+            "name": "Transaction Sent",
+            "type": "date",
+            "tableRef": "transactionSent",
+            "placeholder": "Enter Transaction Sent",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+
+        {
+            "name": "Transaction Received",
+            "type": "date",
+            "tableRef": "transactionReceived",
+            "placeholder": "Enter Transaction Received",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
+            "name": "Remarks",
+            "type": "text",
+            "tableRef": "remarks",
+            "placeholder": "Enter Remarks",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "File",
+            "type": "file",
+            "tableRef": "file",
+            "option": "single",
+            "placeholder": "Enter File",
+            "id": "input1",
+            "onView": true,
+            "validation": ["", "trim", ""],
+            "url": ""
+
+        },
+        {
+            "name": "Expected Days Till Receipt",
+            "type": "text",
+            "tableRef": "expectedDaysTillReceipt",
+            "placeholder": "Enter Expected Days Till Receipt",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+
+
+        {
+            "name": "Reason",
+            "type": "text",
+            "tableRef": "reason",
+            "placeholder": "Enter Reason",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
             "name": "Photos",
             "type": "box",
             "tableRef": "photos",
@@ -164,7 +259,8 @@
 
             }]
 
-        }],
+        }
+    ],
     "action": [{
         "name": "submit",
         "action": "submitTransaction",

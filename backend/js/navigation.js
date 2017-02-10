@@ -32,6 +32,11 @@ var navigationservice = angular.module('navigationservice', [])
         sref: "#!/page/viewProject//",
         icon: "phone"
       }, {
+        name: "Project Expenses",
+        classis: "active",
+        sref: "#!/page/viewProjectexpense//",
+        icon: "phone"
+      }, {
         name: "Transaction",
         classis: "active",
         sref: "#!/page/viewTransaction//",

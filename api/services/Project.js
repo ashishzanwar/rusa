@@ -33,6 +33,65 @@ var schema = new Schema({
         index: true,
         key: "project"
     },
+    components: {
+        type: Schema.Types.ObjectId,
+        ref: 'Components',
+        index: true
+    },
+    projecttype: {
+        type: Schema.Types.ObjectId,
+        ref: 'Projecttype',
+        index: true
+    },
+    assettype: {
+        type: Schema.Types.ObjectId,
+        ref: 'Assettype',
+        index: true
+    },
+    valueOfProject: {
+        type: String
+    },
+
+
+    transaction: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true,
+        key: "project"
+    }],
+
+    photos2: [{
+        payment: {
+            photo: String
+        },
+        instageWork: {
+            photo: String
+        },
+        completedWork: {
+            photo: String
+        },
+        others: {
+            photo: String
+        }
+    }],
+    notes: [{
+            text: String,
+            timestamp: {
+                type: Date,
+                default: Date.now
+            },
+            from: {
+                type: String,
+                enum: ["fromCenter", "fromState", "fromInstitute", "fromVendor"]
+            }
+        }
+
+
+    ],
+
+    dueDate: {
+        type: Date
+    },
     title: {
         type: String
     },

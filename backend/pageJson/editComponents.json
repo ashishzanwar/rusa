@@ -6,6 +6,14 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
+            "name": "Name",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter  Component Name",
+            "id": "component",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },{
             "name": "Institute Name",
             "type": "selectFromTable",
             "dropDownType": "single",

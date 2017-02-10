@@ -29,6 +29,12 @@ var schema = new Schema({
         ref: 'Project',
         index: true
     }],
+
+     district: {
+        type: Schema.Types.ObjectId,
+        ref: 'District',
+        index: true
+    },
     institute_type: {
         type: String,
         enum: ["Central Universities",

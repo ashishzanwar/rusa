@@ -12,6 +12,35 @@ var schema = new Schema({
     name: {
         type: String
     },
+    components: {
+        type: Schema.Types.ObjectId,
+        ref: 'Components',
+        index: true
+    },
+    status: {
+        type: String,
+        enum: ["Pending", "Completed"]
+    },
+
+    type: {
+        type: String,
+        enum: ["Center To State", "State To Intitute", "Institute To Vendor", "Vendor To Institute", "Institute To State", "Institute To Center", "State To Vendor", "State To Center", "Center To Institute"]
+    },
+
+    transactionSent: {
+        type: Date
+    },
+
+    transactionReceived: {
+        type: Date
+    },
+
+    remarks: String,
+
+    file: String,
+    expectedDaysTillReceipt: String,
+
+
     project: {
         type: Schema.Types.ObjectId,
         ref: 'Project',
@@ -42,7 +71,7 @@ var schema = new Schema({
         index: true
     },
 
-        fromVendor: {
+    fromVendor: {
         type: Schema.Types.ObjectId,
         ref: 'Vendor',
         index: true
@@ -63,7 +92,7 @@ var schema = new Schema({
         ref: 'Institute',
         index: true
     },
-     toVendor: {
+    toVendor: {
         type: Schema.Types.ObjectId,
         ref: 'Vendor',
         index: true
@@ -72,7 +101,7 @@ var schema = new Schema({
     reason: {
         type: String
     },
-       photos: [{
+    photos: [{
         tags: [String],
         photo: String
     }]

@@ -1,4 +1,5 @@
 var schema = new Schema({
+    name:String,
     institute: {
         type: Schema.Types.ObjectId,
         ref: 'Institute',

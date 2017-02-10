@@ -6,6 +6,15 @@
     "pageType": "create",
     "urlFields": ["Components"],
     "fields": [{
+            "name": "Name",
+            "type": "text",
+            "tableRef": "name",
+            "placeholder": "Enter  Component Name",
+            "id": "component",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
             "name": "Institute Name",
             "type": "selectFromTable",
             "dropDownType": "single",
@@ -77,7 +86,7 @@
             "id": "tags",
             "validation": ["", "trim", ""],
             "url": ""
-        },  {
+        }, {
             "name": "Fund Delay",
             "type": "checkbox",
             "tableRef": "fundDelay",

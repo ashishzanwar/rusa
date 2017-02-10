@@ -42,7 +42,59 @@
             "id": "input1",
             "validation": ["", "trim", ""],
             "url": "Institute/search"
+        },
+
+        {
+            "name": "Components Name",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "components",
+            "placeholder": "Enter Components Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Components/search"
+        },
+        {
+            "name": "Project Type",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "projecttype",
+            "placeholder": "Enter Project Type",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Projecttype/search"
+        },
+        {
+            "name": "Asset Type",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "assettype",
+            "placeholder": "Enter Asset Type",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Assettype/search"
+        },
+        {
+            "name": "Value of Project",
+            "type": "text",
+            "tableRef": "valueOfProject",
+            "placeholder": "Enter Value of Project",
+            "id": "valueOfProject",
+            "validation": ["", "trim", ""],
+            "url": ""
         }, {
+            "name": "Due Date",
+            "type": "date",
+            "tableRef": "dueDate",
+            "placeholder": "Enter Due Date",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
             "name": "Key Component",
             "type": "text",
             "tableRef": "component",
