@@ -1,4 +1,4 @@
-@import "../../bower_components/bourbon/app/assets/stylesheets/bourbon";
+// @import "../../bower_components/bourbon/app/assets/stylesheets/bourbon";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
 @import "../../bower_components/flexslider/flexslider";
@@ -19,10 +19,6 @@ $brand-info: #000072 !default;
     font-family: 'Glyphicons Halflings';
     src: url("../fonts/glyphicons-halflings-regular.eot");
     src: url("../fonts/glyphicons-halflings-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/glyphicons-halflings-regular.woff2") format("woff2"), url("../fonts/glyphicons-halflings-regular.woff") format("woff"), url("../fonts/glyphicons-halflings-regular.ttf") format("truetype"), url("../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular") format("svg");
-}
-
-body {
-    padding-top: 70px;
 }
 
 img.loading {
@@ -124,6 +120,33 @@ footer {
 .img-full {
     width: 100%;
     display: block;
+}
+
+.section-1 {
+    background-color: #efefef;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.section-1>h4,
+.section-2>h4,
+.section-3>h4 {
+    text-transform: uppercase;
+    font-size: 22px;
+}
+
+.section-2 {
+    background-color: #ccc;
+    padding: 10px;
+}
+
+.section-3 {
+    background-color: #a9a9a9;
+    padding: 10px;
+}
+
+.inner {
+    border-top: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 @import "fancybox-override";
