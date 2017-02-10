@@ -51,7 +51,7 @@ var schema = new Schema({
     accessLevel: {
         type: String,
         default: "User",
-        enum: ['User', 'Admin']
+        enum: ['User', 'Admin','Moderator']
     },
 });
 

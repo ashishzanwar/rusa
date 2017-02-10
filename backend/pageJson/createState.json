@@ -22,6 +22,23 @@
             "id": "abbreviation",
             "validation": ["", "trim", ""],
             "url": ""
+        },
+        {
+            "name": "Centre Share",
+            "type": "number",
+            "tableRef": "centerShare",
+            "placeholder": "Enter Centre Share ",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "State Share",
+            "type": "number",
+            "tableRef": "stateShare",
+            "placeholder": "Enter State Share",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
         }
     ],
     "action": [{

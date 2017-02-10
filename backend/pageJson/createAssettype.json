@@ -1,0 +1,39 @@
+{
+    "title": "Create Asset Tsype",
+    "name": "Assettype",
+    "jsonPage": "viewAssettype",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["Assettype"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitAssettype",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewAssettype"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewAssettype"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Assettype/save"
+    }
+}

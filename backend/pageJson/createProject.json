@@ -217,7 +217,7 @@
             "dropDownType": "single",
             "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
         }, {
-            "name": "Status",
+            "name": "Sub Status",
             "type": "tags",
             "tableRef": "subStatus",
             "placeholder": "Enter Sub Status",

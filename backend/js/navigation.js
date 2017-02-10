@@ -52,6 +52,43 @@ var navigationservice = angular.module('navigationservice', [])
         classis: "active",
         sref: "#!/page/viewVendor//",
         icon: "phone"
+      },
+      {
+        name: "Components",
+        classis: "active",
+        sref: "#!/page/viewComponents//",
+        icon: "phone"
+      }
+      ,
+      {
+        name: "PAB",
+        classis: "active",
+        sref: "#!/page/viewPab//",
+        icon: "phone"
+      },
+      {
+        name: "Key Components",
+        classis: "active",
+        sref: "#!/page/viewKeycomponents//",
+        icon: "phone"
+      },
+      {
+        name: "Project Type",
+        classis: "active",
+        sref: "#!/page/viewProjecttype//",
+        icon: "phone"
+      },
+      {
+        name: "Asset type",
+        classis: "active",
+        sref: "#!/page/viewAssettype//",
+        icon: "phone"
+      },
+      {
+        name: "District",
+        classis: "active",
+        sref: "#!/page/viewDistrict//",
+        icon: "phone"
       }
     ];
 

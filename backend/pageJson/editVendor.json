@@ -50,6 +50,15 @@
             "id": "email",
             "validation": ["", "trim", "unique"],
             "url": ""
+        },
+        {
+            "name": "TIN/TAN",
+            "type": "text",
+            "tableRef": "tintan",
+            "placeholder": "Enter TIN/TAN",
+            "id": "name",
+            "validation": ["", "trim", ""],
+            "url": ""
         }
     ],
     "action": [{

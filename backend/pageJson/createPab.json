@@ -1,0 +1,39 @@
+{
+    "title": "Create PAB",
+    "name": "PAB",
+    "jsonPage": "viewPab",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["Pab"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitPab",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewPab"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewPab"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Pab/save"
+    }
+}

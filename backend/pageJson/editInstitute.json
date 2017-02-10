@@ -41,6 +41,16 @@
                 "Affiliated Colleges",
                 "Autonomous Colleges"
             ]
+        }, {
+            "name": "District",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "district",
+            "placeholder": "Enter District",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "District/search"
         }
     ],
     "action": [{

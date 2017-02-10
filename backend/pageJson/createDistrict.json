@@ -1,0 +1,49 @@
+{
+    "title": "Create District",
+    "name": "District",
+    "jsonPage": "viewDistrict",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["District"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "State Name",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "tableRef": "state",
+        "placeholder": "Enter State Name",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "State/search"
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitDistrict",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewDistrict"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewDistrict"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "District/save"
+    }
+}

@@ -32,7 +32,7 @@ var schema = new Schema({
                 ref: 'User',
                 index: true,
         }],
-
+        tintan:String
 });
 
 schema.plugin(deepPopulate, {

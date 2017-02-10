@@ -1,0 +1,114 @@
+{
+    "title": "Create Components",
+    "name": "Components",
+    "jsonPage": "viewComponents",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["Components"],
+    "fields": [{
+            "name": "Institute Name",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "institute",
+            "placeholder": "Enter Institute Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Institute/search"
+        },
+        {
+            "name": "PAB",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "pabno",
+            "placeholder": "Enter PAB ",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Pab/search"
+        },
+        {
+            "name": "Key Components",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "keycomponents",
+            "placeholder": "Enter Key Components ",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "Keycomponents/search"
+        },
+        {
+            "name": "Allocation",
+            "type": "text",
+            "tableRef": "allocation",
+            "placeholder": "Enter Allocation",
+            "id": "allocation",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "status",
+            "placeholder": "Enter Status",
+            "id": "status",
+            "validation": ["", "trim", ""],
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
+        }, {
+            "name": "Sub Status",
+            "type": "tags",
+            "tableRef": "subStatus",
+            "placeholder": "Enter Sub Status",
+            "id": "status",
+            "validation": ["", "trim", ""],
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "dropDown": ["InTime", "Delay"]
+        },
+        {
+            "name": "Tags",
+            "type": "text",
+            "tableRef": "tags",
+            "placeholder": "Enter Tags",
+            "id": "tags",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },  {
+            "name": "Fund Delay",
+            "type": "checkbox",
+            "tableRef": "fundDelay",
+            "placeholder": "Enter Fund Delay",
+            "id": "fundDelay",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }
+
+
+    ],
+    "action": [{
+        "name": "submit",
+        "action": "submitComponents",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewComponents"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewComponents"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Components/save"
+    }
+}

@@ -759,7 +759,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       ];
 
       $scope.subStatus = [
-        "InTime", "Delay"
+        "InTime", "Delay"                                                                                                                                                                                                                                                                                                             
       ];
             $scope.workStatus = [
         "InTime", "Delay"

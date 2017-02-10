@@ -1,0 +1,45 @@
+{
+    "title": "Edit Project Type",
+    "name": "Projecttype",
+    "jsonPage": "viewProjecttype",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitProjecttype",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewProjecttype"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewProjecttype"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Projecttype/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "Projecttype/getOne",
+        "params": "_id"
+    }
+
+}

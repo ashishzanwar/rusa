@@ -26,7 +26,14 @@ var schema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'Project',
                 index: true
-        }]
+        }],
+        centerShare: {
+                type: Number
+        },
+        stateShare: {
+                type: Number
+        }
+
 });
 
 schema.plugin(deepPopulate, {});
