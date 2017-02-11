@@ -1,0 +1,291 @@
+<h3>Institute Form</h3>
+<form ng-submit="">
+    <div class="section-1">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>State</label>
+                    <select class="form-control">
+                    <option value="">Please Select</option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>District</label>
+                    <select class="form-control">
+                    <option value="">Please Select</option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Institute Name</label>
+                    <select class="form-control">
+                    <option value="">Please Select</option>
+                </select>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-1">
+        <h4>Components</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>PAN No.</label>
+                    <select class="form-control">
+                    <option value="">Please Select</option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Key Component</label>
+                    <select class="form-control">
+                    <option value="">Please Select</option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Allocation(in crores)</label>
+                    <input type="text" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Center Share</label>
+                    <input type="text" class="form-control" readonly>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>State Share</label>
+                    <input type="text" class="form-control" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-1">
+        <h4>Projects</h4>
+        <div class="inner">
+            <button class="btn btn-primary pull-right" type="button" ng-click="">Add Projects</button>
+            <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
+            <h4>Project 1</h4>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Project Type</label>
+                        <select class="form-control">
+                        <option value="">Please Select</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Asset Type</label>
+                        <select class="form-control">
+                        <option value="">Please Select</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Photo 1</label>
+                        <input type="file">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Photo 2</label>
+                        <input type="file">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Value of Project</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Due Date</label>
+                        <input type="date" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="section-2">
+                <h4>Project Expense</h4>
+                <div class="inner">
+                    <button class="btn btn-primary pull-right" type="button" ng-click="">Add Project Expense</button>
+                    <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
+                    <h4>Project Expense 1</h4>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Vendor Name</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Vendor PAN</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Vendor TIN/TAN</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Allocated Amount</label>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-3">
+                    <h4>Institute to Vendor</h4>
+                    <div class="inner">
+                        <button class="btn btn-primary pull-right" type="button" ng-click="">Add Vendor</button>
+                        <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
+                        <h4>Vendor 1</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Installment No.</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Amount</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Transaction Sent</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Transaction Received</label>
+                                    <input type="date" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Remarks</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>File</label>
+                                    <input type="file">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-1">
+            <h4>Center to State</h4>
+            <div class="inner">
+                <button class="btn btn-primary pull-right" type="button" ng-click="">Add Center to state</button>
+                <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
+                <h4>Center to State 1</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Installment No.</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Transaction Sent</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Transaction Received</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-1">
+            <h4>State to Institute</h4>
+            <div class="inner">
+                <button class="btn btn-primary pull-right" type="button" ng-click="">Add State to Institute</button>
+                <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
+                <h4>State to Institute 1</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Installment No.</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Amount</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Transaction Sent</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Transaction Received</label>
+                            <input type="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Remarks</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>File</label>
+                            <input type="file">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</form>
