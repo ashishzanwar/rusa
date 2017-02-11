@@ -192,7 +192,7 @@ var model = {
                 photos: {
                     $each: [{
                         photo: data.photo,
-                        tags: data.tags
+                        types: data.types
 
                     }]
                 }
@@ -407,12 +407,8 @@ var model = {
         }, {
             $pull: {
                 photos: {
-
                     photo: data.photo,
-                    tags: data.tags
-
-
-
+                    types: data.types
                 }
             }
         }, function (err, updated) {

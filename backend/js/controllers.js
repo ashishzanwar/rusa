@@ -608,7 +608,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.projectStatus2 = [
           "Active"
         ];
-
+        $scope.Types = [
+          "Payment", "Instage Work", "Completed Work", "Others"
+        ];
 
         $scope.workStatus2 = [
           "InTime"
@@ -1773,7 +1775,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     //  END FOR EDIT
     $scope.editBoxCustomProjectPhotos = function (data) {
-
+      $scope.types = [
+        "Payment", "Instage Work", "Completed Work", "Others"
+      ];
       console.log("DATADATA", data);
       $scope.datainfo = data;
       $scope.newinfo = {};
@@ -1800,7 +1804,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.addBoxProjectImage = function (data) {
       console.log("DATADATA", data);
-
+      $scope.types = [
+        "Payment", "Instage Work", "Completed Work", "Others"
+      ];
       $scope.projectinfo = {
         _id: data
 
@@ -1874,15 +1880,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       })
 
     };
-    $scope.removeProjectPhotos = function (value, project) {
+    $scope.removeProjectPhotos = function (photo, types, id) {
+      // console.log("PROJECT IMAGE afdadfdaTA", value);
 
-      // var abc ={};
+      var abc = {};
+      abc._id = id;
+      abc.photo = photo;
+      abc.types = types
       // abc = value;
       // abc.project=project;
       // console.log("PROJECT ",project);
-      console.log("PROJECT IMAGE afdadfdaTA", value);
 
-      NavigationService.boxCall("Project/removeProjectPhotos", value, function (data) {
+
+      NavigationService.boxCall("Project/removeProjectPhotos", abc, function (data) {
         $scope.newProjectData = data.data;
         $scope.generateField = true;
         // $state.reload();
