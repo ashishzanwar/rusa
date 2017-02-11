@@ -8,23 +8,23 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>State</label>
-                    <select class="form-control">
-                    <option value="">Please Select</option>
+                    <select class="form-control" ng-model="">
+                    <option value="" ng-repeat="stateselect in allstate">Please Select</option>
                 </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>District</label>
-                    <select class="form-control">
-                    <option value="">Please Select</option>
+                    <select class="form-control" ng-model="">
+                    <option value="" ng-repeat="District in alldistrict">Please Select</option>
                 </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Institute Name</label>
-                    <select class="form-control">
+                    <select class="form-control" ng-model="">
                     <option value="">Please Select</option>
                 </select>
                 </div>
@@ -37,7 +37,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>PAN No.</label>
-                    <select class="form-control">
+                    <select class="form-control" ng-model="">
                     <option value="">Please Select</option>
                 </select>
                 </div>
@@ -45,7 +45,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Key Component</label>
-                    <select class="form-control">
+                    <select class="form-control" ng-model="">
                     <option value="">Please Select</option>
                 </select>
                 </div>
@@ -53,19 +53,19 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Allocation(in crores)</label>
-                    <input type="text" class="form-control">
+                    <input type="text" class="form-control" ng-model="">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Center Share</label>
-                    <input type="text" class="form-control" readonly>
+                    <input type="text" class="form-control" ng-model="" readonly>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>State Share</label>
-                    <input type="text" class="form-control" readonly>
+                    <input type="text" class="form-control" ng-model="" readonly>
                 </div>
             </div>
         </div>
@@ -88,7 +88,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Asset Type</label>
-                        <select class="form-control" ng-model="{{assetType_$index}}">
+                        <select class="form-control" ng-model="project.assetType">
                         <option value="">Please Select</option>
                     </select>
                     </div>
@@ -96,13 +96,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Photo 1</label>
-                        <input type="file" ng-model="{{photo1_$index}}">
+                        <input type="file" ng-model="project.photo1">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Photo 2</label>
-                        <input type="file" ng-model="{{$index}}">
+                        <input type="file" ng-model="project.photo2">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -114,7 +114,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Due Date</label>
-                        <input type="date" ng-model="{{dueDate_$index}}" class="form-control">
+                        <input type="date" ng-model="project.dueDate" class="form-control">
                     </div>
                 </div>
             </div>
@@ -128,25 +128,25 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor Name</label>
-                                <input type="text" ng-model="" class="form-control">
+                                <input type="text" ng-model="projectExpense.vendorName" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor PAN</label>
-                                <input type="text" ng-model="" class="form-control">
+                                <input type="text" ng-model="projectExpense." class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor TIN/TAN</label>
-                                <input type="text" ng-model="" class="form-control">
+                                <input type="text" ng-model="projectExpense." class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Allocated Amount</label>
-                                <input type="text" ng-model="" class="form-control">
+                                <input type="text" ng-model="projectExpense." class="form-control">
                             </div>
                         </div>
                     </div>

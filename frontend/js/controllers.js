@@ -133,6 +133,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.removeInstitute = function (index) {
             $scope.institutes.splice(index, 1);
         };
+        // console.log(allState);
 
     })
 
