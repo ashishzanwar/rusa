@@ -57,6 +57,12 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
             TemplateService.changecontent("project-detail");
           }
           break;
+        case "componentsedit":
+          {
+            console.log("IN components EDIT");
+            TemplateService.changecontent("components-detail");
+          }
+          break;
         case "centreedit":
           {
             console.log("IN Centre EDIT");
@@ -141,18 +147,18 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
       } else if (action && action.type == "projectpage") {
         console.log("IN PROJECT TYPE");
         $state.go("projectpage", sendTo);
+      } else if (action && action.type == "componentspage") {
+        console.log("IN componentspage TYPE");
+        $state.go("componentspage", sendTo);
       } else if (action && action.type == "centrepage") {
         console.log("IN Centre TYPE");
         $state.go("centrepage", sendTo);
 
-      }
-       else if (action && action.type == "vendorpage") {
+      } else if (action && action.type == "vendorpage") {
         console.log("IN Vendor TYPE");
         $state.go("vendorpage", sendTo);
 
-      }
-      
-       else if (action && action.type == "apiCallConfirm") {
+      } else if (action && action.type == "apiCallConfirm") {
         globalfunction.confDel(function (value2) {
           if (value2) {
             NavigationService.delete(action.api, value, function (data) {

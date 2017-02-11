@@ -69,5 +69,93 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Components', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+    saveComponentsPhotos: function (data, callback) {
+
+        console.log(data);
+        Components.findOneAndUpdate({
+            _id: data._id
+        }, {
+            $push: {
+
+                utilizationCertificates: {
+                    $each: [{
+                        images: data.images,
+
+                    }]
+                }
+            }
+        }).exec(function (err, found) {
+
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+    removeComponentsPhotos: function (data, callback) {
+
+        console.log("DATA", data);
+        Components.update({
+
+            "_id": data._id
+        }, {
+            $pull: {
+                utilizationCertificates: {
+
+                    images: data.images
+                }
+            }
+        }, function (err, updated) {
+            console.log(updated);
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
+
+
+                callback(null, updated);
+            }
+        });
+    },
+    findOneComponents: function (data, callback) {
+
+
+        Components.findOne({
+            _id: data._id
+        }).deepPopulate("utilizationCertificates").exec(function (err, found) {
+
+            if (err) {
+
+                callback(err, null);
+            } else {
+
+                if (found) {
+                    console.log("Found", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+
+};
 module.exports = _.assign(module.exports, exports, model);

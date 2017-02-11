@@ -23,7 +23,7 @@
         "name": "edit",
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
-        "type": "page",
+        "type": "projectexpensepage",
         "action": "editProjectExpense",
         "fieldsToSend": {
             "_id": "_id"

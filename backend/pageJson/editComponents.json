@@ -3,7 +3,7 @@
     "name": "Components",
     "jsonPage": "viewComponents",
     "desciption": "",
-    "pageType": "edit",
+    "pageType": "componentsedit",
     "urlFields": ["_id"],
     "fields": [{
             "name": "Name",

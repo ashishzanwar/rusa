@@ -5,29 +5,30 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Name",
-        "isSort": "",
-        "tableRef": "name"
-    },{
-        "name": "Allocation",
-        "isSort": "",
-        "tableRef": "allocation"
-    },
-    {
-        "name": "Status",
-        "isSort": "",
-        "tableRef": "status"
-    },
-    {
-        "name": "Sub Status",
-        "isSort": "",
-        "tableRef": "subStatus"
-    }],
+            "name": "Name",
+            "isSort": "",
+            "tableRef": "name"
+        }, {
+            "name": "Allocation",
+            "isSort": "",
+            "tableRef": "allocation"
+        },
+        {
+            "name": "Status",
+            "isSort": "",
+            "tableRef": "status"
+        },
+        {
+            "name": "Sub Status",
+            "isSort": "",
+            "tableRef": "subStatus"
+        }
+    ],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
-        "type": "page",
+        "type": "componentspage",
         "action": "editComponents",
         "fieldsToSend": {
             "_id": "_id"

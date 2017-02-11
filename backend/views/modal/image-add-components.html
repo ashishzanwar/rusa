@@ -1,0 +1,32 @@
+<form name="modalForm" ng-submit="modalOptions.submit()" class="min-hit">
+    <div class="modal-header blue-bg">
+        <div class="pull-right">
+            <a class="btn btn-clear" ng-click="$dismiss()">
+                <i class="ln-cross"></i>
+            </a>
+        </div>
+        <h5 class="modal-title">Add Photos</h5>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+
+                <div>
+                    <upload-image ng-model="projectinfo.images" ng-disabled="type.disabled" no-view="" ng-if="!type.view" class="ng-pristine ng-untouched ng-valid ng-scope ng-isolate-scope ng-empty" style="">
+                        <div class="form-group">
+                            <div class="btn-upload btn btn-primary btn-outline btn-small create-btn" ng-hide="disabled">
+                                <input id="inputImage" ng-show="!isMultiple" type="file" accept="image/*,application/pdf" image="image" title="Choose Files" class="btn-primary ng-isolate-scope">
+                                <input id="inputImage" ng-show="isMultiple" type="file" accept="image/*,application/pdf" image="image" title="Choose Multiple Files" class="btn-primary ng-isolate-scope ng-hide" onchange="angular.element(this).scope().clearOld()" multiple="" style="">
+                                <span>CHOOSE FILE</span>
+                            </div>
+                        </div>
+                    </upload-image>
+                </div>
+            </div>
+            <div class="text-center">
+                <button class="btn btn-primary btn-save " type="submit" ng-disabled="modalForm.$invalid" ng-click="saveComponentsPhotos(projectinfo)">Save</button>
+                <button class="btn btn-primary btn-danger" type="submit" ng-click="closeBox()">Cancel</button>
+            </div>
+        </div>
+</form>
+</div>
