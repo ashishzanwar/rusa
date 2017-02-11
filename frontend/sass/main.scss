@@ -123,9 +123,10 @@ footer {
 }
 
 .section-1 {
-    background-color: #efefef;
+    background-color: #ffffff;
     padding: 10px;
     margin-top: 10px;
+    border: 1px solid #eee;
 }
 
 .section-1>h4,
@@ -136,13 +137,15 @@ footer {
 }
 
 .section-2 {
-    background-color: #ccc;
+    background-color: #f5f5ff;
     padding: 10px;
+    border: 1px solid #d8d8ff;
 }
 
 .section-3 {
-    background-color: #a9a9a9;
+    background-color: rgba(255, 165, 165, 0.38);
     padding: 10px;
+    border: 1px solid #ffa5a5;
 }
 
 .inner {
