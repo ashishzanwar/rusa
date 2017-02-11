@@ -1,0 +1,76 @@
+<div ng-controller="ProjectExpenseDetailCtrl">
+    <div class="heading-sec">
+        <div class="row">
+            <div class="col-md-4 column">
+                <div class="heading-profile">
+                    <h2>{{json.json.title}}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-content">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="widget">
+                    <div class="form-elements-sec">
+                        <form name="detailForm" role="form" class="sec">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div>
+                                        <div>
+                                            <form name="detailForm" role="form" class="sec ng-pristine ng-valid">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <detail-field type="field" form="detailForm" value="item" ng-repeat="field in json.json.fields" data="data">
+                                                        </detail-field>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <a class=" btn btn-primary pull-right ml-10" ng-click="addBoxProjectExpenseImage(json.keyword._id)">Add New</a>
+                                                <span style="float:right;width:200px; "><input type="search " class="form-control" placeholder="Search... " ng-model="search.text "> </span>
+                                            </div>
+                                            <div class="sec">
+                                                <div>
+                                                    <table class="table table-input ">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>No.</th>
+                                                                <th>Images</th>
+                                                                <th width="150px ">Actions</th>
+                                                            </tr>
+                                                            <thead>
+                                                                <tr ng-repeat="photo in tableData.photos">
+                                                                    <td>{{$index+1}}</td>
+                                                                    <td>
+                                                                        <img ng-src="http://wohlig.io/api/upload/readFile?file={{photo}}"
+                                                                            style="width:150px;height:100px;"></td>
+                                                                    <td>
+                                                                        <a class="btn btn-primary" ng-click="editBoxCustomProjectExpensePhotos(photo)">
+                                                                            <i class="fa fa-pencil"></i>
+                                                                        </a>
+                                                                        <a class="btn btn-danger" ng-click="removeProjectExpensePhotos(photo,json.keyword._id)">
+                                                                            <i class="fa fa-trash"></i>
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tbody>
+                                                                </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center mt20 odd-even-button ">
+                                        <button class="btn btn-default " type="submit " ng-click="saveData(data) " ng-disabled="detailForm.$invalid ">Save</button>
+                                        <button class="btn btn-default " ng-click="onCancel(json.json.action[1].stateName) ">Cancel</button>
+                                    </div>
+                        </form>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
