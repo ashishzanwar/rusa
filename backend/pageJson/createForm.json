@@ -1,0 +1,50 @@
+{
+    "title": "Create Form",
+    "name": "Form",
+    "jsonPage": "viewForm",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["Form"],
+    "fields": [{
+        "name": "Json",
+        "type": "text",
+        "tableRef": "json",
+        "placeholder": "Enter JSON",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Status",
+        "type": "tags",
+        "tableRef": "status",
+        "placeholder": "Enter Status",
+        "id": "status",
+        "validation": ["", "trim", ""],
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "dropDown": ["Enable", "Disable"]
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitForm",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewForm"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewForm"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Form/save"
+    }
+}

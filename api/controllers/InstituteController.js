@@ -28,7 +28,7 @@ var controller = {
             })
         }
     },
- updateUser: function (req, res) {
+    updateUser: function (req, res) {
         if (req.body) {
             Institute.updateUser(req.body, res.callback);
         } else {
@@ -41,7 +41,7 @@ var controller = {
         }
     },
 
-  findOneInstituteUser: function (req, res) {
+    findOneInstituteUser: function (req, res) {
         if (req.body) {
             Institute.findOneInstituteUser(req.body, res.callback);
         } else {
@@ -80,7 +80,7 @@ var controller = {
     },
 
 
-addUserToInstitute: function (req, res) {
+    addUserToInstitute: function (req, res) {
         if (req.body) {
             Institute.addUserToInstitute(req.body, res.callback);
         } else {
@@ -93,7 +93,7 @@ addUserToInstitute: function (req, res) {
         }
     },
 
-     addNewProject: function (req, res) {
+    addNewProject: function (req, res) {
         if (req.body) {
             Project.addNewProject(req.body, res.callback);
         } else {
@@ -106,7 +106,7 @@ addUserToInstitute: function (req, res) {
         }
     },
 
-     getInstitute: function (req, res) {
+    getInstitute: function (req, res) {
         if (req.body) {
             Project.getInstitute(req.body, res.callback);
         } else {
@@ -118,7 +118,18 @@ addUserToInstitute: function (req, res) {
             })
         }
     },
-
+    findAllInstitute: function (req, res) {
+        if (req.body) {
+            Institute.findAllInstitute(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
 
 };
 module.exports = _.assign(module.exports, controller);

@@ -73,12 +73,13 @@
             "fields": [{
                 "name": "Status",
                 "type": "tags",
-                "tableRef": "status",
+                "tableRef": "types",
                 "placeholder": "Enter Status",
                 "id": "status",
                 "validation": ["", "trim", ""],
                 "url": "",
                 "dropDownField": "",
+                "onView": true,
                 "dropDownType": "single",
                 "dropDown": [
                     "Payment", "Instage Work", "Completed Work", "Others"

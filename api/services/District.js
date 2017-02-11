@@ -6,12 +6,8 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'State',
         index: true
-    },
-    district: {
-        type: Schema.Types.ObjectId,
-        ref: 'District',
-        index: true
     }
+
 
 });
 
@@ -21,5 +17,26 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('District', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+    findAllDistrict: function (data, callback) {
+        District.find({
+            state: data.state
+        }).select("name _id").exec(function (err, found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("IN  STATE FOUND", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
+};
 module.exports = _.assign(module.exports, exports, model);

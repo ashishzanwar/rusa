@@ -7,6 +7,11 @@ var navigationservice = angular.module('navigationservice', [])
 
   .factory('NavigationService', function ($http) {
     var navigation = [{
+        name: "Form",
+        classis: "active",
+        sref: "#!/page/viewForm//",
+        icon: "phone"
+      }, {
         name: "Users",
         classis: "active",
         sref: "#!/page/viewUser//",
