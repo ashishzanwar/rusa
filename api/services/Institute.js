@@ -304,5 +304,23 @@ var model = {
         });
     },
 
+
+    findAllIntitute: function (data, callback) {
+        Intitute.find().select("name _id").exec(function (err, found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("IN  STATE FOUND", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
 };
 module.exports = _.assign(module.exports, exports, model);

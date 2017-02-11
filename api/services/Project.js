@@ -127,7 +127,23 @@ module.exports = mongoose.model('Project', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction components', 'user institute state transaction components'));
 var model = {
-
+    findAllProject: function (data, callback) {
+        Project.find().select("name _id").exec(function (err, found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("IN  STATE FOUND", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
     saveProject: function (data, callback) {
         var myprojectdata = data;
         console.log("Data in ADD PROJECT", data);
