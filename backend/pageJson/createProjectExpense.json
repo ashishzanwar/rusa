@@ -53,6 +53,19 @@
             "id": "workcompletedpercent",
             "validation": ["", "trim", ""],
             "url": ""
+        },
+        {
+
+            "name": "Photos",
+            "type": "image",
+            "size": "100 x 100",
+            "option": "multiple",
+            "tableRef": "photos",
+            "placeholder": "Enter Photo",
+            "id": "input1",
+            "onView": true,
+            "validation": ["", "trim", ""],
+            "url": ""
         }
 
     ],

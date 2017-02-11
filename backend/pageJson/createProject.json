@@ -71,14 +71,18 @@
             "validation": ["", "trim", ""],
             "onView": true,
             "fields": [{
-                "onView": true,
-                "name": "Tags",
-                "type": "text",
-                "tableRef": "tags",
-                "placeholder": "Enter Tags",
-                "id": "tag",
+                "name": "Status",
+                "type": "tags",
+                "tableRef": "status",
+                "placeholder": "Enter Status",
+                "id": "status",
                 "validation": ["", "trim", ""],
-                "url": ""
+                "url": "",
+                "dropDownField": "",
+                "dropDownType": "single",
+                "dropDown": [
+                    "Payment", "Instage Work", "Completed Work", "Others"
+                ]
             }, {
 
                 "name": "Image",
