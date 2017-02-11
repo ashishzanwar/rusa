@@ -3,7 +3,7 @@
     "name": "ProjectExpense",
     "jsonPage": "viewProjectExpense",
     "desciption": "",
-    "pageType": "edit",
+    "pageType": "projectexpenseedit",
     "urlFields": ["_id"],
     "fields": [{
             "name": "Project",
@@ -48,7 +48,7 @@
         {
             "name": "Work Completed Percent",
             "type": "number",
-            "tableRef": "workcompletedpercent",
+            "tableRef": "workCompletedPercent",
             "placeholder": "Enter Work Completed Percent",
             "id": "workcompletedpercent",
             "validation": ["", "trim", ""],

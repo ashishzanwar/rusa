@@ -59,6 +59,12 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
       templateUrl: "views/template.html",
       controller: 'CustomStatePageJsonCtrl'
     })
+
+    .state('projectexpensepage', {
+      url: "/page/:id/{page:.*}/{keyword:.*}",
+      templateUrl: "views/template.html",
+      controller: 'CustomStatePageJsonCtrl'
+    })
     .state('componentspage', {
       url: "/page/:id/{page:.*}/{keyword:.*}",
       templateUrl: "views/template.html",

@@ -48,7 +48,7 @@
         {
             "name": "Work Completed Percent",
             "type": "number",
-            "tableRef": "workcompletedpercent",
+            "tableRef": "workCompletedPercent",
             "placeholder": "Enter Work Completed Percent",
             "id": "workcompletedpercent",
             "validation": ["", "trim", ""],
