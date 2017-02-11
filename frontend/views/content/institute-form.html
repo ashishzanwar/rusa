@@ -1,8 +1,11 @@
+<div class="pull-right btn-form">
+    <button class="btn btn-primary" ng-disabled="formName.$invalid">Submit</button>
+</div>
 <h3>Institute Form</h3>
-<form ng-submit="">
+<form ng-submit="submitForm(formData);" ng-if="!formSubmitted">
     <div class="section-1">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>State</label>
                     <select class="form-control">
@@ -10,7 +13,7 @@
                 </select>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>District</label>
                     <select class="form-control">
@@ -18,7 +21,7 @@
                 </select>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Institute Name</label>
                     <select class="form-control">
@@ -31,7 +34,7 @@
     <div class="section-1">
         <h4>Components</h4>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>PAN No.</label>
                     <select class="form-control">
@@ -39,7 +42,7 @@
                 </select>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Key Component</label>
                     <select class="form-control">
@@ -47,19 +50,19 @@
                 </select>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Allocation(in crores)</label>
                     <input type="text" class="form-control">
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>Center Share</label>
                     <input type="text" class="form-control" readonly>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-4">
                 <div class="form-group">
                     <label>State Share</label>
                     <input type="text" class="form-control" readonly>
@@ -69,223 +72,227 @@
     </div>
     <div class="section-1">
         <h4>Projects</h4>
-        <div class="inner">
-            <button class="btn btn-primary pull-right" type="button" ng-click="">Add Projects</button>
-            <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
-            <h4>Project 1</h4>
+        <div class="inner" ng-repeat="project in projects track by $index">
+            <button class="btn btn-primary pull-right" type="button" ng-click="addNewProject($index)">Add Projects</button>
+            <button class="btn btn-danger pull-right" type="button" ng-click="removeProject($index)">-</button>
+            <h4>{{project.name}}</h4>
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Project Type</label>
-                        <select class="form-control">
+                        <select class="form-control" ng-model="project.projectType">
                         <option value="">Please Select</option>
                     </select>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Asset Type</label>
-                        <select class="form-control">
+                        <select class="form-control" ng-model="{{assetType_$index}}">
                         <option value="">Please Select</option>
                     </select>
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Photo 1</label>
-                        <input type="file">
+                        <input type="file" ng-model="{{photo1_$index}}">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Photo 2</label>
-                        <input type="file">
+                        <input type="file" ng-model="{{$index}}">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Value of Project</label>
-                        <input type="text" class="form-control">
+                        <input type="text" ng-model="project.valueProject" class="form-control">
                     </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <div class="form-group">
                         <label>Due Date</label>
-                        <input type="date" class="form-control">
+                        <input type="date" ng-model="{{dueDate_$index}}" class="form-control">
                     </div>
                 </div>
             </div>
             <div class="section-2">
                 <h4>Project Expense</h4>
-                <div class="inner">
-                    <button class="btn btn-primary pull-right" type="button" ng-click="">Add Project Expense</button>
-                    <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
-                    <h4>Project Expense 1</h4>
+                <div class="inner" ng-repeat="projectExpense in project.projectExpenses track by $index">
+                    <button class="btn btn-primary pull-right" type="button" ng-click="addNewProjectExpense(project.projectExpenses)">Add Project Expense</button>
+                    <button class="btn btn-danger pull-right" type="button" ng-click="removeProjectExpense(project.projectExpenses,$index)">-</button>
+                    <h4>{{projectExpense.name}}</h4>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor Name</label>
-                                <input type="text" class="form-control">
+                                <input type="text" ng-model="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor PAN</label>
-                                <input type="text" class="form-control">
+                                <input type="text" ng-model="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor TIN/TAN</label>
-                                <input type="text" class="form-control">
+                                <input type="text" ng-model="" class="form-control">
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <div class="form-group">
                                 <label>Allocated Amount</label>
-                                <input type="text" class="form-control">
+                                <input type="text" ng-model="" class="form-control">
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="section-3">
-                    <h4>Institute to Vendor</h4>
-                    <div class="inner">
-                        <button class="btn btn-primary pull-right" type="button" ng-click="">Add Vendor</button>
-                        <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
-                        <h4>Vendor 1</h4>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Installment No.</label>
-                                    <input type="text" class="form-control">
+                    <div class="section-3">
+                        <h4>Institute to Vendor</h4>
+                        <div class="inner" ng-repeat="institutetoVendor in projectExpense.institutetoVendors track by $index">
+                            <button class="btn btn-primary pull-right" type="button" ng-click=" addNewinstitutetoVendors(projectExpense.institutetoVendors)">Add Vendor</button>
+                            <button class="btn btn-danger pull-right" type="button" ng-click="removeinstitutetoVendors(projectExpense.institutetoVendors,$index)">-</button>
+                            <h4>{{institutetoVendor.name}}</h4>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Installment No.</label>
+                                        <input type="text" ng-model="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Amount</label>
+                                        <input type="text" ng-model="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Transaction Sent</label>
+                                        <input type="date" ng-model="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Transaction Received</label>
+                                        <input type="date" ng-model="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Remarks</label>
+                                        <input type="text" ng-model="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>File</label>
+                                        <input type="file" ng-model="">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Amount</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Transaction Sent</label>
-                                    <input type="date" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Transaction Received</label>
-                                    <input type="date" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>Remarks</label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label>File</label>
-                                    <input type="file">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="section-1">
-            <h4>Center to State</h4>
-            <div class="inner">
-                <button class="btn btn-primary pull-right" type="button" ng-click="">Add Center to state</button>
-                <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
-                <h4>Center to State 1</h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Installment No.</label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Amount</label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Transaction Sent</label>
-                            <input type="date" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Transaction Received</label>
-                            <input type="date" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Remarks</label>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>File</label>
-                            <input type="file">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="section-1">
-            <h4>State to Institute</h4>
-            <div class="inner">
-                <button class="btn btn-primary pull-right" type="button" ng-click="">Add State to Institute</button>
-                <button class="btn btn-danger pull-right" type="button" ng-click="">-</button>
-                <h4>State to Institute 1</h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Installment No.</label>
-                            <input type="text" class="form-control">
-                        </div>
+    </div>
+    <div class="section-1">
+        <h4>Center to State</h4>
+        <div class="inner" ng-repeat="state in states track by $index">
+            <button class="btn btn-primary pull-right" type="button" ng-click="addNewState($index)">Add Center to state</button>
+            <button class="btn btn-danger pull-right" type="button" ng-click="removeStater($index)">-</button>
+            <h4>{{state.name}}</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Installment No.</label>
+                        <input type="text" ng-model="" class="form-control">
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Amount</label>
-                            <input type="text" class="form-control">
-                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" ng-model="" class="form-control">
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Transaction Sent</label>
-                            <input type="date" class="form-control">
-                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Transaction Sent</label>
+                        <input type="date" ng-model="" class="form-control">
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Transaction Received</label>
-                            <input type="date" class="form-control">
-                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Transaction Received</label>
+                        <input type="date" ng-model="" class="form-control">
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>Remarks</label>
-                            <input type="text" class="form-control">
-                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <input type="text" ng-model="" class="form-control">
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <label>File</label>
-                            <input type="file">
-                        </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>File</label>
+                        <input type="file" ng-model="">
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="section-1">
+        <h4>State to Institute</h4>
+        <div class="inner" ng-repeat="institute in institutes track by $index">
+            <button class="btn btn-primary pull-right" type="button" ng-click="addNewInstitute($index)">Add State to Institute</button>
+            <button class="btn btn-danger pull-right" type="button" ng-click="removeInstitute($index)">-</button>
+            <h4>{{institute.name}}</h4>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Installment No.</label>
+                        <input type="text" ng-model="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Amount</label>
+                        <input type="text" ng-model="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Transaction Sent</label>
+                        <input type="date" ng-model="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Transaction Received</label>
+                        <input type="date" ng-model="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <input type="text" ng-model="" class="form-control">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>File</label>
+                        <input type="file" ng-model="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center btn-form">
+        <button class="btn btn-primary" ng-disabled="formName.$invalid">Submit</button>
+    </div>
 </form>
