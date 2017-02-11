@@ -58,7 +58,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             assetType: "assetType",
             photo1: "photo1",
             photo2: "photo2",
-            valueProject: "valueProject",
+            valueProject: "",
             dueDate: "dueDate",
             projectExpenses: [projectExpenses],
         }
