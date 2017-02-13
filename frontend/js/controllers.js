@@ -150,14 +150,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             // var abc = data.toString();
 
 
-            var abc = JSON.parse(data)
+            // var abc = JSON.parse(data);
 
-            json.json = abc;
-            NavigationService.apiCall("Form/save", json, function (data) {
-                // $scope.districtData = data.data;
-                $scope.generateField = true;
+            json.json = data;
+            // NavigationService.apiCall("Form/save", json, function (data) {
+            //     // $scope.districtData = data.data;
+            //     $scope.generateField = true;
 
-            });
+            // });
 
 
         };
