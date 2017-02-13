@@ -1,9 +1,4 @@
-// var imgurl = adminurl + "upload/";
-// var imgpath = adminurl + "upload/readFile";
-// var uploadurl = adminurl + "upload/";
-
 var imgurl = adminurl + "upload/";
-
 var imgpath = imgurl + "readFile";
 var uploadurl = imgurl;
 

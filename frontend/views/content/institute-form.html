@@ -100,8 +100,11 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Photo 1</label>
-                        <input type="file" ng-model="formData.photo1[$index]">
+                        <!--<input type="file" ng-model="formData.photo1[$index]">-->
+                        <upload-image ng-model="formData.photo1[$index]" required>
+                        </upload-image>
                     </div>
+                    {{formData.photo1[$index]}}
                 </div>
                 <!--<upload-image ng-model="careerData.resume" required>
                 </upload-image>-->
