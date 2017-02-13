@@ -1,31 +1,32 @@
 <div class="pull-right btn-form">
     <button class="btn btn-primary" ng-disabled="formName.$invalid">Submit</button>
 </div>
-<h3>Institute Form</h3>
+<h3>Institute Form</h3>{{formData}} FORMaaaaaaaaaaa
 <form ng-submit="submitForm(formData);" ng-if="!formSubmitted">
     <div class="section-1">
-        <div class="row">
+        <div class="row">{{formData}} FORMaaaaaaaaaaa
             <div class="col-md-4">
                 <div class="form-group">
                     <label>State</label>
-                    <select class="form-control" ng-model="">
-                    <option value="" ng-repeat="stateselect in allstate">Please Select</option>
+                    <select class="form-control" ng-model="formData.stateId" ng-change="searchData(formData.stateId);">
+                    <option value="{{name._id}}" ng-repeat="name in stateData">{{name.name}}</option>
+                 
                 </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>District</label>
-                    <select class="form-control" ng-model="">
-                    <option value="" ng-repeat="District in alldistrict">Please Select</option>
+                    <select class="form-control" ng-model="formData.districtId" ng-change="createDistrict(districtId);">
+                    <option value="{{name._id}}" ng-repeat="name in districtData">{{name.name}}</option>
                 </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Institute Name</label>
-                    <select class="form-control" ng-model="">
-                    <option value="">Please Select</option>
+                    <select class="form-control" ng-model="formData.instituteId" ng-change="createInstitute(instituteId);">
+                    <option value="{{name._id}}" ng-repeat="name in instituteData">{{name.name}}</option>
                 </select>
                 </div>
             </div>
@@ -36,36 +37,36 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>PAN No.</label>
-                    <select class="form-control" ng-model="">
-                    <option value="">Please Select</option>
+                    <label>PAB No.</label>
+                    <select class="form-control" ng-model="formData.pabId" ng-change="createPab(pabId);">
+                    <option value="{{name._id}}" ng-repeat="name in pabData">{{name.name}}</option>
                 </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Key Component</label>
-                    <select class="form-control" ng-model="">
-                    <option value="">Please Select</option>
+                    <select class="form-control" ng-model="formData.keycomponentsId" ng-change="createKeyComponents(keycomponentsId);">
+                    <option value="{{name._id}}" ng-repeat="name in keycomponentsData">{{name.name}}</option>
                 </select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Allocation(in crores)</label>
-                    <input type="text" class="form-control" ng-model="">
+                    <input type="number" class="form-control" ng-model="formData.allocation">
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Center Share</label>
-                    <input type="text" class="form-control" ng-model="" readonly>
+                    <input type="text" class="form-control" ng-model="centerShare" readonly>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>State Share</label>
-                    <input type="text" class="form-control" ng-model="" readonly>
+                    <input type="text" class="form-control" ng-model="stateShare" readonly>
                 </div>
             </div>
         </div>
@@ -76,45 +77,52 @@
             <button class="btn btn-primary pull-right" type="button" ng-click="addNewProject($index)">Add Projects</button>
             <button class="btn btn-danger pull-right" type="button" ng-click="removeProject($index)">-</button>
             <h4>{{project.name}}</h4>
-            <div class="row">
+            <div class="row">{{formData}}dfsdf
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Project Type</label>
-                        <select class="form-control" ng-model="project.projectType">
-                        <option value="">Please Select</option>
+                        <select class="form-control" ng-model="formData.projectTypeId[$index]" ng-change="createProjectType(formData.projectTypeId);">
+                    <option value="{{name._id}}" ng-repeat="name in projectType">{{name.name}}</option>
                     </select>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Asset Type</label>
-                        <select class="form-control" ng-model="project.assetType">
-                        <option value="">Please Select</option>
+                        <select class="form-control" ng-model="formData.assetTypeId[$index]" ng-change="createAssetType(formData.assetTypeId);">
+                    <option value="{{name._id}}" ng-repeat="name in assetType">{{name.name}}</option>
                     </select>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Photo 1</label>
-                        <input type="file" ng-model="project.photo1">
+                        <input type="file" ng-model="formData.photo1[$index]">
                     </div>
                 </div>
+                <upload-image ng-model="careerData.resume" required>
+                </upload-image>
+                <!---->cvxcvvzcxvzcvzcxvzcvzcv
+                <upload-image ng-model="formData.photo3[$index]">
+                </upload-image>
+                {{formData.photo3[$index]}} upload pic
+                <!---->
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Photo 2</label>
-                        <input type="file" ng-model="project.photo2">
+                        <input type="file" ng-model="formData.photo2[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Value of Project</label>
-                        <input type="text" ng-model="project.valueProject" class="form-control">
+                        <input type="text" ng-model="formData.valueProject[$index]" class="form-control">
                     </div>
-                </div>
+                </div>{{formData.project[$index].valueProject}}fdsaaf
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Due Date</label>
-                        <input type="date" ng-model="project.dueDate" class="form-control">
+                        <input type="date" ng-model="formData.dueDate[$index]" class="form-control">
                     </div>
                 </div>
             </div>
@@ -128,25 +136,25 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor Name</label>
-                                <input type="text" ng-model="projectExpense.vendorName" class="form-control">
+                                <input type="text" ng-model="formData.vendorname[$index]" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor PAN</label>
-                                <input type="text" ng-model="projectExpense." class="form-control">
+                                <input type="text" ng-model="formData.vendorpan[$index]" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor TIN/TAN</label>
-                                <input type="text" ng-model="projectExpense." class="form-control">
+                                <input type="text" ng-model="formData.tintan[$index]" class="form-control">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Allocated Amount</label>
-                                <input type="text" ng-model="projectExpense." class="form-control">
+                                <input type="text" ng-model="formData.allocatedamount[$index]" class="form-control">
                             </div>
                         </div>
                     </div>
@@ -160,37 +168,37 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Installment No.</label>
-                                        <input type="text" ng-model="" class="form-control">
+                                        <input type="text" class="form-control" ng-model="formData.instituteTovendor_installmentno[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Amount</label>
-                                        <input type="text" ng-model="" class="form-control">
+                                        <input type="text" class="form-control" ng-model="formData.instituteTovendor_amount[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Transaction Sent</label>
-                                        <input type="date" ng-model="" class="form-control">
+                                        <input type="date" class="form-control" ng-model="formData.instituteTovendor_transactionSent[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Transaction Received</label>
-                                        <input type="date" ng-model="" class="form-control">
+                                        <label>Transaction Recieved</label>
+                                        <input type="date" class="form-control" ng-model="formData.instituteTovendor_transactionRecieved[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Remarks</label>
-                                        <input type="text" ng-model="" class="form-control">
+                                        <input type="text" class="form-control" ng-model="formData.instituteTovendor_remarks[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>File</label>
-                                        <input type="file" ng-model="">
+                                        <input type="file" ng-model="formData.instituteTovendor_file[$index]">
                                     </div>
                                 </div>
                             </div>
@@ -210,37 +218,37 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Installment No.</label>
-                        <input type="text" ng-model="" class="form-control">
+                        <input type="text" class="form-control" ng-model="formData.centerToState_installmentno[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" ng-model="" class="form-control">
+                        <input type="text" class="form-control" ng-model="formData.centerToState_amount[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Sent</label>
-                        <input type="date" ng-model="" class="form-control">
+                        <input type="date" class="form-control" ng-model="formData.centerToState_transactionSent[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Received</label>
-                        <input type="date" ng-model="" class="form-control">
+                        <input type="date" class="form-control" ng-model="formData.centerToState_transactionRecieved[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" ng-model="" class="form-control">
+                        <input type="text" class="form-control" ng-model="formData.centerToState_remarks[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>File</label>
-                        <input type="file" ng-model="">
+                        <input type="file" ng-model="formData.centerToState_file[$index]">
                     </div>
                 </div>
             </div>
@@ -256,37 +264,37 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Installment No.</label>
-                        <input type="text" ng-model="" class="form-control">
+                        <input type="text" class="form-control" ng-model="formData.stateToIntitute_installmentno[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" ng-model="" class="form-control">
+                        <input type="text" class="form-control" ng-model="formData.stateToIntitute_amount[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Sent</label>
-                        <input type="date" ng-model="" class="form-control">
+                        <input type="date" class="form-control" ng-model="formData.stateToIntitute_transactionSent[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Received</label>
-                        <input type="date" ng-model="" class="form-control">
+                        <input type="date" class="form-control" ng-model="formData.stateToIntitute_transactionRecieved[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" ng-model="" class="form-control">
+                        <input type="text" class="form-control" ng-model="formData.stateToIntitute_remarks[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>File</label>
-                        <input type="file" ng-model="">
+                        <input type="file" ng-model="formdata.stateToIntitute_file[$index]">
                     </div>
                 </div>
             </div>

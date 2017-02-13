@@ -13,6 +13,17 @@
             "id": "name",
             "validation": ["", "trim", ""],
             "url": ""
+        },
+        {
+            "name": "District",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "district",
+            "placeholder": "Enter District-Name",
+            "id": "input1",
+            "validation": ["", "trim", ""],
+            "url": "District/search"
         }, {
             "name": "State",
             "type": "selectFromTable",

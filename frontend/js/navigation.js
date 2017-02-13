@@ -1,6 +1,15 @@
+// var imgurl = adminurl + "upload/";
+// var imgpath = adminurl + "upload/readFile";
+// var uploadurl = adminurl + "upload/";
+
+var imgurl = adminurl + "upload/";
+
+var imgpath = imgurl + "readFile";
+var uploadurl = imgurl;
+
 var navigationservice = angular.module('navigationservice', [])
 
-    .factory('NavigationService', function () {
+    .factory('NavigationService', function ($http) {
         var navigation = [{
             name: "Home",
             classis: "active",
@@ -38,6 +47,20 @@ var navigationservice = angular.module('navigationservice', [])
                     method: 'POST',
                     withCredentials: true,
                 }).then(callback);
+            },
+
+            boxCall: function (url, callback) {
+                $http.post(adminurl + url).then(function (data) {
+                    data = data.data;
+                    callback(data);
+                });
+            },
+            apiCall: function (url, formData, callback) {
+                $http.post(adminurl + url, formData).then(function (data) {
+                    console.log('inside Navvvvvvvi', data);
+                    data = data.data;
+                    callback(data);
+                });
             },
 
         };

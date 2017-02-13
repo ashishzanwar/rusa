@@ -179,6 +179,25 @@ var model = {
                         }
                 })
         },
+        findOneSelectedState: function (data, callback) {
+                State.findOne({
+                        _id: data.state
+                }).select("centerShare stateShare").exec(function (err, found) {
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+                                if (found) {
+                                        console.log("IN  STATE FOUND", found);
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+                })
+        },
 
 
         updateUser: function (data, callback) {

@@ -41,7 +41,7 @@ var controller = {
         }
     },
 
-    
+
 
 
     addUserToState: function (req, res) {
@@ -70,6 +70,21 @@ var controller = {
             })
         }
     },
+    findOneSelectedState: function (req, res) {
+        if (req.body) {
+            State.findOneSelectedState(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+
+
+
     findInstitute: function (req, res) {
         if (req.body) {
             Institute.findInstitute(req.body, res.callback);

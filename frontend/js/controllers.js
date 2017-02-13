@@ -33,6 +33,137 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.menutitle = NavigationService.makeactive("Institute Form"); //This is the Title of the Website
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.stateData;
+        $scope.districtData;
+        $scope.instituteData;
+        $scope.keycomponentsData;
+        $scope.pabData;
+        $scope.centerShare;
+        $scope.stateShare;
+        $scope.projectType;
+        $scope.assetType;
+        $scope.allocation;
+        $scope.JSON = {};
+        $scope.formData;
+
+
+
+        NavigationService.boxCall("State/findAllState", function (data) {
+            $scope.stateData = data.data;
+            $scope.generateField = true;
+
+        });
+
+        NavigationService.boxCall("District/findAllDistrict", function (data) {
+            $scope.districtData = data.data;
+            $scope.generateField = true;
+
+        });
+
+        NavigationService.boxCall("Institute/findAllInstitute", function (data) {
+            $scope.instituteData = data.data;
+            $scope.generateField = true;
+
+        });
+
+
+        NavigationService.boxCall("Keycomponents/findAllKeycomponents", function (data) {
+            $scope.keycomponentsData = data.data;
+            $scope.generateField = true;
+
+        });
+
+        NavigationService.boxCall("Pab/findAllPab", function (data) {
+            $scope.pabData = data.data;
+            $scope.generateField = true;
+
+        });
+        NavigationService.boxCall("ProjectType/findAllProjectType", function (data) {
+            $scope.projectType = data.data;
+            $scope.generateField = true;
+
+        });
+        NavigationService.boxCall("AssetType/findAllAssetType", function (data) {
+            $scope.assetType = data.data;
+            $scope.generateField = true;
+
+        });
+
+        $scope.searchData = function (data) {
+            console.log("data", data);
+            state = {};
+            state.state = data;
+
+            NavigationService.apiCall("District/findAllDistrict", state, function (data) {
+                $scope.districtData = data.data;
+                $scope.generateField = true;
+
+            });
+
+
+            NavigationService.apiCall("State/findOneSelectedState", state, function (data) {
+                // $scope.districtData = data.data;
+                // console.log("console", data.data);
+                // console.log(data.data.centerShare);
+                // console.log(data.data.stateShare);
+                $scope.centerShare = data.data.centerShare;
+                $scope.stateShare = data.data.stateShare;
+
+                $scope.generateField = true;
+
+            });
+
+
+            JSON.state = data;
+        }
+        $scope.createDistrict = function (data) {
+            JSON.district = data;
+        };
+        $scope.createInstitute = function (data) {
+            JSON.institute = data;
+        };
+        $scope.createPab = function (data) {
+            JSON.pab = data;
+        };
+        $scope.createKeyComponents = function (data) {
+            JSON.keycomponents = data;
+        };
+        $scope.createAllocation = function (data) {
+            JSON.allocation = data;
+        };
+        $scope.createProjectType = function (data) {
+            JSON.projectType = data;
+        };
+        $scope.createAssetType = function (data) {
+            JSON.assetType = data;
+            console.log("JSON", JSON);
+        };
+
+
+        $scope.submitForm = function (data) {
+            // JSON.assetType = data;
+            console.log("FINAL BIG JSOn", data);
+            // var jsonData = {};
+            // jsonData.json = data;
+            json = {};
+
+            // var abc = data.toString();
+
+
+            var abc = JSON.parse(data)
+
+            json.json = abc;
+            NavigationService.apiCall("Form/save", json, function (data) {
+                // $scope.districtData = data.data;
+                $scope.generateField = true;
+
+            });
+
+
+        };
+
+
+
         var institutetoVendors = {
             vendorName: "Vendor1",
             installmentNo: "installmentNo",
@@ -93,9 +224,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             console.log(arry, 'deleted');
         };
 
-
-
-
         var state = {
             name: "Center to State 1",
             installmentNo: "installmentNo",
@@ -105,7 +233,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             remarks: "remarks",
             file: "file"
         };
-        $scope.states = [state]
+        $scope.states = [state];
         $scope.addNewState = function (index) {
             $scope.states.push(state);
         };
