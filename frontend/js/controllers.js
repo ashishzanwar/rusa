@@ -198,7 +198,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.projects = [project];
 
         $scope.addNewProject = function (index) {
-            $scope.projects.push(project);
+            $scope.projects.push(_.cloneDeep(project));
         };
         $scope.removeProject = function (index) {
             $scope.projects.splice(index, 1);
@@ -206,7 +206,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
         $scope.addNewProjectExpense = function (arr) {
-            arr.push(projectExpenses);
+            arr.push(_.cloneDeep(projectExpenses));
         };
         $scope.removeProjectExpense = function (arry, index) {
             console.log(arry, 'deleted');
