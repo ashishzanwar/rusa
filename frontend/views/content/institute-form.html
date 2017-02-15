@@ -2,12 +2,11 @@
     <button class="btn btn-primary" ng-disabled="formName.$invalid">Submit</button>
 </div>
 <h3>Institute Form</h3>
-<!--{{formData}} FORMaaaaaaaaaaa-->
 <form ng-submit="submitForm(formData);" ng-if="!formSubmitted">
     <div class="section-1">
         <div class="row">
             <!--{{formData}} FORMaaaaaaaaaaa-->
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label>State</label>
                     <select class="form-control" ng-model="formData.stateId" ng-change="searchData(formData.stateId);">
@@ -16,19 +15,33 @@
                 </select>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label>District</label>
-                    <select class="form-control" ng-model="formData.districtId" ng-change="createDistrict(districtId);">
+                    <select class="form-control" ng-model="formData.districtId" ng-change="createDistrict(formData.districtId);">
                     <option value="{{name._id}}" ng-repeat="name in districtData">{{name.name}}</option>
                 </select>
                 </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
                 <div class="form-group">
                     <label>Institute Name</label>
                     <select class="form-control" ng-model="formData.instituteId" ng-change="createInstitute(instituteId);">
                     <option value="{{name._id}}" ng-repeat="name in instituteData">{{name.name}}</option>
+                </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Institute Type</label>
+                    <select class="form-control" ng-model="formData.instituteType" ng-change="createInstitute(instituteId);">
+                    <option value="Central Universities" >Central Universities</option>
+                    <option value="State Universities" >State Universities</option>
+                    <option value="Institutes of National Importance" >Institutes of National Importance</option>
+                    <option value="Deemed to be Universities" >Deemed to be Universities</option>
+                    <option value="Affiliated Colleges" >Affiliated Colleges</option>
+                  <option value="Autonomous Colleges" >Autonomous Colleges</option>
+               
                 </select>
                 </div>
             </div>
@@ -72,7 +85,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>{{formData}} FORMaaaaaaaaaaa
     <div class="section-1">
         <h4>Projects</h4>
         <div class="inner" ng-repeat="project in projects track by $index">
@@ -135,7 +148,7 @@
             </div>
             <div class="section-2">
                 <h4>Project Expense</h4>
-                <div class="inner" ng-repeat="projectExpense in project.projectExpenses track by $index">
+                <div class="inner" ng-repeat="projectExpense in project.projectExpenses track by $index" ng-init="outer=$index">
                     <button class="btn btn-primary pull-right" type="button" ng-click="addNewProjectExpense(project.projectExpenses)">Add Project Expense</button>
                     <button class="btn btn-danger pull-right" type="button" ng-click="removeProjectExpense(project.projectExpenses,$index)">-</button>
                     <h4>{{projectExpense.name}}</h4>
@@ -175,37 +188,37 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Installment No.</label>
-                                        <input type="text" class="form-control" ng-model="formData.instituteTovendor_installmentno[$index]">
+                                        <input type="text" class="form-control" ng-model="formData[outer].instituteTovendor_installmentno[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Amount</label>
-                                        <input type="text" class="form-control" ng-model="formData.instituteTovendor_amount[$index]">
+                                        <input type="text" class="form-control" ng-model="formData[outer].instituteTovendor_amount[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Transaction Sent</label>
-                                        <input type="date" class="form-control" ng-model="formData.instituteTovendor_transactionSent[$index]">
+                                        <input type="date" class="form-control" ng-model="formData[outer].instituteTovendor_transactionSent[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Transaction Recieved</label>
-                                        <input type="date" class="form-control" ng-model="formData.instituteTovendor_transactionRecieved[$index]">
+                                        <input type="date" class="form-control" ng-model="formData[outer].instituteTovendor_transactionRecieved[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Remarks</label>
-                                        <input type="text" class="form-control" ng-model="formData.instituteTovendor_remarks[$index]">
+                                        <input type="text" class="form-control" ng-model="formData[outer].instituteTovendor_remarks[$index]">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>File</label>
-                                        <input type="file" ng-model="formData.instituteTovendor_file[$index]">
+                                        <input type="file" ng-model="formData[outer].instituteTovendor_file[$index]">
                                     </div>
                                 </div>
                             </div>
@@ -217,7 +230,7 @@
     </div>
     <div class="section-1">
         <h4>Center to State</h4>
-        <div class="inner" ng-repeat="state in states track by $index">
+        <div class="inner" ng-repeat="state in states track by $index" ng-init="inner=$index">
             <button class="btn btn-primary pull-right" type="button" ng-click="addNewState($index)">Add Center to state</button>
             <button class="btn btn-danger pull-right" type="button" ng-click="removeStater($index)">-</button>
             <h4>{{state.name}}</h4>
@@ -225,37 +238,37 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Installment No.</label>
-                        <input type="text" class="form-control" ng-model="formData.centerToState_installmentno[$index]">
+                        <input type="text" class="form-control" ng-model="formData[inner].centerToState_installmentno[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" class="form-control" ng-model="formData.centerToState_amount[$index]">
+                        <input type="text" class="form-control" ng-model="formData[inner].centerToState_amount[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Sent</label>
-                        <input type="date" class="form-control" ng-model="formData.centerToState_transactionSent[$index]">
+                        <input type="date" class="form-control" ng-model="formData[inner].centerToState_transactionSent[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Received</label>
-                        <input type="date" class="form-control" ng-model="formData.centerToState_transactionRecieved[$index]">
+                        <input type="date" class="form-control" ng-model="formData[inner].centerToState_transactionRecieved[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" ng-model="formData.centerToState_remarks[$index]">
+                        <input type="text" class="form-control" ng-model="formData[inner].centerToState_remarks[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>File</label>
-                        <input type="file" ng-model="formData.centerToState_file[$index]">
+                        <input type="file" ng-model="formData[inner].centerToState_file[$index]">
                     </div>
                 </div>
             </div>
@@ -263,7 +276,7 @@
     </div>
     <div class="section-1">
         <h4>State to Institute</h4>
-        <div class="inner" ng-repeat="institute in institutes track by $index">
+        <div class="inner" ng-repeat="institute in institutes track by $index" ng-init="innner=$index">
             <button class="btn btn-primary pull-right" type="button" ng-click="addNewInstitute($index)">Add State to Institute</button>
             <button class="btn btn-danger pull-right" type="button" ng-click="removeInstitute($index)">-</button>
             <h4>{{institute.name}}</h4>
@@ -271,37 +284,37 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Installment No.</label>
-                        <input type="text" class="form-control" ng-model="formData.stateToIntitute_installmentno[$index]">
+                        <input type="text" class="form-control" ng-model="formData[inner].stateToIntitute_installmentno[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Amount</label>
-                        <input type="text" class="form-control" ng-model="formData.stateToIntitute_amount[$index]">
+                        <input type="text" class="form-control" ng-model="formData[inner].stateToIntitute_amount[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Sent</label>
-                        <input type="date" class="form-control" ng-model="formData.stateToIntitute_transactionSent[$index]">
+                        <input type="date" class="form-control" ng-model="formData[inner].stateToIntitute_transactionSent[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Received</label>
-                        <input type="date" class="form-control" ng-model="formData.stateToIntitute_transactionRecieved[$index]">
+                        <input type="date" class="form-control" ng-model="formData[inner].stateToIntitute_transactionRecieved[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" ng-model="formData.stateToIntitute_remarks[$index]">
+                        <input type="text" class="form-control" ng-model="formData[inner].stateToIntitute_remarks[$index]">
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>File</label>
-                        <input type="file" ng-model="formdata.stateToIntitute_file[$index]">
+                        <input type="file" ng-model="formdata[inner].stateToIntitute_file[$index]">
                     </div>
                 </div>
             </div>

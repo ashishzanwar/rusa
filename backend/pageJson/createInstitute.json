@@ -15,16 +15,6 @@
             "url": ""
         },
         {
-            "name": "District",
-            "type": "selectFromTable",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "district",
-            "placeholder": "Enter District-Name",
-            "id": "input1",
-            "validation": ["", "trim", ""],
-            "url": "District/search"
-        }, {
             "name": "State",
             "type": "selectFromTable",
             "dropDownType": "single",
@@ -34,6 +24,18 @@
             "id": "input1",
             "validation": ["", "trim", ""],
             "url": "State/search"
+        }, {
+            "name": "District",
+            "type": "selectFromTable",
+            "dropDownType": "single",
+            "searchApi": "searchCall",
+            "tableRef": "district",
+            "placeholder": "Enter District-Name",
+            "id": "input1",
+            "filterField": "state",
+            "filterValue": "state",
+            "validation": ["", "trim", ""],
+            "url": "District/search"
         },
         {
             "name": "Institute Type",
@@ -52,16 +54,6 @@
                 "Affiliated Colleges",
                 "Autonomous Colleges"
             ]
-        }, {
-            "name": "District",
-            "type": "selectFromTable",
-            "dropDownType": "single",
-            "searchApi": "searchCall",
-            "tableRef": "district",
-            "placeholder": "Enter District",
-            "id": "input1",
-            "validation": ["", "trim", ""],
-            "url": "District/search"
         }
     ],
     "action": [{

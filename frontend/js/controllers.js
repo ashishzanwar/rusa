@@ -118,6 +118,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
         $scope.createDistrict = function (data) {
             JSON.district = data;
+            district = {};
+            console.log("data", data);
+            district.district = data;
+            // in
+            NavigationService.apiCall("Institute/findAllInstitute", district, function (data) {
+                $scope.instituteData = data.data;
+                $scope.generateField = true;
+                console.log("INSS", data.data);
+            });
+
+
+
+
         };
         $scope.createInstitute = function (data) {
             JSON.institute = data;
@@ -195,10 +208,25 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         }
 
 
+
+
         $scope.projects = [project];
 
         $scope.addNewProject = function (index) {
-            $scope.projects.push(_.cloneDeep(project));
+            $scope.projects.push({
+                projectExpenses: [{
+                    institutetoVendors: []
+                }]
+            });
+
+            // abc = _.cloneDeep(projectExpenses);
+            // def = _.cloneDeep(institutetoVendors);
+
+            // $scope.projects.push({
+            //     abc: [{
+            //         def: [def]
+            //     }]
+            // });
         };
         $scope.removeProject = function (index) {
             $scope.projects.splice(index, 1);
@@ -206,7 +234,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
         $scope.addNewProjectExpense = function (arr) {
-            arr.push(_.cloneDeep(projectExpenses));
+            arr.push({
+                vendorName: "Vendor",
+                institutetoVendors: [_.cloneDeep(institutetoVendors)]
+            });
         };
         $scope.removeProjectExpense = function (arry, index) {
             console.log(arry, 'deleted');
@@ -216,7 +247,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
         $scope.addNewinstitutetoVendors = function (arr1) {
-            arr1.push(institutetoVendors);
+            arr1.push({});
         };
         $scope.removeinstitutetoVendors = function (arry, index) {
             console.log(arry, 'deleted');
@@ -235,7 +266,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
         $scope.states = [state];
         $scope.addNewState = function (index) {
-            $scope.states.push(state);
+            $scope.states.push({});
         };
 
         $scope.removeState = function (index) {
@@ -255,7 +286,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.institutes = [institute];
 
         $scope.addNewInstitute = function (index) {
-            $scope.institutes.push(institute);
+            $scope.institutes.push({});
         };
 
         $scope.removeInstitute = function (index) {

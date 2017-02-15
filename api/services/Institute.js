@@ -306,7 +306,9 @@ var model = {
 
 
     findAllInstitute: function (data, callback) {
-        Institute.find().select("name _id").exec(function (err, found) {
+        Institute.find({
+            district: data.district
+        }).select("name _id").exec(function (err, found) {
             if (err) {
                 // console.log(err);
                 callback(err, null);
