@@ -1,6 +1,6 @@
 var schema = new Schema({
     json: {
-        type: String
+        type: []
     },
     status: {
         type: String,

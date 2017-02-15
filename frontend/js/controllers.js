@@ -24,8 +24,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         $scope.submitForm = function (data) {
             console.log(data);
+
+            NavigationService.apiCall("Form/save", state, function (data) {
+                $scope.districtData = data.data;
+                $scope.generateField = true;
+
+            });
+
             $scope.formSubmitted = true;
         }
+
+
+
     })
 
     .controller('InstituteFormCtrl', function ($scope, TemplateService, NavigationService, $uibModal, $timeout) {
@@ -44,7 +54,68 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.assetType;
         $scope.allocation;
         $scope.JSON = {};
-        $scope.formData;
+
+        var institutetoVendors = {
+            vendorName: "",
+            installmentNo: "",
+            amount: "",
+            transactionRececived: "",
+            remarks: "",
+            file: ""
+        };
+
+
+        var projectExpenses = {
+            name: "",
+            installmentNo: "",
+            amount: "",
+            transactionSent: "",
+            transactionRececived: "",
+            remarks: "",
+            file: "",
+            institutetoVendors: [_.cloneDeep(institutetoVendors)]
+        };
+
+
+
+        var institute = {
+            name: "State to Institute 1",
+            installmentNo: "",
+            amount: "",
+            transactionSent: "",
+            transactionRececived: "",
+            remarks: "",
+            file: ""
+
+        };
+        var project = {
+
+            name: "",
+            projectType: "",
+            assetType: "",
+            photo1: "",
+            photo2: "",
+            valueProject: "",
+            dueDate: "",
+            projectExpenses: [_.cloneDeep(projectExpenses)],
+        };
+        var state = {
+            name: "",
+            installmentNo: "",
+            amount: "",
+            transactionSent: "",
+            transactionRececived: "",
+            remarks: "",
+            file: ""
+        };
+
+        $scope.formData = {
+            projects: [_.cloneDeep(project)],
+            centerToState: [_.cloneDeep(state)],
+            stateToInstitute: [_.cloneDeep(institute)]
+
+        };
+
 
 
 
@@ -166,70 +237,28 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             // var abc = JSON.parse(data);
 
             json.json = data;
-            // NavigationService.apiCall("Form/save", json, function (data) {
-            //     // $scope.districtData = data.data;
-            //     $scope.generateField = true;
+            NavigationService.apiCall("Form/save", json, function (data) {
+                // $scope.districtData = data.data;
+                $scope.generateField = true;
 
-            // });
-
-
-        };
-
-
-
-        var institutetoVendors = {
-            vendorName: "Vendor1",
-            installmentNo: "installmentNo",
-            amount: "amount",
-            transactionRececived: "transactionRececived",
-            remarks: "remarks",
-            file: "file"
-        }
-        var projectExpenses = {
-            name: "Project Expense 1",
-            installmentNo: "installmentNo",
-            amount: "amount",
-            transactionSent: "transactionSent",
-            transactionRececived: "transactionRececived",
-            remarks: "remarks",
-            file: "file",
-            institutetoVendors: [institutetoVendors]
-        }
-
-        var project = {
-            name: "Project1",
-            projectType: "projectType",
-            assetType: "assetType",
-            photo1: "photo1",
-            photo2: "photo2",
-            valueProject: "",
-            dueDate: "dueDate",
-            projectExpenses: [projectExpenses],
-        }
-
-
-
-
-        $scope.projects = [project];
-
-        $scope.addNewProject = function (index) {
-            $scope.projects.push({
-                projectExpenses: [{
-                    institutetoVendors: []
-                }]
             });
 
-            // abc = _.cloneDeep(projectExpenses);
-            // def = _.cloneDeep(institutetoVendors);
 
-            // $scope.projects.push({
-            //     abc: [{
-            //         def: [def]
-            //     }]
-            // });
+        };
+
+
+
+
+
+        $scope.abc = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
+
+
+        $scope.addNewProject = function () {
+            $scope.formData.projects.push(project);
         };
         $scope.removeProject = function (index) {
-            $scope.projects.splice(index, 1);
+            $scope.formData.projects.splice(index, 1);
             console.log(index, 'deleted');
         };
 
@@ -255,38 +284,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             console.log(arry, 'deleted');
         };
 
-        var state = {
-            name: "Center to State 1",
-            installmentNo: "installmentNo",
-            amount: "amount",
-            transactionSent: "transactionSent",
-            transactionRececived: "transactionRececived",
-            remarks: "remarks",
-            file: "file"
-        };
+
         $scope.states = [state];
         $scope.addNewState = function (index) {
-            $scope.states.push({});
+
+            $scope.formData.centerToState.push(state);
+            // $scope.states.push({});
         };
 
         $scope.removeState = function (index) {
             $scope.states.splice(index, 1);
         };
 
-        var institute = {
-            name: "State to Institute 1",
-            installmentNo: "",
-            amount: "",
-            transactionSent: "",
-            transactionRececived: "",
-            remarks: "",
-            file: ""
-
-        }
         $scope.institutes = [institute];
 
         $scope.addNewInstitute = function (index) {
-            $scope.institutes.push({});
+
+            $scope.formData.stateToInstitute.push(institute);
+            // $scope.institutes.push({});
         };
 
         $scope.removeInstitute = function (index) {
