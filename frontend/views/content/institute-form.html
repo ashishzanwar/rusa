@@ -130,7 +130,9 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Photo 2</label>
-                        <input type="file" ng-model="project.photo2">
+                        <!--<input type="file" ng-model="project.photo2">-->
+                        <upload-image ng-model="project.photo2" required>
+                        </upload-image>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -221,7 +223,10 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>File</label>
-                                        <input type="file" ng-model="institutetoVendor.file">
+                                        <!--<input type="file" ng-model="institutetoVendor.file">
+                                        -->
+                                        <upload-image ng-model="institutetoVendor.file" required>
+                                        </upload-image>
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +276,10 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>File</label>
-                        <input type="file" ng-model="state.file">
+                        <!--<input type="file" ng-model="state.file">
+                        -->
+                        <upload-image ng-model="state.file" required>
+                        </upload-image>
                     </div>
                 </div>
             </div>
@@ -317,7 +325,9 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>File</label>
-                        <input type="file" ng-model="institute.file">
+                        <!--<input type="file" ng-model="institute.file">-->
+                        <upload-image ng-model="institute.file" required>
+                        </upload-image>
                     </div>
                 </div>
             </div>
