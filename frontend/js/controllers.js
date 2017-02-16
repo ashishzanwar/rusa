@@ -32,12 +32,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
 
             $scope.formSubmitted = true;
-        }
-
-
-
+        };
     })
-
     .controller('InstituteFormCtrl', function ($scope, TemplateService, NavigationService, $uibModal, $timeout) {
         $scope.template = TemplateService.changecontent("institute-form"); //Use same name of .html file
         $scope.menutitle = NavigationService.makeactive("Institute Form"); //This is the Title of the Website
