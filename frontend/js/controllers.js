@@ -203,8 +203,36 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
         };
-        $scope.createInstitute = function (data) {
+        $scope.createInstituteType = function (data) {
+
             JSON.institute = data;
+            institute = {};
+            institute.district = JSON.district;
+            institute.type = data
+
+
+            NavigationService.apiCall("Institute/findAllInstitute", institute, function (data) {
+                $scope.instituteData = data.data;
+                $scope.generateField = true;
+                console.log("INSS", data.data);
+            });
+
+        };
+
+        $scope.createInstitute = function (data) {
+
+            JSON.institute = data;
+            // institute = {};
+            // institute.district = JSON.district;
+            // institute.type =
+
+
+            // NavigationService.apiCall("Institute/findAllInstitute", district, function (data) {
+            //     $scope.instituteData = data.data;
+            //     $scope.generateField = true;
+            //     console.log("INSS", data.data);
+            // });
+
         };
         $scope.createPab = function (data) {
             JSON.pab = data;

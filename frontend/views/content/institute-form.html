@@ -26,16 +26,8 @@
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label>Institute Name</label>
-                    <select class="form-control" ng-model="formData.instituteId" ng-change="createInstitute(instituteId);">
-                    <option value="{{name._id}}" ng-repeat="name in instituteData">{{name.name}}</option>
-                </select>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="form-group">
                     <label>Institute Type</label>
-                    <select class="form-control" ng-model="formData.instituteType" ng-change="createInstitute(instituteId);">
+                    <select class="form-control" ng-model="formData.instituteType" ng-change="createInstituteType(instituteType);">
                     <option value="Central Universities" >Central Universities</option>
                     <option value="State Universities" >State Universities</option>
                     <option value="Institutes of National Importance" >Institutes of National Importance</option>
@@ -43,6 +35,14 @@
                     <option value="Affiliated Colleges" >Affiliated Colleges</option>
                   <option value="Autonomous Colleges" >Autonomous Colleges</option>
                
+                </select>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Institute Name</label>
+                    <select class="form-control" ng-model="formData.instituteId" ng-change="createInstitute(instituteId);">
+                    <option value="{{name._id}}" ng-repeat="name in instituteData">{{name.name}}</option>
                 </select>
                 </div>
             </div>
