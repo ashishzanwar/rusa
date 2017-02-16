@@ -51,6 +51,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.allocation;
         $scope.JSON = {};
 
+        $scope.calcShareAmount = function (amount) {
+            $scope.centerShareAmount = (amount * $scope.centerShare / 100).toFixed(2);
+            $scope.stateShareAmount = (amount * (100 - $scope.centerShare) / 100).toFixed(2);
+        };
 
         if ($stateParams.id) {
             $scope.isEdit = true;
