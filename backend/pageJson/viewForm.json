@@ -5,7 +5,7 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Json",
+        "name": "Form Details",
         "isSort": "",
         "tableRef": "json",
         "type": "form"
@@ -14,28 +14,7 @@
         "isSort": "",
         "tableRef": "status"
     }],
-    "action": [{
-        "name": "edit",
-        "icon": "fa-pencil",
-        "buttonClass": "btn-primary",
-        "type": "page",
-        "action": "editForm",
-        "fieldsToSend": {
-            "_id": "_id"
-        }
-    }, {
-        "name": "delete",
-        "icon": "fa-trash",
-        "buttonClass": "btn-danger",
-        "type": "apiCallConfirm",
-        "title": "Delete Form",
-        "content": "Are you sure you want to delete Form?",
-        "api": "Form/delete",
-        "fieldsToSend": {
-            "name": "_id",
-            "value": "_id"
-        }
-    }],
+
     "button": [{
         "name": "Create",
         "icon": "plus",

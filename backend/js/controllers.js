@@ -411,6 +411,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     } else {
       $scope.currentPage = 1;
     }
+    $scope.adminUrl = adminurl;
 
     $scope.search = {
       keyword: ""

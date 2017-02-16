@@ -25,6 +25,14 @@ var navigationservice = angular.module('navigationservice', [])
             getnav: function () {
                 return navigation;
             },
+            getOneForm: function (id, callback) {
+                $http.post(adminurl + "Form/getOne", {
+                    _id: id
+                }).then(function (data) {
+                    data = data.data;
+                    callback(data);
+                });
+            },
             makeactive: function (menuname) {
                 for (var i = 0; i < navigation.length; i++) {
                     if (navigation[i].name == menuname) {
