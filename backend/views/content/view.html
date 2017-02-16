@@ -17,7 +17,6 @@
             <div class="col-md-12 ">
                 <div class="widget ">
                     <div class="table-area ">
-
                         <div class="widget-title ">
                             <div class="pull-right ">
                                 <form class="search-form mr-form ">
@@ -30,14 +29,13 @@
                         </div>
                         <div class="table-responsive " ng-show="totalItems>0 ">
                             <table class="table">
-                               
                                 <thead>
                                     <tr>
                                         <th>#</th>
                                         <th ng-repeat="field in json.json.fields">
                                             {{field.name}}
                                         </th>
-                                        <th>Actions </th>
+                                        <th ng-if="json.json.action.lenght > 0">Actions </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -45,19 +43,15 @@
                                         <td>{{($index + 1)+((currentPage-1)*maxRow)}}</td>
                                         <td ng-repeat="field in json.json.fields">
                                             <view-field type="field" value="item">
-                                 
-                                                
                                             </view-field>
                                         </td>
                                         <td ng-repeat="but in json.json.action">
                                             <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
                                                 <i class="fa" ng-class="but.icon"></i>{{but.name}}
                                             </a>
-
                                         </td>
                                     </tr>
                                 </tbody>
-
                             </table>
                         </div>
                         <div class="tableData " ng-show="totalItems===0 ">
@@ -66,12 +60,10 @@
                         <div class="tableData " ng-show="totalItems===undefined ">
                             <h5>Loading Data</h5>
                         </div>
-
                         <ul ng-if="totalItems " ng-change="changePage(currentPage); " uib-pagination total-items="totalItems
                                             " items-per-page="maxRow " ng-model="currentPage " max-size="template.pageMax "
                             class="pagination-sm
                                             " boundary-links="true " force-ellipses="true "></ul>
-
                     </div>
                 </div>
             </div>

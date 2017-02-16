@@ -1,1 +1,3 @@
-{{form.model}}
+Key Component:{{form.model.keyComponentsId.name}} | PAB: {{form.model.pabId.name}} | Institute: {{form.model.instituteId.name}}
+| District: {{form.model.districtId.name}} | State: {{form.model.stateId.name}} {{value.status}}
+<a class="pull-right btn btn-primary" ng-href="{{adminUrl+'../institute-form/'+value._id}}" ng-if="value.status == 'To Be Moderated'">Moderate Form</a>

@@ -26,6 +26,11 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
             templateUrl: "frontend/views/template.html",
             controller: 'InstituteFormCtrl'
         })
+        .state('institute-form-edit', {
+            url: "/institute-form/:id",
+            templateUrl: "frontend/views/template.html",
+            controller: 'InstituteFormCtrl'
+        })
         .state('form', {
             url: "/form",
             templateUrl: "frontend/views/template.html",

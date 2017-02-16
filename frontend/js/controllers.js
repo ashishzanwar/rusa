@@ -34,7 +34,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.formSubmitted = true;
         };
     })
-    .controller('InstituteFormCtrl', function ($scope, TemplateService, NavigationService, $uibModal, $timeout) {
+    .controller('InstituteFormCtrl', function ($scope, TemplateService, NavigationService, $uibModal, $timeout, $stateParams) {
         $scope.template = TemplateService.changecontent("institute-form"); //Use same name of .html file
         $scope.menutitle = NavigationService.makeactive("Institute Form"); //This is the Title of the Website
         TemplateService.title = $scope.menutitle;
@@ -50,6 +50,18 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.assetType;
         $scope.allocation;
         $scope.JSON = {};
+
+
+        if ($stateParams.id) {
+            $scope.isEdit = true;
+            NavigationService.getOneForm($stateParams.id, function (data) {
+                console.log(data);
+
+                $scope.formEdit = data.data;
+                $scope.formData = data.data.json;
+            });
+
+        }
 
         var institutetoVendors = {
             vendorName: "",
@@ -250,6 +262,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         $scope.submitForm = function (data) {
             // JSON.assetType = data;
+            $scope.submitText = "Form Sent for Submission.";
             console.log("FINAL BIG JSOn", data);
             // var jsonData = {};
             // jsonData.json = data;
@@ -259,12 +272,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
             // var abc = JSON.parse(data);
-
+            if ($scope.isEdit) {
+                json = $scope.formEdit;
+                json.status = "Moderation Completed";
+            }
             json.json = data;
+
             NavigationService.apiCall("Form/save", json, function (data) {
                 // $scope.districtData = data.data;
+                $scope.submitText = "Form Submitted Successfully.";
                 $scope.generateField = true;
-
+                if ($scope.isEdit) {
+                    window.location.href = adminurl + "../backend/#!/page/viewForm//";
+                }
             });
 
 

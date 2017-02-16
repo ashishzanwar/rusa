@@ -147,6 +147,10 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
       } else if (action && action.type == "custompage") {
         console.log("IN CUSTOMPAGE TYPE");
         $state.go("custompage", sendTo);
+      } else if (action && action.type == "externalUrl") {
+        console.log(sendTo);
+        var data = JSON.parse(sendTo.keyword);
+        window.location.href = adminurl + "../institute-form/" + data._id;
       } else if (action && action.type == "statepage") {
         console.log("IN statePAGE TYPE");
         $state.go("statepage", sendTo);
