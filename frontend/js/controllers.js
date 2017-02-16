@@ -50,20 +50,62 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.assetType;
         $scope.allocation;
         $scope.JSON = {};
+        $scope.state;
+
 
         $scope.calcShareAmount = function (amount) {
-            $scope.centerShareAmount = (amount * $scope.centerShare / 100).toFixed(2);
-            $scope.stateShareAmount = (amount * (100 - $scope.centerShare) / 100).toFixed(2);
+            console.log(amount);
+            console.log($scope.centerShare);
+            $scope.centerShareAmount = (amount * parseInt($scope.centerShare) / 100).toFixed(2);
+            $scope.stateShareAmount = (amount * (100 - parseInt($scope.centerShare)) / 100).toFixed(2);
         };
 
         if ($stateParams.id) {
             $scope.isEdit = true;
             NavigationService.getOneForm($stateParams.id, function (data) {
-                console.log(data);
+                console.log("Params data", data);
 
                 $scope.formEdit = data.data;
                 $scope.formData = data.data.json;
+                $scope.state = data.data.json.stateId._id;
+                $scope.district = data.data.json.districtId._id;
+                $scope.instituteType = data.data.json.instituteType;
+
+                console.log("State id", $scope.state);
+
+                state.state = $scope.state;
+                state._id = $scope.state;
+
+
+
+                // NavigationService.apiCall("State/findOneStateMod", state, function (data) {
+                //     $scope.percent = data.data;
+                //     $scope.centerShareAmount = data.data.centerShare;
+                //     $scope.stateShareAmount = data.data.stateShare;
+                //     console.log("KNJKBJK", $scope.percent);
+                //     $scope.generateField = true;
+
+                // });
+                NavigationService.apiCall("District/findAllDistrict", state, function (data) {
+                    $scope.districtData = data.data;
+                    $scope.generateField = true;
+
+                });
+
+
+                institute.district = $scope.district;
+
+
+
+                NavigationService.apiCall("Institute/findAllInstitute", institute, function (data) {
+                    $scope.instituteData = data.data;
+                    $scope.generateField = true;
+                    console.log("INSS", data.data);
+                });
+
             });
+
+
 
         }
 
@@ -75,7 +117,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             remarks: "",
             file: ""
         };
-
 
         var projectExpenses = {
             name: "",
@@ -129,8 +170,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
 
-
-
         NavigationService.boxCall("State/findAllState", function (data) {
             $scope.stateData = data.data;
             $scope.generateField = true;
@@ -142,6 +181,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.generateField = true;
 
         });
+
+
+
+
 
         NavigationService.boxCall("Institute/findAllInstitute", function (data) {
             $scope.instituteData = data.data;
@@ -212,8 +255,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             });
 
 
-
-
         };
         $scope.createInstituteType = function (data) {
 
@@ -278,7 +319,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             // var abc = JSON.parse(data);
             if ($scope.isEdit) {
                 json = $scope.formEdit;
-                json.status = "Moderation Completed";
+                // json.status = "Moderation Completed";
             }
             json.json = data;
 

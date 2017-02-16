@@ -77,6 +77,34 @@ var model = {
                 })
         },
 
+
+        findOneStateMod: function (data, callback) {
+
+
+                State.findOne({
+                        _id: data._id
+                }).select("centerShare stateShare").exec(function (err, found) {
+
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+
+                                if (found) {
+
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+
+                })
+        },
+
+
+
         addUserToState: function (data, callback) {
 
                 console.log(data);
