@@ -25,6 +25,7 @@ $brand-success: $green;
 $body-color-font: #505050;
 @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
 @import "template/icons";
+@import "mycss";
 @import "template/main";
 @import "template/responsive";
 @import "custom-switch";
@@ -60,14 +61,13 @@ nav li:hover .dropdown-menu {
     display: block;
 }
 
-.mt-180{
-    min-height:180px;
+.mt-180 {
+    min-height: 180px;
 }
 
-.mt-308{
-    min-height:308px;
+.mt-308 {
+    min-height: 308px;
 }
-
 
 .btn,
 a,
@@ -115,10 +115,11 @@ a,
 
 .logo {
     padding: 10px 0 10px 25px;
- h1 {
-    margin: 5px 18px;
+    h1 {
+        margin: 5px 18px;
+    }
 }
-}
+
 .account-form>form .feild>.login-w {
     background: #125daa none repeat scroll 0 0;
     border: medium none;
@@ -1185,13 +1186,15 @@ body {
 .account-user-sec {
     z-index: 9999;
 }
-.ml-10{
-  margin-left: 10px;
+
+.ml-10 {
+    margin-left: 10px;
 }
 
-.dashimage{
-        padding: 70px 0px 0 220px !important;
+.dashimage {
+    padding: 70px 0px 0 220px !important;
 }
+
 
 /* Start writing sass here */
 

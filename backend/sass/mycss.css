@@ -1,0 +1,62 @@
+.select_tag_dashboard {
+    border-radius: 5px !important;
+}
+
+.dashboard_blocks {
+    border-radius: 15px;
+}
+
+.margin0 {
+    margin: 0px !important;
+}
+
+.paddingl10 {
+    padding-left: 10px;
+}
+
+.em1_5 {
+    font-size: 1.5em;
+}
+
+.em1_3 {
+    font-size: 1.3em;
+}
+
+.em1 {
+    font-size: 1em;
+}
+
+.padding10_20 {
+    padding: 10px 20px;
+}
+
+.block_upper {
+    border-bottom: 1px solid #e8edf2;
+    border-bottom-width: thin;
+    border-bottom-style: double;
+    border-radius: 10px 10px 0px 0px !important;
+}
+
+
+/*table css*/
+
+.table_row {
+    background: white;
+    border-radius: 5px;
+}
+
+.borderbottom_transparant>th {
+    border-bottom: 1px solid rgba(255, 0, 0, 0) !important;
+}
+
+.table_head {
+    background-color: #e8edf2;
+}
+
+.table_data>td {
+    text-align: center;
+}
+
+.table_head>th {
+    text-align: center;
+}

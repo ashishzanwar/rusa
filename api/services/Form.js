@@ -323,7 +323,7 @@ var model = {
 
                                                                     proExpense = {};
                                                                     proExpense._id = proExData._id;
-                                                                    // proExpense.transactions.id
+                                                                    // proExpense.transactions.id   
                                                                     ProjectExpense.update({
                                                                         _id: proExData
                                                                     }, {
