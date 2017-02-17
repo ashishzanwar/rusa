@@ -43,6 +43,7 @@
 .table_row {
     background: white;
     border-radius: 5px;
+    margin: 0px 1px;
 }
 
 .borderbottom_transparant>th {
