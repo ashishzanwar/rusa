@@ -35,8 +35,9 @@ var schema = new Schema({
             ref: 'KeyComponents',
             index: true
         },
-        allocation: Number
-
+        allocation: Number,
+        remarks: String,
+        stateAsUnit: String
     },
     status: {
         type: String,

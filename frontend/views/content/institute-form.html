@@ -41,6 +41,15 @@
                         ng-model="formData.instituteId" ng-change="createInstitute(instituteId);"></select>
                 </div>
             </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>State as an Unit</label>
+                    <select class="form-control" ng-model="formData.stateAsUnit">
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                </div>
+            </div>
         </div>
     </div>
     <div class="section-1">
@@ -147,6 +156,7 @@
                 <div class="inner" ng-repeat="projectExpense in project.projectExpenses track by $index" ng-init="outer=seq" ng-value="counter=projectExpense.id">
                     <button class="btn btn-danger pull-right" type="button" ng-click="removeProjectExpense(project.projectExpenses,$index)">Remove</button>
                     <h4>{{projectExpense.name}} </h4>
+                    <div class="clearfix"></div>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -236,6 +246,7 @@
         <div class="inner" ng-repeat="state in formData.centerToState track by $index" ng-init="inner=$index">
             <button class="btn btn-danger pull-right" type="button" ng-click="removeStater($index)">Remove</button>
             <h4>{{state.name}}</h4>
+            <div class="clearfix"></div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -327,6 +338,10 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="form-group">
+            <label>Remarks</label>
+            <textarea ng-model="formData.remarks" placeholder="If you have any other issues please mention here" class="form-control"></textarea>
         </div>
     </div>
     <div class="text-center btn-form" ng-if="!submitText">
