@@ -54,8 +54,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
         $scope.calcShareAmount = function (amount) {
-            console.log(amount);
-            console.log($scope.centerShare);
             $scope.centerShareAmount = (amount * parseInt($scope.centerShare) / 100).toFixed(2);
             $scope.stateShareAmount = (amount * (100 - parseInt($scope.centerShare)) / 100).toFixed(2);
         };
@@ -344,7 +342,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
         $scope.addNewProject = function () {
-            $scope.formData.projects.push(project);
+            $scope.formData.projects.push(_.cloneDeep(project));
         };
         $scope.removeProject = function (index) {
             $scope.formData.projects.splice(index, 1);
@@ -377,7 +375,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.states = [state];
         $scope.addNewState = function (index) {
 
-            $scope.formData.centerToState.push(state);
+            $scope.formData.centerToState.push(_.cloneDeep(state));
             // $scope.states.push({});
         };
 
@@ -389,7 +387,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         $scope.addNewInstitute = function (index) {
 
-            $scope.formData.stateToInstitute.push(institute);
+            $scope.formData.stateToInstitute.push(_.cloneDeep(institute));
             // $scope.institutes.push({});
         };
 
