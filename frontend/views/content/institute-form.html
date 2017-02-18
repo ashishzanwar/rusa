@@ -99,6 +99,7 @@
             <br>
             <button class="btn btn-danger pull-right" type="button" ng-click="removeProject($index)">Remove</button>
             <h4> PROJECT EXPENSE </h4>
+            <div class="clearfix"></div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
@@ -145,6 +146,14 @@
                         <label>Due Date</label>
                         <input-date ng-model="project.dueDate">
                         </input-date>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Remarks</label>
+                        <textarea ng-model="project.remarks" placeholder="If you have any other issues please mention here" class="form-control"></textarea>
                     </div>
                 </div>
             </div>
