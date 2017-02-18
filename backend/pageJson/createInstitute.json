@@ -32,8 +32,6 @@
             "tableRef": "district",
             "placeholder": "Enter District-Name",
             "id": "input1",
-            "filterField": "state",
-            "filterValue": "state",
             "validation": ["", "trim", ""],
             "url": "District/search"
         },

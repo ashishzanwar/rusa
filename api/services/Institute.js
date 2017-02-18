@@ -325,5 +325,27 @@ var model = {
             }
         })
     },
+
+
+    findAllInstituteDashBoard: function (data, callback) {
+        Institute.find({
+            district: data.district,
+            type: data.type
+        }).select("name _id").exec(function (err, found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("IN  STATE FOUND", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
 };
 module.exports = _.assign(module.exports, exports, model);
