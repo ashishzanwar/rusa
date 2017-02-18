@@ -248,14 +248,19 @@ firstapp.directive('autoHeight', function ($compile, $parse) {
 firstapp.directive('inputDate', function ($compile, $parse) {
     return {
         restrict: 'E',
+        replace: false,
         scope: {
             value: "=ngModel",
         },
-        templateUrl: 'views/directive/date.html',
-        replace: false,
+        templateUrl: 'frontend/views/directive/date.html',
         link: function ($scope, element, attrs) {
+            console.log("This is loaded atlease");
             $scope.data = {};
             $scope.data.model = moment($scope.value).toDate();
+            $scope.changeDate = function (data) {
+                console.log("ChangeDate Called");
+                $scope.value = $scope.data.model;
+            };
         }
     };
 });
