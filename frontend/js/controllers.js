@@ -319,7 +319,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             // var abc = JSON.parse(data);
             if ($scope.isEdit) {
                 json = $scope.formEdit;
-                // json.status = "Moderation Completed";
+                json.status = "Moderation Completed";
             }
             json.json = data;
 

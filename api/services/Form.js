@@ -296,7 +296,7 @@ var model = {
                                                         var transId = [];
                                                         async.each(m.institutetoVendors, function (p, callback) {
                                                             var counter = 1;
-                                                            console.log("INSTO VENDOR", p);
+                                                            console.log("lINSTO VENDOR", p);
                                                             var trans = {};
                                                             trans.type = "Institute To Vendor";
                                                             trans.components = compoData._id;
