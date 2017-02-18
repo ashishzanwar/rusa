@@ -52,6 +52,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.JSON = {};
         $scope.state;
 
+        $scope.printForm = function () {
+            print();
+        };
+
 
         $scope.calcShareAmount = function (amount) {
             $scope.centerShareAmount = (amount * parseInt($scope.centerShare) / 100).toFixed(2);

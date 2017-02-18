@@ -233,11 +233,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <br>
     <div class="section-1">
@@ -347,6 +347,7 @@
     <div class="text-center btn-form" ng-if="!submitText">
         <button class="btn btn-primary" ng-disabled="!formData.stateId" ng-if="!isEdit">Submit</button>
         <button class="btn btn-primary" ng-disabled="formName.$invalid" ng-if="isEdit">Moderation Completed</button>
+        <a class="btn btn-primary" ng-if="isEdit" ng-click="printForm()">Print</button>
     </div>
     <div class="text-center" ng-if="submitText">
         {{submitText}}
