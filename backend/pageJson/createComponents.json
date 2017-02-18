@@ -45,7 +45,7 @@
             "placeholder": "Enter Key Components ",
             "id": "input1",
             "validation": ["", "trim", ""],
-            "url": "Keycomponents/search"
+            "url": "KeyComponents/search"
         },
         {
             "name": "Allocation",

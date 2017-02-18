@@ -11,6 +11,7 @@ autoIncrement.initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
+    name: String,
     components: {
         type: Schema.Types.ObjectId,
         ref: 'Components',

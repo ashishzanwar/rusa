@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>Allocation</label>
+                    <label>Allocation (in INR)</label>
                     <input type="number" class="form-control" ng-model="formData.allocation" ng-change="calcShareAmount(formData.allocation);">
                 </div>
             </div>
@@ -178,7 +178,7 @@
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label>Allocated Amount</label>
+                                <label>Allocated Amount (in INR)</label>
                                 <input type="text" ng-model="projectExpense.amount" class="form-control">
                             </div>
                         </div>
@@ -201,7 +201,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Amount</label>
+                                        <label>Amount (in INR)</label>
                                         <input type="text" class="form-control" ng-model="institutetoVendor.amount">
                                     </div>
                                 </div>
@@ -233,11 +233,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <br>
     <div class="section-1">
@@ -256,7 +256,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Amount</label>
+                        <label>Amount (in INR)</label>
                         <input type="text" class="form-control" ng-model="state.amount">
                     </div>
                 </div>
@@ -307,7 +307,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Amount</label>
+                        <label>Amount (in INR)</label>
                         <input type="text" class="form-control" ng-model="institute.amount">
                     </div>
                 </div>
@@ -345,7 +345,7 @@
         </div>
     </div>
     <div class="text-center btn-form" ng-if="!submitText">
-        <button class="btn btn-primary" ng-disabled="formName.$invalid" ng-if="!isEdit">Submit</button>
+        <button class="btn btn-primary" ng-disabled="!formData.stateId" ng-if="!isEdit">Submit</button>
         <button class="btn btn-primary" ng-disabled="formName.$invalid" ng-if="isEdit">Moderation Completed</button>
     </div>
     <div class="text-center" ng-if="submitText">
