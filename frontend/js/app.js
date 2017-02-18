@@ -243,6 +243,23 @@ firstapp.directive('autoHeight', function ($compile, $parse) {
     };
 });
 
+
+
+firstapp.directive('inputDate', function ($compile, $parse) {
+    return {
+        restrict: 'E',
+        scope: {
+            value: "=ngModel",
+        },
+        templateUrl: 'views/directive/date.html',
+        replace: false,
+        link: function ($scope, element, attrs) {
+            $scope.data = {};
+            $scope.data.model = moment($scope.value).toDate();
+        }
+    };
+});
+
 firstapp.config(function ($translateProvider) {
     $translateProvider.translations('en', LanguageEnglish);
     $translateProvider.translations('hi', LanguageHindi);
