@@ -1,10 +1,12 @@
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ui.swiper'])
 
-    .controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+    .controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
         $scope.template = TemplateService.changecontent("home"); //Use same name of .html file
         $scope.menutitle = NavigationService.makeactive("Home"); //This is the Title of the Website
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+
+        $state.go("institute-form");
 
         $scope.mySlides = [
             'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
@@ -61,6 +63,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.centerShareAmount = (amount * parseInt($scope.centerShare) / 100).toFixed(2);
             $scope.stateShareAmount = (amount * (100 - parseInt($scope.centerShare)) / 100).toFixed(2);
         };
+
+        if ($stateParams.isModerator == "Moderator") {
+            $scope.isModerator = true;
+        }
 
         if ($stateParams.id) {
             $scope.isEdit = true;
@@ -307,7 +313,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
 
-        $scope.submitForm = function (data) {
+        $scope.submitForm = function (data, otherValue) {
             // JSON.assetType = data;
             $scope.submitText = "Form Sent for Submission.";
             console.log("FINAL BIG JSOn", data);
@@ -319,9 +325,13 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
             // var abc = JSON.parse(data);
-            if ($scope.isEdit) {
+            if (otherValue == "Moderation") {
                 json = $scope.formEdit;
                 json.status = "Moderation Completed";
+            }
+            if (otherValue == "Trash") {
+                json = $scope.formEdit;
+                json.status = "Trashed";
             }
             json.json = data;
 
@@ -329,7 +339,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 // $scope.districtData = data.data;
                 $scope.submitText = "Form Submitted Successfully.";
                 $scope.generateField = true;
-                if ($scope.isEdit) {
+                if (otherValue == "Moderation") {
+                    $scope.submitText = "Form Moderated Successfully.";
+                    window.location.href = adminurl + "../backend/#!/page/viewForm//";
+                }
+                if (otherValue == "Trash") {
+                    $scope.submitText = "Form Trashed Successfully.";
                     window.location.href = adminurl + "../backend/#!/page/viewForm//";
                 }
             });

@@ -41,7 +41,7 @@ var schema = new Schema({
     },
     status: {
         type: String,
-        enum: ["To Be Moderated", "Moderation Completed"],
+        enum: ["To Be Moderated", "Moderation Completed", "Trashed"],
         default: "To Be Moderated"
     }
 });
@@ -105,7 +105,7 @@ var model = {
                             w: 1
                         }, callback);
 
-                        Form.compile(data);
+                        //Form.compile(data);
 
                     });
 
