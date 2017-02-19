@@ -37,6 +37,11 @@ img {
     border-radius: 5px;
 }
 
+input[type="file"] {
+    display: block;
+    width: 100%;
+}
+
 img.doneLoading {
     opacity: 1;
 }
