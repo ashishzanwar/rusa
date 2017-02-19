@@ -19,8 +19,8 @@
         "name": "Create",
         "icon": "plus",
         "class": "btn-success",
-        "type": "page",
-        "action": "createForm"
+        "type": "externalUrl",
+        "action": "externalUrl"
     }],
     "apiCall": {
         "url": "Form/searchModerated",

@@ -19,7 +19,7 @@
         "name": "Create",
         "icon": "plus",
         "class": "btn-success",
-        "type": "page",
+        "type": "externalUrl",
         "action": "createForm"
     }],
     "apiCall": {
