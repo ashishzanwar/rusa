@@ -7,7 +7,8 @@ var firstapp = angular.module('firstapp', [
     'pascalprecht.translate',
     'angulartics',
     'angulartics.google.analytics',
-    'imageupload'
+    'imageupload',
+    'cleave.js'
 
 
 ]);

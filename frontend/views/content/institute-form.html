@@ -74,19 +74,20 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Allocation (in INR)</label>
-                    <input type="number" class="form-control" ng-model="formData.allocation" ng-change="calcShareAmount(formData.allocation);">
+                    <input type="text" class="form-control" ng-model="formData.allocation" ng-change="calcShareAmount(formData.allocation);"
+                        cleave="options.indian">
                 </div>
             </div>
             <div class=" col-md-4">
                 <div class="form-group">
-                    <label>Center Share</label>
-                    <input type="text" class="form-control" ng-model="centerShareAmount" readonly>
+                    <label>Center Share (in INR)</label>
+                    <input type="text" class="form-control" ng-model="centerShareAmount" cleave="options.indian" readonly>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label>State Share</label>
-                    <input type="text" class="form-control" ng-model="stateShareAmount" readonly>
+                    <label>State Share (in INR)</label>
+                    <input type="text" class="form-control" ng-model="stateShareAmount" cleave="options.indian" readonly>
                 </div>
             </div>
         </div>
@@ -188,7 +189,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Allocated Amount (in INR)</label>
-                                <input type="text" ng-model="projectExpense.amount" class="form-control">
+                                <input type="text" cleave="options.indian" ng-model="projectExpense.amount" class="form-control">
                             </div>
                         </div>
                         <!--</br>-->
@@ -211,7 +212,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Amount (in INR)</label>
-                                        <input type="text" class="form-control" ng-model="institutetoVendor.amount">
+                                        <input type="text" class="form-control" ng-model="institutetoVendor.amount" cleave="options.indian">
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -266,7 +267,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Amount (in INR)</label>
-                        <input type="text" class="form-control" ng-model="state.amount">
+                        <input type="text" class="form-control" cleave="options.indian" ng-model="state.amount">
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -317,7 +318,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Amount (in INR)</label>
-                        <input type="text" class="form-control" ng-model="institute.amount">
+                        <input type="text" class="form-control" cleave="options.indian" ng-model="institute.amount">
                     </div>
                 </div>
                 <div class="col-md-4">

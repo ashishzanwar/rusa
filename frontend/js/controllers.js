@@ -1,4 +1,4 @@
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ui.swiper'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ui.swiper', 'cleave.js'])
 
     .controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
         $scope.template = TemplateService.changecontent("home"); //Use same name of .html file
@@ -58,10 +58,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             print();
         };
 
+        $scope.options = {
+            indian: {
+                numeral: true,
+                numeralThousandsGroupStyle: 'lakh'
+            }
+        };
 
         $scope.calcShareAmount = function (amount) {
             $scope.centerShareAmount = (amount * parseInt($scope.centerShare) / 100).toFixed(2);
             $scope.stateShareAmount = (amount * (100 - parseInt($scope.centerShare)) / 100).toFixed(2);
+            console.log(amount);
+            console.log($scope.centerShare);
+
         };
 
         if ($stateParams.isModerator == "Moderator") {
@@ -78,6 +87,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.state = data.data.json.stateId._id;
                 $scope.district = data.data.json.districtId._id;
                 $scope.instituteType = data.data.json.instituteType;
+                $scope.searchData($scope.state);
+
 
                 console.log("State id", $scope.state);
 
@@ -244,6 +255,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.stateShare = data.data.stateShare;
 
                 $scope.generateField = true;
+
+                $scope.calcShareAmount($scope.formData.allocation);
 
             });
 
