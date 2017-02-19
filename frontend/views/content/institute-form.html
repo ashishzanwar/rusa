@@ -1,7 +1,7 @@
 <!--<div class="pull-right btn-form">
     <button class="btn btn-primary" ng-disabled="formName.$invalid">Submit</button>
 </div>-->
-<pre class="hidden">{{formData|json}}</pre>
+<pre class="hidden1">{{formData|json}}</pre>
 <!--<h3>Institute Form</h3>-->
 <form ng-submit="submitForm(formData);" ng-if="!formSubmitted">
 
@@ -409,20 +409,86 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
-            <label>Remarks</label>
-            <textarea ng-model="formData.remarks" placeholder="If you have any other issues please mention here" class="form-control"></textarea>
+    </div>
+
+
+    <div class="section-1">
+        <h4>Utilization Certificate Submitted to State Government</h4>
+        <div class="row">
+            <div class="col-md-3">
+                <h4>Installment no. 1</h4>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Date of UC</label>
+                    <input-date ng-model="formData.utilization.date1">
+                    </input-date>
+                </div>
+            </div>
+            <div class=" col-md-3 ">
+                <div class="form-group ">
+                    <label>Value</label>
+                    <input type="text " class="form-control" ng-model="formData.utilization.value1">
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-group ">
+                    <label>Upload File</label>
+                    <upload-image ng-model="formData.utilization.file1" required>
+                    </upload-image>
+                </div>
+            </div>
+        </div>
+        <div class="row ">
+            <div class="col-md-3 ">
+                <h4>Installment no. 2</h4>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-group ">
+                    <label>Date of UC</label>
+                    <input-date ng-model="formData.utilization.date2">
+                    </input-date>
+                </div>
+            </div>
+            <div class=" col-md-3 ">
+                <div class="form-group ">
+                    <label>Value</label>
+                    <input type="text " class="form-control" ng-model="formData.utilization.value2">
+                </div>
+            </div>
+            <div class="col-md-3 ">
+                <div class="form-group ">
+                    <label>Upload File</label>
+                    <upload-image ng-model="formData.utilization.file2" required>
+                    </upload-image>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="text-center btn-form" ng-if="!submitText">
-        <button class="btn btn-primary" ng-disabled="!formData.stateId" ng-if="!isEdit">Submit</button>
-        <button class="btn btn-primary" ng-disabled="formName.$invalid" ng-if="isEdit">Save</button>
-        <a class="btn btn-default" ng-if="isEdit" ng-click="printForm()">Print</a>
-        <a class="btn btn-success" ng-disabled="formName.$invalid" ng-if="isEdit && isModerator" ng-click="submitForm(formData,'Moderation')">Moderation Completed</a>
-        <a class="btn btn-danger" ng-disabled="formName.$invalid" ng-if="isEdit && isModerator" ng-click="submitForm(formData,'Trash')">Trash</a>
+
+
+    <div class="section-1 ">
+        <div class="row ">
+            <div class="col-md-12 ">
+                <div class="form-group ">
+                    <label>Remarks</label>
+                    <textarea ng-model="formData.remarks " placeholder="If you have any other issues please mention here
+                        " class="form-control "></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="text-center btn-form " ng-if="!submitText ">
+        <button class="btn btn-primary " ng-disabled="!formData.stateId " ng-if="!isEdit ">Submit</button>
+        <button class="btn btn-primary " ng-disabled="formName.$invalid " ng-if="isEdit ">Save</button>
+        <a class="btn btn-default " ng-if="isEdit " ng-click="printForm() ">Print</a>
+        <a class="btn btn-success " ng-disabled="formName.$invalid " ng-if="isEdit && isModerator " ng-click="submitForm(formData,
+                        'Moderation') ">Moderation Completed</a>
+        <a class="btn btn-danger " ng-disabled="formName.$invalid " ng-if="isEdit && isModerator " ng-click="submitForm(formData,
+                        'Trash') ">Trash</a>
 
     </div>
-    <div class="text-center" ng-if="submitText">
+    <div class="text-center " ng-if="submitText ">
         {{submitText}}
     </div>
 </form>

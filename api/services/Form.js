@@ -1,7 +1,10 @@
 var schema = new Schema({
     json: {
         contact: {
-            type: []
+            type: {}
+        },
+        utilization: {
+            type: {}
         },
         projects: {
             type: []

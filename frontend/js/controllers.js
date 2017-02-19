@@ -187,6 +187,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         };
 
         $scope.formData = {
+            contact: {},
+            utilization: {},
             projects: [_.cloneDeep(project)],
             centerToState: [_.cloneDeep(state)],
             stateToInstitute: [_.cloneDeep(institute)]
