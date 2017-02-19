@@ -29,8 +29,12 @@ img.loading {
 }
 
 img {
-    opacity: 0;
     @include transition(all 300ms ease);
+}
+
+.btn-upload {
+    width: 100%;
+    border-radius: 5px;
 }
 
 img.doneLoading {

@@ -97,6 +97,28 @@ firstapp.filter('uploadpath', function () {
     };
 });
 
+firstapp.filter('downloadpath', function () {
+    return function (input, width, height, style) {
+        var other = "";
+        if (width && width !== "") {
+            other += "&width=" + width;
+        }
+        if (height && height !== "") {
+            other += "&height=" + height;
+        }
+        if (style && style !== "") {
+            other += "&style=" + style;
+        }
+        if (input) {
+            if (input.indexOf('https://') == -1) {
+                return adminurl + "download/" + input;
+            } else {
+                return adminurl;
+            }
+        }
+    };
+});
+
 firstapp.directive('imageonload', function () {
     return {
         restrict: 'A',
