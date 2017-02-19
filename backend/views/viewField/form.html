@@ -1,3 +1,7 @@
-Key Component:{{form.model.keyComponentsId.name}} | PAB: {{form.model.pabId.name}} | Institute: {{form.model.instituteId.name}}
-| District: {{form.model.districtId.name}} | State: {{form.model.stateId.name}} {{value.status}}
-<a class="pull-right btn btn-primary" ng-href="{{adminUrl+'../institute-form/'+value._id}}" ng-if="value.status == 'To Be Moderated'">Moderate Form</a>
+Key Component:{{form.model.keyComponentsId.name}} <br/> PAB: {{form.model.pabId.name}} <br/> Institute: {{form.model.instituteId.name}}
+<br/> District: {{form.model.districtId.name}} <br/> State: {{form.model.stateId.name}} {{value.status}}
+
+
+<a class="pull-right btn btn-default" ngclipboard data-clipboard-text="{{adminUrl+'../institute-form/'+value._id+''}}">Copy To ClipBoard</a>
+
+<a class="pull-right btn btn-primary" ng-href="{{adminUrl+'../institute-form/'+value._id+'/Moderator'}}" ng-if="value.status == 'To Be Moderated'">Moderate Form</a>

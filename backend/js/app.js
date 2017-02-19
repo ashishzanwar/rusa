@@ -10,7 +10,8 @@ var firstapp = angular.module('firstapp', [
   'imageupload',
   "ngMap",
   "internationalPhoneNumber",
-  "jsonservicemod"
+  "jsonservicemod",
+  'ngclipboard'
 ]);
 
 firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -676,6 +677,7 @@ firstapp.directive('viewField', function ($http, $filter) {
       if (!$scope.type.type) {
         $scope.type.type = "text";
       }
+      $scope.adminUrl = adminurl;
       $scope.form = {};
       $scope.objectDepth = function () {
         if (_.isObjectLike($scope.storeObj)) {

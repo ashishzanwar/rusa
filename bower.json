@@ -61,6 +61,8 @@
     "lodash": "^4.16.0",
     "ui-router": "latest",
     "tinymce": "4.3.12",
-    "angular-ui-swiper": "^2.3.6"
+    "angular-ui-swiper": "^2.3.6",
+    "clipboard": "^1.6.0",
+    "ngclipboard": "^1.1.1"
   }
 }
