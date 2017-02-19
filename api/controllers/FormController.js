@@ -9,5 +9,8 @@ var controller = {
     searchTrashed: function (req, res) {
         req.model.search(req.body, "Trashed", res.callback);
     },
+    saveName: function (req, res) {
+        req.model.saveName(req.body._id, res.callback);
+    }
 };
 module.exports = _.assign(module.exports, controller);

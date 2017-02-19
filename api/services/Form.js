@@ -1,4 +1,5 @@
 var schema = new Schema({
+    name: String,
     json: {
         contact: {
             type: {}
@@ -83,6 +84,18 @@ module.exports = mongoose.model('Form', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "json.stateId json.districtId json.pabId json.instituteId json.keyComponentsId", "json.stateId json.districtId json.pabId json.instituteId json.keyComponentsId"));
 var model = {
 
+    saveName: function (id, callback) {
+        var Model = this;
+        var deepSearch = "json.stateId json.districtId json.pabId json.instituteId json.keyComponentsId";
+        Model.findOne({
+            _id: id
+        }).deepPopulate(deepSearch).exec(function (err, data) {
+            var name = data.json.stateId.name + " " + data.json.districtId.name + " " + data.json.instituteId.name + " " + data.json.pabId.name + " " + data.json.keyComponentsId.name;
+            data.name = name;
+            data.save(callback);
+        });
+    },
+
     saveData: function (data, callback) {
         var Model = this;
         var Const = this(data);
@@ -110,6 +123,7 @@ var model = {
                         data2.update(data, {
                             w: 1
                         }, callback);
+                        Model.saveName(data._id);
 
                         //Form.compile(data);
 
@@ -126,7 +140,7 @@ var model = {
                 if (err) {
                     callback(err, data2);
                 } else {
-
+                    Model.saveName(data2._id);
                     async.each(foreignKeys, function (n, callback) {
                         Config.manageArrayObject(mongoose.models[n.ref], data2[n.name], data2._id, n.key, "create", function (err, md) {
                             callback(err, data2);
