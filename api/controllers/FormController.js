@@ -19,7 +19,7 @@ var controller = {
                 Form.saveName(n._id, function (err2, data2) {
                     callback(null);
                     if (err2) {
-                        n.remove();
+                        //n.remove();
                         retVal.push({
                             id: n._id,
                             err: err2,
