@@ -366,10 +366,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.generateField = true;
                 if (otherValue == "Moderation") {
                     $scope.submitText = "Form Moderated Successfully.";
-                    window.location.href = adminurl + "../backend/#!/page/viewForm//";
                 }
                 if (otherValue == "Trash") {
                     $scope.submitText = "Form Trashed Successfully.";
+                }
+                if ($scope.isModerator) {
                     window.location.href = adminurl + "../backend/#!/page/viewForm//";
                 }
             });
