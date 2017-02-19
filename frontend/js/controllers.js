@@ -36,7 +36,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.formSubmitted = true;
         };
     })
-    .controller('InstituteFormCtrl', function ($scope, TemplateService, NavigationService, $uibModal, $timeout, $stateParams) {
+    .controller('InstituteFormCtrl', function ($scope, TemplateService, NavigationService, $uibModal, $timeout, $stateParams, $state) {
         $scope.template = TemplateService.changecontent("institute-form"); //Use same name of .html file
         $scope.menutitle = NavigationService.makeactive("Institute Form"); //This is the Title of the Website
         TemplateService.title = $scope.menutitle;
@@ -93,6 +93,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 $scope.district = data.data.json.districtId._id;
                 $scope.instituteType = data.data.json.instituteType;
                 $scope.searchData($scope.state);
+                if ($scope.formEdit.status != "To Be Moderated") {
+                    $scope.submitText = "This Form Can Not Be Modified.";
+                }
 
 
                 console.log("State id", $scope.state);
