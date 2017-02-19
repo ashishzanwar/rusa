@@ -1,5 +1,8 @@
 var schema = new Schema({
     json: {
+        contact: {
+            type: []
+        },
         projects: {
             type: []
         },
