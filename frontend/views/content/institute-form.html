@@ -2,9 +2,46 @@
     <button class="btn btn-primary" ng-disabled="formName.$invalid">Submit</button>
 </div>-->
 <pre class="hidden">{{formData|json}}</pre>
-<h3>Institute Form</h3>
+<!--<h3>Institute Form</h3>-->
 <form ng-submit="submitForm(formData);" ng-if="!formSubmitted">
+
     <div class="section-1">
+        <h4>Contact Details of RUSA co-ordinator</h4>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" class="form-control" ng-model="formData.contact.name">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Designation</label>
+                    <input type="text" class="form-control" ng-model="formData.contact.designation">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Mobile</label>
+                    <input type="text" class="form-control" cleave="options.mobile" ng-model="formData.contact.mobile">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" ng-model="formData.contact.email">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <label>I certify that all information being provided is accurate
+                to the best of my knowledge &nbsp;&nbsp; <input type="checkbox" ng-model="formData.contact.agree"></label>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="section-1">
+        <h4>Institute Details</h4>
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
@@ -99,7 +136,7 @@
         <div class="inner" ng-repeat="project in formData.projects track by $index" ng-init="counter">
             <br>
             <button class="btn btn-danger pull-right" type="button" ng-click="removeProject($index)">Remove</button>
-            <h4> PROJECT EXPENSE </h4>
+            <h4> </h4>
             <div class="clearfix"></div>
             <div class="row">
                 <div class="col-md-4">
@@ -120,7 +157,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Photo 1</label>
+                        <label>Latest Project Photo 1</label>
                         <!--<input type="file" ng-model="formData.photo1[$index]">-->
                         <upload-image ng-model="project.photo1" required>
                         </upload-image>
@@ -129,7 +166,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label>Photo 2</label>
+                        <label>Latest Project Photo 2</label>
                         <!--<input type="file" ng-model="project.photo2">-->
                         <upload-image ng-model="project.photo2" required>
                         </upload-image>
@@ -190,6 +227,29 @@
                             <div class="form-group">
                                 <label>Allocated Amount (in INR)</label>
                                 <input type="text" cleave="options.indian" ng-model="projectExpense.amount" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Order Issue Date</label>
+                                <input-date ng-model="projectExpense.orderIssueDate"></input-date>
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Due Date</label>
+                                <input-date ng-model="projectExpense.orderDueDate"></input-date>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Uplaod Order File</label>
+                                <upload-image ng-model="projectExpense.orderFile" required>
+                                </upload-image>
                             </div>
                         </div>
                         <!--</br>-->

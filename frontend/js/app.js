@@ -262,7 +262,11 @@ firstapp.directive('inputDate', function ($compile, $parse) {
         link: function ($scope, element, attrs) {
             console.log("This is loaded atlease");
             $scope.data = {};
-            $scope.data.model = moment($scope.value).toDate();
+            console.log($scope.value);
+            if (!_.isEmpty($scope.value)) {
+                $scope.data.model = moment($scope.value).toDate();
+            }
+
             $scope.changeDate = function (data) {
                 console.log("ChangeDate Called");
                 $scope.value = $scope.data.model;

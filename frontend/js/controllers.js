@@ -62,6 +62,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             indian: {
                 numeral: true,
                 numeralThousandsGroupStyle: 'lakh'
+            },
+            mobile: {
+                // numeral: true,
+                prefix: '+91',
+                blocks: [3, 4, 3, 3],
             }
         };
 
@@ -338,12 +343,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
             // var abc = JSON.parse(data);
-            if (otherValue == "Moderation") {
+            if ($scope.isEdit) {
                 json = $scope.formEdit;
+            }
+
+            if (otherValue == "Moderation") {
                 json.status = "Moderation Completed";
             }
             if (otherValue == "Trash") {
-                json = $scope.formEdit;
                 json.status = "Trashed";
             }
             json.json = data;
