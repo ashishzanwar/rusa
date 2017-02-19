@@ -90,7 +90,22 @@ var model = {
         Model.findOne({
             _id: id
         }).deepPopulate(deepSearch).exec(function (err, data) {
-            var name = data.json.stateId.name + " " + data.json.districtId.name + " " + data.json.instituteId.name + " " + data.json.pabId.name + " " + data.json.keyComponentsId.name;
+            name = "";
+            if (data.json.stateId && data.json.stateId.name) {
+                name += data.json.stateId.name + " ";
+            }
+            if (data.json.districtId && data.json.districtId.name) {
+                name += data.json.districtId.name + " ";
+            }
+            if (data.json.instituteId && data.json.instituteId.name) {
+                name += data.json.instituteId.name + " ";
+            }
+            if (data.json.pabId && data.json.pabId.name) {
+                name += data.json.pabId.name + " ";
+            }
+            if (data.json.keyComponentsId && data.json.keyComponentsId.name) {
+                name += data.json.keyComponentsId.name + " ";
+            }
             data.name = name;
             data.save(callback);
         });
@@ -508,9 +523,7 @@ var model = {
             count: maxRow
         };
 
-        options.sort = {
-            desc: "_id"
-        };
+        options.sort = ["-createdAt"];
 
 
         var Search = Model.find(data.filter)
