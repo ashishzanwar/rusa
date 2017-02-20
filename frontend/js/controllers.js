@@ -58,6 +58,37 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             print();
         };
 
+        $scope.calculateUtilization = function () {
+            var sum = 0;
+            if ($scope.formData.projects.length > 0 && $scope.formData.projects[0] && $scope.formData.projects[0].projectExpenses.length > 0 && $scope.formData.projects[0].projectExpenses[0].institutetoVendors.length > 0 && $scope.formData.projects[0].projectExpenses[0].institutetoVendors[0].amount) {
+                _.each($scope.formData.projects, function (project) {
+                    _.each(project.projectExpenses, function (projectExpense) {
+                        _.each(projectExpense.institutetoVendors, function (institutetoVendor) {
+                            var num = parseFloat(institutetoVendor.amount);
+                            if (!_.isNaN(num)) {
+                                sum += num;
+                            }
+
+                        });
+                    });
+                });
+            }
+
+            var x = sum;
+            x = x.toString();
+            var afterPoint = '';
+            if (x.indexOf('.') > 0)
+                afterPoint = x.substring(x.indexOf('.'), x.length);
+            x = Math.floor(x);
+            x = x.toString();
+            var lastThree = x.substring(x.length - 3);
+            var otherNumbers = x.substring(0, x.length - 3);
+            if (otherNumbers != '')
+                lastThree = ',' + lastThree;
+            var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree + afterPoint;
+            return res;
+        };
+
         $scope.options = {
             indian: {
                 numeral: true,

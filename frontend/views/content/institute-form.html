@@ -1,7 +1,7 @@
 <!--<div class="pull-right btn-form">
     <button class="btn btn-primary" ng-disabled="formName.$invalid">Submit</button>
 </div>-->
-<pre class="hidden">{{formData|json}}</pre>
+<pre class="hidden1">{{formData|json}}</pre>
 <!--<h3>Institute Form</h3>-->
 <form ng-submit="submitForm(formData);" ng-if="!formSubmitted">
 
@@ -427,8 +427,8 @@
             </div>
             <div class=" col-md-3 ">
                 <div class="form-group ">
-                    <label>Value</label>
-                    <input type="text " class="form-control" ng-model="formData.utilization.value1">
+                    <label>Value (in INR)</label>
+                    <input type="text " class="form-control" cleave="options.indian" ng-model="formData.utilization.value1">
                 </div>
             </div>
             <div class="col-md-3 ">
@@ -452,8 +452,8 @@
             </div>
             <div class=" col-md-3 ">
                 <div class="form-group ">
-                    <label>Value</label>
-                    <input type="text " class="form-control" ng-model="formData.utilization.value2">
+                    <label>Value (in INR)</label>
+                    <input type="text " class="form-control" cleave="options.indian" ng-model="formData.utilization.value2">
                 </div>
             </div>
             <div class="col-md-3 ">
@@ -461,6 +461,17 @@
                     <label>Upload File</label>
                     <upload-image ng-model="formData.utilization.file2" required>
                     </upload-image>
+                </div>
+            </div>
+        </div>
+
+        <div class="row ">
+            <div class="col-md-3 ">
+                <h5>Total Utilization as entered in this Form (INR) </h5>
+            </div>
+            <div class=" col-md-3 ">
+                <div class="form-group ">
+                    <p class="form-control"> {{calculateUtilization()}} </p>
                 </div>
             </div>
         </div>
