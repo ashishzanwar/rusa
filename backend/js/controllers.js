@@ -1,14 +1,93 @@
 var globalfunction = {};
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', "jsonservicemod", 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable', "ngclipboard"])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', "jsonservicemod", 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable'])
 
-  .controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+  .controller('DashboardCtrl', function ($scope, $http, TemplateService, NavigationService, $timeout, $state) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("dashboard");
     $scope.menutitle = NavigationService.makeactive("Dashboard");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-  })
+    $scope.selectedPab = "";
+    $scope.selectedState = "";
+    $scope.AllComponents = "";
+    $scope.AllInstitutes = "";
+    $scope.dropDownData = {
+      pab_id: "",
+      state_id: "",
+      component_id: "",
+      institute_id: ""
+    };
 
+    $scope.getAllDashboardData = function (item) {
+
+      var id = angular.element(event.target).data('id');
+      // console.log("Selected Id is", id);
+      // console.log("I am clicked", item.name);
+
+      if (id == "pab") {
+        $scope.dropDownData.pab_id = item.id;
+        NavigationService.boxCall("Components/findDashBoardData", dropDownData, function (data) {
+          $scope.filteredComponents = data.data;
+          // console.log("AllComponents after filter", $scope.filteredComponents);
+          // console.log("Selected Id is", id);
+        });
+
+      } else if (id == "state") {
+        $scope.dropDownData.state_id = item.id;
+        NavigationService.boxCall("Components/findDashBoardData", dropDownData, function (data) {
+          $scope.filteredComponents = data.data;
+          // console.log("AllComponents after filter", $scope.filteredComponents);
+          // console.log("Selected Id is", id);
+        });
+      } else if (id == "component") {
+        $scope.dropDownData.component_id = item.id;
+        NavigationService.boxCall("Components/findDashBoardData", dropDownData, function (data) {
+          $scope.filteredComponents = data.data;
+          // console.log("AllComponents after filter", $scope.filteredComponents);
+          // console.log("Selected Id is", id);
+        });
+      } else if (id == "institute") {
+        $scope.dropDownData.institute_id = item.id;
+        NavigationService.boxCall("Components/findDashBoardData", dropDownData, function (data) {
+          $scope.filteredComponents = data.data;
+          // console.log("AllComponents after filter", $scope.filteredComponents);
+          // console.log("Selected Id is", id);
+        });
+      }
+
+      Console.log("yiipppiieee m getng dis bldy data", dropDownData);
+    };
+
+    NavigationService.callApi("Pab/findAllPab", function (data) {
+      $scope.AllPABs = data.data;
+      // $scope.selectedPab = $scope.AllPABs[0];
+      //console.log($scope.selectedPab, "hiiiiiiiiiii", $scope.AllPABs[0]._id);
+      $scope.generateField = true;
+      //console.log("AllPAB DATA IS FOUND HERE-->", $scope.AllPABs);
+    });
+
+    NavigationService.callApi("State/findAllState", function (data) {
+      $scope.AllStates = data.data;
+      // $scope.selectedState = $scope.AllStates[0];
+      $scope.generateField = true;
+      // console.log("AllState DATA IS FOUND HERE-->", $scope.AllStates);
+    });
+
+    NavigationService.callApi("Components/findAllComponents", function (data) {
+      $scope.AllComponents = data.data;
+      // $scope.selectedComponents = $scope.AllComponents[0];
+      $scope.generateField = true;
+      // console.log("AllComponents DATA IS FOUND HERE-->", $scope.AllComponents);
+    });
+
+    NavigationService.callApi("Institute/findAllInstituteDashBoard", function (data) {
+      $scope.AllInstitutes = data.data;
+      // $scope.selectedInstitute = $scope.AllInstitutes[0];
+      $scope.generateField = true;
+      // console.log("AllInstitutes DATA IS FOUND HERE-->", $scope.AllInstitutes);
+    });
+
+  })
 
   .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
     if ($.jStorage.get("accessToken")) {
@@ -248,7 +327,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     console.log("JSONSERVICE START get");
     console.log("ORGIN-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
     console.log("JSONSERVICE END get");
 
     globalfunction.confDel = function (callback) {
@@ -301,7 +380,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN CUSTOM PAGE CTRLLER");
     console.log("CUSTOM JSONSERVICE START get");
     console.log("CUSTOM-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
 
     console.log("CUSTOM JSONSERVICE END get");
     globalfunction.confDel = function (callback) {
@@ -355,7 +434,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN CUSTOM PAGE CTRLLER");
     console.log("CUSTOM JSONSERVICE START get");
     console.log("CUSTOM-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
 
     console.log("CUSTOM JSONSERVICE END get");
     globalfunction.confDel = function (callback) {
@@ -400,8 +479,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   })
 
-
-
   .controller('ViewCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
     $scope.json = JsonService;
     $scope.template = TemplateService;
@@ -437,9 +514,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.currentPage = 1;
       }
       NavigationService.search($scope.json.json.apiCall.url, {
-          page: $scope.currentPage,
-          keyword: $scope.search.keyword
-        }, ++i,
+        page: $scope.currentPage,
+        keyword: $scope.search.keyword
+      }, ++i,
         function (data, ini) {
           if (ini == i) {
             $scope.items = data.data.results;
@@ -510,6 +587,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     };
   })
+
   .controller('InstituteDetailCtrl', function ($scope, TemplateService, $rootScope, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);
@@ -565,16 +643,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("Institute/findOneInstituteUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.instituteUserData = data.data;
-          // $scope.generateField = true;
-          console.log("instituteUserDATA IS FOUND HERE-->", $scope.instituteUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("Institute/findOneInstituteUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.instituteUserData = data.data;
+        // $scope.generateField = true;
+        console.log("instituteUserDATA IS FOUND HERE-->", $scope.instituteUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
       $scope.getUser();
     $scope.removeUser = function (value) {
       console.log("USER REMOVE DATA", $scope.json.keyword._id);
@@ -862,8 +940,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     JsonService.setKeyword($stateParams.keyword);
     $scope.template = TemplateService;
     $scope.data = {};
-    console.log("IN STATEDETAIL controller");
-    console.log("SCOPE JSON", $scope.json);
+    // console.log("IN STATEDETAIL controller");
+    // console.log("SCOPE JSON", $scope.json);
     $scope.tableData = {};
     $scope.stateData = {};
     $scope.stateName = [];
@@ -875,7 +953,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.editNewState = function (userId, centerId) {
 
-      console.log("USER ID", userId);
+      // console.log("USER ID", userId);
       $scope.edituserinfo = {
         "_id": centerId,
         "user_id": userId,
@@ -912,7 +990,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.removeUser = function (value) {
-      console.log("USER REMOVE DATA", $scope.json.keyword._id);
+      // console.log("USER REMOVE DATA", $scope.json.keyword._id);
 
       var dataUser = {
         _id: $scope.json.keyword._id,
@@ -930,16 +1008,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("State/findOneStateUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.stateUserData = data.data;
-          // $scope.generateField = true;
-          console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("State/findOneStateUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.stateUserData = data.data;
+        // $scope.generateField = true;
+        console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
 
       $scope.getUser();
 
@@ -1175,7 +1253,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
   })
 
-
   .controller('VendorDetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr, $rootScope) {
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);
@@ -1247,16 +1324,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("Vendor/findOneVendorUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.vendorUserData = data.data;
-          // $scope.generateField = true;
-          console.log("vendorUserDATA IS FOUND HERE-->", $scope.stateUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("Vendor/findOneVendorUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.vendorUserData = data.data;
+        // $scope.generateField = true;
+        console.log("vendorUserDATA IS FOUND HERE-->", $scope.stateUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
 
       $scope.getUser();
 
@@ -2485,17 +2562,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
     };
     $scope.editBox = function (state, data) {
-        $scope.state = state;
-        $scope.data = data;
-        $scope.formData[$scope.type.tableRef] = data;
-        var modalInstance = $uibModal.open({
-          animation: $scope.animationsEnabled,
-          templateUrl: '/backend/views/modal/modal.html',
-          size: 'lg',
-          scope: $scope,
-          formData: $scope.data
-        });
-      },
+      $scope.state = state;
+      $scope.data = data;
+      $scope.formData[$scope.type.tableRef] = data;
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/modal.html',
+        size: 'lg',
+        scope: $scope,
+        formData: $scope.data
+      });
+    },
 
       $scope.editBox2 = function (state, data) {
         $scope.state = state;
@@ -3043,84 +3120,84 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     $scope.collectionTypes = ["Table View", "Table View Drag and Drop", "Grid View", "Grid View Drag and Drop"];
     $scope.schema = [{
-        "schemaType": "Boolean",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Color",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Date",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Email",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "File",
-        "Input1": "MB Limit",
-        "Input2": ""
-      }, {
-        "schemaType": "Image",
-        "Input1": "pixel x",
-        "Input2": "pixel y "
-      }, {
-        "schemaType": "Location",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Mobile",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Multiple Select",
-        "Input1": "Enum",
-        "Input2": ""
-      }, {
-        "schemaType": "Multiple Select From Table",
-        "Input1": "Collection",
-        "Input2": "Field"
-      }, {
-        "schemaType": "Number",
-        "Input1": "min ",
-        "Input2": "max"
-      }, {
-        "schemaType": "Single Select ",
-        "Input1": "Enum",
-        "Input2": ""
-      },
+      "schemaType": "Boolean",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Color",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Date",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Email",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "File",
+      "Input1": "MB Limit",
+      "Input2": ""
+    }, {
+      "schemaType": "Image",
+      "Input1": "pixel x",
+      "Input2": "pixel y "
+    }, {
+      "schemaType": "Location",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Mobile",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Multiple Select",
+      "Input1": "Enum",
+      "Input2": ""
+    }, {
+      "schemaType": "Multiple Select From Table",
+      "Input1": "Collection",
+      "Input2": "Field"
+    }, {
+      "schemaType": "Number",
+      "Input1": "min ",
+      "Input2": "max"
+    }, {
+      "schemaType": "Single Select ",
+      "Input1": "Enum",
+      "Input2": ""
+    },
 
-      {
-        "schemaType": "Single Select From Table",
-        "Input1": "Collection",
-        "Input2": "Field"
-      }, {
-        "schemaType": "Telephone",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Text",
-        "Input1": "min length",
-        "Input2": "max length"
-      }, {
-        "schemaType": "TextArea",
-        "Input1": "min length",
-        "Input2": "max length"
-      }, {
-        "schemaType": "URL",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "WYSIWYG",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Youtube",
-        "Input1": "",
-        "Input2": ""
-      }
+    {
+      "schemaType": "Single Select From Table",
+      "Input1": "Collection",
+      "Input2": "Field"
+    }, {
+      "schemaType": "Telephone",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Text",
+      "Input1": "min length",
+      "Input2": "max length"
+    }, {
+      "schemaType": "TextArea",
+      "Input1": "min length",
+      "Input2": "max length"
+    }, {
+      "schemaType": "URL",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "WYSIWYG",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Youtube",
+      "Input1": "",
+      "Input2": ""
+    }
     ];
 
 

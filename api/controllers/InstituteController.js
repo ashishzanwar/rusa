@@ -118,9 +118,23 @@ var controller = {
             })
         }
     },
+
     findAllInstitute: function (req, res) {
         if (req.body) {
             Institute.findAllInstitute(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    },
+
+    findAllInstituteDashBoard: function (req, res) {
+        if (req.body) {
+            Institute.findAllInstituteDashBoard(req.body, res.callback);
         } else {
             res.json({
                 value: false,
