@@ -429,6 +429,13 @@ firstapp.filter('convDate', function () {
   };
 });
 
+
+firstapp.filter('viewdate', function () {
+  return function (input) {
+    return moment(input).format("llll");
+  };
+});
+
 firstapp.filter('downloadImage', function () {
   return function (input) {
     if (input) {

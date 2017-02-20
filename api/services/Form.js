@@ -523,7 +523,7 @@ var model = {
             count: maxRow
         };
 
-        options.sort = ["-createdAt"];
+        options.sort = ["-updatedAt"];
 
 
         var Search = Model.find(data.filter)
