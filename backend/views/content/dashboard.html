@@ -13,13 +13,13 @@
                 </select>
         </div>
         <div class="col-md-4 form-group pull-right ">
-            <select name=" " ng-model="selectedComponents " class="form-control select_tag_dashboard " ng-options="x.name
-                for x in AllComponents track by x._id " ng-change="getAllDashboardData(selectedComponents, $event) " data-id="component">
+            <select name=" " ng-model="selectedInstitute " class="form-control select_tag_dashboard " ng-options="x.name
+                for x in AllInstitutes track by x._id " ng-change="getAllDashboardData(selectedInstitute, $event) " data-id="institute">
                 </select>
         </div>
         <div class="col-md-4 form-group pull-right ">
-            <select name=" " ng-model="selectedInstitute " class="form-control select_tag_dashboard " ng-options="x.name
-                for x in AllInstitutes track by x._id " ng-change="getAllDashboardData(selectedInstitute, $event) " data-id="institute">
+            <select name=" " ng-model="selectedComponents " class="form-control select_tag_dashboard " ng-options="x.name
+                for x in AllComponents track by x._id " ng-change="getAllDashboardData(selectedComponents, $event) " data-id="component">
                 </select>
         </div>
     </div>

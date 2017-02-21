@@ -179,32 +179,5 @@ var model = {
 
         })
     },
-
-    findDashBoardData: function (data, callback) {
-        console.log("I am inside component model", data._id);
-
-        callback(null, {
-            message: "I am inside model"
-        });
-
-
-        // Components.findOne({
-        //     _id: data._id
-        // }).deepPopulate("project").populate("institute").populate("pabno").populate("keycomponents").exec(function (err, found) {
-        //     if (err) {
-        //         callback(err, null);
-        //     } else {
-        //         if (found) {
-        //             console.log("Found", found);
-        //             callback(null, found);
-        //         } else {
-        //             callback(null, {
-        //                 message: "No Data Found"
-        //             });
-        //         }
-        //     }
-        // })
-    },
-
 };
 module.exports = _.assign(module.exports, exports, model);
