@@ -517,13 +517,13 @@ var model = {
                 }
             },
             sort: {
-                asc: 'name'
+                desc: 'updatedAt'
             },
             start: (page - 1) * maxRow,
             count: maxRow
         };
 
-        options.sort = ["-updatedAt"];
+
 
 
         var Search = Model.find(data.filter)
