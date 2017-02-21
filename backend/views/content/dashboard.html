@@ -1,144 +1,152 @@
 <div class="dashimages container">
     <!--<img src="../../backend/img/rusa.png" class="img-responsive" alt="img">-->
     <div class="row"><br><br></div>
-
     <div class="row">
         <div class="col-md-2 form-group ">
-            <select name="" ng-model="selectedPab" class="form-control select_tag_dashboard" ng-options="x.name for x in AllPABs track by x._id"
-                ng-change="getAllDashboardData(selectedPab, $event)" data-id="pab">
-                </select>
+            <select name="" id="" class="form-control select_tag_dashboard">
+                <option value="">PAB 9</option>
+                <option value="">PAB 8</option>
+                <option value="">PAB 7</option>
+                <option value="">PAB 6</option>
+            </select>
         </div>
-        <div class=" col-md-2 form-group ">
-            <select name=" " ng-model="selectedState " class="form-control select_tag_dashboard " ng-options="x.name for
-                x in AllStates track by x._id " ng-change="getAllDashboardData(selectedState, $event) " data-id="state">
-                </select>
+        <div class="col-md-2 form-group ">
+            <select name="" id="" class="form-control select_tag_dashboard">
+                <option value="">Maharashtra</option>
+                <option value="">Rajastan</option>
+                <option value="">Gujrat</option>
+                <option value="">Karnataka</option>
+            </select>
         </div>
-        <div class="col-md-4 form-group pull-right ">
-            <select name=" " ng-model="selectedComponents " class="form-control select_tag_dashboard " ng-options="x.name
-                for x in AllComponents track by x._id " ng-change="getAllDashboardData(selectedComponents, $event) " data-id="component">
-                </select>
+        <div class="col-md-4 form-group pull-right">
+            <select name="" id="" class="form-control select_tag_dashboard">
+                <option value="">Mumbai University</option>
+                <option value="">Pune University</option>
+                <option value="">Chandigad University</option>
+                <option value="">DBSA University</option>
+            </select>
         </div>
-        <div class="col-md-4 form-group pull-right ">
-            <select name=" " ng-model="selectedInstitute " class="form-control select_tag_dashboard " ng-options="x.name
-                for x in AllInstitutes track by x._id " ng-change="getAllDashboardData(selectedInstitute, $event) " data-id="institute">
-                </select>
+        <div class="col-md-4 form-group pull-right">
+            <select name="" id="" class="form-control select_tag_dashboard">
+                <option value="">All Components</option>
+                <option value="">First Component</option>
+                <option value="">Second Component</option>
+                <option value="">Third Component</option>
+            </select>
         </div>
     </div>
-
-    <div class="row ">
-        <div class="col-md-3 dashboard_blocks ">
-            <div class="widget ">
-                <!--<div class="widget-controls ">
-                    <span class="refresh-content "><i class="fa fa-refresh "></i></span>
+    <div class="row">
+        <div class="col-md-3 dashboard_blocks">
+            <div class="widget">
+                <!--<div class="widget-controls">
+                    <span class="refresh-content"><i class="fa fa-refresh"></i></span>
                 </div>-->
                 <!-- Widget Controls -->
-                <div class="mini-stats block_upper ">
-                    <span class="red-skin "><i class="fa fa-area-chart fa-lg "></i></span>
+                <div class="mini-stats block_upper">
+                    <span class="red-skin"><i class="fa fa-area-chart fa-lg"></i></span>
                     <p>FUND ALLOCATION</p>
                     <h3>2,000 L</h3><br><br>
                 </div>
-                <div class="row ">
-                    <div class="col-md-6 padding10_20 ">
-                        <p class="margin0 paddingl10 ">CENTER SHARE</p>
-                        <p class="margin0 paddingl10 em1_5 "><strong>12,000 L</strong></p>
+                <div class="row">
+                    <div class="col-md-6 padding10_20">
+                        <p class="margin0 paddingl10">CENTER SHARE</p>
+                        <p class="margin0 paddingl10 em1_5"><strong>12,000 L</strong></p>
                     </div>
-                    <div class="col-md-6 padding10_20 ">
-                        <p class="margin0 paddingl10 ">STATE SHARE</p>
-                        <p class="margin0 paddingl10 em1_5 "><strong>8,000 L</strong></p>
+                    <div class="col-md-6 padding10_20">
+                        <p class="margin0 paddingl10">STATE SHARE</p>
+                        <p class="margin0 paddingl10 em1_5"><strong>8,000 L</strong></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 dashboard_blocks ">
-            <div class="widget ">
-                <!--<div class="widget-controls ">
-                    <span class="refresh-content "><i class="fa fa-refresh "></i></span>
+        <div class="col-md-3 dashboard_blocks">
+            <div class="widget">
+                <!--<div class="widget-controls">
+                    <span class="refresh-content"><i class="fa fa-refresh"></i></span>
                 </div>-->
                 <!-- Widget Controls -->
-                <div class="mini-stats block_upper ">
-                    <span class="sky-skin " style="margin-bottom: 20px; "><i class="fa fa-globe fa-lg "></i></span>
+                <div class="mini-stats block_upper">
+                    <span class="sky-skin" style="margin-bottom: 20px;"><i class="fa fa-globe fa-lg"></i></span>
                     <p>TOTAL COMPONENTS</p>
-                    <h5 class="margin0 em1_3 ">10</h5>
+                    <h5 class="margin0 em1_3">10</h5>
                     <p>TOTAL PROJECTS</p>
-                    <h5 class="margin0 em1_3 ">30</h5>
+                    <h5 class="margin0 em1_3">30</h5>
                 </div>
-                <div class="row ">
-                    <div class="col-md-6 padding10_20 ">
-                        <p class="margin0 paddingl10 ">INTIME</p>
-                        <p class="margin0 paddingl10 em1_5 "><strong>20</strong></p>
+                <div class="row">
+                    <div class="col-md-6 padding10_20">
+                        <p class="margin0 paddingl10">INTIME</p>
+                        <p class="margin0 paddingl10 em1_5"><strong>20</strong></p>
                     </div>
-                    <div class="col-md-6 padding10_20 ">
-                        <p class="margin0 paddingl10 ">DELAYED</p>
-                        <p class="margin0 paddingl10 em1_5 "><strong>10</strong></p>
+                    <div class="col-md-6 padding10_20">
+                        <p class="margin0 paddingl10">DELAYED</p>
+                        <p class="margin0 paddingl10 em1_5"><strong>10</strong></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 dashboard_blocks ">
-            <div class="widget ">
-                <!--<div class="widget-controls ">
-                    <span class="refresh-content "><i class="fa fa-refresh "></i></span>
+        <div class="col-md-3 dashboard_blocks">
+            <div class="widget">
+                <!--<div class="widget-controls">
+                    <span class="refresh-content"><i class="fa fa-refresh"></i></span>
                 </div>-->
                 <!-- Widget Controls -->
-                <div class="mini-stats block_upper ">
-                    <span class="purple-skin "><i class="fa fa-bullhorn fa-lg "></i></span>
+                <div class="mini-stats block_upper">
+                    <span class="purple-skin"><i class="fa fa-bullhorn fa-lg"></i></span>
                     <p>FUNDS RELEASED</p>
                     <h3>6,101</h3><br><br>
                 </div>
-                <div class="row ">
-                    <div class="col-md-6 padding10_20 ">
-                        <p class="margin0 paddingl10 ">CENTER SHARE</p>
-                        <p class="margin0 paddingl10 em1_5 "><strong>400 L</strong></p>
+                <div class="row">
+                    <div class="col-md-6 padding10_20">
+                        <p class="margin0 paddingl10">CENTER SHARE</p>
+                        <p class="margin0 paddingl10 em1_5"><strong>400 L</strong></p>
                     </div>
-                    <div class="col-md-6 padding10_20 ">
-                        <p class="margin0 paddingl10 ">STATE SHARE</p>
-                        <p class="margin0 paddingl10 em1_5 "><strong>600 L</strong></p>
+                    <div class="col-md-6 padding10_20">
+                        <p class="margin0 paddingl10">STATE SHARE</p>
+                        <p class="margin0 paddingl10 em1_5"><strong>600 L</strong></p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 dashboard_blocks ">
-            <div class="widget ">
-                <div class="widget-controls ">
-                    <span class="refresh-content ">58%</span>
+        <div class="col-md-3 dashboard_blocks">
+            <div class="widget">
+                <div class="widget-controls">
+                    <span class="refresh-content">58%</span>
                 </div>
                 <!-- Widget Controls -->
-                <div class="mini-stats block_upper ">
-                    <span class="pink-skin "><i class="fa fa-bar-chart fa-lg "></i></span>
+                <div class="mini-stats block_upper">
+                    <span class="pink-skin"><i class="fa fa-bar-chart fa-lg"></i></span>
                     <p>FUNDS UTILIZED</p>
                     <h3>5,218</h3><br><br>
                 </div>
-                <div class="row ">
-                    <div class="col-md-12 padding10_20 ">
-                        <p class="margin0 paddingl10 ">CENTER SHARE</p>
-                        <p class="margin0 paddingl10 em1_5 "><strong>12,000 L</strong></p>
+                <div class="row">
+                    <div class="col-md-12 padding10_20">
+                        <p class="margin0 paddingl10">CENTER SHARE</p>
+                        <p class="margin0 paddingl10 em1_5"><strong>12,000 L</strong></p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <div class="row "><br></div>
-
-    <div class="row table_row ">
-        <div class="col-md-12 ">
+    <div class="row"><br></div>
+    <div class="row table_row">
+        <div class="col-md-12">
             <p><br></p>
-            <p class="text-right text-muted ">
+            <p class="text-right text-muted">
                 All amount in INR Lacs
             </p><br><br>
-            <table class="table table-hover ">
-                <thead class="active ">
-                    <tr class="table_head borderbottom_transparant ">
+            <table class="table table-hover">
+                <thead class="active">
+                    <tr class="table_head borderbottom_transparant">
                         <th></th>
                         <th></th>
                         <th></th>
                         <th></th>
-                        <th colspan="2 " class="text-center ">Projects</th>
-                        <th colspan="2 " class="text-center ">Allocation</th>
-                        <th colspan="2 " class="text-center ">Released</th>
-                        <th colspan="2 " class="text-center ">Utilized</th>
+                        <th colspan="2" class="text-center">Projects</th>
+                        <th colspan="2" class="text-center">Allocation</th>
+                        <th colspan="2" class="text-center">Released</th>
+                        <th colspan="2" class="text-center">Utilized</th>
                     </tr>
-                    <tr class="table_head ">
+                    <tr class="table_head">
                         <th>PAB NO.</th>
                         <th>Institution</th>
                         <th>State</th>
@@ -154,7 +162,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table_data ">
+                    <tr class="table_data">
                         <td>9</td>
                         <td>Mumbai University</td>
                         <td>Maharastra</td>
@@ -168,7 +176,7 @@
                         <td>30</td>
                         <td>60%</td>
                     </tr>
-                    <tr class="table_data ">
+                    <tr class="table_data">
                         <td>9</td>
                         <td>Mumbai University</td>
                         <td>Maharastra</td>
@@ -182,7 +190,7 @@
                         <td>30</td>
                         <td>60%</td>
                     </tr>
-                    <tr class="table_data ">
+                    <tr class="table_data">
                         <td>9</td>
                         <td>Mumbai University</td>
                         <td>Maharastra</td>
@@ -196,7 +204,7 @@
                         <td>30</td>
                         <td>60%</td>
                     </tr>
-                    <tr class="table_data ">
+                    <tr class="table_data">
                         <td>9</td>
                         <td>Mumbai University</td>
                         <td>Maharastra</td>
@@ -210,7 +218,7 @@
                         <td>30</td>
                         <td>60%</td>
                     </tr>
-                    <tr class="table_data ">
+                    <tr class="table_data">
                         <td>9</td>
                         <td>Mumbai University</td>
                         <td>Maharastra</td>

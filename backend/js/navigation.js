@@ -7,98 +7,108 @@ var navigationservice = angular.module('navigationservice', [])
 
   .factory('NavigationService', function ($http) {
     var navigation = [{
-      name: "Form",
-      classis: "active",
-      sref: "#!/page/viewForm//",
-      icon: "phone"
-    }, {
-      name: "Users",
-      classis: "active",
-      sref: "#!/page/viewUser//",
-      icon: "phone"
-    }, {
-      name: "Centre",
-      classis: "active",
-      sref: "#!/page/viewCenter//",
-      icon: "phone"
-    }, {
-      name: "State",
-      classis: "active",
-      sref: "#!/page/viewState//",
-      icon: "phone"
-    }, {
-      name: "Institute",
-      classis: "active",
-      sref: "#!/page/viewInstitute//",
-      icon: "phone"
-    }, {
-      name: "Project",
-      classis: "active",
-      sref: "#!/page/viewProject//",
-      icon: "phone"
-    }, {
-      name: "Project Expenses",
-      classis: "active",
-      sref: "#!/page/viewProjectExpense//",
-      icon: "phone"
-    }, {
-      name: "Transaction",
-      classis: "active",
-      sref: "#!/page/viewTransaction//",
-      icon: "phone"
-    }, {
-      name: "Milestones",
-      classis: "active",
-      sref: "#!/page/viewMilestones//",
-      icon: "phone"
-    }, {
-      name: "Transaction Due",
-      classis: "active",
-      sref: "#!/page/viewTransactionDue//",
-      icon: "phone"
-    },
-    {
-      name: "Vendor",
-      classis: "active",
-      sref: "#!/page/viewVendor//",
-      icon: "phone"
-    },
-    {
-      name: "Components",
-      classis: "active",
-      sref: "#!/page/viewComponents//",
-      icon: "phone"
-    },
-    {
-      name: "PAB",
-      classis: "active",
-      sref: "#!/page/viewPab//",
-      icon: "phone"
-    },
-    {
-      name: "Key Components",
-      classis: "active",
-      sref: "#!/page/viewKeyComponents//",
-      icon: "phone"
-    },
-    {
-      name: "Project Type",
-      classis: "active",
-      sref: "#!/page/viewProjectType//",
-      icon: "phone"
-    },
-    {
-      name: "Asset Type",
-      classis: "active",
-      sref: "#!/page/viewAssetType//",
-      icon: "phone"
-    },
-    {
-      name: "District",
-      classis: "active",
-      sref: "#!/page/viewDistrict//",
-      icon: "phone"
-    }
+        name: "Forms",
+        classis: "active",
+        sref: "#!/page/viewForm//",
+        icon: "phone"
+      }, {
+        name: "Moderated Forms",
+        classis: "active",
+        sref: "#!/page/viewFormModerated//",
+        icon: "phone"
+      }, {
+        name: "Trashed Form",
+        classis: "active",
+        sref: "#!/page/viewFormTrashed//",
+        icon: "phone"
+      }, {
+        name: "Users",
+        classis: "active",
+        sref: "#!/page/viewUser//",
+        icon: "phone"
+      }, {
+        name: "Centre",
+        classis: "active",
+        sref: "#!/page/viewCenter//",
+        icon: "phone"
+      }, {
+        name: "State",
+        classis: "active",
+        sref: "#!/page/viewState//",
+        icon: "phone"
+      }, {
+        name: "Institute",
+        classis: "active",
+        sref: "#!/page/viewInstitute//",
+        icon: "phone"
+      }, {
+        name: "Project",
+        classis: "active",
+        sref: "#!/page/viewProject//",
+        icon: "phone"
+      }, {
+        name: "Project Expenses",
+        classis: "active",
+        sref: "#!/page/viewProjectExpense//",
+        icon: "phone"
+      }, {
+        name: "Transaction",
+        classis: "active",
+        sref: "#!/page/viewTransaction//",
+        icon: "phone"
+      }, {
+        name: "Milestones",
+        classis: "active",
+        sref: "#!/page/viewMilestones//",
+        icon: "phone"
+      }, {
+        name: "Transaction Due",
+        classis: "active",
+        sref: "#!/page/viewTransactionDue//",
+        icon: "phone"
+      },
+      {
+        name: "Vendor",
+        classis: "active",
+        sref: "#!/page/viewVendor//",
+        icon: "phone"
+      },
+      {
+        name: "Components",
+        classis: "active",
+        sref: "#!/page/viewComponents//",
+        icon: "phone"
+      },
+      {
+        name: "PAB",
+        classis: "active",
+        sref: "#!/page/viewPab//",
+        icon: "phone"
+      },
+      {
+        name: "Key Components",
+        classis: "active",
+        sref: "#!/page/viewKeyComponents//",
+        icon: "phone"
+      },
+      {
+        name: "Project Type",
+        classis: "active",
+        sref: "#!/page/viewProjectType//",
+        icon: "phone"
+      },
+      {
+        name: "Asset Type",
+        classis: "active",
+        sref: "#!/page/viewAssetType//",
+        icon: "phone"
+      },
+      {
+        name: "District",
+        classis: "active",
+        sref: "#!/page/viewDistrict//",
+        icon: "phone"
+      }
     ];
 
     return {
@@ -145,7 +155,6 @@ var navigationservice = angular.module('navigationservice', [])
           callback(data, i);
         });
       },
-
       delete: function (url, formData, callback) {
         $http.post(adminurl + url, formData).then(function (data) {
           data = data.data;
@@ -187,15 +196,6 @@ var navigationservice = angular.module('navigationservice', [])
           callback(data);
         });
       },
-
-
-      callApi: function (url, callback) {
-        $http.post(adminurl + url).then(function (data) {
-          data = data.data;
-          callback(data);
-        });
-      },
-
       searchCall: function (url, formData, i, callback) {
         $http.post(adminurl + url, formData).then(function (data) {
           data = data.data;
