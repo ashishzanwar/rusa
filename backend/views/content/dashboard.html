@@ -3,38 +3,27 @@
     <div class="row"><br><br></div>
     <div class="row">
         <div class="col-md-2 form-group ">
-            <select name="" id="" class="form-control select_tag_dashboard">
-                <option value="">PAB 9</option>
-                <option value="">PAB 8</option>
-                <option value="">PAB 7</option>
-                <option value="">PAB 6</option>
-            </select>
+            <select name="" ng-model="selectedPab" class="form-control select_tag_dashboard" ng-options="x.name for x in AllPABs track by x._id"
+                ng-change="getAllDashboardData(selectedPab, $event)" data-id="pab">
+                </select>
         </div>
-        <div class="col-md-2 form-group ">
-            <select name="" id="" class="form-control select_tag_dashboard">
-                <option value="">Maharashtra</option>
-                <option value="">Rajastan</option>
-                <option value="">Gujrat</option>
-                <option value="">Karnataka</option>
-            </select>
+        <div class=" col-md-2 form-group ">
+            <select name=" " ng-model="selectedState " class="form-control select_tag_dashboard " ng-options="x.name for
+                x in AllStates track by x._id " ng-change="getAllDashboardData(selectedState, $event) " data-id="state">
+                </select>
         </div>
-        <div class="col-md-4 form-group pull-right">
-            <select name="" id="" class="form-control select_tag_dashboard">
-                <option value="">Mumbai University</option>
-                <option value="">Pune University</option>
-                <option value="">Chandigad University</option>
-                <option value="">DBSA University</option>
-            </select>
+        <div class="col-md-4 form-group pull-right ">
+            <select name=" " ng-model="selectedComponents " class="form-control select_tag_dashboard " ng-options="x.name
+                for x in AllComponents track by x._id " ng-change="getAllDashboardData(selectedComponents, $event) " data-id="component">
+                </select>
         </div>
-        <div class="col-md-4 form-group pull-right">
-            <select name="" id="" class="form-control select_tag_dashboard">
-                <option value="">All Components</option>
-                <option value="">First Component</option>
-                <option value="">Second Component</option>
-                <option value="">Third Component</option>
-            </select>
+        <div class="col-md-4 form-group pull-right ">
+            <select name=" " ng-model="selectedInstitute " class="form-control select_tag_dashboard " ng-options="x.name
+                for x in AllInstitutes track by x._id " ng-change="getAllDashboardData(selectedInstitute, $event) " data-id="institute">
+                </select>
         </div>
     </div>
+
     <div class="row">
         <div class="col-md-3 dashboard_blocks">
             <div class="widget">

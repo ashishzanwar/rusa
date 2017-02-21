@@ -68,20 +68,6 @@ var controller = {
     },
 
 
-    // findDashBoardData: function (req, res) {
-    //     console.log("######################$$$$$$$$$$$$$$$$$$#####################");
-    //     if (req.body) {
-    //         Components.findDashBoardData(req.body, res.callback);
-    //     } else {
-    //         res.json({
-    //             value: false,
-    //             data: {
-    //                 message: "Invalid Request"
-    //             }
-    //         })
-    //     }
-    // },
-
 };
 
 
