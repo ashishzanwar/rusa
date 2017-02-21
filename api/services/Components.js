@@ -73,37 +73,37 @@ var model = {
 
     saveComponentsPhotos: function (data, callback) {
 
-        console.log(data);
+        // console.log(data);
         Components.findOneAndUpdate({
             _id: data._id
         }, {
-            $push: {
+                $push: {
 
-                utilizationCertificates: {
-                    $each: [{
-                        images: data.images,
+                    utilizationCertificates: {
+                        $each: [{
+                            images: data.images,
 
-                    }]
+                        }]
+                    }
                 }
-            }
-        }).exec(function (err, found) {
+            }).exec(function (err, found) {
 
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
-
-                if (found) {
-
-                    callback(null, found);
+                if (err) {
+                    // console.log(err);
+                    callback(err, null);
                 } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
-                }
-            }
 
-        })
+                    if (found) {
+
+                        callback(null, found);
+                    } else {
+                        callback(null, {
+                            message: "No Data Found"
+                        });
+                    }
+                }
+
+            })
     },
 
     removeComponentsPhotos: function (data, callback) {
@@ -113,23 +113,23 @@ var model = {
 
             "_id": data._id
         }, {
-            $pull: {
-                utilizationCertificates: {
+                $pull: {
+                    utilizationCertificates: {
 
-                    images: data.images
+                        images: data.images
+                    }
                 }
-            }
-        }, function (err, updated) {
-            console.log(updated);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
+            }, function (err, updated) {
+                console.log(updated);
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
 
 
-                callback(null, updated);
-            }
-        });
+                    callback(null, updated);
+                }
+            });
     },
     findOneComponents: function (data, callback) {
 
@@ -156,6 +156,122 @@ var model = {
         })
     },
 
+    findAllComponents: function (data, callback) {
+
+
+        Components.find({
+        }).exec(function (err, found) {
+
+            if (err) {
+
+                callback(err, null);
+            } else {
+
+                if (found) {
+                    console.log("Found", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+
+        })
+    },
+
+    findDashBoardData: function (data, callback) {
+        console.log("I am inside component model", data._id);
+
+        // callback(null, {
+        //     message: "I am inside model"
+        // });
+
+
+        Components.findOne({
+            _id: data._id
+        }).deepPopulate("project").populate("institute").populate("pabno").populate("keycomponents").exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("Found", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
+
+
+
+
+
+
+    //     Components.findOne({
+    //         _id: data._id
+
+    //     }).deepPopulate("project").populate("institute").populate("pabno").populate("keycomponents").exec(function (err, found) {
+
+    //         if (err) {
+
+    //             callback(err, null);
+    //         } else {
+
+    //             if (found) {
+    //                 console.log("Found", found);
+    //                 callback(null, found);
+    //             } else {
+    //                 callback(null, {
+    //                     message: "No Data Found"
+    //                 });
+    //             }
+    //         }
+
+    //     })
+    // },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // findDashBoardData: function (data, callback) {
+    //     console.log("hiiiiii---------------------------#####################", data);
+
+    //     Components.findOne({
+    //         _id: data._id
+
+    //     }).deepPopulate("project").populate("institute").populate("pabno").populate("keycomponents").exec(function (err, found) {
+
+    //         if (err) {
+
+    //             callback(err, null);
+    //         } else {
+
+    //             if (found) {
+    //                 console.log("Found", found);
+    //                 callback(null, found);
+    //             } else {
+    //                 callback(null, {
+    //                     message: "No Data Found"
+    //                 });
+    //             }
+    //         }
+
+    //     })
+    // },
 
 };
 module.exports = _.assign(module.exports, exports, model);

@@ -104,27 +104,27 @@ var model = {
         Institute.findOneAndUpdate({
             _id: data._id
         }, {
-            $pull: {
-                users: data.user_id
-            }
-        }).exec(function (err, found) {
-
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
-
-                if (found) {
-
-                    callback(null, found);
-                } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
+                $pull: {
+                    users: data.user_id
                 }
-            }
+            }).exec(function (err, found) {
 
-        })
+                if (err) {
+                    // console.log(err);
+                    callback(err, null);
+                } else {
+
+                    if (found) {
+
+                        callback(null, found);
+                    } else {
+                        callback(null, {
+                            message: "No Data Found"
+                        });
+                    }
+                }
+
+            })
     },
 
     updateUser: function (data, callback) {
@@ -133,21 +133,21 @@ var model = {
             _id: data._id,
             "users": data.user_id
         }, {
-            $set: {
-                // $set: {
-                "users.$": data.change_id
-                // }
-            }
-        }, function (err, data) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else if (data) {
-                callback(null, data);
-            } else {
-                callback(null, "Invalid data");
-            }
-        });
+                $set: {
+                    // $set: {
+                    "users.$": data.change_id
+                    // }
+                }
+            }, function (err, data) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else if (data) {
+                    callback(null, data);
+                } else {
+                    callback(null, "Invalid data");
+                }
+            });
 
     },
 
@@ -158,31 +158,31 @@ var model = {
         Institute.findOneAndUpdate({
             _id: data._id
         }, {
-            $addToSet: {
-                // $push: {
-                users: data.user_id
-                // }
-            },
-        }, {
-            upsert: true
-        }).exec(function (err, found) {
+                $addToSet: {
+                    // $push: {
+                    users: data.user_id
+                    // }
+                },
+            }, {
+                upsert: true
+            }).exec(function (err, found) {
 
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
-
-                if (found) {
-
-                    callback(null, found);
+                if (err) {
+                    // console.log(err);
+                    callback(err, null);
                 } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
-                }
-            }
 
-        })
+                    if (found) {
+
+                        callback(null, found);
+                    } else {
+                        callback(null, {
+                            message: "No Data Found"
+                        });
+                    }
+                }
+
+            })
     },
 
 
@@ -219,53 +219,53 @@ var model = {
 
             "_id": data.institute,
         }, {
-            $pull: {
-                "project": objectid(data._id)
+                $pull: {
+                    "project": objectid(data._id)
 
-            }
-        }, function (err, updated) {
-            console.log(updated);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
+                }
+            }, function (err, updated) {
+                console.log(updated);
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
 
-                State.update({
+                    State.update({
 
-                    "_id": data.state,
-                }, {
-                    $pull: {
-                        "project": objectid(data._id)
+                        "_id": data.state,
+                    }, {
+                            $pull: {
+                                "project": objectid(data._id)
 
-                    }
-                }, function (err, updated) {
-                    console.log(updated);
-                    if (err) {
-                        console.log(err);
-                        callback(err, null);
-                    } else {
-                        Project.update({
-
-                            "_id": data._id,
-                        }, {
-
-                            "institute": null,
-                            "state": null
-
+                            }
                         }, function (err, updated) {
                             console.log(updated);
                             if (err) {
                                 console.log(err);
                                 callback(err, null);
                             } else {
-                                callback(null, updated);
+                                Project.update({
+
+                                    "_id": data._id,
+                                }, {
+
+                                        "institute": null,
+                                        "state": null
+
+                                    }, function (err, updated) {
+                                        console.log(updated);
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, null);
+                                        } else {
+                                            callback(null, updated);
+                                        }
+                                    });
                             }
                         });
-                    }
-                });
-                //    callback(null, updated);
-            }
-        });
+                    //    callback(null, updated);
+                }
+            });
     },
     findInstitute: function (data, callback) {
         Institute.find({
@@ -292,16 +292,16 @@ var model = {
             _id: data._id
 
         }, {
-            state: null
-        }).exec(function (err, found) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
-                console.log("Institute", found);
-                callback(null, found);
-            }
-        });
+                state: null
+            }).exec(function (err, found) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    console.log("Institute", found);
+                    callback(null, found);
+                }
+            });
     },
 
 
@@ -328,10 +328,7 @@ var model = {
 
 
     findAllInstituteDashBoard: function (data, callback) {
-        Institute.find({
-            district: data.district,
-            type: data.type
-        }).select("name _id").exec(function (err, found) {
+        Institute.find().select("name _id").exec(function (err, found) {
             if (err) {
                 // console.log(err);
                 callback(err, null);
@@ -347,5 +344,26 @@ var model = {
             }
         })
     },
+
+    //  findAllInstituteDashBoard: function (data, callback) {
+    //     Institute.find({
+    //         district: data.district,
+    //         type: data.type
+    //     }).select("name _id").exec(function (err, found) {
+    //         if (err) {
+    //             // console.log(err);
+    //             callback(err, null);
+    //         } else {
+    //             if (found) {
+    //                 console.log("IN  STATE FOUND", found);
+    //                 callback(null, found);
+    //             } else {
+    //                 callback(null, {
+    //                     message: "No Data Found"
+    //                 });
+    //             }
+    //         }
+    //     })
+    // },
 };
 module.exports = _.assign(module.exports, exports, model);
