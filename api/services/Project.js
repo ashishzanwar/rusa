@@ -584,6 +584,27 @@ var model = {
                     }
                 });
 
+            },
+            totalComponents: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        "_id": 1,
+                        count: {
+                            $sum: 1
+                        },
+                    }
+                });
+                Project.aggregate(newPipeLine, callback);
+
+            },
+            totalProjects: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $count: "count"
+                });
+                Project.aggregate(newPipeLine, callback);
+
             }
         }, callback);
 
