@@ -71,7 +71,7 @@ global["validators"] = require('mongoose-validators');
 global["monguurl"] = require('monguurl');
 require('mongoose-middleware').initialize(mongoose);
 global["Schema"] = mongoose.Schema;
-
+global["ObjectId"] = mongoose.Types.ObjectId;
 // Util Globals
 global["moment"] = require("moment");
 global["exec"] = require('child_process').exec;

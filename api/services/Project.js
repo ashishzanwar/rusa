@@ -440,17 +440,8 @@ var model = {
             }
         });
     },
-
-    findDashBoardData: function (data, callback) {
-        console.log("I am inside component model", data._id);
-
-        callback(null, {
-            message: "I am inside model"
-        });
-
-    },
     getAggregatePipeLine: function (data) {
-        pipeline = [
+        var pipeline = [
             // Stage 1
             {
                 $lookup: {
@@ -519,6 +510,7 @@ var model = {
                 }
             }
         ];
+        console.log(ObjectId);
         if (data.pab) {
             pipeline.push({
                 $match: {
@@ -550,8 +542,51 @@ var model = {
         return pipeline;
     },
     getProjectReport: function (data, callback) {
-        pipeLine = Project.getAggregatePipeLine();
-        Project.aggregate(pipeLine).exec(callback);
+        var pipeLine = Project.getAggregatePipeLine(data);
+        console.log(pipeLine);
+        async.parallel({
+            complete: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        "_id": "1",
+                        totalAllocation: {
+                            $sum: "$components_data.allocation"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, callback);
+
+            },
+            state: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        "_id": "$states_data",
+                        totalAllocation: {
+                            $sum: "$components_data.allocation"
+                        },
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, data) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        var obj = {
+                            centerShare: 0,
+                            stateShare: 0
+                        };
+                        _.each(data, function (n) {
+                            obj.centerShare += n._id.centerShare * n.totalAllocation / 100;
+                            obj.stateShare += n._id.stateShare * n.totalAllocation / 100;
+                        });
+                        callback(err, obj);
+                    }
+                });
+
+            }
+        }, callback);
+
     }
 };
 module.exports = _.assign(module.exports, exports, model);
