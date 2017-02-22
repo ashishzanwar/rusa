@@ -130,6 +130,7 @@ var model = {
                     callback(null, updated);
                 }
             });
+        console.log("DATA", data);
     },
     findOneComponents: function (data, callback) {
 
