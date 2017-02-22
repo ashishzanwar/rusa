@@ -41,10 +41,12 @@ var controller = {
             })
         }
     },
-<<<<<<< HEAD
-=======
+    <<
+    << << < HEAD ===
+    === =
 
->>>>>>> bfbc0d97751cfaab7deca35bc8ac4501865ce6e4
+    >>>
+    >>> > bfbc0d97751cfaab7deca35bc8ac4501865ce6e4
     removeProjectPhotos: function (req, res) {
         if (req.body) {
             Project.removeProjectPhotos(req.body, res.callback);
@@ -98,12 +100,5 @@ var controller = {
         }
     }
 };
-<<<<<<< HEAD
-module.exports = _.assign(module.exports, controller);
-=======
-
-
-
 
 module.exports = _.assign(module.exports, controller);
->>>>>>> bfbc0d97751cfaab7deca35bc8ac4501865ce6e4
