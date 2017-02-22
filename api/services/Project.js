@@ -605,6 +605,27 @@ var model = {
                 });
                 Project.aggregate(newPipeLine, callback);
 
+            },
+            institute: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        "_id": {
+                            pab: "$pab_data.name",
+                            component: "$components_data.name",
+                            institute: "$institutes_data.name",
+                            state: "$states_data",
+                        },
+                        "projects": {
+                            $sum: 1
+                        },
+                        totalAllocation: {
+                            $sum: "$components_data.allocation"
+                        },
+                    }
+                });
+                Project.aggregate(newPipeLine, callback);
+
             }
         }, callback);
 
