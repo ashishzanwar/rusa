@@ -3,7 +3,7 @@ var controller = {
 
     saveProject: function (req, res) {
         if (req.body) {
-          //  req.body.myCart = req.session.cart;
+            //  req.body.myCart = req.session.cart;
             // req.body.myCart.package = req.session.cart.package;
             // req.body.myCart.activities = req.session.cart.activities;
             // req.body.myCart.whatshot = req.session.cart.whatshot;
@@ -16,7 +16,7 @@ var controller = {
         }
     },
 
-       findAllState: function (req, res) {
+    findAllState: function (req, res) {
         if (req.body) {
             Project.findAllState(req.body, res.callback);
         } else {
@@ -29,7 +29,7 @@ var controller = {
         }
     },
 
-      saveProjectPhotos: function (req, res) {
+    saveProjectPhotos: function (req, res) {
         if (req.body) {
             Project.saveProjectPhotos(req.body, res.callback);
         } else {
@@ -41,7 +41,7 @@ var controller = {
             })
         }
     },
-  removeProjectPhotos: function (req, res) {
+    removeProjectPhotos: function (req, res) {
         if (req.body) {
             Project.removeProjectPhotos(req.body, res.callback);
         } else {
@@ -50,22 +50,34 @@ var controller = {
                 data: {
                     message: "Invalid Request"
                 }
-            })
+            });
         }
     },
-   
-  findOneProject: function (req, res) {
+
+    findOneProject: function (req, res) {
         if (req.body) {
-            Project. findOneProject(req.body, res.callback);
+            Project.findOneProject(req.body, res.callback);
         } else {
             res.json({
                 value: false,
                 data: {
                     message: "Invalid Request"
                 }
-            })
+            });
         }
     },
+    getProjectReport: function (req, res) {
+        if (req.body) {
+            Project.getProjectReport(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    }
 
 };
 module.exports = _.assign(module.exports, controller);

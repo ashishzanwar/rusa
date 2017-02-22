@@ -440,6 +440,113 @@ var model = {
             }
         });
     },
+    getAggregatePipeLine: function (data) {
+        pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "components",
+                    "localField": "components",
+                    "foreignField": "_id",
+                    "as": "components_data"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$components_data"
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "institutes",
+                    "localField": "components_data.institute",
+                    "foreignField": "_id",
+                    "as": "institutes_data"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$institutes_data"
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "states",
+                    "localField": "institutes_data.state",
+                    "foreignField": "_id",
+                    "as": "states_data"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$states_data"
+                }
+            },
+
+            // Stage 7
+            {
+                $lookup: {
+                    "from": "pabs",
+                    "localField": "components_data.pabno",
+                    "foreignField": "_id",
+                    "as": "pab_data"
+                }
+            },
+
+            // Stage 8
+            {
+                $unwind: {
+                    path: "$pab_data"
+                }
+            }
+        ];
+        if (data.pab) {
+            pipeline.push({
+                $match: {
+                    "pab_data._id": ObjectId("58a7f938efca06467a4ea95f")
+                }
+            });
+        }
+        if (data.component) {
+            pipeline.push({
+                $match: {
+                    "components_data._id": ObjectId("58a7fbdf30315f49d52eddb1")
+                }
+            });
+        }
+        if (data.institute) {
+            pipeline.push({
+                $match: {
+                    "institutes_data._id": ObjectId("58a42874af96ed63dcc5aa3f")
+                }
+            });
+        }
+        if (data.state) {
+            pipeline.push({
+                $match: {
+                    "states_data._id": ObjectId("58a7f8deefca06467a4ea959")
+                }
+            });
+        }
+        return pipeline;
+    },
+    getProjectReport: function (data, callback) {
+        pipeLine = Project.getAggregatePipeLine();
+        Project.aggregate(pipeLine).exec(function (err, data) {
+
+        });
+    }
+
 
 
 };
