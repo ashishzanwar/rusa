@@ -41,6 +41,7 @@ var controller = {
             })
         }
     },
+
     removeProjectPhotos: function (req, res) {
         if (req.body) {
             Project.removeProjectPhotos(req.body, res.callback);
@@ -66,6 +67,7 @@ var controller = {
             });
         }
     },
+
     getProjectReport: function (req, res) {
         if (req.body) {
             Project.getProjectReport(req.body, res.callback);

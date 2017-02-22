@@ -2,12 +2,29 @@
     border-radius: 5px !important;
 }
 
+.textright
+{
+    text-align: right !important;
+}
+
 .dashboard_blocks {
     border-radius: 15px;
 }
 
 .margin0 {
     margin: 0px !important;
+}
+
+.padding0{
+    padding:0px !important;
+}
+
+.padding5{
+    padding: 5px;
+}
+
+.padding10{
+    padding: 10px;
 }
 
 .paddingl10 {
@@ -60,4 +77,45 @@
 
 .table_head>th {
     text-align: center;
+}
+
+@media (max-width: 1200px)
+{
+    .dashimage {
+    padding: 0px !important;
+    }
+    
+
+}
+
+@media (max-width: 900px)
+{
+    .table_row{
+        overflow-x: scroll;
+    }
+
+
+    .table_row::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #abb0b5;
+        border-radius: 10px;
+    }
+
+    .table_row::-webkit-scrollbar
+    {
+        width: 10px;
+        background-color: #F5F5F5;
+    }
+
+    .table_row::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        background-image: -webkit-gradient(linear,
+                                         left top,
+                                        left bottom,                                       
+                                       color-stop(0.44, #e8edf2), 
+                                       color-stop(0.72, #c8ccd1), 
+                                       color-stop(0.86, #b1b4b6));
+    }
 }

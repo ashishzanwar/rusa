@@ -108,6 +108,7 @@ schema.plugin(deepPopulate, {
         'photos': {
             select: '_id photo tags'
         },
+
         'components': {
             select: '_id name'
         }
@@ -145,6 +146,7 @@ var model = {
             }
         })
     },
+
     saveProject: function (data, callback) {
         var myprojectdata = data;
         console.log("Data in ADD PROJECT", data);
@@ -292,7 +294,6 @@ var model = {
         });
     },
 
-
     addNewProject: function (data, callback) {
         var projectdata = data;
         projectdata = this(projectdata);
@@ -376,7 +377,6 @@ var model = {
         })
     },
 
-
     findAllState: function (data, callback) {
         Project.find().select("state").deepPopulate("state").exec(function (err, found) {
             if (err) {
@@ -395,7 +395,6 @@ var model = {
         })
     },
 
-
     getInstitute: function (data, callback) {
 
         Project.find({
@@ -411,9 +410,6 @@ var model = {
         });
 
     },
-
-
-
 
     removeProjectPhotos: function (data, callback) {
 
@@ -440,6 +436,7 @@ var model = {
                 }
             });
     },
+
     getAggregatePipeLine: function (data) {
 
         var pipeline = [
@@ -543,12 +540,14 @@ var model = {
         }
         return pipeline;
     },
+
     getProjectReport: function (data, callback) {
         var pipeLine = Project.getAggregatePipeLine(data);
         console.log(pipeLine);
         async.parallel({
             complete: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
+                //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
                 newPipeLine.push({
                     $group: {
                         "_id": "1",
