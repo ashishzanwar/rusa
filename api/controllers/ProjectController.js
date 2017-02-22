@@ -41,7 +41,6 @@ var controller = {
             })
         }
     },
-
     removeProjectPhotos: function (req, res) {
         if (req.body) {
             Project.removeProjectPhotos(req.body, res.callback);
@@ -51,7 +50,7 @@ var controller = {
                 data: {
                     message: "Invalid Request"
                 }
-            })
+            });
         }
     },
 
@@ -64,27 +63,21 @@ var controller = {
                 data: {
                     message: "Invalid Request"
                 }
-            })
+            });
         }
     },
-
-    findDashBoardData: function (req, res) {
-        // console.log("#################### All dashboard data ###################");
-        // console.log('request is :', req.body);
+    getProjectReport: function (req, res) {
         if (req.body) {
-            Components.findDashBoardData(req.body, res.callback);
+            Project.getProjectReport(req.body, res.callback);
         } else {
             res.json({
                 value: false,
                 data: {
                     message: "Invalid Request"
                 }
-            })
+            });
         }
     }
 };
-
-
-
 
 module.exports = _.assign(module.exports, controller);
