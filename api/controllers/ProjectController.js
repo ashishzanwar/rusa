@@ -41,6 +41,10 @@ var controller = {
             })
         }
     },
+<<<<<<< HEAD
+=======
+
+>>>>>>> bfbc0d97751cfaab7deca35bc8ac4501865ce6e4
     removeProjectPhotos: function (req, res) {
         if (req.body) {
             Project.removeProjectPhotos(req.body, res.callback);
@@ -79,5 +83,27 @@ var controller = {
         }
     }
 
+    findDashBoardData: function (req, res) {
+        // console.log("#################### All dashboard data ###################");
+        // console.log('request is :', req.body);
+        if (req.body) {
+            Components.findDashBoardData(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    }
 };
+<<<<<<< HEAD
 module.exports = _.assign(module.exports, controller);
+=======
+
+
+
+
+module.exports = _.assign(module.exports, controller);
+>>>>>>> bfbc0d97751cfaab7deca35bc8ac4501865ce6e4

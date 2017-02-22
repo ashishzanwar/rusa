@@ -51,37 +51,6 @@ var controller = {
             })
         }
     },
-
-    findDashBoardData: function (req, res) {
-        // console.log("#################### All dashboard data ###################");
-        // console.log('request is :', req.body);
-        if (req.body) {
-            Components.findDashBoardData(req.body, res.callback);
-        } else {
-            res.json({
-                value: false,
-                data: {
-                    message: "Invalid Request"
-                }
-            })
-        }
-    },
-
-
-    // findDashBoardData: function (req, res) {
-    //     console.log("######################$$$$$$$$$$$$$$$$$$#####################");
-    //     if (req.body) {
-    //         Components.findDashBoardData(req.body, res.callback);
-    //     } else {
-    //         res.json({
-    //             value: false,
-    //             data: {
-    //                 message: "Invalid Request"
-    //             }
-    //         })
-    //     }
-    // },
-
 };
 
 
