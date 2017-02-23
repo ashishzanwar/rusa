@@ -5,7 +5,8 @@
         <div class="col-md-3 form-group ">
             <lable>Select PAB No.</lable>
             <select name="" ng-model="selectedPab" class="form-control select_tag_dashboard" ng-options="x.name for x in AllPABs track by x._id"
-                ng-change="getAllDashboardData(selectedPab, $event)" data-id="pab">
+                ng-change="selectedPab===null ? '' : getAllDashboardData(selectedPab, $event) " data-id="pab">
+                <option value=""></option>
                 </select>
         </div>
         <div class=" col-md-3 form-group ">

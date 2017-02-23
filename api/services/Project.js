@@ -538,6 +538,14 @@ var model = {
                 }
             });
         }
+        if (data.componentStatus) {
+
+            pipeline.push({
+                $match: {
+                    "components_data.status": data.componentStatus
+                }
+            });
+        }
         return pipeline;
     },
 
@@ -615,6 +623,7 @@ var model = {
                             pab: "$pab_data.name",
                             component: "$components_data.name",
                             institute: "$institutes_data.name",
+                            componentStatus: "$components_data.status",
                             state: "$states_data",
                         },
                         "projects": {
@@ -629,6 +638,24 @@ var model = {
 
             }
         }, callback);
+
+    },
+
+
+    getAllprojectOfComponent: function (data, callback) {
+        // console.log("#############$$$$$$ inside getAllprojectOfComponent $$$$$#############", data);
+        Project.aggregate([
+            // Stage 1
+            {
+                $match: {
+                    "components": ObjectId(data.id)
+                }
+            },
+
+        ]).exec(function (error, resObject) {
+            console.log(resObject);
+            callback(error, resObject)
+        });
 
     }
 };
