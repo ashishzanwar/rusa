@@ -165,7 +165,7 @@ var model = {
                                         });
                                 }
                         }
-
+                        .populate("users").
                 })
         },
 
@@ -246,7 +246,7 @@ var model = {
                         } else if (data) {
                                 callback(null, data);
                         } else {
-                                callback(null, "Invalid data");
+                                .populate("users").callback(null, "Invalid data");
                         }
                 });
 

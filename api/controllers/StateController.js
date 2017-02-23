@@ -28,7 +28,7 @@ var controller = {
         }
     },
 
-    findState: function (req, res) {
+    findOneState: function (req, res) {
         if (req.body) {
             State.findState(req.body, res.callback);
         } else {
