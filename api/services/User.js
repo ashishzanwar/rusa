@@ -51,14 +51,14 @@ var schema = new Schema({
     accessLevel: {
         type: String,
         default: "User",
-        enum: ['User', 'Admin','Moderator']
+        enum: ['User', 'Admin', 'Moderator']
     },
 });
 
 schema.plugin(deepPopulate, {
     populate: {
         'user': {
-            select: 'name _id'
+            select: 'name _id '
         }
     }
 });
@@ -69,6 +69,72 @@ module.exports = mongoose.model('User', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "user", "user"));
 var model = {
+
+    LoginUser: function (data, callback) {
+        var username = data.username;
+        console.log("username", username);
+        var password = data.password;
+        var Model = this;
+        User.findOne({
+            "username": username,
+            "password": password
+        }).exec(function (err, user) {
+            console.log("user", user);
+            if (err) {
+                callback(err, null);
+            } else {
+                if (user) {
+                    console.log("if!!!");
+                    var id = user._id //user object id
+                    async.parallel({
+                        state: function (callback) {
+                            State.find({
+                                users: id
+                            }).exec(function (err, state) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (state) {
+                                        callback(null, state);
+                                    }
+                                }
+                            });
+                        },
+                        center: function (callback) {
+                            Center.find({
+                                users: id
+                            }).exec(function (err, center) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (center) {
+                                        callback(null, center);
+                                    }
+                                }
+                            });
+                        },
+                        institute: function (callback) {
+                            Institute.find({
+                                users: id
+                            }).exec(function (err, institute) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (institute) {
+                                        callback(null, institute);
+                                    }
+                                }
+                            });
+                        }
+                    }, callback);
+                } else {
+                    callback("no data", null);
+                }
+            }
+        });
+
+    },
+
 
     existsSocial: function (user, callback) {
         var Model = this;
@@ -118,7 +184,7 @@ var model = {
                 delete data.forgotPassword;
                 delete data.otp;
                 data.googleAccessToken = user.googleAccessToken;
-                data.save(function () {});
+                data.save(function () { });
                 console.log(data);
                 callback(err, data);
             }
@@ -146,31 +212,31 @@ var model = {
             "_id": id
         }).exec(function (err, data) {
             data.googleAccessToken = accessToken;
-            data.save(function () {});
+            data.save(function () { });
         });
     },
-     findAllUser: function (data, callback) {
-          
-                User.find({
-                    _id:data._id
-                }).select("name _id").exec(function (err, found) {
-                        if (err) {
-                                // console.log(err);
-                                callback(err, null);
-                        } else {
-                                if (found) {
-                                        console.log("IN  User FOUND", found);
-                                        callback(null, found);
-                                } else {
-                                        callback(null, {
-                                                message: "No Data Found"
-                                        });
-                                }
-                        }
-                })
-        },
+    findAllUser: function (data, callback) {
 
-        
+        User.find({
+            _id: data._id
+        }).select("name _id").exec(function (err, found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("IN  User FOUND", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
+
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

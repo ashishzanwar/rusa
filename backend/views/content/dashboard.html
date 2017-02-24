@@ -1,123 +1,149 @@
-<div class="dashimages container">
+<div class="dashimages container-fluid">
     <!--<img src="../../backend/img/rusa.png" class="img-responsive" alt="img">-->
     <div class="row"><br><br></div>
     <div class="row">
-        <div class="col-md-2 form-group ">
+        <div class="col-md-3 form-group ">
+            <lable>Select PAB No.</lable>
             <select name="" ng-model="selectedPab" class="form-control select_tag_dashboard" ng-options="x.name for x in AllPABs track by x._id"
-                ng-change="getAllDashboardData(selectedPab, $event)" data-id="pab">
+                ng-change="selectedPab===null ? '' : getAllDashboardData(selectedPab, $event) " data-id="pab">
+                <option value=""></option>
                 </select>
         </div>
-        <div class=" col-md-2 form-group ">
+        <div class=" col-md-3 form-group ">
+            <lable>Select State</lable>
             <select name=" " ng-model="selectedState " class="form-control select_tag_dashboard " ng-options="x.name for
-                x in AllStates track by x._id " ng-change="getAllDashboardData(selectedState, $event) " data-id="state">
+                x in AllStates track by x._id " ng-change="selectedState===null ? '' : getAllDashboardData(selectedState, $event)"
+                data-id="state">
+                <option value=""></option>
                 </select>
         </div>
-        <div class="col-md-4 form-group pull-right ">
+        <div class="col-md-3 form-group">
+            <lable>Select Institute</lable>
             <select name=" " ng-model="selectedInstitute " class="form-control select_tag_dashboard " ng-options="x.name
-                for x in AllInstitutes track by x._id " ng-change="getAllDashboardData(selectedInstitute, $event) " data-id="institute">
+                for x in AllInstitutes track by x._id " ng-change="selectedInstitute===null ? '' : getAllDashboardData(selectedInstitute, $event)"
+                data-id="institute">
+                <option value=""></option>
                 </select>
         </div>
-        <div class="col-md-4 form-group pull-right ">
+        <div class="col-md-3 form-group ">
+            <lable>Select Component</lable>
             <select name=" " ng-model="selectedComponents " class="form-control select_tag_dashboard " ng-options="x.name
-                for x in AllComponents track by x._id " ng-change="getAllDashboardData(selectedComponents, $event) " data-id="component">
+                for x in AllComponents track by x._id " ng-change="selectedComponents===null ? '' : getAllDashboardData(selectedComponents, $event)"
+                data-id="component">
+                <option value=""></option>
                 </select>
         </div>
     </div>
-
     <div class="row">
-        <div class="col-md-3 dashboard_blocks">
+        <div class="col-md-3 col-sm-6 dashboard_blocks">
             <div class="widget">
                 <!--<div class="widget-controls">
                     <span class="refresh-content"><i class="fa fa-refresh"></i></span>
                 </div>-->
                 <!-- Widget Controls -->
-                <div class="mini-stats block_upper">
-                    <span class="red-skin"><i class="fa fa-area-chart fa-lg"></i></span>
-                    <p>FUND ALLOCATION</p>
-                    <h3>2,000 L</h3><br><br>
-                </div>
                 <div class="row">
-                    <div class="col-md-6 padding10_20">
-                        <p class="margin0 paddingl10">CENTER SHARE</p>
-                        <p class="margin0 paddingl10 em1_5"><strong>12,000 L</strong></p>
+                    <div class="col-md-12">
+                        <div class="mini-stats block_upper">
+                            <span class="red-skin"><i class="fa fa-area-chart fa-lg"></i></span>
+                            <p>FUND ALLOCATION</p>
+                            <h3>{{filteredComponents.complete[0].totalAllocation | currency:"&#8377;"}}</h3><br><br>
+                        </div>
                     </div>
-                    <div class="col-md-6 padding10_20">
-                        <p class="margin0 paddingl10">STATE SHARE</p>
-                        <p class="margin0 paddingl10 em1_5"><strong>8,000 L</strong></p>
+                </div>
+                <div class="row margin0 padding10 ">
+                    <div class="col-md-6 col-xs-6 padding0">
+                        <p class="margin0">CENTER SHARE</p>
+                        <p class="margin0 em1_1">{{filteredComponents.state.centerShare | currency:"&#8377;"}}</p>
+                    </div>
+                    <div class="col-md-6 col-xs-6 padding0 textright">
+                        <p class="margin0">STATE SHARE</p>
+                        <p class="margin0 em1_1">{{filteredComponents.state.stateShare | currency:"&#8377;"}}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 dashboard_blocks">
+        <div class="col-md-3 col-sm-6 dashboard_blocks">
             <div class="widget">
                 <!--<div class="widget-controls">
                     <span class="refresh-content"><i class="fa fa-refresh"></i></span>
                 </div>-->
                 <!-- Widget Controls -->
-                <div class="mini-stats block_upper">
-                    <span class="sky-skin" style="margin-bottom: 20px;"><i class="fa fa-globe fa-lg"></i></span>
-                    <p>TOTAL COMPONENTS</p>
-                    <h5 class="margin0 em1_3">10</h5>
-                    <p>TOTAL PROJECTS</p>
-                    <h5 class="margin0 em1_3">30</h5>
-                </div>
                 <div class="row">
-                    <div class="col-md-6 padding10_20">
-                        <p class="margin0 paddingl10">INTIME</p>
-                        <p class="margin0 paddingl10 em1_5"><strong>20</strong></p>
+                    <div class="col-md-12">
+                        <div class="mini-stats block_upper">
+                            <span class="sky-skin" style="margin-bottom: 35px;"><i class="fa fa-globe fa-lg"></i></span>
+                            <p>TOTAL COMPONENTS</p>
+                            <h5 class="margin0 em1_3">{{filteredComponents.totalComponents[0].count}}</h5>
+                            <p>TOTAL PROJECTS</p>
+                            <h5 class="margin0 em1_3">{{filteredComponents.totalProjects[0].count}}</h5>
+                        </div>
                     </div>
-                    <div class="col-md-6 padding10_20">
-                        <p class="margin0 paddingl10">DELAYED</p>
-                        <p class="margin0 paddingl10 em1_5"><strong>10</strong></p>
+                </div>
+                <div class="row margin0 padding10 ">
+                    <div class="col-md-6 col-xs-6 padding0">
+                        <p class="margin0 ">INTIME</p>
+                        <p class="margin0  em1_1">{{filteredComponents.inTimeComponents[0].inTimeComponentsCount}}</p>
+                    </div>
+                    <div class="col-md-6 col-xs-6padding0 textright">
+                        <p class="margin0 ">DELAYED</p>
+                        <p class="margin0 em1_1">{{filteredComponents.totalComponents[0].count - filteredComponents.inTimeComponents[0].inTimeComponentsCount}}</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 dashboard_blocks">
+        <div class="col-md-3 col-sm-6 dashboard_blocks">
             <div class="widget">
                 <!--<div class="widget-controls">
                     <span class="refresh-content"><i class="fa fa-refresh"></i></span>
                 </div>-->
                 <!-- Widget Controls -->
-                <div class="mini-stats block_upper">
-                    <span class="purple-skin"><i class="fa fa-bullhorn fa-lg"></i></span>
-                    <p>FUNDS RELEASED</p>
-                    <h3>6,101</h3><br><br>
-                </div>
                 <div class="row">
-                    <div class="col-md-6 padding10_20">
-                        <p class="margin0 paddingl10">CENTER SHARE</p>
-                        <p class="margin0 paddingl10 em1_5"><strong>400 L</strong></p>
+                    <div class="col-md-12">
+                        <div class="mini-stats block_upper">
+                            <span class="purple-skin"><i class="fa fa-bullhorn fa-lg"></i></span>
+                            <p>FUNDS RELEASED</p>
+                            <h3>6,101</h3><br><br>
+                        </div>
                     </div>
-                    <div class="col-md-6 padding10_20">
-                        <p class="margin0 paddingl10">STATE SHARE</p>
-                        <p class="margin0 paddingl10 em1_5"><strong>600 L</strong></p>
+                </div>
+                <div class="row margin0 padding10">
+                    <div class="col-md-6 col-xs-6 padding0">
+                        <p class="margin0">CENTER SHARE</p>
+                        <p class="margin0  em1_1">400 L</p>
+                    </div>
+                    <div class="col-md-6 col-xs-6 padding0 textright">
+                        <p class="margin0 ">STATE SHARE</p>
+                        <p class="margin0 em1_1">600 L</p>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3 dashboard_blocks">
+        <div class="col-md-3 col-sm-6 dashboard_blocks">
             <div class="widget">
                 <div class="widget-controls">
                     <span class="refresh-content">58%</span>
                 </div>
                 <!-- Widget Controls -->
-                <div class="mini-stats block_upper">
-                    <span class="pink-skin"><i class="fa fa-bar-chart fa-lg"></i></span>
-                    <p>FUNDS UTILIZED</p>
-                    <h3>5,218</h3><br><br>
-                </div>
                 <div class="row">
-                    <div class="col-md-12 padding10_20">
-                        <p class="margin0 paddingl10">CENTER SHARE</p>
-                        <p class="margin0 paddingl10 em1_5"><strong>12,000 L</strong></p>
+                    <div class="col-md-12">
+                        <div class="mini-stats block_upper">
+                            <span class="pink-skin"><i class="fa fa-bar-chart fa-lg"></i></span>
+                            <p>FUNDS UTILIZED</p>
+                            <h3>5,218</h3><br><br>
+                        </div>
+                    </div>
+                </div>
+                <div class="row margin0 padding10 textright">
+                    <div class="col-md-12 ">
+                        <p class="margin0 ">CENTER SHARE</p>
+                        <p class="margin0 em1_1">12,000 L</p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
     <div class="row"><br></div>
-    <div class="row table_row">
+    <div class="row table_row ">
         <div class="col-md-12">
             <p><br></p>
             <p class="text-right text-muted">
@@ -151,78 +177,24 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table_data">
-                        <td>9</td>
-                        <td>Mumbai University</td>
-                        <td>Maharastra</td>
-                        <td>Infrastucture Grant</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>60</td>
-                        <td>40</td>
-                        <td>30</td>
+                    <tr class="table_data" ng-repeat="i in filteredComponents.institute">
+                        <td>{{i._id.pab}}</td>
+                        <td>{{i._id.institute}}</td>
+                        <td>{{i._id.state.name}}</td>
+                        <td>{{i._id.component}}</td>
+                        <td>{{i.projects}}</td>
+                        <td>-</td>
+                        <td>{{i.totalAllocation * (i._id.state.centerShare/100)}}</td>
+                        <td>{{i.totalAllocation * (i._id.state.stateShare/100)}}</td>
+                        <td>{{1+5}}</td>
                         <td>20</td>
                         <td>30</td>
                         <td>60%</td>
                     </tr>
-                    <tr class="table_data">
-                        <td>9</td>
-                        <td>Mumbai University</td>
-                        <td>Maharastra</td>
-                        <td>Infrastucture Grant</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>60</td>
-                        <td>40</td>
-                        <td>30</td>
-                        <td>20</td>
-                        <td>30</td>
-                        <td>60%</td>
-                    </tr>
-                    <tr class="table_data">
-                        <td>9</td>
-                        <td>Mumbai University</td>
-                        <td>Maharastra</td>
-                        <td>Infrastucture Grant</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>60</td>
-                        <td>40</td>
-                        <td>30</td>
-                        <td>20</td>
-                        <td>30</td>
-                        <td>60%</td>
-                    </tr>
-                    <tr class="table_data">
-                        <td>9</td>
-                        <td>Mumbai University</td>
-                        <td>Maharastra</td>
-                        <td>Infrastucture Grant</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>60</td>
-                        <td>40</td>
-                        <td>30</td>
-                        <td>20</td>
-                        <td>30</td>
-                        <td>60%</td>
-                    </tr>
-                    <tr class="table_data">
-                        <td>9</td>
-                        <td>Mumbai University</td>
-                        <td>Maharastra</td>
-                        <td>Infrastucture Grant</td>
-                        <td>3</td>
-                        <td>1</td>
-                        <td>60</td>
-                        <td>40</td>
-                        <td>30</td>
-                        <td>20</td>
-                        <td>30</td>
-                        <td>60%</td>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
     </div>
+    <div class="row"><br><br><br></div>
 </div>

@@ -11,51 +11,49 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.selectedState = "";
     $scope.AllComponents = "";
     $scope.AllInstitutes = "";
-    $scope.dropDownData = {
-      pab_id: "",
-      state_id: "",
-      component_id: "",
-      institute_id: ""
+    $scope.filteredComponents = "";
+    var dropDownData = {
+      pab: "",
+      state: "",
+      component: "",
+      institute: ""
     };
 
-    $scope.getAllDashboardData = function (item) {
+    NavigationService.boxCall("Project/getProjectReport", dropDownData, function (data) {
+      $scope.filteredComponents = data.data;
+      // console.log("Dashboard data: ", $scope.filteredComponents);
+      // console.log($scope.filteredComponents.complete[0].totalAllocation);
+    });
 
+    $scope.getAllDashboardData = function (item) {
+      console.log(item);
       var id = angular.element(event.target).data('id');
-      // console.log("Selected Id is", id);
-      // console.log("I am clicked", item.name);
+      console.log(id);
 
       if (id == "pab") {
-        $scope.dropDownData.pab_id = item._id;
-        NavigationService.boxCall("Components/findDashBoardData", $scope.dropDownData, function (data) {
+        dropDownData.pab = item._id;
+        NavigationService.boxCall("Project/getProjectReport", dropDownData, function (data) {
           $scope.filteredComponents = data.data;
-          // console.log("AllComponents after filter", $scope.filteredComponents);
-          // console.log("Selected Id is", id);
         });
 
       } else if (id == "state") {
-        $scope.dropDownData.state_id = item._id;
-        NavigationService.boxCall("Components/findDashBoardData", $scope.dropDownData, function (data) {
+        dropDownData.state = item._id;
+        NavigationService.boxCall("Project/getProjectReport", dropDownData, function (data) {
           $scope.filteredComponents = data.data;
-          // console.log("AllComponents after filter", $scope.filteredComponents);
-          // console.log("Selected Id is", id);
         });
       } else if (id == "component") {
-        $scope.dropDownData.component_id = item._id;
-        NavigationService.boxCall("Components/findDashBoardData", $scope.dropDownData, function (data) {
+        dropDownData.component = item._id;
+        NavigationService.boxCall("Project/getProjectReport", dropDownData, function (data) {
           $scope.filteredComponents = data.data;
-          // console.log("AllComponents after filter", $scope.filteredComponents);
-          // console.log("Selected Id is", id);
         });
       } else if (id == "institute") {
-        $scope.dropDownData.institute_id = item._id;
-        NavigationService.boxCall("Components/findDashBoardData", $scope.dropDownData, function (data) {
+        dropDownData.institute = item._id;
+        NavigationService.boxCall("Project/getProjectReport", dropDownData, function (data) {
           $scope.filteredComponents = data.data;
-          // console.log("AllComponents after filter", $scope.filteredComponents);
-          // console.log("Selected Id is", id);
         });
       }
 
-      console.log("yiipppiieee m getng dis bldy data", $scope.dropDownData);
+      console.log(dropDownData);
     };
 
     NavigationService.callApi("Pab/findAllPab", function (data) {
