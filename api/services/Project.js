@@ -553,18 +553,28 @@ var model = {
         var pipeLine = Project.getAggregatePipeLine(data);
         console.log(pipeLine);
         async.parallel({
-            complete: function (callback) {
+            totalComponentsFundAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
                 newPipeLine.push({
                     $group: {
                         "_id": "1",
-                        totalAllocation: {
+                        totalFundAllocation: {
                             $sum: "$components_data.allocation"
                         }
                     }
                 });
-                Project.aggregate(newPipeLine, callback);
+                Project.aggregate(newPipeLine, function (err, allocationData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(allocationData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, allocationData[0]);
+                        }
+                    }
+                });
 
             },
             state: function (callback) {
@@ -604,7 +614,17 @@ var model = {
                         },
                     }
                 });
-                Project.aggregate(newPipeLine, callback);
+                Project.aggregate(newPipeLine, function (err, componentData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(componentData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, componentData[0]);
+                        }
+                    }
+                });
 
             },
             totalProjects: function (callback) {
@@ -612,7 +632,17 @@ var model = {
                 newPipeLine.push({
                     $count: "count"
                 });
-                Project.aggregate(newPipeLine, callback);
+                Project.aggregate(newPipeLine, function (err, projectData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(projectData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, projectData[0]);
+                        }
+                    }
+                });
 
             },
             inTimeComponents: function (callback) {
@@ -631,7 +661,17 @@ var model = {
                         }
                     }
                 });
-                Project.aggregate(newPipeLine, callback);
+                Project.aggregate(newPipeLine, function (err, inTimeCompData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(inTimeCompData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, inTimeCompData[0]);
+                        }
+                    }
+                });
             },
             institute: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
@@ -639,15 +679,16 @@ var model = {
                     $group: {
                         "_id": {
                             pab: "$pab_data.name",
+                            componentId: "$components_data._id",
                             component: "$components_data.name",
                             institute: "$institutes_data.name",
                             componentStatus: "$components_data.status",
                             state: "$states_data",
                         },
-                        "projects": {
+                        "totalComponentProjects": {
                             $sum: 1
                         },
-                        totalAllocation: {
+                        totalComponentAllocation: {
                             $sum: "$components_data.allocation"
                         },
                     }

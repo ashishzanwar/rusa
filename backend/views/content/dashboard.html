@@ -46,7 +46,7 @@
                         <div class="mini-stats block_upper">
                             <span class="red-skin"><i class="fa fa-area-chart fa-lg"></i></span>
                             <p>FUND ALLOCATION</p>
-                            <h3>{{filteredComponents.complete[0].totalAllocation | currency:"&#8377;"}}</h3><br><br>
+                            <h3>{{filteredComponents.totalComponentsFundAllocation.totalFundAllocation | currency:"&#8377;"}}</h3><br><br>
                         </div>
                     </div>
                 </div>
@@ -73,20 +73,20 @@
                         <div class="mini-stats block_upper">
                             <span class="sky-skin" style="margin-bottom: 35px;"><i class="fa fa-globe fa-lg"></i></span>
                             <p>TOTAL COMPONENTS</p>
-                            <h5 class="margin0 em1_3">{{filteredComponents.totalComponents[0].count}}</h5>
+                            <h5 class="margin0 em1_3">{{filteredComponents.totalComponents.count}}</h5>
                             <p>TOTAL PROJECTS</p>
-                            <h5 class="margin0 em1_3">{{filteredComponents.totalProjects[0].count}}</h5>
+                            <h5 class="margin0 em1_3">{{filteredComponents.totalProjects.count}}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10 ">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0 ">INTIME</p>
-                        <p class="margin0  em1_1">{{filteredComponents.inTimeComponents[0].inTimeComponentsCount}}</p>
+                        <p class="margin0  em1_1">{{filteredComponents.inTimeComponents.inTimeComponentsCount}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6padding0 textright">
                         <p class="margin0 ">DELAYED</p>
-                        <p class="margin0 em1_1">{{filteredComponents.totalComponents[0].count - filteredComponents.inTimeComponents[0].inTimeComponentsCount}}</p>
+                        <p class="margin0 em1_1">{{filteredComponents.totalComponents.count - filteredComponents.inTimeComponents.inTimeComponentsCount}}</p>
                     </div>
                 </div>
             </div>
@@ -182,10 +182,10 @@
                         <td>{{i._id.institute}}</td>
                         <td>{{i._id.state.name}}</td>
                         <td>{{i._id.component}}</td>
-                        <td>{{i.projects}}</td>
+                        <td>{{i.totalComponentProjects}}</td>
                         <td>-</td>
-                        <td>{{i.totalAllocation * (i._id.state.centerShare/100)}}</td>
-                        <td>{{i.totalAllocation * (i._id.state.stateShare/100)}}</td>
+                        <td>{{i.totalComponentAllocation * (i._id.state.centerShare/100)}}</td>
+                        <td>{{i.totalComponentAllocation * (i._id.state.stateShare/100)}}</td>
                         <td>{{1+5}}</td>
                         <td>20</td>
                         <td>30</td>
