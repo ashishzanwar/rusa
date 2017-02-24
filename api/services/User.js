@@ -127,42 +127,6 @@ var model = {
                             });
                         }
                     }, callback);
-                    // State.find({
-                    //     users: id
-                    // }).exec(function (err, state) {
-                    //     if (err) {
-                    //         callback(err, null);
-                    //     } else {
-                    //         if (state) {
-                    //             callback(null, users, state._id);
-                    //         } else {
-
-                    //             Center.find({
-                    //                 users: id
-                    //             }).exec(function (err, center) {
-                    //                 if (err) {
-                    //                     callback(err, null);
-                    //                 } else {
-                    //                     if (center) {
-                    //                         callback(null, user._id, center._id);
-                    //                     } else {
-                    //                         Institute.find({
-                    //                             users: id
-                    //                         }, function (err, center) {
-                    //                             if (err) {
-                    //                                 callback(err, null)
-                    //                             }
-                    //                             if (center) {
-                    //                                 callback(null, user._id, institute._id);
-                    //                             }
-                    //                         });
-                    //                     }
-                    //                 }
-                    //             })
-
-                    //         }
-                    //     }
-                    // });
                 } else {
                     callback("no data", null);
                 }
@@ -220,7 +184,7 @@ var model = {
                 delete data.forgotPassword;
                 delete data.otp;
                 data.googleAccessToken = user.googleAccessToken;
-                data.save(function () {});
+                data.save(function () { });
                 console.log(data);
                 callback(err, data);
             }
@@ -248,7 +212,7 @@ var model = {
             "_id": id
         }).exec(function (err, data) {
             data.googleAccessToken = accessToken;
-            data.save(function () {});
+            data.save(function () { });
         });
     },
     findAllUser: function (data, callback) {

@@ -12,19 +12,25 @@
         <div class=" col-md-3 form-group ">
             <lable>Select State</lable>
             <select name=" " ng-model="selectedState " class="form-control select_tag_dashboard " ng-options="x.name for
-                x in AllStates track by x._id " ng-change="getAllDashboardData(selectedState, $event) " data-id="state">
+                x in AllStates track by x._id " ng-change="selectedState===null ? '' : getAllDashboardData(selectedState, $event)"
+                data-id="state">
+                <option value=""></option>
                 </select>
         </div>
         <div class="col-md-3 form-group">
             <lable>Select Institute</lable>
             <select name=" " ng-model="selectedInstitute " class="form-control select_tag_dashboard " ng-options="x.name
-                for x in AllInstitutes track by x._id " ng-change="getAllDashboardData(selectedInstitute, $event) " data-id="institute">
+                for x in AllInstitutes track by x._id " ng-change="selectedInstitute===null ? '' : getAllDashboardData(selectedInstitute, $event)"
+                data-id="institute">
+                <option value=""></option>
                 </select>
         </div>
         <div class="col-md-3 form-group ">
             <lable>Select Component</lable>
             <select name=" " ng-model="selectedComponents " class="form-control select_tag_dashboard " ng-options="x.name
-                for x in AllComponents track by x._id " ng-change="getAllDashboardData(selectedComponents, $event) " data-id="component">
+                for x in AllComponents track by x._id " ng-change="selectedComponents===null ? '' : getAllDashboardData(selectedComponents, $event)"
+                data-id="component">
+                <option value=""></option>
                 </select>
         </div>
     </div>
@@ -76,11 +82,11 @@
                 <div class="row margin0 padding10 ">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0 ">INTIME</p>
-                        <p class="margin0  em1_1">20</p>
+                        <p class="margin0  em1_1">{{filteredComponents.inTimeComponents[0].inTimeComponentsCount}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6padding0 textright">
                         <p class="margin0 ">DELAYED</p>
-                        <p class="margin0 em1_1">10</p>
+                        <p class="margin0 em1_1">{{filteredComponents.totalComponents[0].count - filteredComponents.inTimeComponents[0].inTimeComponentsCount}}</p>
                     </div>
                 </div>
             </div>

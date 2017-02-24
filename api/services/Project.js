@@ -615,6 +615,24 @@ var model = {
                 Project.aggregate(newPipeLine, callback);
 
             },
+            inTimeComponents: function (callback) {
+
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $match: {
+                        "components_data.subStatus": "InTime"
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        "_id": null,
+                        inTimeComponentsCount: {
+                            $sum: 1
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, callback);
+            },
             institute: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
