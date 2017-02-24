@@ -139,8 +139,10 @@ var model = {
                             w: 1
                         }, callback);
                         Model.saveName(data._id);
-
+                        // if (data.status == "Moderation Completed") {
                         //Form.compile(data);
+                        // }
+
 
                     });
 
@@ -170,325 +172,69 @@ var model = {
         }
 
     },
-
     compile: function (data) {
-        console.log("Compilation Starts");
-        console.log("Compile data", data);
-        var componentData = {};
-        componentData.institute = data.json.instituteId._id;
-        componentData.pabno = data.json.pabId._id;
-        componentData.keycomponents = data.json.keyComponentsId._id;
-        componentData.allocation = data.json.allocation;
+        var json = data.json;
 
-
-
-        Components.saveData(componentData, function (err, compoData) {
-            if (err) {
-                console.log("Error in Components Save", err);
-                callback(err, null);
-            } else {
-
-                console.log("COMPONENT DATA", compoData);
-                async.parallel([
-
-                    //projects
-                    function (callback) {
-                        async.each(data.json.projects, function (n, callback) {
-                            console.log("DATATATAT", n);
-                            var projectData = {};
-                            projectData.components = compoData._id;
-                            projectData.projectType = n.projectType;
-                            projectData.assetType = n.assetType;
-                            projectData.valueProject = n.valueProject;
-
-                            Project.saveData(projectData, function (err, proData) {
-                                if (err) {
-                                    console.log("Error in Project Save", err);
-                                    callback(err, null);
-                                } else {
-
-                                    async.each(data.json.centerToState, function (c) {
-                                        console.log("center to state", c);
-                                        var centerToState = {};
-
-
-                                        centerToState.type = "Center To State";
-                                        centerToState.components = compoData._id;
-                                        centerToState.project = proData._id;
-                                        centerToState.installment = c.installmentNo;
-                                        centerToState.amount = c.amount;
-                                        centerToState.remark = c.remarks;
-                                        centerToState.file = c.file;
-                                        centerToState.transactionSent = c.transactionSent;
-                                        centerToState.transactionReceived = c.transactionRececived;
-
-                                        Transaction.saveData(centerToState, function (err, transCenterToStateData) {
-                                            if (err) {
-                                                console.log("Error in Transation centerToState ");
-                                                callback(err, null);
-                                            } else {
-
-
-                                                console.log("Transaction In centerToState ", transCenterToStateData);
-                                            }
-                                        });
-
+        var componentObj = {
+            name: String,
+            institute: json.instituteId._id,
+            pabno: json.pabId._id,
+            keycomponents: json.keyComponentsId._id,
+            allocation: allocation,
+            status: "Active",
+            subStatus: "InTime",
+            utilizationCertificates: [{
+                images: json.utilization.file1,
+                date: json.utilization.date1,
+                amount: json.utilization.value1
+            }, {
+                images: json.utilization.file2,
+                date: json.utilization.date2,
+                amount: json.utilization.value2
+            }],
+            fundDelay: false
+        };
+        var compo = Components(componentObj);
+        compo.save(function (err, comSave) {
+            async.parallel({
+                project: function (callback) {
+                    async.each(json.projects, function (project, callback) {
+                        var projectObj = {}; // create it with project;
+                        Project.save(function (err, projectSave) {
+                            async.each(project.projectExpenses, function (projectExp, callback) {
+                                var projectExpObj = {}; // create it with projectExp;
+                                ProjectExpense.save(function (err, projectExpenseSave) {
+                                    async.each(projectExp.institutetoVendors, function (instituteVendor, callback) {
+                                        var transactionObj = {}; // create it with instituteVendor;
+                                        Transaction.save();
+                                    }, function () {
 
                                     });
+                                });
+                            }, function () {
 
-
-                                    async.each(data.json.centerToState, function (c) {
-                                        console.log("center to state", c);
-                                        var centerToState = {};
-
-
-                                        centerToState.type = "Center To State";
-                                        centerToState.components = compoData._id;
-                                        centerToState.project = proData._id;
-                                        centerToState.installment = c.installmentNo;
-                                        centerToState.amount = c.amount;
-                                        centerToState.remark = c.remarks;
-                                        centerToState.file = c.file;
-                                        centerToState.transactionSent = c.transactionSent;
-                                        centerToState.transactionReceived = c.transactionRececived;
-
-                                        Transaction.saveData(centerToState, function (err, transCenterToStateData) {
-                                            if (err) {
-                                                console.log("Error in Transation centerToState ");
-                                                callback(err, null);
-                                            } else {
-
-
-                                                console.log("Transaction In centerToState ", transCenterToStateData);
-                                            }
-                                        });
-
-
-                                    });
-
-
-                                    async.each(data.json.stateToInstitute, function (s) {
-                                        console.log("stateToInstitute", s);
-                                        var stateToInstitute = {};
-
-
-                                        stateToInstitute.type = "Center To State";
-                                        stateToInstitute.components = compoData._id;
-                                        stateToInstitute.project = proData._id;
-                                        stateToInstitute.installment = s.installmentNo;
-                                        stateToInstitute.amount = s.amount;
-                                        stateToInstitute.remark = s.remarks;
-                                        stateToInstitute.file = s.file;
-                                        stateToInstitute.transactionSent = s.transactionSent;
-                                        stateToInstitute.transactionReceived = s.transactionRececived;
-
-                                        Transaction.saveData(stateToInstitute, function (err, transStateToInstitute) {
-                                            if (err) {
-                                                console.log("Error in Transation stateToInstitute ");
-                                                callback(err, null);
-                                            } else {
-
-
-                                                console.log("Transaction In stateToInstitute ", transStateToInstitute);
-                                            }
-                                        });
-
-
-                                    });
-
-
-                                    async.each(n.projectExpenses, function (m, callback) {
-
-                                        console.log("Inner projectExpenses", m);
-                                        var vendorData = {};
-                                        vendorData.name = m.name;
-                                        vendorData.tintan = m.tintan;
-                                        vendorData.pan = m.vendorpan;
-
-
-
-                                        Vendor.saveData(vendorData, function (err, venData) {
-                                            if (err) {
-                                                console.log("Error in Vendor ");
-                                                callback(err, null);
-                                            } else {
-                                                console.log("Vendor Data", venData);
-
-                                                var projectExpense = {};
-                                                projectExpense.vendor = venData._id;
-                                                projectExpense.allocatedAmount = m.amount;
-                                                // projectExpense.transactions = {
-                                                //     id: transId
-                                                // };
-                                                projectExpense.project = proData._id;
-
-                                                ProjectExpense.saveData(projectExpense, function (err, proExData) {
-                                                    if (err) {
-                                                        console.log("Error in Project Expense  ", err);
-                                                        callback(err, null);
-                                                    } else {
-                                                        console.log("Project Expense Data", proExData);
-
-                                                        var transId = [];
-                                                        async.each(m.institutetoVendors, function (p, callback) {
-                                                            var counter = 1;
-                                                            console.log("lINSTO VENDOR", p);
-                                                            var trans = {};
-                                                            trans.type = "Institute To Vendor";
-                                                            trans.components = compoData._id;
-                                                            trans.project = proData._id;
-                                                            trans.installment = p.installmentNo;
-                                                            trans.amount = p.amount;
-                                                            trans.remark = p.remarks;
-                                                            trans.file = p.file;
-                                                            trans.transactionSent = p.transactionSent;
-                                                            trans.transactionReceived = p.transactionRececived;
-
-                                                            Transaction.saveData(trans, function (err, transData) {
-                                                                if (err) {
-                                                                    console.log("Error in Transation Institute To Vendor ");
-                                                                    callback(err, null);
-                                                                } else {
-                                                                    console.log("Transaction In Insti to Vendor ", counter);
-
-                                                                    console.log("Transaction In Insti to Vendor ", transData);
-                                                                    console.log("ID", transData._id);
-
-                                                                    transId.push(transData._id);
-                                                                    console.log("ID---------------->-----", transId);
-
-                                                                    proExpense = {};
-                                                                    proExpense._id = proExData._id;
-                                                                    // proExpense.transactions.id   
-                                                                    ProjectExpense.update({
-                                                                        _id: proExData
-                                                                    }, {
-                                                                        $push: {
-                                                                            "transactions.id": transData._id
-                                                                        }
-                                                                    }, function (err, peData) {
-                                                                        if (err) {
-                                                                            console.log("Error in Project Expense Transatioon ID ", err);
-                                                                            callback(err, null);
-                                                                        } else {
-                                                                            console.log("Project Expense Transatioon ID", peData);
-                                                                        }
-                                                                    });
-                                                                    // transD`.push(trans)
-                                                                }
-                                                            });
-
-
-
-
-                                                        }, function (err) {
-                                                            callback(err, "DOne");
-                                                        });
-
-
-                                                    }
-                                                });
-
-
-
-                                                ////
-
-                                                //
-
-
-                                            }
-                                        });
-
-
-
-
-                                    }, function (err) {
-                                        callback(err, data3);
-                                    });
-
-
-                                }
                             });
-
-
-
-
-
-
-
-                        }, function (err) {
-                            callback(err, data2);
                         });
-                    },
+                    }, function () {
 
-                    //states
-                    function (callback) {
-
-                    },
-
-                    //vendor
-                    function (callback) {
-
-                    },
-
-
-                ], function (err, data5) {
-                    if (err) {
-                        callback(err, null);
-                    }
-                    callback(null, data5);
-                });
-
-            }
-        })
-
-
-
-        // async.parallel([
-
-
-
-
-
-
-        //     //projects
-        //     function (callback) {
-        //         async.each(data.json.projects, function (n, callback) {
-        //             console.log("DATATATAT", n);
-        //             // var projectData =n.
-
-
-
-
-
-        //         }, function (err) {
-        //             callback(err, data2);
-        //         });
-        //     },
-
-        //     //states
-        //     function (callback) {
-
-        //     },
-
-        //     //vendor
-        //     function (callback) {
-
-        //     },
-
-
-        // ], function (err, data5) {
-        //     if (err) {
-        //         callback(err, null);
-        //     }
-        //     callback(null, data5);
-        // });
-
-
-
-
-
-
+                    });
+                },
+                stateToInstitute: function (callback) {
+                    async.each(json.stateToInstitute, function (stateTransaction, callback) {
+                        var transactionObj = {}; // create it with StateTransaction;
+                        Transaction.save();
+                    }, function () {});
+                },
+                centerToState: function (callback) {
+                    async.each(json.centerToState, function (centerTransaction, callback) {
+                        var transactionObj = {}; // create it with CenterTransaction;
+                        Transaction.save();
+                    }, function () {});
+                }
+            }, function (err, data) {
+                // callback(err, data);
+            });
+        });
     },
     search: function (data, status, callback) {
 
