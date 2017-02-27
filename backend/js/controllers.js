@@ -87,7 +87,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   })
 
-
   .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
     if ($.jStorage.get("accessToken")) {
 
@@ -478,8 +477,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
   })
 
-
-
   .controller('ViewCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams) {
     $scope.json = JsonService;
     $scope.template = TemplateService;
@@ -532,6 +529,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   })
 
   .controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, toastr) {
+
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);
     $scope.template = TemplateService;
@@ -588,6 +586,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       });
     };
   })
+
   .controller('InstituteDetailCtrl', function ($scope, TemplateService, $rootScope, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);

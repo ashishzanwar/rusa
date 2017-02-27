@@ -700,7 +700,6 @@ var model = {
 
     },
 
-
     getAllprojectOfComponent: function (data, callback) {
         // console.log("#############$$$$$$ inside getAllprojectOfComponent $$$$$#############", data);
         Project.aggregate([

@@ -16,11 +16,6 @@ var schema = new Schema({
         index: true
     },
     allocation: Number,
-    project: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Project',
-        index: true
-    }],
     amountReceivedCenter: [{
         type: Schema.Types.ObjectId,
         ref: 'Transaction',
@@ -79,33 +74,33 @@ var model = {
         Components.findOneAndUpdate({
             _id: data._id
         }, {
-            $push: {
+                $push: {
 
-                utilizationCertificates: {
-                    $each: [{
-                        images: data.images,
+                    utilizationCertificates: {
+                        $each: [{
+                            images: data.images,
 
-                    }]
+                        }]
+                    }
                 }
-            }
-        }).exec(function (err, found) {
+            }).exec(function (err, found) {
 
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
-
-                if (found) {
-
-                    callback(null, found);
+                if (err) {
+                    // console.log(err);
+                    callback(err, null);
                 } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
-                }
-            }
 
-        })
+                    if (found) {
+
+                        callback(null, found);
+                    } else {
+                        callback(null, {
+                            message: "No Data Found"
+                        });
+                    }
+                }
+
+            })
     },
 
     removeComponentsPhotos: function (data, callback) {
@@ -115,25 +110,26 @@ var model = {
 
             "_id": data._id
         }, {
-            $pull: {
-                utilizationCertificates: {
+                $pull: {
+                    utilizationCertificates: {
 
-                    images: data.images
+                        images: data.images
+                    }
                 }
-            }
-        }, function (err, updated) {
-            console.log(updated);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
+            }, function (err, updated) {
+                console.log(updated);
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
 
 
-                callback(null, updated);
-            }
-        });
+                    callback(null, updated);
+                }
+            });
         console.log("DATA", data);
     },
+
     findOneComponents: function (data, callback) {
 
 
