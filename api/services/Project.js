@@ -51,40 +51,40 @@ var schema = new Schema({
     },
     notes: [{
 
-        timestamp: {
-            type: Date,
-            default: Date.now
-        },
+            timestamp: {
+                type: Date,
+                default: Date.now
+            },
 
-        fromCenter: {
-            type: Schema.Types.ObjectId,
-            ref: 'Center',
-            index: true,
-            text: String
-        },
-        fromState: {
-            type: Schema.Types.ObjectId,
-            ref: 'State',
-            index: true,
-            text: String
-        },
-        fromInstitute: {
-            type: Schema.Types.ObjectId,
-            ref: 'Institute',
-            index: true,
-            text: String
-        },
+            fromCenter: {
+                type: Schema.Types.ObjectId,
+                ref: 'Center',
+                index: true,
+                text: String
+            },
+            fromState: {
+                type: Schema.Types.ObjectId,
+                ref: 'State',
+                index: true,
+                text: String
+            },
+            fromInstitute: {
+                type: Schema.Types.ObjectId,
+                ref: 'Institute',
+                index: true,
+                text: String
+            },
 
-        fromVendor: {
-            type: Schema.Types.ObjectId,
-            ref: 'Vendor',
-            index: true,
-            text: String
-        },
-        text: {
-            type: String
+            fromVendor: {
+                type: Schema.Types.ObjectId,
+                ref: 'Vendor',
+                index: true,
+                text: String
+            },
+            text: {
+                type: String
+            }
         }
-    }
 
 
     ],
@@ -186,18 +186,18 @@ var model = {
         Project.findOneAndUpdate({
             _id: data._id
         }, data2, {
-                new: true
-            }).exec(function (err, found) {
-                if (err) {
+            new: true
+        }).exec(function (err, found) {
+            if (err) {
 
-                    // console.log("err", err);
-                    //   callback(err);
-                } else {
-                    console.log("reply", found);
-                    callback(null, found);
-                }
+                // console.log("err", err);
+                //   callback(err);
+            } else {
+                console.log("reply", found);
+                callback(null, found);
+            }
 
-            });
+        });
     },
 
     saveProjectPhotos: function (data, callback) {
@@ -206,34 +206,34 @@ var model = {
         Project.findOneAndUpdate({
             _id: data._id
         }, {
-                $push: {
+            $push: {
 
-                    photos: {
-                        $each: [{
-                            photo: data.photo,
-                            types: data.types
+                photos: {
+                    $each: [{
+                        photo: data.photo,
+                        types: data.types
 
-                        }]
-                    }
+                    }]
                 }
-            }).exec(function (err, found) {
+            }
+        }).exec(function (err, found) {
 
-                if (err) {
-                    // console.log(err);
-                    callback(err, null);
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
                 } else {
-
-                    if (found) {
-
-                        callback(null, found);
-                    } else {
-                        callback(null, {
-                            message: "No Data Found"
-                        });
-                    }
+                    callback(null, {
+                        message: "No Data Found"
+                    });
                 }
+            }
 
-            })
+        })
     },
 
     addNewProject: function (data, callback) {
@@ -249,46 +249,46 @@ var model = {
                 Institute.findOneAndUpdate({
                     _id: data.institute
                 }, {
-                        $push: {
-                            project: respo._id
-                        }
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
+                    $push: {
+                        project: respo._id
+                    }
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (found) {
+                            console.log("FOUND-->", found);
+                            State.findOneAndUpdate({
+                                _id: data.state
+                            }, {
+                                $push: {
+                                    project: respo._id
+                                }
+                            }).exec(function (err, found) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (found) {
+                                        console.log("FOUND-->", found);
+                                        callback(null, found);
+                                    } else {
+                                        callback(null, {
+                                            message: "No Data Found"
+                                        });
+                                    }
+                                }
+                            });
+
+
+
+                            //  callback(null, found);
                         } else {
-                            if (found) {
-                                console.log("FOUND-->", found);
-                                State.findOneAndUpdate({
-                                    _id: data.state
-                                }, {
-                                        $push: {
-                                            project: respo._id
-                                        }
-                                    }).exec(function (err, found) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            if (found) {
-                                                console.log("FOUND-->", found);
-                                                callback(null, found);
-                                            } else {
-                                                callback(null, {
-                                                    message: "No Data Found"
-                                                });
-                                            }
-                                        }
-                                    });
-
-
-
-                                //  callback(null, found);
-                            } else {
-                                callback(null, {
-                                    message: "No Data Found"
-                                });
-                            }
+                            callback(null, {
+                                message: "No Data Found"
+                            });
                         }
-                    });
+                    }
+                });
 
             }
         });
@@ -307,46 +307,46 @@ var model = {
                 Institute.findOneAndUpdate({
                     _id: data.institute
                 }, {
-                        $push: {
-                            project: respo._id
-                        }
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
+                    $push: {
+                        project: respo._id
+                    }
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (found) {
+                            console.log("FOUND-->", found);
+                            State.findOneAndUpdate({
+                                _id: data.state
+                            }, {
+                                $push: {
+                                    project: respo._id
+                                }
+                            }).exec(function (err, found) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (found) {
+                                        console.log("FOUND-->", found);
+                                        callback(null, found);
+                                    } else {
+                                        callback(null, {
+                                            message: "No Data Found"
+                                        });
+                                    }
+                                }
+                            });
+
+
+
+                            //  callback(null, found);
                         } else {
-                            if (found) {
-                                console.log("FOUND-->", found);
-                                State.findOneAndUpdate({
-                                    _id: data.state
-                                }, {
-                                        $push: {
-                                            project: respo._id
-                                        }
-                                    }).exec(function (err, found) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            if (found) {
-                                                console.log("FOUND-->", found);
-                                                callback(null, found);
-                                            } else {
-                                                callback(null, {
-                                                    message: "No Data Found"
-                                                });
-                                            }
-                                        }
-                                    });
-
-
-
-                                //  callback(null, found);
-                            } else {
-                                callback(null, {
-                                    message: "No Data Found"
-                                });
-                            }
+                            callback(null, {
+                                message: "No Data Found"
+                            });
                         }
-                    });
+                    }
+                });
 
             }
         });
@@ -418,23 +418,23 @@ var model = {
 
             "_id": data._id
         }, {
-                $pull: {
-                    photos: {
-                        photo: data.photo,
-                        types: data.types
-                    }
+            $pull: {
+                photos: {
+                    photo: data.photo,
+                    types: data.types
                 }
-            }, function (err, updated) {
-                console.log(updated);
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
+            }
+        }, function (err, updated) {
+            console.log(updated);
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
 
 
-                    callback(null, updated);
-                }
-            });
+                callback(null, updated);
+            }
+        });
     },
 
     getAggregatePipeLine: function (data) {
@@ -506,7 +506,37 @@ var model = {
                 $unwind: {
                     path: "$pab_data"
                 }
+            },
+            {
+                $lookup: {
+                    "from": "transactions",
+                    "localField": "transaction",
+                    "foreignField": "_id",
+                    "as": "transaction_data"
+                }
+            },
+
+            // Stage 16
+            {
+                $unwind: {
+                    path: "$transaction_data"
+                }
+            },
+
+            // Stage 17
+            {
+                $unwind: {
+                    path: "$components_data.utilizationCertificates",
+                }
+            },
+
+            // Stage 18
+            {
+                $unwind: {
+                    path: "$components_data.amountUtilized"
+                }
             }
+
         ];
         // console.log(ObjectId);
         if (data.pab) {
@@ -695,6 +725,247 @@ var model = {
                 });
                 Project.aggregate(newPipeLine, callback);
 
+            },
+            totalFundRelease: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        totalFundRelease: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+
+                });
+                Project.aggregate(newPipeLine, function (err, releaseData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(releaseData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, releaseData[0]);
+                        }
+                    }
+                });
+
+            },
+            TotalcenterFundRelease: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                                "transaction_data.type": "Center To State"
+                            }, {
+                                "transaction_data.type": "Center To Institute"
+                            },
+                            {
+                                "transaction_data.type": "Center To Vendor"
+                            }
+                        ]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        CenterFundRelease: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+                });
+
+                Project.aggregate(newPipeLine, function (err, centerData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(centerData)) {
+                            callback(null, "No data founds");
+                        } else {
+
+                            callback(null, centerData[0]);
+                        }
+                    }
+                });
+
+
+            },
+
+
+
+            CenterShareReleasePerComponent: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                                "transaction_data.type": "Center To State"
+                            }, {
+                                "transaction_data.type": "Center To Institute"
+                            },
+                            {
+                                "transaction_data.type": "Center To Vendor"
+                            }
+                        ]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        _id: "$components_data._id",
+                        centerRelease_perComponent: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, componentCenterData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(componentCenterData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, componentCenterData);
+                        }
+                    }
+                });
+
+            },
+            StateShareReleasePerComponent: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                                "transaction_data.type": "State To Intitute"
+                            }, {
+                                "transaction_data.type": "State To Institute"
+                            },
+                            {
+                                "transaction_data.type": "State To Vendor"
+                            }
+                        ]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        _id: "$components_data._id",
+                        stateReleasePerComponent: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, componentStateData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(componentStateData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, componentStateData);
+                        }
+                    }
+                });
+
+            },
+            totalFundUtilized: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        totalfundUtized: {
+                            $sum: "$components_data.amountUtilized"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, utilizedData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(utilizedData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, utilizedData[0]);
+                        }
+                    }
+                });
+
+            },
+            totalFundUtilizedPerComponent: function (callback) {
+
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        _id: "$components_data._id",
+                        fundUtized: {
+                            $sum: "$components_data.amountUtilized"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, componentUtilizedData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(componentUtilizedData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, componentUtilizedData);
+                        }
+                    }
+                });
+            },
+            totalutilizationPercent: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        totalPercent_fundUtized: {
+                            $avg: {
+                                $sum: "$components_data.utilizationCertificates"
+                            }
+                        }
+                    }
+
+                });
+                Project.aggregate(newPipeLine, function (err, utilizedpercentData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(utilizedpercentData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, utilizedpercentData[0]);
+                        }
+                    }
+                });
+
+            },
+            percentUtilizationPerComponent: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        _id: "$components_data._id",
+                        componentPercent_fundUtized: {
+                            $sum: "$components_data.utilizationCertificates"
+                        }
+
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, percentData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(percentData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, percentData);
+                        }
+                    }
+                });
+
             }
         }, callback);
 
@@ -716,5 +987,6 @@ var model = {
         });
 
     }
+
 };
 module.exports = _.assign(module.exports, exports, model);
