@@ -528,14 +528,10 @@ var model = {
                 $unwind: {
                     path: "$components_data.utilizationCertificates",
                 }
-            },
+            }
 
             // Stage 18
-            {
-                $unwind: {
-                    path: "$components_data.amountUtilized"
-                }
-            }
+
 
         ];
         // console.log(ObjectId);
@@ -731,7 +727,7 @@ var model = {
                 //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
                 newPipeLine.push({
                     $group: {
-                        _id: "$pab_data._id",
+                        _id: "_id",
                         totalFundRelease: {
                             $sum: "$transaction_data.amount"
                         }
@@ -837,13 +833,15 @@ var model = {
                 newPipeLine.push({
                     $match: {
                         $or: [{
-                            "transaction_data.type": "State To Intitute"
+
+                            "transaction_data.type": "State To Center"
                         }, {
-                            "transaction_data.type": "State To Institute"
+                            "transaction_data.type": "State To Intitute"
                         },
                         {
                             "transaction_data.type": "State To Vendor"
                         }
+
                         ]
                     }
                 });
@@ -869,8 +867,53 @@ var model = {
                 });
 
             },
+
+            totalStateShareRelease: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                            "transaction_data.type": "State To Center"
+                        }, {
+                            "transaction_data.type": "State To Intitute"
+                        },
+                        {
+                            "transaction_data.type": "State To Vendor"
+                        }
+                        ]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        _id: "_id",
+                        totalstateRelease: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, totalStateData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(totalStateData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, totalStateData[0]);
+                        }
+                    }
+                });
+
+            },
             totalFundUtilized: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $unwind: {
+                        path: "$components_data.amountUtilized",
+
+                    }
+                });
+
                 newPipeLine.push({
                     $group: {
                         _id: "$pab_data._id",
@@ -896,6 +939,12 @@ var model = {
 
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
+                    $unwind: {
+                        path: "$components_data.amountUtilized",
+
+                    }
+                });
+                newPipeLine.push({
                     $group: {
                         _id: "$pab_data._id",
                         _id: "$components_data._id",
@@ -918,9 +967,10 @@ var model = {
             },
             totalutilizationPercent: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
+
                 newPipeLine.push({
                     $group: {
-                        _id: "$pab_data._id",
+                        _id: "_id",
                         totalPercent_fundUtized: {
                             $avg: {
                                 $sum: "$components_data.utilizationCertificates"

@@ -8,8 +8,8 @@ var firstapp = angular.module('firstapp', [
     'angulartics',
     'angulartics.google.analytics',
     'imageupload',
-    'cleave.js'
-
+    'cleave.js',
+    'ui.date'
 
 ]);
 
