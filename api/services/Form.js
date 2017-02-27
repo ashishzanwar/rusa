@@ -176,12 +176,13 @@ var model = {
 
     compile: function (data) {
         var json = {};
-        json = data;
+        json = data.json;
 
         console.log("##############inside compile of form.js#################", json);
         var componentObj = {
-            name: "newComponengt",
-            institute: json.instituteId._id,
+            name: "newComponent",
+            // institute: json.instituteId._id,        // we are not getting it don't know why
+            institute: "58a33d54e146a5042e43a551",
             pabno: json.pabId._id,
             keycomponents: json.keyComponentsId._id,
             allocation: json.allocation,
@@ -202,14 +203,15 @@ var model = {
 
         var compo = Components(componentObj);
         compo.save(function (err, comSave) {
-            console.log("##############inside compo.save of form.js#################");
+            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ comSave is here, we have to look for compnent_id here $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", comSave);
+            console.log("############## inside compo.save of form.js #################");
             async.parallel({
                 project: function (callback) {
                     async.each(json.projects, function (project, callback) {
                         // project schema object
                         var projectObj = {
-                            name: "Ashish",
-                            components: "58a7fb7030315f49d52edd7f", //not available in json
+                            name: "ProjectName_Ashish",
+                            components: _id, //not available in json
                             projectType: project.projectType,
                             assetType: project.assetType,
                             valueOfProject: project.valueProject,
@@ -220,7 +222,6 @@ var model = {
                             }],
                             status: "Active",
                             dueDate: project.dueDate
-
                         };
 
                         console.log(projectObj);
@@ -229,7 +230,7 @@ var model = {
                             if (err) {
                                 console.log("DAMM PROJECT EEROR", err);
                             } else {
-                                console.log("projectSave", projectSave);
+                                console.log("######### projectSave ########", projectSave);
                             }
                         });
 
@@ -237,76 +238,21 @@ var model = {
                         async.each(project.projectExpenses, function (projectExp, callback) {
                             // ProjectExpense schema object
                             var projectExpObj = {
-                                vendor: projectExp.name, //id is there in database & we need it in transaction as well
+                                // vendor: projectExp.name, //id is there in database & we need it in transaction as well
+                                // vendor: "589981b89665a4440e2809b6",
                                 allocatedAmount: projectExp.amount,
                                 vendorpan: projectExp.vendorpan,
                                 tintan: projectExp.tintan,
                                 orderIssueDate: projectExp.orderIssueDate,
                                 orderDueDate: projectExp.orderDueDate,
-                                orderFile: projectExp.orderFile,
-
-                                // project: {
-                                //     type: Schema.Types.ObjectId,
-                                //     ref: 'Project',
-                                //     index: true
-                                // },
-
-                                // vendor: {
-                                //     type: Schema.Types.ObjectId,
-                                //     ref: 'Vendor',
-                                //     index: true
-                                // },
-                                // allocatedAmount: {
-                                //     type: Number
-                                // },
-                                // amountReleased: {
-                                //     type: Number
-                                // },
-                                // workCompletedPercent: {
-                                //     type: Number
-                                // },
-
-                                // transactions: {
-                                //     id: [{
-                                //         type: Schema.Types.ObjectId,
-                                //         ref: 'Transaction',
-                                //         index: true
-                                //     }]
-                                // },
-
-                                // photos: [{
-                                //     type: String
-                                // }],
-
-                                // notes: [{
-                                //     timestamp: {
-                                //         type: Date,
-                                //         default: Date.now
-                                //     },
-                                //     fromInstitute: {
-                                //         type: Schema.Types.ObjectId,
-                                //         ref: 'Institute',
-                                //         index: true,
-                                //         text: String
-                                //     },
-
-                                //     fromVendor: {
-                                //         type: Schema.Types.ObjectId,
-                                //         ref: 'Vendor',
-                                //         index: true,
-                                //         text: String
-                                //     },
-                                //     text: {
-                                //         type: String
-                                //     }
-                                // }],
+                                // orderFile: projectExp.orderFile
                             };
 
                             ProjectExpense.saveData(projectExpObj, function (err, projectExpenseSave) {
                                 if (err) {
-                                    console.log("DAMM PROJECT EEROR", err);
+                                    console.log("DAMM ProjectExpense EEROR", err);
                                 } else {
-                                    console.log("projectSave", projectSave);
+                                    console.log("####### ProjectExpense Save #######", projectExpenseSave);
                                 }
                             });
 
@@ -326,70 +272,6 @@ var model = {
                                     transactionSent: instituteVendor.transactionSent,
                                     transactionReceived: instituteVendor.transactionRecieved,
 
-
-                                    // fromInstitute: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'Institute',
-                                    //     index: true
-                                    // },
-                                    // toVendor: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'Vendor',
-                                    //     index: true
-                                    // },
-
-                                    // project: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'Project',
-                                    //     index: true
-                                    // },
-                                    // components: {                      
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'Components',
-                                    //     index: true
-                                    // },                                            
-                                    // fromCenter: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'Center',
-                                    //     index: true
-                                    // },
-                                    // fromState: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'State',
-                                    //     index: true
-                                    // },
-
-
-                                    // fromVendor: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'Vendor',
-                                    //     index: true
-                                    // },
-
-                                    // toCenter: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'Center',
-                                    //     index: true
-                                    // },
-                                    // toState: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'State',
-                                    //     index: true
-                                    // },
-                                    // toInstitute: {
-                                    //     type: Schema.Types.ObjectId,
-                                    //     ref: 'Institute',
-                                    //     index: true
-                                    // },
-
-
-                                    // reason: {
-                                    //     type: String
-                                    // },
-                                    // photos: [{
-                                    //     tags: [String],
-                                    //     photo: String
-                                    // }]
                                 };
                                 // var transactionObjSave = Project(transactionObj);
                                 // transactionObjSave.save();
