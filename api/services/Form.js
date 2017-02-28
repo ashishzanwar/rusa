@@ -185,9 +185,9 @@ var model = {
             var componentObj = {
                 name: "newComponent",
                 // institute: json.instituteId._id,        // we are not getting it don't know why
-                institute: json.instituteId._id,
-                pabno: json.pabId._id,
-                keycomponents: json.keyComponentsId._id,
+                institute: json.instituteId,
+                pabno: json.pabId,
+                keycomponents: json.keyComponentsId,
                 allocation: json.allocation,
                 status: "Active",
                 subStatus: "InTime",
