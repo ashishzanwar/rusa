@@ -4,7 +4,6 @@ var schema = new Schema({
         ref: 'Project',
         index: true
     },
-
     vendor: {
         type: Schema.Types.ObjectId,
         ref: 'Vendor',
