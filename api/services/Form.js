@@ -213,6 +213,9 @@ var model = {
                         project: function (callback) {
                             async.each(json.projects, function (project, callback) {
                                 // project schema object
+                                if (_.isEmpty(project.assetType)) {
+                                    project.assetType = undefined;
+                                }
                                 console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ project is here, we have to look for compnent_id here $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", project);
                                 var projectObj = {
                                     name: "ProjectName_Ashish",
