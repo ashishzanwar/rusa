@@ -84,7 +84,7 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('ProjectExpense', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction components', 'user institute state transaction components'));
 var model = {
     saveProjectExpensePhotos: function (data, callback) {
 
@@ -92,28 +92,28 @@ var model = {
         ProjectExpense.findOneAndUpdate({
             _id: data._id
         }, {
-                $push: {
+            $push: {
 
-                    photos: data.photos
-                }
-            }).exec(function (err, found) {
+                photos: data.photos
+            }
+        }).exec(function (err, found) {
 
-                if (err) {
-                    // console.log(err);
-                    callback(err, null);
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+
+                if (found) {
+
+                    callback(null, found);
                 } else {
-
-                    if (found) {
-
-                        callback(null, found);
-                    } else {
-                        callback(null, {
-                            message: "No Data Found"
-                        });
-                    }
+                    callback(null, {
+                        message: "No Data Found"
+                    });
                 }
+            }
 
-            })
+        })
     },
     removeProjectExpensePhotos: function (data, callback) {
 
@@ -122,23 +122,22 @@ var model = {
 
             "_id": data._id
         }, {
-                $pull: {
-                    photos: data.photos
+            $pull: {
+                photos: data.photos
 
-                }
-            }, function (err, updated) {
-                console.log(updated);
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
+            }
+        }, function (err, updated) {
+            console.log(updated);
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
 
 
-                    callback(null, updated);
-                }
-            });
+                callback(null, updated);
+            }
+        });
     },
-
 
     updateProjectExpensePhotos: function (data, callback) {
 
@@ -147,21 +146,21 @@ var model = {
             _id: data._id,
             photos: data.old
         }, {
-                $set: {
-                    "photos.$": data.photo
+            $set: {
+                "photos.$": data.photo
 
-                }
-            }, function (err, updated) {
-                console.log(updated);
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
+            }
+        }, function (err, updated) {
+            console.log(updated);
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
 
 
-                    callback(null, updated);
-                }
-            });
+                callback(null, updated);
+            }
+        });
     },
 
 
@@ -189,5 +188,81 @@ var model = {
 
         })
     },
+
+    getAllprojectOfComponent: function (data, callback) {
+
+        ProjectExpense.aggregate([
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "projects",
+                    "localField": "project",
+                    "foreignField": "_id",
+                    "as": "project_data"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$project_data",
+
+                }
+            },
+            {
+                $lookup: {
+                    "from": "projecttypes",
+                    "localField": "project_data.projectType",
+                    "foreignField": "_id",
+                    "as": "projectType_data"
+                }
+            },
+
+            // Stage 2.1
+            {
+                $unwind: {
+                    path: "$projectType_data",
+
+                }
+            },
+
+            // Stage 3.1
+            {
+                $lookup: {
+
+                    "from": "assettypes",
+                    "localField": "project_data.assetType",
+                    "foreignField": "_id",
+                    "as": "assetType_data"
+                }
+            },
+
+            // Stage 4.1
+            {
+                $unwind: {
+                    path: "$assetType_data",
+                }
+            },
+            // Stage 1
+            {
+                $match: {
+                    "project_data.components": ObjectId(data.id)
+                }
+            },
+
+        ]).exec(function (error, resObject) {
+            console.log(resObject);
+            if (error) {
+                callback(error, null)
+            } else {
+                if (_.isEmpty(resObject)) {
+                    callback(null, "No data founds");
+                } else {
+                    callback(null, resObject);
+                }
+            }
+        });
+
+    }
 };
 module.exports = _.assign(module.exports, exports, model);

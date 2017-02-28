@@ -102,18 +102,18 @@
                         <div class="mini-stats block_upper">
                             <span class="purple-skin"><i class="fa fa-bullhorn fa-lg"></i></span>
                             <p>FUNDS RELEASED</p>
-                            <h3>6,101</h3><br><br>
+                            <h3>{{filteredComponents.totalFundRelease.totalFundRelease | currency:"&#8377;"}}</h3><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0">CENTER SHARE</p>
-                        <p class="margin0  em1_1">400 L</p>
+                        <p class="margin0  em1_1">{{filteredComponents.totalCenterShareFundRelease.totalcenterFundRelease | currency:"&#8377;"}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6 padding0 textright">
                         <p class="margin0 ">STATE SHARE</p>
-                        <p class="margin0 em1_1">600 L</p>
+                        <p class="margin0 em1_1">{{filteredComponents.totalStateShareFundRelease.totalstateRelease | currency:"&#8377;"}}</p>
                     </div>
                 </div>
             </div>
@@ -121,7 +121,7 @@
         <div class="col-md-3 col-sm-6 dashboard_blocks">
             <div class="widget">
                 <div class="widget-controls">
-                    <span class="refresh-content">58%</span>
+                    <span class="refresh-content">{{filteredComponents.totalutilizationPercent.totalPercent_fundUtized}} %</span>
                 </div>
                 <!-- Widget Controls -->
                 <div class="row">
@@ -129,14 +129,14 @@
                         <div class="mini-stats block_upper">
                             <span class="pink-skin"><i class="fa fa-bar-chart fa-lg"></i></span>
                             <p>FUNDS UTILIZED</p>
-                            <h3>5,218</h3><br><br>
+                            <h3>{{filteredComponents.totalFundUtilized.totalfundUtized | currency:"&#8377;"}}</h3><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10 textright">
                     <div class="col-md-12 ">
                         <p class="margin0 ">CENTER SHARE</p>
-                        <p class="margin0 em1_1">12,000 L</p>
+                        <p class="margin0 em1_1">NA</p>
                     </div>
                 </div>
             </div>
@@ -186,10 +186,10 @@
                         <td>-</td>
                         <td>{{i.totalComponentAllocation * (i._id.state.centerShare/100)}}</td>
                         <td>{{i.totalComponentAllocation * (i._id.state.stateShare/100)}}</td>
-                        <td>{{1+5}}</td>
-                        <td>20</td>
-                        <td>30</td>
-                        <td>60%</td>
+                        <td>{{filteredComponents.centerShareReleasePerComponent.centerFundReleasePerComponent}}</td>
+                        <td>{{filteredComponents.stateShareReleasePerComponent.stateFundRelease}}</td>
+                        <td>{{filteredComponents.totalFundUtilizedPerComponent.fundUtized}}</td>
+                        <td>{{filteredComponents.percentUtilizationPerComponent.componentPercent_fundUtized}}</td>
                     </tr>
 
                 </tbody>

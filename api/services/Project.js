@@ -329,19 +329,7 @@ var model = {
                                             if (found) {
                                                 console.log("FOUND-->", found);
                                                 callback(null, found);
-                                            } else {// totalFundRelease: function (callback) {
-                                                //     var newPipeLine = _.cloneDeep(pipeLine);
-                                                //     //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
-                                                //     newPipeLine.push({
-                                                //         $group: {
-                                                //             _id: "_id",
-                                                //             totalFundRelease: {
-                                                //                 $sum: "$transaction_data.amount"
-                                                //             }
-                                                //         }
-
-                                                //     });
-                                                //     Project.aggreg
+                                            } else {
                                                 callback(null, {
                                                     message: "No Data Found"
                                                 });
@@ -353,9 +341,55 @@ var model = {
 
                                 //  callback(null, found);
                             } else {
-                                callback(null, {
-                                    message: "No Data Found"
-                                });
+<<<<<<< HEAD
+                                if (found) {
+                                    console.log("FOUND-->", found);
+                                    State.findOneAndUpdate({
+                                        _id: data.state
+                                    }, {
+                                            $push: {
+                                                project: respo._id
+                                            }
+                                        }).exec(function (err, found) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (found) {
+                                                    console.log("FOUND-->", found);
+                                                    callback(null, found);
+                                                } else {// totalFundRelease: function (callback) {
+                                                    //     var newPipeLine = _.cloneDeep(pipeLine);
+                                                    //     //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
+                                                    //     newPipeLine.push({
+                                                    //         $group: {
+                                                    //             _id: "_id",
+                                                    //             totalFundRelease: {
+                                                    //                 $sum: "$transaction_data.amount"
+                                                    //             }
+                                                    //         }
+
+                                                    //     });
+                                                    //     Project.aggreg
+                                                    callback(null, {
+                                                        message: "No Data Found"
+                                                    });
+                                                }
+                                            }
+                                        });
+
+
+
+                                    //  callback(null, found);
+                                } else {
+                                    callback(null, {
+                                        message: "No Data Found"
+                                    });
+                                }
+=======
+                            callback(null, {
+                                message: "No Data Found"
+                            });
+>>>>>>> 6ab94ab950959339335b1a1a50f88228a38ac099
                             }
                         }
                     });
@@ -452,6 +486,8 @@ var model = {
     getAggregatePipeLine: function (data) {
 
         var pipeline = [
+
+
             // Stage 1
             {
                 $lookup: {
@@ -465,7 +501,8 @@ var model = {
             // Stage 2
             {
                 $unwind: {
-                    path: "$components_data"
+                    path: "$components_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
 
@@ -482,7 +519,8 @@ var model = {
             // Stage 4
             {
                 $unwind: {
-                    path: "$institutes_data"
+                    path: "$institutes_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
 
@@ -499,7 +537,8 @@ var model = {
             // Stage 6
             {
                 $unwind: {
-                    path: "$states_data"
+                    path: "$states_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
 
@@ -516,10 +555,12 @@ var model = {
             // Stage 8
             {
                 $unwind: {
-                    path: "$pab_data"
+                    path: "$pab_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
 
+<<<<<<< HEAD
             // {
             //     $lookup: {
             //         "from": "transactions",
@@ -542,6 +583,23 @@ var model = {
             //         path: "$components_data.utilizationCertificates",
             //     }
             // }
+=======
+            // Stage 16
+            {
+                $unwind: {
+                    path: "$transaction_data",
+                    "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 17
+            {
+                $unwind: {
+                    path: "$components_data.utilizationCertificates",
+                    "preserveNullAndEmptyArrays": true
+                }
+            }
+>>>>>>> 6ab94ab950959339335b1a1a50f88228a38ac099
 
             // Stage 18
 
@@ -633,10 +691,10 @@ var model = {
                             centerShare: 0,
                             stateShare: 0
                         };
-                        _.each(data, function (n) {
-                            obj.centerShare += n._id.centerShare * n.totalAllocation / 100;
-                            obj.stateShare += n._id.stateShare * n.totalAllocation / 100;
-                        });
+                        // _.each(data, function (n) {
+                        //     obj.centerShare += n._id.centerShare * n.totalAllocation / 100;
+                        //     obj.stateShare += n._id.stateShare * n.totalAllocation / 100;
+                        // });
                         callback(err, obj);
                     }
                 });
@@ -713,6 +771,7 @@ var model = {
             },
             institute: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
+
                 newPipeLine.push({
                     $group: {
                         "_id": {
@@ -729,11 +788,14 @@ var model = {
                         totalComponentAllocation: {
                             $sum: "$components_data.allocation"
                         },
+
                     }
+
                 });
                 Project.aggregate(newPipeLine, callback);
 
             },
+<<<<<<< HEAD
             // totalFundRelease: function (callback) {
             //     var newPipeLine = _.cloneDeep(pipeLine);
             //     //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
@@ -1025,26 +1087,346 @@ var model = {
             //     });
 
             // }
+=======
+            totalFundRelease: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
+                newPipeLine.push({
+                    $group: {
+                        _id: "_id",
+                        totalFundRelease: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+
+                });
+                Project.aggregate(newPipeLine, function (err, releaseData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(releaseData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, releaseData[0]);
+                        }
+                    }
+                });
+
+            },
+            totalCenterShareFundRelease: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                                "transaction_data.type": "Center To State"
+                            }, {
+                                "transaction_data.type": "Center To Institute"
+                            },
+                            {
+                                "transaction_data.type": "Center To Vendor"
+                            }
+                        ]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        totalcenterFundRelease: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+
+                });
+
+
+                Project.aggregate(newPipeLine, function (err, centerData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(centerData)) {
+                            callback(null, "No data founds");
+                        } else {
+
+                            callback(null, centerData[0]);
+                        }
+                    }
+                });
+
+
+            },
+            totalStateShareFundRelease: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                                "transaction_data.type": "State To Center"
+                            }, {
+                                "transaction_data.type": "State To Intitute"
+                            },
+                            {
+                                "transaction_data.type": "State To Vendor"
+                            }
+                        ]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        totalstateRelease: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, totalStateData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(totalStateData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, totalStateData[0]);
+                        }
+                    }
+                });
+
+            },
+            centerShareReleasePerComponent: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                                "transaction_data.type": "Center To State"
+                            },
+                            {
+                                "transaction_data.type": "Center To Institute"
+                            },
+                            {
+                                "transaction_data.type": "Center To Vendor"
+                            }
+
+
+                        ]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        "_id": {
+                            pab: "$pab_data.name",
+                            componentId: "$components_data._id",
+                            component: "$components_data.name",
+                            institute: "$institutes_data.name",
+                            componentStatus: "$components_data.status",
+                            state: "$states_data",
+                        },
+                        "totalComponentProjects": {
+                            $sum: 1
+                        },
+                        totalComponentAllocation: {
+                            $sum: "$components_data.allocation"
+                        },
+                        centerFundReleasePerComponent: {
+                            $sum: "$transaction_data.amount"
+                        }
+
+                    }
+
+                });
+                Project.aggregate(newPipeLine, function (err, componentCenterData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(componentCenterData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, componentCenterData);
+                        }
+                    }
+                });
+
+            },
+            stateShareReleasePerComponent: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                                "transaction_data.type": "State To Center"
+                            }, {
+                                "transaction_data.type": "State To Intitute"
+                            },
+                            {
+                                "transaction_data.type": "State To Vendor"
+                            }
+                        ]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        "_id": {
+                            pab: "$pab_data.name",
+                            componentId: "$components_data._id",
+                            component: "$components_data.name",
+                            institute: "$institutes_data.name",
+                            componentStatus: "$components_data.status",
+                            state: "$states_data",
+                        },
+                        "totalComponentProjects": {
+                            $sum: 1
+                        },
+                        totalComponentAllocation: {
+                            $sum: "$components_data.allocation"
+                        },
+                        stateFundRelease: {
+                            $sum: "$transaction_data.amount"
+                        }
+
+                    }
+
+                });
+                Project.aggregate(newPipeLine, function (err, componentStateData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(componentStateData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, componentStateData);
+                        }
+                    }
+                });
+
+            },
+            totalFundUtilized: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $unwind: {
+                        path: "$components_data.amountUtilized",
+
+                    }
+                });
+
+                newPipeLine.push({
+                    $group: {
+                        _id: "$pab_data._id",
+                        totalfundUtized: {
+                            $sum: "$components_data.amountUtilized"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, utilizedData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(utilizedData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, utilizedData[0]);
+                        }
+                    }
+                });
+
+            },
+            totalFundUtilizedPerComponent: function (callback) {
+
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $unwind: {
+                        path: "$components_data.amountUtilized",
+
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        "_id": {
+                            pab: "$pab_data.name",
+                            componentId: "$components_data._id",
+                            component: "$components_data.name",
+                            institute: "$institutes_data.name",
+                            componentStatus: "$components_data.status",
+                            state: "$states_data",
+                        },
+                        fundUtized: {
+                            $sum: "$components_data.amountUtilized"
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, componentUtilizedData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(componentUtilizedData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, componentUtilizedData);
+                        }
+                    }
+                });
+            },
+            totalutilizationPercent: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                newPipeLine.push({
+                    $group: {
+                        _id: "_id",
+                        totalPercent_fundUtized: {
+                            $avg: {
+                                $sum: "$components_data.utilizationCertificates"
+                            }
+                        }
+                    }
+
+                });
+                Project.aggregate(newPipeLine, function (err, utilizedpercentData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(utilizedpercentData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, utilizedpercentData[0]);
+                        }
+                    }
+                });
+
+            },
+            percentUtilizationPerComponent: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        "_id": {
+                            pab: "$pab_data.name",
+                            componentId: "$components_data._id",
+                            component: "$components_data.name",
+                            institute: "$institutes_data.name",
+                            componentStatus: "$components_data.status",
+                            state: "$states_data",
+                        },
+                        componentPercent_fundUtized: {
+                            $sum: "$components_data.utilizationCertificates"
+                        }
+
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, percentData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(percentData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, percentData);
+                        }
+                    }
+                });
+
+            }
+>>>>>>> 6ab94ab950959339335b1a1a50f88228a38ac099
         }, callback);
 
     },
 
-    getAllprojectOfComponent: function (data, callback) {
-        // console.log("#############$$$$$$ inside getAllprojectOfComponent $$$$$#############", data);
-        Project.aggregate([
-            // Stage 1
-            {
-                $match: {
-                    "components": ObjectId(data.id)
-                }
-            },
-
-        ]).exec(function (error, resObject) {
-            console.log(resObject);
-            callback(error, resObject)
-        });
-
-    }
 
 };
 module.exports = _.assign(module.exports, exports, model);

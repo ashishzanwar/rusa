@@ -41,11 +41,12 @@ var controller = {
         Form.find({}).lean().exec(function (err, data) {
             if (err) {
                 res.callback(err);
-            } if (data.length == 0) {
+            }
+            if (data.length === 0) {
                 res.callback();
             } else {
                 async.each(data, function (n, callback) {
-                    Form.compile(data);
+                    Form.compile(n, callback);
                 }, function (data) {
                     res.callback(err, data);
                 });
