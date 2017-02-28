@@ -329,7 +329,19 @@ var model = {
                                             if (found) {
                                                 console.log("FOUND-->", found);
                                                 callback(null, found);
-                                            } else {
+                                            } else {// totalFundRelease: function (callback) {
+                                                //     var newPipeLine = _.cloneDeep(pipeLine);
+                                                //     //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
+                                                //     newPipeLine.push({
+                                                //         $group: {
+                                                //             _id: "_id",
+                                                //             totalFundRelease: {
+                                                //                 $sum: "$transaction_data.amount"
+                                                //             }
+                                                //         }
+
+                                                //     });
+                                                //     Project.aggreg
                                                 callback(null, {
                                                     message: "No Data Found"
                                                 });
@@ -507,28 +519,29 @@ var model = {
                     path: "$pab_data"
                 }
             },
-            {
-                $lookup: {
-                    "from": "transactions",
-                    "localField": "transaction",
-                    "foreignField": "_id",
-                    "as": "transaction_data"
-                }
-            },
 
-            // Stage 16
-            {
-                $unwind: {
-                    path: "$transaction_data"
-                }
-            },
+            // {
+            //     $lookup: {
+            //         "from": "transactions",
+            //         "localField": "transaction",
+            //         "foreignField": "_id",
+            //         "as": "transaction_data"
+            //     }
+            // },
 
-            // Stage 17
-            {
-                $unwind: {
-                    path: "$components_data.utilizationCertificates",
-                }
-            }
+            // // Stage 16
+            // {
+            //     $unwind: {
+            //         path: "$transaction_data"
+            //     }
+            // },
+
+            // // Stage 17
+            // {
+            //     $unwind: {
+            //         path: "$components_data.utilizationCertificates",
+            //     }
+            // }
 
             // Stage 18
 
@@ -581,7 +594,6 @@ var model = {
         async.parallel({
             totalComponentsFundAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
-                //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
                 newPipeLine.push({
                     $group: {
                         "_id": "1",
@@ -722,301 +734,297 @@ var model = {
                 Project.aggregate(newPipeLine, callback);
 
             },
-            totalFundRelease: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
-                //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
-                newPipeLine.push({
-                    $group: {
-                        _id: "_id",
-                        totalFundRelease: {
-                            $sum: "$transaction_data.amount"
-                        }
-                    }
+            // totalFundRelease: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
+            //     //If we directly use pipeline instead of newPipeLine then $group will change the pipeline data & we will not able to use it for next $group. So, we have to make a copy of pipeline everytime for new $group operation
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "_id",
+            //             totalFundRelease: {
+            //                 $sum: "$transaction_data.amount"
+            //             }
+            //         }
 
-                });
-                Project.aggregate(newPipeLine, function (err, releaseData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(releaseData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, releaseData[0]);
-                        }
-                    }
-                });
+            //     });
+            //     Project.aggregate(newPipeLine, function (err, releaseData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(releaseData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 callback(null, releaseData[0]);
+            //             }
+            //         }
+            //     });
 
-            },
-            TotalcenterFundRelease: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
-                newPipeLine.push({
-                    $match: {
-                        $or: [{
-                            "transaction_data.type": "Center To State"
-                        }, {
-                            "transaction_data.type": "Center To Institute"
-                        },
-                        {
-                            "transaction_data.type": "Center To Vendor"
-                        }
-                        ]
-                    }
-                });
-                newPipeLine.push({
-                    $group: {
-                        _id: "$pab_data._id",
-                        CenterFundRelease: {
-                            $sum: "$transaction_data.amount"
-                        }
-                    }
-                });
+            // },
+            // TotalcenterFundRelease: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
+            //     newPipeLine.push({
+            //         $match: {
+            //             $or: [{
+            //                 "transaction_data.type": "Center To State"
+            //             }, {
+            //                 "transaction_data.type": "Center To Institute"
+            //             },
+            //             {
+            //                 "transaction_data.type": "Center To Vendor"
+            //             }
+            //             ]
+            //         }
+            //     });
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "$pab_data._id",
+            //             CenterFundRelease: {
+            //                 $sum: "$transaction_data.amount"
+            //             }
+            //         }
+            //     });
 
-                Project.aggregate(newPipeLine, function (err, centerData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(centerData)) {
-                            callback(null, "No data founds");
-                        } else {
+            //     Project.aggregate(newPipeLine, function (err, centerData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(centerData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
 
-                            callback(null, centerData[0]);
-                        }
-                    }
-                });
-
-
-            },
+            //                 callback(null, centerData[0]);
+            //             }
+            //         }
+            //     });
 
 
+            // },
+            // CenterShareReleasePerComponent: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
 
-            CenterShareReleasePerComponent: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
+            //     newPipeLine.push({
+            //         $match: {
+            //             $or: [{
+            //                 "transaction_data.type": "Center To State"
+            //             }, {
+            //                 "transaction_data.type": "Center To Institute"
+            //             },
+            //             {
+            //                 "transaction_data.type": "Center To Vendor"
+            //             }
+            //             ]
+            //         }
+            //     });
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "$pab_data._id",
+            //             _id: "$components_data._id",
+            //             centerRelease_perComponent: {
+            //                 $sum: "$transaction_data.amount"
+            //             }
+            //         }
+            //     });
+            //     Project.aggregate(newPipeLine, function (err, componentCenterData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(componentCenterData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 callback(null, componentCenterData);
+            //             }
+            //         }
+            //     });
 
-                newPipeLine.push({
-                    $match: {
-                        $or: [{
-                            "transaction_data.type": "Center To State"
-                        }, {
-                            "transaction_data.type": "Center To Institute"
-                        },
-                        {
-                            "transaction_data.type": "Center To Vendor"
-                        }
-                        ]
-                    }
-                });
-                newPipeLine.push({
-                    $group: {
-                        _id: "$pab_data._id",
-                        _id: "$components_data._id",
-                        centerRelease_perComponent: {
-                            $sum: "$transaction_data.amount"
-                        }
-                    }
-                });
-                Project.aggregate(newPipeLine, function (err, componentCenterData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(componentCenterData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, componentCenterData);
-                        }
-                    }
-                });
+            // },
+            // StateShareReleasePerComponent: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
 
-            },
-            StateShareReleasePerComponent: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
+            //     newPipeLine.push({
+            //         $match: {
+            //             $or: [{
 
-                newPipeLine.push({
-                    $match: {
-                        $or: [{
+            //                 "transaction_data.type": "State To Center"
+            //             }, {
+            //                 "transaction_data.type": "State To Intitute"
+            //             },
+            //             {
+            //                 "transaction_data.type": "State To Vendor"
+            //             }
 
-                            "transaction_data.type": "State To Center"
-                        }, {
-                            "transaction_data.type": "State To Intitute"
-                        },
-                        {
-                            "transaction_data.type": "State To Vendor"
-                        }
+            //             ]
+            //         }
+            //     });
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "$pab_data._id",
+            //             _id: "$components_data._id",
+            //             stateReleasePerComponent: {
+            //                 $sum: "$transaction_data.amount"
+            //             }
+            //         }
+            //     });
+            //     Project.aggregate(newPipeLine, function (err, componentStateData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(componentStateData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 callback(null, componentStateData);
+            //             }
+            //         }
+            //     });
 
-                        ]
-                    }
-                });
-                newPipeLine.push({
-                    $group: {
-                        _id: "$pab_data._id",
-                        _id: "$components_data._id",
-                        stateReleasePerComponent: {
-                            $sum: "$transaction_data.amount"
-                        }
-                    }
-                });
-                Project.aggregate(newPipeLine, function (err, componentStateData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(componentStateData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, componentStateData);
-                        }
-                    }
-                });
+            // },
+            // totalStateShareRelease: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
 
-            },
+            //     newPipeLine.push({
+            //         $match: {
+            //             $or: [{
+            //                 "transaction_data.type": "State To Center"
+            //             }, {
+            //                 "transaction_data.type": "State To Intitute"
+            //             },
+            //             {
+            //                 "transaction_data.type": "State To Vendor"
+            //             }
+            //             ]
+            //         }
+            //     });
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "_id",
+            //             totalstateRelease: {
+            //                 $sum: "$transaction_data.amount"
+            //             }
+            //         }
+            //     });
+            //     Project.aggregate(newPipeLine, function (err, totalStateData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(totalStateData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 callback(null, totalStateData[0]);
+            //             }
+            //         }
+            //     });
 
-            totalStateShareRelease: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
+            // },
+            // totalFundUtilized: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
+            //     newPipeLine.push({
+            //         $unwind: {
+            //             path: "$components_data.amountUtilized",
 
-                newPipeLine.push({
-                    $match: {
-                        $or: [{
-                            "transaction_data.type": "State To Center"
-                        }, {
-                            "transaction_data.type": "State To Intitute"
-                        },
-                        {
-                            "transaction_data.type": "State To Vendor"
-                        }
-                        ]
-                    }
-                });
-                newPipeLine.push({
-                    $group: {
-                        _id: "_id",
-                        totalstateRelease: {
-                            $sum: "$transaction_data.amount"
-                        }
-                    }
-                });
-                Project.aggregate(newPipeLine, function (err, totalStateData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(totalStateData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, totalStateData[0]);
-                        }
-                    }
-                });
+            //         }
+            //     });
 
-            },
-            totalFundUtilized: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
-                newPipeLine.push({
-                    $unwind: {
-                        path: "$components_data.amountUtilized",
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "$pab_data._id",
+            //             totalfundUtized: {
+            //                 $sum: "$components_data.amountUtilized"
+            //             }
+            //         }
+            //     });
+            //     Project.aggregate(newPipeLine, function (err, utilizedData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(utilizedData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 callback(null, utilizedData[0]);
+            //             }
+            //         }
+            //     });
 
-                    }
-                });
+            // },
+            // totalFundUtilizedPerComponent: function (callback) {
 
-                newPipeLine.push({
-                    $group: {
-                        _id: "$pab_data._id",
-                        totalfundUtized: {
-                            $sum: "$components_data.amountUtilized"
-                        }
-                    }
-                });
-                Project.aggregate(newPipeLine, function (err, utilizedData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(utilizedData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, utilizedData[0]);
-                        }
-                    }
-                });
+            //     var newPipeLine = _.cloneDeep(pipeLine);
+            //     newPipeLine.push({
+            //         $unwind: {
+            //             path: "$components_data.amountUtilized",
 
-            },
-            totalFundUtilizedPerComponent: function (callback) {
+            //         }
+            //     });
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "$pab_data._id",
+            //             _id: "$components_data._id",
+            //             fundUtized: {
+            //                 $sum: "$components_data.amountUtilized"
+            //             }
+            //         }
+            //     });
+            //     Project.aggregate(newPipeLine, function (err, componentUtilizedData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(componentUtilizedData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 callback(null, componentUtilizedData);
+            //             }
+            //         }
+            //     });
+            // },
+            // totalutilizationPercent: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
 
-                var newPipeLine = _.cloneDeep(pipeLine);
-                newPipeLine.push({
-                    $unwind: {
-                        path: "$components_data.amountUtilized",
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "_id",
+            //             totalPercent_fundUtized: {
+            //                 $avg: {
+            //                     $sum: "$components_data.utilizationCertificates"
+            //                 }
+            //             }
+            //         }
 
-                    }
-                });
-                newPipeLine.push({
-                    $group: {
-                        _id: "$pab_data._id",
-                        _id: "$components_data._id",
-                        fundUtized: {
-                            $sum: "$components_data.amountUtilized"
-                        }
-                    }
-                });
-                Project.aggregate(newPipeLine, function (err, componentUtilizedData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(componentUtilizedData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, componentUtilizedData);
-                        }
-                    }
-                });
-            },
-            totalutilizationPercent: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
+            //     });
+            //     Project.aggregate(newPipeLine, function (err, utilizedpercentData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(utilizedpercentData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 callback(null, utilizedpercentData[0]);
+            //             }
+            //         }
+            //     });
 
-                newPipeLine.push({
-                    $group: {
-                        _id: "_id",
-                        totalPercent_fundUtized: {
-                            $avg: {
-                                $sum: "$components_data.utilizationCertificates"
-                            }
-                        }
-                    }
+            // },
+            // percentUtilizationPerComponent: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
+            //     newPipeLine.push({
+            //         $group: {
+            //             _id: "$pab_data._id",
+            //             _id: "$components_data._id",
+            //             componentPercent_fundUtized: {
+            //                 $sum: "$components_data.utilizationCertificates"
+            //             }
 
-                });
-                Project.aggregate(newPipeLine, function (err, utilizedpercentData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(utilizedpercentData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, utilizedpercentData[0]);
-                        }
-                    }
-                });
+            //         }
+            //     });
+            //     Project.aggregate(newPipeLine, function (err, percentData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(percentData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 callback(null, percentData);
+            //             }
+            //         }
+            //     });
 
-            },
-            percentUtilizationPerComponent: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
-                newPipeLine.push({
-                    $group: {
-                        _id: "$pab_data._id",
-                        _id: "$components_data._id",
-                        componentPercent_fundUtized: {
-                            $sum: "$components_data.utilizationCertificates"
-                        }
-
-                    }
-                });
-                Project.aggregate(newPipeLine, function (err, percentData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(percentData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, percentData);
-                        }
-                    }
-                });
-
-            }
+            // }
         }, callback);
 
     },

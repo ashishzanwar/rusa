@@ -180,7 +180,7 @@ var model = {
 
         console.log("##############inside compile of form.js#################", json);
         var componentObj = {
-            name: "newComponent",
+            name: json.keyComponentsId.name,
             // institute: json.instituteId._id,        // we are not getting it don't know why
             institute: json.instituteId._id,
             pabno: json.pabId._id,
@@ -203,7 +203,7 @@ var model = {
 
         var compo = Components(componentObj);
         compo.save(function (err, comSave) {
-            // console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ comSave is here, we have to look for compnent_id here $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", comSave);
+            console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ comSave is here, we have to look for compnent_id here $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", comSave);
             console.log("############## inside compo.save of form.js #################");
             async.parallel({
                 project: function (callback) {
@@ -211,7 +211,7 @@ var model = {
                         // project schema object
                         console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ project is here, we have to look for compnent_id here $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", project);
                         var projectObj = {
-                            name: "ProjectName_Ashish",
+                            name: comSave.name,
                             components: comSave._id, //not available in json
                             projectType: project.projectType,
                             assetType: project.assetType,
@@ -269,7 +269,6 @@ var model = {
                                                     file: instituteVendor.file,
                                                     transactionSent: instituteVendor.transactionSent,
                                                     transactionReceived: instituteVendor.transactionRecieved,
-
                                                 };
                                                 // var transactionObjSave = Project(transactionObj);
                                                 // transactionObjSave.save();
@@ -278,6 +277,18 @@ var model = {
                                                         console.log('#### error inside saveData of project expense ####');
                                                     } else if (instToVen) {
                                                         console.log('#### project expense data stored successfully ####');
+
+                                                        var projectNewObj = {};
+                                                        projectNewObj.transaction = [];
+                                                        projectNewObj._id = projectSave._id; //current project id
+                                                        projectNewObj.transaction.push(instToVen._id); // current transaction id
+                                                        Project.saveData(projectNewObj, function (err, transactionIdToProject) {
+                                                            if (err) {
+                                                                console.log("DAMM projectNewObj EEROR", err);
+                                                            } else {
+                                                                console.log("####### projectNewObj Save #######", transactionIdToProject);
+                                                            }
+                                                        });
                                                     }
                                                 });
                                                 //callback();
@@ -328,11 +339,13 @@ var model = {
                 },
                 stateToInstitute: function (callback) {
                     async.each(json.stateToInstitute, function (stateTransaction, callback) {
+                        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ stateTransaction is here, we have to look for transaction id here $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", stateTransaction);
                         var transactionObj = {
+                            components: comSave._id,
                             name: stateTransaction.vendorName, // it is state name or institue name? 
                             installment: stateTransaction.installmentNo,
                             amount: stateTransaction.amount,
-                            type: "State To Intitute",
+                            type: "State To Institute",
                             remarks: stateTransaction.remarks,
                             file: stateTransaction.file,
                             transactionSent: stateTransaction.transactionSent,
@@ -342,15 +355,16 @@ var model = {
 
                         Transaction.saveData(transactionObj, function (err, instToVen) {
                             if (err) {
-                                console.log('#### error inside saveData of stateToInstitute  ####');
+                                console.log('#### error inside saveData of stateToInstitute  ####', err);
                             } else if (instToVen) {
                                 console.log('####  stateToInstitute data stored successfully ####');
+                                console.log('####  instituteToVendor data ####', instToVen);
                             }
                         });
                     }, function (err) {
                         if (err) {
                             console.log(err);
-                            console.log('#### error inside asynch.each of stateToInstitute ####');
+                            console.log('#### error inside asynch.each of stateToInstitute ####', err);
                         } else {
                             console.log('#### Done with stateToInstitute data ####');
                         }
@@ -358,22 +372,25 @@ var model = {
                 },
                 centerToState: function (callback) {
                     async.each(json.centerToState, function (centerTransaction, callback) {
+                        console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ centerTransaction is here, we have to look for transaction id here $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", centerTransaction);
                         var transactionObj = {
+                            components: comSave._id,
                             name: centerTransaction.vendorName, // it is vendor name or institue name? 
                             installment: centerTransaction.installmentNo,
                             amount: centerTransaction.amount,
-                            type: "State To Intitute",
+                            type: "Center To Institute",
                             remarks: centerTransaction.remarks,
                             file: centerTransaction.file,
                             transactionSent: centerTransaction.transactionSent,
                             transactionReceived: centerTransaction.transactionRecieved,
                         }; // create it with CenterTransaction;
                         // Transaction.save();
-                        Transaction.saveData(transactionObj, function (err, instToVen) {
+                        Transaction.saveData(transactionObj, function (err, cenToState) {
                             if (err) {
                                 console.log('#### error inside saveData of centerToState ####');
-                            } else if (instToVen) {
+                            } else if (cenToState) {
                                 console.log('#### centerToState expense data stored successfully ####');
+                                console.log('####  instituteToVendor data ####', cenToState);
                             }
                         });
                     }, function (err) {

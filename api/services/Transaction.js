@@ -17,6 +17,11 @@ var schema = new Schema({
         ref: 'Components',
         index: true
     },
+    // project: {
+    //     type: Schema.Types.ObjectId,
+    //     ref: 'Project',
+    //     index: true
+    // },
     status: {
         type: String,
         enum: ["Pending", "Completed"]
@@ -24,7 +29,7 @@ var schema = new Schema({
 
     type: {
         type: String,
-        enum: ["Center To State", "State To Intitute", "Institute To Vendor", "Vendor To Institute", "Institute To State", "Institute To Center", "State To Vendor", "State To Center", "Center To Institute"]
+        enum: ["Center To State", "State To Institute", "Institute To Vendor", "Vendor To Institute", "Institute To State", "Institute To Center", "State To Vendor", "State To Center", "Center To Institute"]
     },
 
     transactionSent: {
@@ -40,12 +45,6 @@ var schema = new Schema({
     file: String,
     expectedDaysTillReceipt: String,
 
-
-    project: {
-        type: Schema.Types.ObjectId,
-        ref: 'Project',
-        index: true
-    },
     installment: {
         type: Number
     },
