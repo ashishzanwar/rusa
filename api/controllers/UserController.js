@@ -44,8 +44,7 @@ var controller = {
                 var name = Model.collection.collectionName;
                 return {
                     key: key,
-                    name: name,
-                    $unwind
+                    name: name
                 };
             });
             var isBackup = fs.existsSync("./backup");
