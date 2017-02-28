@@ -46,7 +46,7 @@ var controller = {
                 res.callback();
             } else {
                 async.each(data, function (n, callback) {
-                    Form.compile(n);
+                    Form.compile(n, callback);
                 }, function (data) {
                     res.callback(err, data);
                 });
