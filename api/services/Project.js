@@ -629,10 +629,10 @@ var model = {
                             centerShare: 0,
                             stateShare: 0
                         };
-                        _.each(data, function (n) {
-                            obj.centerShare += n._id.centerShare * n.totalAllocation / 100;
-                            obj.stateShare += n._id.stateShare * n.totalAllocation / 100;
-                        });
+                        // _.each(data, function (n) {
+                        //     obj.centerShare += n._id.centerShare * n.totalAllocation / 100;
+                        //     obj.stateShare += n._id.stateShare * n.totalAllocation / 100;
+                        // });
                         callback(err, obj);
                     }
                 });
