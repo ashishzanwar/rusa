@@ -6,7 +6,7 @@ module.exports = [
   'bower_components/fancyBox/source/jquery.fancybox.js',
   'bower_components/smart-app-banner/smart-app-banner.js',
   "bower_components/moment/min/moment.min.js",
-
+  "bower_components/jquery-ui/jquery-ui.js",
 
 
   //Angular Libs
@@ -24,6 +24,7 @@ module.exports = [
   'bower_components/angular-ui-swiper/dist/angular-ui-swiper.js',
   'bower_components/angularjs-imageupload-directive/public/javascripts/imageupload.js',
   "bower_components/cleave.js/dist/cleave-angular.js",
+  "bower_components/angular-ui-date/dist/date.js",
 
   //Work files
   'frontend/js/app.js',

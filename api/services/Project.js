@@ -837,12 +837,15 @@ var model = {
                     $match: {
                         $or: [{
                                 "transaction_data.type": "Center To State"
-                            }, {
+                            },
+                            {
                                 "transaction_data.type": "Center To Institute"
                             },
                             {
                                 "transaction_data.type": "Center To Vendor"
                             }
+
+
                         ]
                     }
                 });

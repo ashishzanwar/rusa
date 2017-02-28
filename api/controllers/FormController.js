@@ -36,6 +36,22 @@ var controller = {
                 }
             });
         });
+    },
+    compileAll: function (req, res) {
+        Form.find({}).lean().exec(function (err, data) {
+            if (err) {
+                res.callback(err);
+            }
+            if (data.length === 0) {
+                res.callback();
+            } else {
+                async.each(data, function (n, callback) {
+                    Form.compile(n, callback);
+                }, function (data) {
+                    res.callback(err, data);
+                });
+            }
+        });
     }
 };
 module.exports = _.assign(module.exports, controller);

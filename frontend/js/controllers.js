@@ -1,4 +1,4 @@
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ui.swiper', 'cleave.js'])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', 'ui.bootstrap', 'ngAnimate', 'ngSanitize', 'angular-flexslider', 'ui.swiper', 'cleave.js', 'ui.date'])
 
     .controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
         $scope.template = TemplateService.changecontent("home"); //Use same name of .html file
