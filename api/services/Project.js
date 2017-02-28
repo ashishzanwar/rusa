@@ -455,7 +455,8 @@ var model = {
             // Stage 2
             {
                 $unwind: {
-                    path: "$components_data"
+                    path: "$components_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
 
@@ -472,7 +473,8 @@ var model = {
             // Stage 4
             {
                 $unwind: {
-                    path: "$institutes_data"
+                    path: "$institutes_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
 
@@ -489,7 +491,8 @@ var model = {
             // Stage 6
             {
                 $unwind: {
-                    path: "$states_data"
+                    path: "$states_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
 
@@ -506,7 +509,8 @@ var model = {
             // Stage 8
             {
                 $unwind: {
-                    path: "$pab_data"
+                    path: "$pab_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
             {
@@ -521,7 +525,8 @@ var model = {
             // Stage 16
             {
                 $unwind: {
-                    path: "$transaction_data"
+                    path: "$transaction_data",
+                    "preserveNullAndEmptyArrays": true
                 }
             },
 
@@ -529,6 +534,7 @@ var model = {
             {
                 $unwind: {
                     path: "$components_data.utilizationCertificates",
+                    "preserveNullAndEmptyArrays": true
                 }
             }
 
