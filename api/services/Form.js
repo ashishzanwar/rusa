@@ -216,6 +216,9 @@ var model = {
                                 if (_.isEmpty(project.assetType)) {
                                     project.assetType = undefined;
                                 }
+                                if (_.isEmpty(project.projectType)) {
+                                    project.projectType = undefined;
+                                }
                                 console.log("$$$$$$$$$$$$$$$$$$$$$$$$$$$$ project is here, we have to look for compnent_id here $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$", project);
                                 var projectObj = {
                                     name: "ProjectName_Ashish",
