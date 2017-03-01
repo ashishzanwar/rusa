@@ -102,18 +102,18 @@
                         <div class="mini-stats block_upper">
                             <span class="purple-skin"><i class="fa fa-bullhorn fa-lg"></i></span>
                             <p>FUNDS RELEASED</p>
-                            <h3>{{254542454}}</h3><br><br>
+                            <h3>{{filteredComponents.totalReleaseAndUtilization.totalFundRelease}}</h3><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0">CENTER SHARE</p>
-                        <p class="margin0  em1_1">{{1231312}}</p>
+                        <p class="margin0  em1_1">{{filteredComponents.totalCenterRelease.totalCenterRelease}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6 padding0 textright">
                         <p class="margin0 ">STATE SHARE</p>
-                        <p class="margin0 em1_1">{{121311}}</p>
+                        <p class="margin0 em1_1">{{filteredComponents.totalStateRelease.totalStateRelease}}</p>
                     </div>
                 </div>
             </div>
@@ -121,7 +121,7 @@
         <div class="col-md-3 col-sm-6 dashboard_blocks">
             <div class="widget">
                 <div class="widget-controls">
-                    <span class="refresh-content">{{65}} %</span>
+                    <span class="refresh-content">{{filteredComponents.totalReleaseAndUtilization.totalPercent_fundUtized}} %</span>
                 </div>
                 <!-- Widget Controls -->
                 <div class="row">
@@ -129,7 +129,7 @@
                         <div class="mini-stats block_upper">
                             <span class="pink-skin"><i class="fa fa-bar-chart fa-lg"></i></span>
                             <p>FUNDS UTILIZED</p>
-                            <h3>{{58451}}</h3><br><br>
+                            <h3>{{filteredComponents.totalReleaseAndUtilization.totalUtilization}}</h3><br><br>
                         </div>
                     </div>
                 </div>
