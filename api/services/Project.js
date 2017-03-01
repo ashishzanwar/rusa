@@ -592,6 +592,8 @@ var model = {
         var pipeLine = Project.getAggregatePipeLine(data);
         console.log(pipeLine);
         async.parallel({
+
+            // Blocks function start here
             totalComponentsFundAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
@@ -614,7 +616,7 @@ var model = {
                     }
                 });
             },
-            state: function (callback) {
+            totalCenterAndStateAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
                     $group: {
@@ -643,13 +645,22 @@ var model = {
             totalComponents: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
-                    $group: {
-                        "_id": 1,
-                        count: {
-                            $sum: 1
+                        $group: {
+                            "_id": {
+                                pab: "$pab_data.name",
+                                componentId: "$components_data._id",
+                            },
                         },
-                    }
-                });
+                    },
+
+                    {
+                        $group: {
+                            "_id": 1,
+                            count: {
+                                $sum: 1
+                            },
+                        }
+                    });
                 Project.aggregate(newPipeLine, function (err, componentData) {
                     if (err) {
                         callback(null, err);
@@ -666,8 +677,22 @@ var model = {
             totalProjects: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
-                    $count: "count"
-                });
+                        $group: {
+                            "_id": {
+
+                                componentId: "$_id",
+                            },
+                        },
+                    },
+
+                    {
+                        $group: {
+                            "_id": 1,
+                            count: {
+                                $sum: 1
+                            },
+                        }
+                    });
                 Project.aggregate(newPipeLine, function (err, projectData) {
                     if (err) {
                         callback(null, err);
@@ -691,6 +716,13 @@ var model = {
                 });
                 newPipeLine.push({
                     $group: {
+                        "_id": {
+
+                            componentId: "$_id",
+                        }
+                    }
+                }, {
+                    $group: {
                         "_id": null,
                         inTimeComponentsCount: {
                             $sum: 1
@@ -709,29 +741,6 @@ var model = {
                     }
                 });
             },
-            institute: function (callback) {
-                var newPipeLine = _.cloneDeep(pipeLine);
-                newPipeLine.push({
-                    $group: {
-                        "_id": {
-                            pab: "$pab_data.name",
-                            componentId: "$components_data._id",
-                            component: "$components_data.name",
-                            institute: "$institutes_data.name",
-                            componentStatus: "$components_data.status",
-                            state: "$states_data",
-                            totalComponentAllocation: {
-                                $sum: "$components_data.allocation"
-                            },
-                            "totalComponentProjects": {
-                                $sum: 1
-                            }
-                        },
-                    }
-                });
-                Project.aggregate(newPipeLine, callback);
-            },
-
             totalReleaseAndUtilization: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
@@ -761,6 +770,32 @@ var model = {
                         }
                     }
                 });
+            },
+
+            // Table functions start here
+            institute: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $group: {
+                        "_id": {
+                            //id: "$_id",
+                            pab: "$pab_data.name",
+                            componentId: "$components_data._id",
+                            component: "$components_data.name",
+                            institute: "$institutes_data.name",
+                            componentStatus: "$components_data.status",
+                            state: "$states_data",
+                            totalComponentAllocation: {
+                                $sum: "$components_data.allocation"
+                            },
+                            "totalComponentProjects": {
+                                $sum: 1
+                            }
+
+                        },
+                    },
+                });
+                Project.aggregate(newPipeLine, callback);
             },
             totalCenterRelease: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
@@ -837,7 +872,7 @@ var model = {
                     }
                 });
             },
-            transactionsPerComponents: function (callback) {
+            utilizationPerComponents: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
                     $group: {
@@ -872,8 +907,7 @@ var model = {
                 });
 
             },
-
-            perComponents: function (callback) {
+            releasePerComponents: function (callback) {
 
                 var typeData = [];
                 var newPipeLine = _.cloneDeep(pipeLine);
