@@ -367,7 +367,7 @@ var model = {
                             newPipeLine1.push({
                                 $match: {
                                     $or: [{
-                                            "type": "State To Intitute"
+                                            "type": "State To Institute"
                                         },
                                         {
                                             "type": "State To Vendor"
@@ -413,7 +413,6 @@ var model = {
                 });
 
             },
-
             transactionsPerComponents: function (callback) {
 
                 var newPipeLine = _.cloneDeep(pipeLine);
@@ -428,14 +427,8 @@ var model = {
                             amountUtilizedPerComponent: "$components_data.amountUtilized",
                             amountUtilizedPercentagePerComponent: "$components_data.utilizationCertificates"
                         },
-                        totalComponentRelease: {
-                            $sum: "$amount"
-                        },
-                        // totalComponentAmountUtlization: {
-                        //     $sum: "$components_data.amountUtilized"
-                        // },
-                        // totalComponentUtilizationPercent: {
-                        //     $sum: "$components_data.utilizationCertificates"
+                        // totalComponentRelease: {
+                        //     $sum: "$amount"
                         // },
 
                     }
