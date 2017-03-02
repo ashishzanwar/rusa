@@ -612,7 +612,7 @@ var model = {
             totalComponents: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
-                        $group: {
+                        $group: { // it will remove repeated component
                             "_id": {
                                 pab: "$pab_data.name",
                                 componentId: "$components_data._id",
@@ -621,7 +621,7 @@ var model = {
                     },
 
                     {
-                        $group: {
+                        $group: { // it will select all records. So, we will get total components
                             "_id": 1,
                             count: {
                                 $sum: 1
@@ -676,7 +676,7 @@ var model = {
             inTimeComponents: function (callback) {
 
                 var newPipeLine = _.cloneDeep(pipeLine);
-                newPipeLine.push({
+                newPipeLine.push({ // it will remove repeated component 
                     $group: {
                         "_id": {
                             componentId: "$components_data._id",
@@ -685,14 +685,14 @@ var model = {
                     }
                 });
 
-                newPipeLine.push({
+                newPipeLine.push({ // it will select only InTime Component
                     $match: {
                         "_id.componentSubStatus": "InTime"
                     }
                 });
 
                 newPipeLine.push({
-                    $group: { //to select all records
+                    $group: { //to select all records so we will get totalInTime components
                         "_id": null,
                         inTimeComponentsCount: {
                             $sum: 1
@@ -772,7 +772,7 @@ var model = {
             },
             totalDelayedProjectsPerComponent: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
-                newPipeLine.push({
+                newPipeLine.push({ // it will select records who's deuDate is less than current date
                     $match: {
                         "dueDate": {
                             "$lt": new Date()
@@ -781,7 +781,7 @@ var model = {
                 });
 
                 newPipeLine.push({
-                    $group: { // to calculate total count of filtered data
+                    $group: { //  
                         "_id": {
                             pab: "$pab_data.name",
                             componentId: "$components_data._id",

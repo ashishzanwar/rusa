@@ -200,25 +200,77 @@ var model = {
         console.log(pipeLine);
         async.parallel({
 
-            //Release & Utilized block data 
+            //Release & Utilized block data  (pipe line 1-6  13-15)
             totalReleaseAndUtilization: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
+
                 newPipeLine.push({
-                    $group: {
-                        _id: "1",
+                    $match: { // to get the records of state & center release only (institute to vendor is also there )
+                        $or: [{
+                            "type": "Center To State"
+                        }, {
+                            "type": "Center To Institute"
+                        }, {
+                            "type": "Center To Vendor"
+                        }, {
+                            "type": "State To Institute"
+                        }, {
+                            "type": "State To Vendor"
+                        }]
+                    }
+                });
+
+                newPipeLine.push({ // to remove all repeated data & filter wanted data 
+                    $group: { // we will get n records & then calculate what we want in following group
+                        "_id": "$components",
                         totalFundRelease: {
                             $sum: "$amount"
                         },
                         totalUtilization: {
-                            $sum: "$components_data.amountUtilized"
+                            $first: "$components_data.amountUtilized"
                         },
+
                         totalfundUtizedPercent: {
+                            $first: "$components_data.utilizationCertificates"
+                        }
+
+                    }
+                });
+
+                newPipeLine.push({ // calculate sum from all records 
+                    $group: {
+                        "_id": null,
+                        totalFundRelease1: {
+                            $sum: "$totalFundRelease"
+                        },
+                        totalUtilization1: {
+                            $sum: "$totalUtilization"
+                        },
+                        totalfundUtizedPercent1: {
                             $avg: {
-                                $sum: "$components_data.utilizationCertificates"
+                                $sum: "$totalfundUtizedPercent"
                             }
                         }
                     }
                 });
+
+                // newPipeLine.push({
+                //     $group: {
+
+                //         "_id": 1,
+                //         totalFundRelease: { // it is write 
+                //             $sum: "$amount"
+                //         },
+                //         totalUtilization: {
+                //             $sum: "$components_data.amountUtilized"
+                //         },
+                //         totalfundUtizedPercent: {
+                //             $avg: {
+                //                 $sum: "$components_data.utilizationCertificates"
+                //             }
+                //         }
+                //     }
+                // });
 
                 Transaction.aggregate(newPipeLine, function (err, totalData) {
                     if (err) {
@@ -227,7 +279,7 @@ var model = {
                         if (_.isEmpty(totalData)) {
                             callback(null, "No data founds");
                         } else {
-                            callback(null, totalData[0]);
+                            callback(null, totalData);
                         }
                     }
                 });
