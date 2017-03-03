@@ -129,11 +129,47 @@ var model = {
             {
                 $unwind: {
                     path: "$components_data",
-
+                    // "preserveNullAndEmptyArrays": true
                 }
             },
 
             // Stage 3
+            {
+                $lookup: {
+                    "from": "institutes",
+                    "localField": "components_data.institute",
+                    "foreignField": "_id",
+                    "as": "institutes_data"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$institutes_data",
+                    // "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "states",
+                    "localField": "institutes_data.state",
+                    "foreignField": "_id",
+                    "as": "states_data"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$states_data",
+                    // "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 7
             {
                 $lookup: {
                     "from": "pabs",
@@ -143,11 +179,11 @@ var model = {
                 }
             },
 
-            // Stage 4
+            // Stage 8
             {
                 $unwind: {
                     path: "$pab_data",
-
+                    // "preserveNullAndEmptyArrays": true
                 }
             },
 
@@ -183,7 +219,20 @@ var model = {
                 }
             });
         }
-
+        if (data.institute) {
+            pipeline.push({
+                $match: {
+                    "institutes_data._id": ObjectId(data.institute)
+                }
+            });
+        }
+        if (data.state) {
+            pipeline.push({
+                $match: {
+                    "states_data._id": ObjectId(data.state)
+                }
+            });
+        }
         if (data.componentStatus) {
             pipeline.push({
                 $match: {
@@ -279,7 +328,7 @@ var model = {
                         if (_.isEmpty(totalData)) {
                             callback(null, "No data founds");
                         } else {
-                            callback(null, totalData);
+                            callback(null, totalData[0]);
                         }
                     }
                 });

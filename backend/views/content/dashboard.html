@@ -46,18 +46,18 @@
                         <div class="mini-stats block_upper">
                             <span class="red-skin"><i class="fa fa-area-chart fa-lg"></i></span>
                             <p>FUND ALLOCATION</p>
-                            <h3>{{filteredComponents.totalComponentsFundAllocation.totalFundAllocation | currency:"&#8377;"}}</h3><br><br>
+                            <h3>{{DashboardAllData.totalComponentsFundAllocation.totalFundAllocation | currency:"&#8377;"}}</h3><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10 ">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0">CENTER SHARE</p>
-                        <p class="margin0 em1_1">{{filteredComponents.state.centerShare | currency:"&#8377;"}}</p>
+                        <p class="margin0 em1_1">{{DashboardAllData.totalCenterAndStateAllocation.centerShare | currency:"&#8377;"}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6 padding0 textright">
                         <p class="margin0">STATE SHARE</p>
-                        <p class="margin0 em1_1">{{filteredComponents.state.stateShare | currency:"&#8377;"}}</p>
+                        <p class="margin0 em1_1">{{DashboardAllData.totalCenterAndStateAllocation.stateShare | currency:"&#8377;"}}</p>
                     </div>
                 </div>
             </div>
@@ -73,20 +73,20 @@
                         <div class="mini-stats block_upper">
                             <span class="sky-skin" style="margin-bottom: 35px;"><i class="fa fa-globe fa-lg"></i></span>
                             <p>TOTAL COMPONENTS</p>
-                            <h5 class="margin0 em1_3">{{filteredComponents.totalComponents.count}}</h5>
+                            <h5 class="margin0 em1_3">{{DashboardAllData.totalComponents.count}}</h5>
                             <p>TOTAL PROJECTS</p>
-                            <h5 class="margin0 em1_3">{{filteredComponents.totalProjects.count}}</h5>
+                            <h5 class="margin0 em1_3">{{DashboardAllData.totalProjects.count}}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10 ">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0 ">INTIME</p>
-                        <p class="margin0  em1_1">{{filteredComponents.inTimeComponents.inTimeComponentsCount}}</p>
+                        <p class="margin0  em1_1">{{DashboardAllData.inTimeComponents.inTimeComponentsCount}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6padding0 textright">
                         <p class="margin0 ">DELAYED</p>
-                        <p class="margin0 em1_1">{{filteredComponents.totalComponents.count - filteredComponents.inTimeComponents.inTimeComponentsCount}}</p>
+                        <p class="margin0 em1_1">{{DashboardAllData.totalComponents.count - DashboardAllData.inTimeComponents.inTimeComponentsCount}}</p>
                     </div>
                 </div>
             </div>
@@ -102,18 +102,18 @@
                         <div class="mini-stats block_upper">
                             <span class="purple-skin"><i class="fa fa-bullhorn fa-lg"></i></span>
                             <p>FUNDS RELEASED</p>
-                            <h3>{{filteredComponents.totalReleaseAndUtilization.totalFundRelease}}</h3><br><br>
+                            <h3>{{DashboardAllData.totalReleaseAndUtilization.totalFundRelease1}}</h3><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0">CENTER SHARE</p>
-                        <p class="margin0  em1_1">{{filteredComponents.totalCenterRelease.totalCenterRelease}}</p>
+                        <p class="margin0  em1_1">{{DashboardAllData.totalCenterRelease.totalCenterRelease}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6 padding0 textright">
                         <p class="margin0 ">STATE SHARE</p>
-                        <p class="margin0 em1_1">{{filteredComponents.totalStateRelease.totalStateRelease}}</p>
+                        <p class="margin0 em1_1">{{DashboardAllData.totalReleaseAndUtilization.totalFundRelease1 - DashboardAllData.totalCenterRelease.totalCenterRelease}}</p>
                     </div>
                 </div>
             </div>
@@ -121,7 +121,7 @@
         <div class="col-md-3 col-sm-6 dashboard_blocks">
             <div class="widget">
                 <div class="widget-controls">
-                    <span class="refresh-content">{{filteredComponents.totalReleaseAndUtilization.totalPercent_fundUtized}} %</span>
+                    <span class="refresh-content">{{DashboardAllData.totalReleaseAndUtilization.totalfundUtizedPercent1}} %</span>
                 </div>
                 <!-- Widget Controls -->
                 <div class="row">
@@ -129,7 +129,7 @@
                         <div class="mini-stats block_upper">
                             <span class="pink-skin"><i class="fa fa-bar-chart fa-lg"></i></span>
                             <p>FUNDS UTILIZED</p>
-                            <h3>{{filteredComponents.totalReleaseAndUtilization.totalUtilization}}</h3><br><br>
+                            <h3>{{DashboardAllData.totalReleaseAndUtilization.totalUtilization1}}</h3><br><br>
                         </div>
                     </div>
                 </div>
@@ -177,19 +177,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table_data" ng-repeat="i in filteredComponents.institute">
+                    <tr class="table_data" ng-repeat="i in DashboardAllData.institute">
                         <td>{{i._id.pab}}</td>
                         <td>{{i._id.institute}}</td>
                         <td>{{i._id.state.name}}</td>
                         <td>{{i._id.component}}</td>
-                        <td>{{i._id.totalComponentProjects}}</td>
-                        <td>-</td>
+                        <td>{{i.totalComponentProjects}}</td>
+                        <td>{{i.totalDelayedProjectsPerComponent}}</td>
                         <td>{{i.totalComponentAllocation * (i._id.state.centerShare/100)}}</td>
+                        <!-- i._id.state.centerShare have % & we are calculating state share amount i.e. totalComponentAllocation * stateShare %-->
                         <td>{{i.totalComponentAllocation * (i._id.state.stateShare/100)}}</td>
-                        <td>{{52}}</td>
-                        <td>{{12}}</td>
-                        <td>{{45}}</td>
-                        <td>{65}</td>
+                        <td>{{i.centerReleasePerComponent}}</td>
+                        <td>{{i.stateReleasePerComponent}}</td>
+                        <td>{{i.amountUtilizedPerComponent}}</td>
+                        <td>{{i.amountUtilizedPercentagePerComponent}}</td>
                     </tr>
 
                 </tbody>
