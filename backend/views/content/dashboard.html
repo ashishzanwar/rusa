@@ -73,20 +73,21 @@
                         <div class="mini-stats block_upper">
                             <span class="sky-skin" style="margin-bottom: 35px;"><i class="fa fa-globe fa-lg"></i></span>
                             <p>TOTAL COMPONENTS</p>
-                            <h5 class="margin0 em1_3">{{DashboardAllData.totalComponents.count}}</h5>
+                            <h5 class="margin0 em1_3">{{DashboardAllData.totalComponents.count | number:2}}</h5>
                             <p>TOTAL PROJECTS</p>
-                            <h5 class="margin0 em1_3">{{DashboardAllData.totalProjects.count}}</h5>
+                            <h5 class="margin0 em1_3">{{DashboardAllData.totalProjects.count | number:2}}</h5>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10 ">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0 ">INTIME</p>
-                        <p class="margin0  em1_1">{{DashboardAllData.inTimeComponents.inTimeComponentsCount}}</p>
+                        <p class="margin0  em1_1">{{DashboardAllData.inTimeComponents.inTimeComponentsCount | number:2}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6padding0 textright">
                         <p class="margin0 ">DELAYED</p>
-                        <p class="margin0 em1_1">{{DashboardAllData.totalComponents.count - DashboardAllData.inTimeComponents.inTimeComponentsCount}}</p>
+                        <p class="margin0 em1_1">{{DashboardAllData.totalComponents.count - DashboardAllData.inTimeComponents.inTimeComponentsCount
+                            | number:2}}</p>
                     </div>
                 </div>
             </div>
@@ -102,18 +103,19 @@
                         <div class="mini-stats block_upper">
                             <span class="purple-skin"><i class="fa fa-bullhorn fa-lg"></i></span>
                             <p>FUNDS RELEASED</p>
-                            <h3>{{DashboardAllData.totalReleaseAndUtilization.totalFundRelease1}}</h3><br><br>
+                            <h3>{{DashboardAllData.totalReleaseAndUtilization.totalFundRelease1 | number:2}}</h3><br><br>
                         </div>
                     </div>
                 </div>
                 <div class="row margin0 padding10">
                     <div class="col-md-6 col-xs-6 padding0">
                         <p class="margin0">CENTER SHARE</p>
-                        <p class="margin0  em1_1">{{DashboardAllData.totalCenterRelease.totalCenterRelease}}</p>
+                        <p class="margin0  em1_1">{{DashboardAllData.totalCenterRelease.totalCenterRelease | number:2}}</p>
                     </div>
                     <div class="col-md-6 col-xs-6 padding0 textright">
                         <p class="margin0 ">STATE SHARE</p>
-                        <p class="margin0 em1_1">{{DashboardAllData.totalReleaseAndUtilization.totalFundRelease1 - DashboardAllData.totalCenterRelease.totalCenterRelease}}</p>
+                        <p class="margin0 em1_1">{{DashboardAllData.totalReleaseAndUtilization.totalFundRelease1 - DashboardAllData.totalCenterRelease.totalCenterRelease
+                            | number:2}}</p>
                     </div>
                 </div>
             </div>
@@ -121,7 +123,7 @@
         <div class="col-md-3 col-sm-6 dashboard_blocks">
             <div class="widget">
                 <div class="widget-controls">
-                    <span class="refresh-content">{{DashboardAllData.totalReleaseAndUtilization.totalfundUtizedPercent1}} %</span>
+                    <span class="refresh-content">{{DashboardAllData.totalReleaseAndUtilization.totalfundUtizedPercent1 | number:2}} %</span>
                 </div>
                 <!-- Widget Controls -->
                 <div class="row">
@@ -129,7 +131,7 @@
                         <div class="mini-stats block_upper">
                             <span class="pink-skin"><i class="fa fa-bar-chart fa-lg"></i></span>
                             <p>FUNDS UTILIZED</p>
-                            <h3>{{DashboardAllData.totalReleaseAndUtilization.totalUtilization1}}</h3><br><br>
+                            <h3>{{DashboardAllData.totalReleaseAndUtilization.totalUtilization1 | number:2}}</h3><br><br>
                         </div>
                     </div>
                 </div>
@@ -184,13 +186,13 @@
                         <td>{{i._id.component}}</td>
                         <td>{{i.totalComponentProjects}}</td>
                         <td>{{i.totalDelayedProjectsPerComponent}}</td>
-                        <td>{{i.totalComponentAllocation * (i._id.state.centerShare/100)}}</td>
+                        <td>{{i.totalComponentAllocation * (i._id.state.centerShare/100) | number:2}}</td>
                         <!-- i._id.state.centerShare have % & we are calculating state share amount i.e. totalComponentAllocation * stateShare %-->
-                        <td>{{i.totalComponentAllocation * (i._id.state.stateShare/100)}}</td>
-                        <td>{{i.centerReleasePerComponent}}</td>
-                        <td>{{i.stateReleasePerComponent}}</td>
-                        <td>{{i.amountUtilizedPerComponent}}</td>
-                        <td>{{i.amountUtilizedPercentagePerComponent}}</td>
+                        <td>{{i.totalComponentAllocation * (i._id.state.stateShare/100) | number:2}}</td>
+                        <td>{{i.centerReleasePerComponent | number:2}}</td>
+                        <td>{{i.stateReleasePerComponent | number:2}}</td>
+                        <td>{{i.amountUtilizedPerComponent | number:2}}</td>
+                        <td>{{i.amountUtilizedPercentagePerComponent| number:2}}</td>
                     </tr>
 
                 </tbody>

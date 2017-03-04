@@ -561,8 +561,29 @@ var model = {
         async.parallel({
 
             // Blocks function start here
+            // rusaDashboard.js pipeline 9 & 10
             totalComponentsFundAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
+
+                // do not delete below two pipeline
+                // newPipeLine.push({
+                //     $group: {
+                //         "_id": "$components",
+                //         totalFundAllocationTemp: { // bcoz one component can have multiple projects.
+                //             $first: "$components_data.allocation"
+                //         }
+                //     }
+                // });
+
+                // newPipeLine.push({
+                //     $group: {
+                //         "_id": null,
+                //         totalFundAllocation: {
+                //             $sum: "$totalFundAllocationTemp"
+                //         }
+                //     }
+                // });
+
                 newPipeLine.push({
                     $group: {
                         "_id": "1",
@@ -571,6 +592,7 @@ var model = {
                         }
                     }
                 });
+
                 Project.aggregate(newPipeLine, function (err, allocationData) {
                     if (err) {
                         callback(null, err);
@@ -583,6 +605,8 @@ var model = {
                     }
                 });
             },
+
+            // rusaDashboard.js pipeline 11 & 12
             totalCenterAndStateAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({

@@ -278,7 +278,6 @@ var model = {
                         totalUtilization: {
                             $first: "$components_data.amountUtilized"
                         },
-
                         totalfundUtizedPercent: {
                             $first: "$components_data.utilizationCertificates"
                         }
@@ -367,9 +366,9 @@ var model = {
                     }
                 });
             },
-            centerAndStateReleasePerComponent: function (callback) {
+            centerReleasePerComponent: function (callback) {
 
-                var typeData = [];
+                // var typeData = [];
                 var newPipeLine = _.cloneDeep(pipeLine);
 
                 newPipeLine.push({
@@ -408,55 +407,57 @@ var model = {
                         callback(null, err);
                     } else {
                         if (_.isEmpty(centerData)) {
+                            // typeData.push([null]);
                             callback(null, "No data founds");
                         } else {
-                            typeData.push(centerData);
-                            console.log("center", centerData);
-                            var newPipeLine1 = _.cloneDeep(pipeLine);
-                            newPipeLine1.push({
-                                $match: {
-                                    $or: [{
-                                            "type": "State To Institute"
-                                        },
-                                        {
-                                            "type": "State To Vendor"
-                                        }
-                                    ]
-                                }
-                            });
-                            newPipeLine1.push({
-                                $group: {
-                                    "_id": {
-                                        pab: "$pab_data.name",
-                                        componentId: "$components_data._id",
-                                        component: "$components_data.name",
-                                        componentStatus: "$components_data.status",
-                                    },
-                                    stateComponentRelease: {
-                                        $sum: "$amount"
-                                    },
-                                    // totalComponentAmountUtlization: {
-                                    //     $sum: "$components_data.amountUtilized"
-                                    // },
-                                    // totalComponentUtilizationPercent: {
-                                    //     $sum: "$components_data.utilizationCertificates"
-                                    // },
-                                }
-                            });
-                            Transaction.aggregate(newPipeLine1, function (err, stateData) {
-                                if (err) {
-                                    callback(null, err);
-                                } else {
-                                    if (_.isEmpty(stateData)) {
-                                        callback(null, "No data founds");
-                                    } else {
-                                        typeData.push(stateData);
-                                        console.log("state", stateData);
-                                        callback(null, typeData);
-                                    }
-                                }
-                            });
-                            //callback(null, componentData);
+                            callback(null, centerData);
+                        }
+                    }
+                });
+
+            },
+            stateReleasePerComponent: function (callback) {
+
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                newPipeLine.push({
+                    $match: {
+                        $or: [{
+                            "type": "State To Institute"
+                        }, {
+                            "type": "State To Vendor"
+                        }]
+                    }
+                });
+                newPipeLine.push({
+                    $group: {
+                        "_id": {
+                            pab: "$pab_data.name",
+                            componentId: "$components_data._id",
+                            component: "$components_data.name",
+                            componentStatus: "$components_data.status",
+                        },
+                        stateComponentRelease: {
+                            $sum: "$amount"
+                        }
+                        // totalComponentAmountUtlization: {
+                        //     $sum: "$components_data.amountUtilized"
+                        // },
+                        // totalComponentUtilizationPercent: {
+                        //     $sum: "$components_data.utilizationCertificates"
+                        // },
+
+                    }
+                });
+                Transaction.aggregate(newPipeLine, function (err, stateData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(stateData)) {
+                            // typeData.push([null]);
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, stateData);
                         }
                     }
                 });

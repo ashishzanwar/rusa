@@ -23,71 +23,87 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     function loadData(dropDownData) {
+
       NavigationService.boxCall("Project/getProjectReport", dropDownData, function (data) {
         $scope.filteredComponents = data.data;
 
         NavigationService.boxCall("Transaction/getTransactionReport", dropDownData, function (data) {
           $scope.filteredComponentsNew = data.data;
 
-          console.log("filteredComponents", $scope.filteredComponents);
-          console.log("filteredComponentsNew", $scope.filteredComponentsNew);
-
           $scope.DashboardAllData = angular.extend({}, $scope.filteredComponents, $scope.filteredComponentsNew);
-          // console.log("Updated DashboardAllData", DashboardAllData);
+
+          $scope.centerReleasePerComp = $scope.DashboardAllData.centerReleasePerComponent;
+          $scope.stateReleasePerComp = $scope.DashboardAllData.stateReleasePerComponent;
+          $scope.delayedProPerComp = $scope.DashboardAllData.totalDelayedProjectsPerComponent;
 
           // to get totalDelayedProjectsPerComponent in institute array 
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
-            angular.forEach($scope.DashboardAllData.totalDelayedProjectsPerComponent, function (tdppc, index) {
+            if ($scope.delayedProPerComp != "No data founds") {
+              //when we get 0 records from Db we canno't make any operation 
 
-              if (inst._id.componentId == tdppc._id.componentId) {
-                inst.totalDelayedProjectsPerComponent = tdppc.totalDelayedProjectsPerComponent;
-              } else {
-                if (inst.totalDelayedProjectsPerComponent != null) {
-                  // console.log("test");
+              angular.forEach($scope.DashboardAllData.totalDelayedProjectsPerComponent, function (tdppc, index) {
+                if (inst._id.componentId == tdppc._id.componentId) {
+                  inst.totalDelayedProjectsPerComponent = tdppc.totalDelayedProjectsPerComponent;
                 } else {
-                  inst.totalDelayedProjectsPerComponent = 0;
+                  if (inst.totalDelayedProjectsPerComponent != null) {
+                    // console.log("test");
+                  } else {
+                    // if it is null then make it 0 to display on table 
+                    inst.totalDelayedProjectsPerComponent = 0;
+                  }
                 }
-              }
-            });
+              });
+            } else {
+              // Don't compare it with 1st object put direct 0 in institute
+              inst.totalDelayedProjectsPerComponent = null;
+              inst.totalDelayedProjectsPerComponent = 0;
+            }
           });
-          // console.log("Updated DashboardAllData", $scope.DashboardAllData);
-
 
           // to get centerReleasePerComponent in institute array 
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
-            angular.forEach($scope.DashboardAllData.centerAndStateReleasePerComponent[0], function (crpc, index) {
 
-              if (inst._id.componentId == crpc._id.componentId) {
-                inst.centerReleasePerComponent = crpc.centerComponentRelease;
-              } else {
-                if (inst.centerReleasePerComponent != null) {
-                  // console.log("test");
+            if ($scope.centerReleasePerComp != "No data founds") {
+              angular.forEach($scope.DashboardAllData.centerReleasePerComponent, function (crpc, index) {
+                if (inst._id.componentId == crpc._id.componentId) {
+                  inst.centerReleasePerComponent = crpc.centerComponentRelease;
                 } else {
-                  inst.centerReleasePerComponent = 0;
+                  if (inst.centerReleasePerComponent != null) {
+                    // console.log("test");
+                  } else {
+                    inst.centerReleasePerComponent = 0;
+                  }
                 }
-              }
-            });
+              });
+            } else {
+              inst.centerReleasePerComponent = null;
+              inst.centerReleasePerComponent = 0;
+            }
           });
 
 
           // to get stateReleasePerComponent in institute array 
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
-            angular.forEach($scope.DashboardAllData.centerAndStateReleasePerComponent[1], function (srpc, index) {
-
-              if (inst._id.componentId == srpc._id.componentId) {
-                inst.stateReleasePerComponent = srpc.stateComponentRelease;
-              } else {
-                if (inst.stateReleasePerComponent != null) {
-                  // console.log("test");
+            if ($scope.stateReleasePerComp != "No data founds") {
+              angular.forEach($scope.DashboardAllData.stateReleasePerComponent, function (srpc, index) {
+                if (inst._id.componentId == srpc._id.componentId) {
+                  inst.stateReleasePerComponent = srpc.stateComponentRelease;
                 } else {
-                  inst.stateReleasePerComponent = 0;
+                  if (inst.stateReleasePerComponent != null) {
+                    // console.log("test");
+                  } else {
+                    inst.stateReleasePerComponent = 0;
+                  }
                 }
-              }
-            });
+              });
+            } else {
+              inst.stateReleasePerComponent = null;
+              inst.stateReleasePerComponent = 0;
+            }
           });
 
 
-          // to get stateReleasePerComponent in institute array 
+          // to get transactionsPerComponents in institute array 
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
             angular.forEach($scope.DashboardAllData.transactionsPerComponents, function (tpc, index) {
 
@@ -100,25 +116,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 } else {
                   inst.amountUtilizedPerComponent = 0;
                   inst.amountUtilizedPercentagePerComponent = 0;
-
                 }
               }
             });
+
           });
-          console.log("Updated object", $scope.DashboardAllData);
+
         });
         // console.log("Updated object", $scope.DashboardAllData);
-
       });
-      // console.log("Updated object", $scope.DashboardAllData);
+
 
     }
-
     loadData(dropDownData);
-    // console.log("Updated object", $scope.DashboardAllData);
 
-    // console.log("Dashboard data outside: getProjectReport ", $scope.filteredComponents);
-    // console.log("Dashboard data outside: getTransactionReport", $scope.filteredComponentsNew);
 
     $scope.getAllDashboardData = function (item) {
       console.log(item);
