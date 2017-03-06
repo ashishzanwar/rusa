@@ -327,6 +327,7 @@ var model = {
                         if (_.isEmpty(totalData)) {
                             callback(null, "No data founds");
                         } else {
+                            totalData[0].totalfundUtizedPercent1 = (totalData[0].totalUtilization1 / totalData[0].totalFundRelease1) * 100
                             callback(null, totalData[0]);
                         }
                     }
@@ -467,6 +468,21 @@ var model = {
 
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
+                    $match: { // to get the records of state & center release only (institute to vendor is also there )
+                        $or: [{
+                            "type": "Center To State"
+                        }, {
+                            "type": "Center To Institute"
+                        }, {
+                            "type": "Center To Vendor"
+                        }, {
+                            "type": "State To Institute"
+                        }, {
+                            "type": "State To Vendor"
+                        }]
+                    }
+                });
+                newPipeLine.push({
                     $group: {
                         "_id": {
                             // id: "_id",
@@ -476,10 +492,11 @@ var model = {
                             componentStatus: "$components_data.status",
                             amountUtilizedPerComponent: "$components_data.amountUtilized",
                             amountUtilizedPercentagePerComponent: "$components_data.utilizationCertificates"
+
                         },
-                        // totalComponentRelease: {
-                        //     $sum: "$amount"
-                        // },
+                        totalComponentRelease: {
+                            $sum: "$amount"
+                        },
 
                     }
                 });
@@ -520,80 +537,6 @@ var model = {
 
 
             },
-
-            // centerReleasePerComponents: function (callback) {
-
-            //     var newPipeLine = _.cloneDeep(pipeLine);
-            //     newPipeLine.push({
-            //         $match: {
-            //             $or: [{
-            //                 "type": "Center To State"
-            //             }, {
-            //                 "type": "Center To Institute"
-            //             }, {
-            //                 "type": "Center To Vendor"
-            //             }]
-            //         }
-            //     });
-            //     newPipeLine.push({
-            //         $group: {
-            //             "_id": {
-            //                 pab: "$pab_data.name",
-            //                 componentId: "$components_data._id",
-            //             },
-            //             centerReleasePerComponents: {
-            //                 $sum: "$amount"
-            //             }
-            //         }
-            //     });
-            //     Transaction.aggregate(newPipeLine, function (err, perCenterData) {
-            //         if (err) {
-            //             callback(null, err);
-            //         } else {
-            //             if (_.isEmpty(perCenterData)) {
-            //                 callback(null, "No data founds");
-            //             } else {
-            //                 callback(null, perCenterData);
-            //             }
-            //         }
-            //     });
-            // },
-            // stateReleasePerComponents: function (callback) {
-
-            //     var newPipeLine = _.cloneDeep(pipeLine);
-            //     newPipeLine.push({
-            //         $match: {
-            //             $or: [{
-            //                 "type": "State To Institute"
-            //             }, {
-            //                 "type": "State To Vendor"
-            //             }]
-            //         }
-            //     });
-            //     newPipeLine.push({
-            //         $group: {
-            //             "_id": {
-            //                 pab: "$pab_data.name",
-            //                 componentId: "$components_data._id",
-            //             },
-            //             stateReleasePerComponents: {
-            //                 $sum: "$amount"
-            //             }
-            //         }
-            //     });
-            //     Transaction.aggregate(newPipeLine, function (err, perStateData1) {
-            //         if (err) {
-            //             callback(null, err);
-            //         } else {
-            //             if (_.isEmpty(perStateData1)) {
-            //                 callback(null, "No data founds");
-            //             } else {
-            //                 callback(null, perStateData1);
-            //             }
-            //         }
-            //     });
-            // },
-
 
 
         }, callback);

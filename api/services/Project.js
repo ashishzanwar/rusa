@@ -565,33 +565,33 @@ var model = {
             totalComponentsFundAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
 
-                // do not delete below two pipeline
-                // newPipeLine.push({
-                //     $group: {
-                //         "_id": "$components",
-                //         totalFundAllocationTemp: { // bcoz one component can have multiple projects.
-                //             $first: "$components_data.allocation"
-                //         }
-                //     }
-                // });
-
-                // newPipeLine.push({
-                //     $group: {
-                //         "_id": null,
-                //         totalFundAllocation: {
-                //             $sum: "$totalFundAllocationTemp"
-                //         }
-                //     }
-                // });
-
+                //do not delete below two pipeline
                 newPipeLine.push({
                     $group: {
-                        "_id": "1",
-                        totalFundAllocation: {
-                            $sum: "$components_data.allocation"
+                        "_id": "$components",
+                        totalFundAllocationTemp: { // bcoz one component can have multiple projects.
+                            $first: "$components_data.allocation"
                         }
                     }
                 });
+
+                newPipeLine.push({
+                    $group: {
+                        "_id": null,
+                        totalFundAllocation: {
+                            $sum: "$totalFundAllocationTemp"
+                        }
+                    }
+                });
+
+                // newPipeLine.push({
+                //     $group: {
+                //         "_id": "1",
+                //         totalFundAllocation: {
+                //             $sum: "$components_data.allocation"
+                //         }
+                //     }
+                // });
 
                 Project.aggregate(newPipeLine, function (err, allocationData) {
                     if (err) {
@@ -609,14 +609,23 @@ var model = {
             // rusaDashboard.js pipeline 11 & 12
             totalCenterAndStateAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
+
                 newPipeLine.push({
                     $group: {
-                        "_id": "$states_data",
-                        totalAllocation: {
-                            $sum: "$components_data.allocation"
+                        "_id": {
+                            compData: "$components_data._id",
+                            state: "$states_data._id",
+                            centerShare: "$states_data.centerShare",
+                            stateShare: "$states_data.stateShare",
                         },
-                    }
+
+                        totalAllocation: {
+                            $first: "$components_data.allocation"
+                        },
+                    },
+
                 });
+
                 Project.aggregate(newPipeLine, function (err, data) {
                     if (err) {
                         callback(err);
@@ -625,6 +634,9 @@ var model = {
                             centerShare: 0,
                             stateShare: 0
                         };
+
+                        console.log("###############################datadatadatadata#########################################", data);
+
                         _.each(data, function (n) {
                             obj.centerShare += n._id.centerShare * n.totalAllocation / 100;
                             obj.stateShare += n._id.stateShare * n.totalAllocation / 100;
@@ -742,57 +754,43 @@ var model = {
                 newPipeLine.push({
                     $group: {
                         "_id": {
-                            // id: "$_id",
+                            id: "$components",
                             componentId: "$components_data._id",
                             component: "$components_data.name",
                             pab: "$pab_data.name",
                             institute: "$institutes_data.name",
                             componentStatus: "$components_data.status",
-                            state: "$states_data"
+                            state: "$states_data._id",
+                            stateName: "$states_data.name",
+                            centerShare: "$states_data.centerShare",
+                            stateShare: "$states_data.stateShare"
                         },
 
                         totalComponentProjects: {
                             $sum: 1
                         },
                         totalComponentAllocation: {
-                            $sum: "$components_data.allocation"
+                            $first: "$components_data.allocation"
                         }
                     }
 
 
-                    // $group: {
-                    //     "_id": {
-                    //         componentId: "$components_data._id",
-                    //     },
-                    //     componentName: {
-                    //         $first: "$components_data.name"
-                    //     },
 
-                    //     pab: {
-                    //         $first: "$pab_data.name"
-                    //     },
-
-                    //     institute: {
-                    //         $first: "$institutes_data.name"
-                    //     },
-
-                    //     componentStatus: {
-                    //         $first: "$components_data.status"
-                    //     },
-
-                    //     state: {
-                    //         $first: "$states_data"
-                    //     },
-
-                    //     totalComponentProjects: {
-                    //         $sum: 1
-                    //     },
-                    //     totalComponentAllocation: {
-                    //         $sum: "$components_data.allocation"
-                    //     }
-                    // },
                 });
-                Project.aggregate(newPipeLine, callback);
+                // Project.aggregate(newPipeLine, callback);
+                Project.aggregate(newPipeLine, function (err, datacomp) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(datacomp)) {
+                            callback(null, "No data founds");
+                        } else {
+                            console.log("###############################.....institute....#########################################", datacomp);
+
+                            callback(null, datacomp);
+                        }
+                    }
+                });
             },
             totalDelayedProjectsPerComponent: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
@@ -827,6 +825,36 @@ var model = {
                             callback(null, "No data founds");
                         } else {
                             callback(null, tdppc);
+                        }
+                    }
+                });
+            },
+            totalDelayedProjects: function (callback) {
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({ // it will select records who's deuDate is less than current date
+                    $match: {
+                        "dueDate": {
+                            "$lt": new Date()
+                        } // to filter delayed data
+                    }
+                });
+
+                newPipeLine.push({
+                    $group: { //  
+                        _id: "1",
+                        "totalDelayedProjects": {
+                            $sum: 1
+                        }
+                    }
+                });
+                Project.aggregate(newPipeLine, function (err, tdppc) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(tdppc)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, tdppc[0]);
                         }
                     }
                 });

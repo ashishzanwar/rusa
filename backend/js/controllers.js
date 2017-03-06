@@ -13,6 +13,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.AllInstitutes = "";
     $scope.filteredComponents = {};
     $scope.filteredComponentsNew = {};
+    $scope.totalUtilizedPercentage = 0;
+    $scope.count = 0;
     var dropDownData = {
       pab: "",
       state: "",
@@ -30,11 +32,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.boxCall("Transaction/getTransactionReport", dropDownData, function (data) {
           $scope.filteredComponentsNew = data.data;
 
+          // console.log("filteredComponents", $scope.filteredComponents);
+          // console.log("filteredComponentsNew", $scope.filteredComponentsNew);
+
           $scope.DashboardAllData = angular.extend({}, $scope.filteredComponents, $scope.filteredComponentsNew);
 
+          // console.log("filteredComponentsNew", $scope.filteredComponentsNew);
           $scope.centerReleasePerComp = $scope.DashboardAllData.centerReleasePerComponent;
           $scope.stateReleasePerComp = $scope.DashboardAllData.stateReleasePerComponent;
           $scope.delayedProPerComp = $scope.DashboardAllData.totalDelayedProjectsPerComponent;
+
+
 
           // to get totalDelayedProjectsPerComponent in institute array 
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
@@ -107,18 +115,24 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
             angular.forEach($scope.DashboardAllData.transactionsPerComponents, function (tpc, index) {
 
+
               if (inst._id.componentId == tpc._id.componentId) {
                 inst.amountUtilizedPerComponent = tpc._id.amountUtilizedPerComponent;
-                inst.amountUtilizedPercentagePerComponent = tpc._id.amountUtilizedPercentagePerComponent;
+                // inst.amountUtilizedPercentagePerComponent = tpc._id.amountUtilizedPercentagePerComponent;
+                console.log("totalComponentRelease", tpc.totalComponentRelease);
+                inst.amountUtilizedPercentagePerComponent = (tpc._id.amountUtilizedPerComponent * 100) / tpc.totalComponentRelease;
+                console.log("count", $scope.count);
               } else {
                 if (inst.amountUtilizedPerComponent != null && inst.amountUtilizedPercentagePerComponent != null) {
                   // console.log("test");
                 } else {
                   inst.amountUtilizedPerComponent = 0;
                   inst.amountUtilizedPercentagePerComponent = 0;
+                  console.log("count inside", $scope.count);
                 }
               }
             });
+
 
           });
 

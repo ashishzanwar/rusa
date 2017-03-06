@@ -6,7 +6,7 @@
             <lable>Select PAB No.</lable>
             <select name="" ng-model="selectedPab" class="form-control select_tag_dashboard" ng-options="x.name for x in AllPABs track by x._id"
                 ng-change="selectedPab===null ? '' : getAllDashboardData(selectedPab, $event) " data-id="pab">
-                <option value=""></option>
+                <!--<option value=""></option>-->
                 </select>
         </div>
         <div class=" col-md-3 form-group ">
@@ -182,13 +182,13 @@
                     <tr class="table_data" ng-repeat="i in DashboardAllData.institute">
                         <td>{{i._id.pab}}</td>
                         <td>{{i._id.institute}}</td>
-                        <td>{{i._id.state.name}}</td>
+                        <td>{{i._id.stateName}}</td>
                         <td>{{i._id.component}}</td>
                         <td>{{i.totalComponentProjects}}</td>
                         <td>{{i.totalDelayedProjectsPerComponent}}</td>
-                        <td>{{i.totalComponentAllocation * (i._id.state.centerShare/100) | number:2}}</td>
+                        <td>{{i.totalComponentAllocation * (i._id.centerShare/100) | number:2}}</td>
                         <!-- i._id.state.centerShare have % & we are calculating state share amount i.e. totalComponentAllocation * stateShare %-->
-                        <td>{{i.totalComponentAllocation * (i._id.state.stateShare/100) | number:2}}</td>
+                        <td>{{i.totalComponentAllocation * (i._id.stateShare/100) | number:2}}</td>
                         <td>{{i.centerReleasePerComponent | number:2}}</td>
                         <td>{{i.stateReleasePerComponent | number:2}}</td>
                         <td>{{i.amountUtilizedPerComponent | number:2}}</td>
