@@ -542,6 +542,63 @@ var model = {
         }, callback);
 
     },
+    getTransactionDetails: function (data, callback) {
+        var pipeLine = Transaction.getAggregatePipeLine(data);
+        console.log(pipeLine);
 
+        var newPipeLine = _.cloneDeep(pipeLine);
+
+        newPipeLine.push({
+            $match: { // to get the records of state & center release only (institute to vendor is also there )             
+                "components": ObjectId(data.components),
+                $or: [{
+                    "type": "Center To State"
+                }, {
+                    "type": "Center To Institute"
+                }, {
+                    "type": "Center To Vendor"
+                }, {
+                    "type": "State To Institute"
+                }, {
+                    "type": "State To Vendor"
+                }]
+            }
+        });
+
+        newPipeLine.push({ // to remove all repeated data & filter wanted data 
+            $group: { // we will get n records & then calculate what we want in following group
+                "_id": {
+                    componentName: "$components_data.name",
+                    pabName: "$pab_data.name"
+                },
+                totalAmountRelease: {
+                    $sum: "$amount"
+                },
+                latestAmountRelease: {
+                    $last: "$amount"
+                },
+                totalAllocationForComponent: {
+                    $first: "$components_data.allocation"
+                },
+                totalUtilizationForComponent: {
+                    $first: "$components_data.amountUtilized"
+                }
+
+
+            }
+        });
+        Transaction.aggregate(newPipeLine, function (err, totalData) {
+            if (err) {
+                callback(null, err);
+            } else {
+                if (_.isEmpty(totalData)) {
+                    callback(null, "No data founds");
+                } else {
+                    callback(null, totalData[0]);
+                }
+            }
+        });
+
+    },
 };
 module.exports = _.assign(module.exports, exports, model);
