@@ -551,7 +551,6 @@ var model = {
 
         newPipeLine.push({
             $match: { // to get the records of state & center release only (institute to vendor is also there & we don't want)             
-                "components": ObjectId(data.components),
                 $or: [{
                     "type": "Center To State"
                 }, {
@@ -707,7 +706,7 @@ var model = {
                             callback(null, "No data founds");
                         } else {
 
-                            callback(null, tfaru);
+                            callback(null, tfaru[0]);
                         }
                     }
                 });
@@ -758,7 +757,7 @@ var model = {
                             callback(null, "No data founds");
                         } else {
 
-                            callback(null, totalCR);
+                            callback(null, totalCR[0]);
                         }
                     }
                 });
@@ -805,7 +804,7 @@ var model = {
                         if (_.isEmpty(totalSR)) {
                             callback(null, "No data founds");
                         } else {
-                            callback(null, totalSR);
+                            callback(null, totalSR[0]);
                         }
                     }
                 });
@@ -895,10 +894,10 @@ var model = {
         }, callback);
     },
 
-    // componentProjects: function (data, callback) {
-    // },
+    componentProjects: function (data, callback) {
+    },
 
-    // componentMedia: function (data, callback) {
-    // }
+    componentMedia: function (data, callback) {
+    }
 };
 module.exports = _.assign(module.exports, exports, model);

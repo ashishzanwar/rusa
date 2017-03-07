@@ -13,9 +13,11 @@ var controller = {
             });
         }
     },
-    getTransactionDetails: function (req, res) {
+
+    // Mobile Application API
+    componentOverview: function (req, res) {
         if (req.body) {
-            Transaction.getTransactionDetails(req.body, res.callback);
+            Transaction.componentOverview(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -37,7 +39,29 @@ var controller = {
             });
         }
     },
-
-
+    componentProjects: function (req, res) {
+        if (req.body) {
+            Transaction.componentProjects(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+    componentMedia: function (req, res) {
+        if (req.body) {
+            Transaction.componentMedia(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
 };
 module.exports = _.assign(module.exports, controller);
