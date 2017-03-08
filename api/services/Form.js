@@ -188,15 +188,15 @@ var model = {
             allocation: json.allocation,
             status: "Active",
             subStatus: "InTime",
-            // utilizationCertificates: [{
-            //     images: json.utilization.file1,
-            //     date: json.utilization.date1,
-            //     amount: json.utilization.value1
-            // }, {
-            //     images: json.utilization.file2,
-            //     date: json.utilization.date2,
-            //     amount: json.utilization.value2
-            // }],
+            utilizationCertificates: [{
+                images: json.utilization.file1,
+                date: json.utilization.date1,
+                amount: json.utilization.value1
+            }, {
+                images: json.utilization.file2,
+                date: json.utilization.date2,
+                amount: json.utilization.value2
+            }],
             fundDelay: false
         };
 
