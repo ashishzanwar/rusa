@@ -183,20 +183,20 @@ var model = {
             name: json.keyComponentsId.name,
             // institute: json.instituteId._id,        // we are not getting it don't know why
             institute: json.instituteId._id,
-            pabno: json.pabId._id,
+            // pabno: json.pabId._id,
             keycomponents: json.keyComponentsId._id,
             allocation: json.allocation,
             status: "Active",
             subStatus: "InTime",
-            utilizationCertificates: [{
-                images: json.utilization.file1,
-                date: json.utilization.date1,
-                amount: json.utilization.value1
-            }, {
-                images: json.utilization.file2,
-                date: json.utilization.date2,
-                amount: json.utilization.value2
-            }],
+            // utilizationCertificates: [{
+            //     images: json.utilization.file1,
+            //     date: json.utilization.date1,
+            //     amount: json.utilization.value1
+            // }, {
+            //     images: json.utilization.file2,
+            //     date: json.utilization.date2,
+            //     amount: json.utilization.value2
+            // }],
             fundDelay: false
         };
 
