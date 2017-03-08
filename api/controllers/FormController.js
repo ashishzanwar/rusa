@@ -38,7 +38,9 @@ var controller = {
         });
     },
     compileAll: function (req, res) {
-        Form.find({}).lean().exec(function (err, data) {
+        Form.find({
+            status: "Moderation Completed"
+        }).lean().exec(function (err, data) {
             if (err) {
                 res.callback(err);
             }
