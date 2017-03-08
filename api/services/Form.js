@@ -253,7 +253,7 @@ var model = {
 
                                                 var transactionObj = {
                                                     components: comSave._id,
-                                                    name: instituteVendor.vendorName,
+                                                    name: projectExpenseSave.vendorName,
                                                     installment: instituteVendor.installmentNo,
                                                     amount: instituteVendor.amount,
                                                     type: "Institute To Vendor",

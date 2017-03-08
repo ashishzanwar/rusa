@@ -188,20 +188,20 @@ var model = {
             },
 
             // Stage 5
-            {
-                $unwind: {
-                    path: "$components_data.utilizationCertificates",
+            // {
+            //     $unwind: {
+            //         path: "$components_data.utilizationCertificates",
 
-                }
-            },
+            //     }
+            // },
 
             // Stage 6
-            {
-                $unwind: {
-                    path: "$components_data.amountUtilized",
+            // {
+            //     $unwind: {
+            //         path: "$components_data.amountUtilized",
 
-                }
-            },
+            //     }
+            // },
 
         ];
 
@@ -212,10 +212,17 @@ var model = {
                 }
             });
         }
-        if (data.component) {
+        // if (data.component) {
+        //     pipeline.push({
+        //         $match: {
+        //             "components_data._id": ObjectId(data.component)
+        //         }
+        //     });
+        // }
+        if (data.component) {  // In actial it is keycomponents
             pipeline.push({
                 $match: {
-                    "components_data._id": ObjectId(data.component)
+                    "components_data.keycomponents": ObjectId(data.component)
                 }
             });
         }
@@ -537,7 +544,6 @@ var model = {
 
 
             },
-
 
         }, callback);
 
