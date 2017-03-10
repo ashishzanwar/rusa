@@ -273,6 +273,8 @@ var model = {
                                                         projectNewObj.transaction = [];
                                                         projectNewObj._id = projectSave._id; //current project id
                                                         projectNewObj.transaction.push(instToVen._id); // current transaction id
+
+                                                        // we have to put in into ProjectExpenses rather than Project
                                                         Project.saveData(projectNewObj, function (err, transactionIdToProject) {
                                                             if (err) {
                                                                 console.log("********** Error in Project saveData (when updating transaction in project table) **********", err);
@@ -357,7 +359,7 @@ var model = {
                             name: centerTransaction.vendorName, // it is vendor name or institue name? 
                             installment: centerTransaction.installmentNo,
                             amount: centerTransaction.amount,
-                            type: "Center To Institute",
+                            type: "Center To State",
                             remarks: centerTransaction.remarks,
                             file: centerTransaction.file,
                             transactionSent: centerTransaction.transactionSent,
