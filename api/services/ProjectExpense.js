@@ -19,13 +19,20 @@ var schema = new Schema({
         type: Number
     },
 
-    transactions: {
-        id: [{
-            type: Schema.Types.ObjectId,
-            ref: 'Transaction',
-            index: true
-        }]
-    },
+    // transactions: {
+    //     id: [{
+    //         type: Schema.Types.ObjectId,
+    //         ref: 'Transaction',
+    //         index: true
+    //     }]
+    // },
+
+    transaction: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Transaction',
+        index: true,
+        key: "project"
+    }],
 
     photos: [{
         type: String
@@ -92,28 +99,28 @@ var model = {
         ProjectExpense.findOneAndUpdate({
             _id: data._id
         }, {
-            $push: {
+                $push: {
 
-                photos: data.photos
-            }
-        }).exec(function (err, found) {
-
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
-
-                if (found) {
-
-                    callback(null, found);
-                } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
+                    photos: data.photos
                 }
-            }
+            }).exec(function (err, found) {
 
-        })
+                if (err) {
+                    // console.log(err);
+                    callback(err, null);
+                } else {
+
+                    if (found) {
+
+                        callback(null, found);
+                    } else {
+                        callback(null, {
+                            message: "No Data Found"
+                        });
+                    }
+                }
+
+            })
     },
     removeProjectExpensePhotos: function (data, callback) {
 
@@ -122,21 +129,21 @@ var model = {
 
             "_id": data._id
         }, {
-            $pull: {
-                photos: data.photos
+                $pull: {
+                    photos: data.photos
 
-            }
-        }, function (err, updated) {
-            console.log(updated);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
+                }
+            }, function (err, updated) {
+                console.log(updated);
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
 
 
-                callback(null, updated);
-            }
-        });
+                    callback(null, updated);
+                }
+            });
     },
 
     updateProjectExpensePhotos: function (data, callback) {
@@ -146,21 +153,21 @@ var model = {
             _id: data._id,
             photos: data.old
         }, {
-            $set: {
-                "photos.$": data.photo
+                $set: {
+                    "photos.$": data.photo
 
-            }
-        }, function (err, updated) {
-            console.log(updated);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
+                }
+            }, function (err, updated) {
+                console.log(updated);
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
 
 
-                callback(null, updated);
-            }
-        });
+                    callback(null, updated);
+                }
+            });
     },
 
 

@@ -183,20 +183,20 @@ var model = {
             name: json.keyComponentsId.name,
             // institute: json.instituteId._id,        // we are not getting it don't know why
             institute: json.instituteId._id,
-            // pabno: json.pabId._id,
+            pabno: json.pabId._id,
             keycomponents: json.keyComponentsId._id,
             allocation: json.allocation,
             status: "Active",
             subStatus: "InTime",
-            // utilizationCertificates: [{
-            //     images: json.utilization.file1,
-            //     date: json.utilization.date1,
-            //     amount: json.utilization.value1
-            // }, {
-            //     images: json.utilization.file2,
-            //     date: json.utilization.date2,
-            //     amount: json.utilization.value2
-            // }],
+            utilizationCertificates: [{
+                images: json.utilization.file1,
+                date: json.utilization.date1,
+                amount: json.utilization.value1
+            }, {
+                images: json.utilization.file2,
+                date: json.utilization.date2,
+                amount: json.utilization.value2
+            }],
             fundDelay: false
         };
 
@@ -207,7 +207,7 @@ var model = {
 
             async.parallel({
                 project: function (callback) {
-                    async.each(json.projects, function (project, callback) {
+                    async.eachSeries(json.projects, function (project, callback) {
 
                         var projectObj = {
                             name: comSave.name,
@@ -230,7 +230,7 @@ var model = {
                             } else {
                                 console.log("********** Following project Data submitted **********", projectSave);
 
-                                async.each(project.projectExpenses, function (projectExp, callback) {
+                                async.eachSeries(project.projectExpenses, function (projectExp, callback) {
 
                                     var projectExpObj = {
                                         // vendor: projectExp.name, //id is there in database & we need it in transaction as well
@@ -249,7 +249,7 @@ var model = {
                                         } else {
                                             console.log("********* Following ProjectExpense Data submitted **********", projectExpenseSave);
 
-                                            async.each(projectExp.institutetoVendors, function (instituteVendor, callback) {
+                                            async.eachSeries(projectExp.institutetoVendors, function (instituteVendor, callback) {
 
                                                 var transactionObj = {
                                                     components: comSave._id,
@@ -269,28 +269,50 @@ var model = {
                                                     } else if (instToVen) {
                                                         console.log("********** Following Transaction from Institute To Vendor is submitted **********", instToVen);
 
-                                                        var projectNewObj = {};
-                                                        projectNewObj.transaction = [];
-                                                        projectNewObj._id = projectSave._id; //current project id
-                                                        projectNewObj.transaction.push(instToVen._id); // current transaction id
 
-                                                        // we have to put in into ProjectExpenses rather than Project
-                                                        Project.saveData(projectNewObj, function (err, transactionIdToProject) {
+                                                        projectExpenseSave.transaction.push(instToVen._id); // current transaction id
+                                                        projectExpenseSave.save(function (err, updateTransProjectExpens) {
                                                             if (err) {
-                                                                console.log("********** Error in Project saveData (when updating transaction in project table) **********", err);
+                                                                console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
                                                             } else {
-                                                                console.log("********** Following project Data (updating transaction in project) submitted **********", transactionIdToProject);
+                                                                console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateTransProjectExpens);
+
+                                                                comSave.amountUtilized.push(instituteVendor.amount);
+                                                                // comSave.amountUtilized.push(instToVen._id);
+                                                                comSave.save(function (err, updateAmountUtilizedComp) {
+                                                                    if (err) {
+                                                                        console.log("********** Error in ProjectExpense saveData (when  updating transaction in project table) **********", err);
+                                                                    } else {
+                                                                        console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
+                                                                    }
+                                                                    callback();
+                                                                });
                                                             }
+
                                                         });
+
+                                                        // comSave.amountUtilized.push(instituteVendor.amount);
+                                                        // // comSave.amountUtilized.push(instToVen._id);
+                                                        // comSave.save(function (err, updateAmountUtilizedComp) {
+                                                        //     if (err) {
+                                                        //         console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
+                                                        //     } else {
+                                                        //         console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
+                                                        //     }
+                                                        //     callback();
+                                                        // });
+                                                        // callback();
                                                     }
                                                 });
+
+
 
                                             }, function (err) {
                                                 if (err) {
                                                     console.log(" ######## Following error in async.each of institutetoVendors ######## ", err);
                                                 } else {
                                                     console.log(" ####### Data of institutetoVendors is stored successfully ####### ");
-                                                    // callback();
+                                                    callback();
                                                 }
                                             });
 
@@ -303,11 +325,14 @@ var model = {
                                         console.log(" ######## Following error in async.each of projectExpenses ######## ", err);
                                     } else {
                                         console.log(" ####### Data of projectExpenses is stored successfully ####### ");
-                                        // callback();
+                                        callback();
                                     }
                                 });
+                                // callback();
                             }
                         });
+
+
                     }, function (err) {
                         if (err) {
                             console.log(err);

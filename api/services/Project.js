@@ -529,7 +529,7 @@ var model = {
         //         }
         //     });
         // }
-        if (data.component) {  // In actial it is keycomponents
+        if (data.component) {  // In actual it is keycomponents
             pipeline.push({
                 $match: {
                     "components_data.keycomponents": ObjectId(data.component)
