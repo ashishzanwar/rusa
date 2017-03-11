@@ -281,9 +281,9 @@ var model = {
                                                                 // comSave.amountUtilized.push(instToVen._id);
                                                                 comSave.save(function (err, updateAmountUtilizedComp) {
                                                                     if (err) {
-                                                                        console.log("********** Error in ProjectExpense saveData (when  updating transaction in project table) **********", err);
+                                                                        console.log("********** Error in comSave save (when  updating transaction in project table) **********", err);
                                                                     } else {
-                                                                        console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
+                                                                        console.log("********** Following comSave save (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
                                                                     }
                                                                     callback();
                                                                 });
