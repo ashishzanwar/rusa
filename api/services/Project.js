@@ -91,10 +91,12 @@ var schema = new Schema({
 
     dueDate: {
         type: Date
-    }
+    },
 
-
-
+    amountOfWork: {
+        type: Number,
+        default: 10
+    },
 
 });
 

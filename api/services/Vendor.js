@@ -23,7 +23,12 @@ var schema = new Schema({
                 type: String,
                 default: ""
         },
-        pan: String,
+        pan: {
+                type: String,
+                required: true,
+                unique: true
+        },
+        tintan: String,
 
         organization: String,
 
@@ -31,8 +36,8 @@ var schema = new Schema({
                 type: Schema.Types.ObjectId,
                 ref: 'User',
                 index: true,
-        }],
-        tintan:String
+        }]
+
 });
 
 schema.plugin(deepPopulate, {
@@ -41,7 +46,6 @@ schema.plugin(deepPopulate, {
                         select: 'name _id'
                 }
         }
-
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
@@ -56,31 +60,31 @@ var model = {
                 Vendor.findOneAndUpdate({
                         _id: data._id
                 }, {
-                        $addToSet: {
-                                // $push: {
-                                users: data.user_id
-                                // }
-                        },
-                }, {
-                        upsert: true
-                }).exec(function (err, found) {
+                                $addToSet: {
+                                        // $push: {
+                                        users: data.user_id
+                                        // }
+                                },
+                        }, {
+                                upsert: true
+                        }).exec(function (err, found) {
 
-                        if (err) {
-                                // console.log(err);
-                                callback(err, null);
-                        } else {
-
-                                if (found) {
-
-                                        callback(null, found);
+                                if (err) {
+                                        // console.log(err);
+                                        callback(err, null);
                                 } else {
-                                        callback(null, {
-                                                message: "No Data Found"
-                                        });
-                                }
-                        }
 
-                })
+                                        if (found) {
+
+                                                callback(null, found);
+                                        } else {
+                                                callback(null, {
+                                                        message: "No Data Found"
+                                                });
+                                        }
+                                }
+
+                        })
         },
 
         findOneVendorUser: function (data, callback) {
@@ -113,27 +117,27 @@ var model = {
                 Vendor.findOneAndUpdate({
                         _id: data._id
                 }, {
-                        $pull: {
-                                users: data.user_id
-                        }
-                }).exec(function (err, found) {
-
-                        if (err) {
-                                // console.log(err);
-                                callback(err, null);
-                        } else {
-
-                                if (found) {
-
-                                        callback(null, found);
-                                } else {
-                                        callback(null, {
-                                                message: "No Data Found"
-                                        });
+                                $pull: {
+                                        users: data.user_id
                                 }
-                        }
+                        }).exec(function (err, found) {
 
-                })
+                                if (err) {
+                                        // console.log(err);
+                                        callback(err, null);
+                                } else {
+
+                                        if (found) {
+
+                                                callback(null, found);
+                                        } else {
+                                                callback(null, {
+                                                        message: "No Data Found"
+                                                });
+                                        }
+                                }
+
+                        })
         },
 
         updateUser: function (data, callback) {
@@ -142,21 +146,21 @@ var model = {
                         _id: data._id,
                         "users": data.user_id
                 }, {
-                        $set: {
-                                // $set: {
-                                "users.$": data.change_id
-                                // }
-                        }
-                }, function (err, data) {
-                        if (err) {
-                                console.log(err);
-                                callback(err, null);
-                        } else if (data) {
-                                callback(null, data);
-                        } else {
-                                callback(null, "Invalid data");
-                        }
-                });
+                                $set: {
+                                        // $set: {
+                                        "users.$": data.change_id
+                                        // }
+                                }
+                        }, function (err, data) {
+                                if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                } else if (data) {
+                                        callback(null, data);
+                                } else {
+                                        callback(null, "Invalid data");
+                                }
+                        });
 
         },
 

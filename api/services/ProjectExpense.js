@@ -62,27 +62,27 @@ var schema = new Schema({
     }],
 
     // extra filed added by Ashish
-    vendorName: {
-        type: Date
-    },
-    installmentNo: {
-        type: Number
-    },
-    orderIssueDate: {
-        type: Date
-    },
-    orderDueDate: {
-        type: Date
-    },
-    orderFile: {
-        type: Date
-    },
-    vendorpan: {
-        type: String
-    },
-    tintan: {
-        type: String
-    },
+    // vendorName: {
+    //     type: Date
+    // },
+    // installmentNo: {
+    //     type: Number
+    // },
+    // orderIssueDate: {
+    //     type: Date
+    // },
+    // orderDueDate: {
+    //     type: Date
+    // },
+    // orderFile: {
+    //     type: Date
+    // },
+    // vendorpan: {
+    //     type: String
+    // },
+    // tintan: {
+    //     type: String
+    // },
 
 });
 

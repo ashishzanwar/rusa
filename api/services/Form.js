@@ -174,6 +174,49 @@ var model = {
 
     },
 
+    checkVendor: function (data) {
+        console.log("##@@@@## inside checkVendor##@@@##", data);
+
+
+        Vendor.findOne({ "pan": data }, function (err, vendor) {
+            if (err) {
+                console.log("##@@@@## inside  check Vendor err ##@@@@##");
+                // callback(err, null);
+                return err;
+            } else if (_.isEmpty(vendor)) {
+                console.log("##@@@@## inside  check Vendor is empty ##@@@@##");
+                // callback(null, "No Data Found");
+                return "No Data Found";
+            } else {
+                console.log("##@@@@## inside  check success ##@@@@##", vendor);
+                // callback(null, vendor);
+                return vendor;
+            }
+
+        })
+
+        // Vendor.findOne({ "pan": data }, function (err, vendor) {
+        //     if (err) {
+        //         return handleError(err);
+        //     } else if (_.isEmpty(vendor)) {
+        //         return "No Data Found";
+        //     } else {
+        //         return vendor;
+        //     }
+
+        // })
+
+        // Vendor.find({ "pan": data }).exec(function (err, vendor) {
+        //     if (err) {
+        //         return "err";
+        //     } else if (_.isEmpty(vendor)) {
+        //         return "No Data Found";
+        //     } else {
+        //         return vendor;
+        //     }
+        // })
+    },
+
     compile: function (data, callback) {
         var json = {};
         json = data.json;
@@ -232,90 +275,124 @@ var model = {
 
                                 async.eachSeries(project.projectExpenses, function (projectExp, callback) {
 
-                                    var projectExpObj = {
-                                        // vendor: projectExp.name, //id is there in database & we need it in transaction as well
-                                        project: projectSave._id,
-                                        allocatedAmount: projectExp.amount,
-                                        vendorpan: projectExp.vendorpan,
-                                        tintan: projectExp.tintan,
-                                        orderIssueDate: projectExp.orderIssueDate,
-                                        orderDueDate: projectExp.orderDueDate,
-                                        // orderFile: projectExp.orderFile
+                                    // check whether vendor is already available or not on the base of PAN
+
+                                    var vendorObject = {};
+                                    // var vendorCheck = Form.checkVendor(projectExp.vendorpan);
+                                    // console.log("@@@@@@@@@@ vendorCheck 1st console @@@@@@@@@", Form.checkVendor(projectExp.vendorpan));
+
+                                    // if (vendorCheck == "No Data Found") {
+                                    //     vendorObject = {
+                                    //         name: projectExp.name,
+                                    //         pan: projectExp.vendorpan,
+                                    //         tintan: projectExp.tintan
+                                    //     };
+                                    // } else if (vendorCheck) {
+                                    vendorObject = {
+                                        // _id: vendorCheck._id,
+                                        name: projectExp.name,
+                                        pan: projectExp.vendorpan,
+                                        tintan: projectExp.tintan
                                     };
+                                    // }
 
-                                    ProjectExpense.saveData(projectExpObj, function (err, projectExpenseSave) {
+                                    // console.log("@@@@@@@@@@@@@@@@@@ vendorCheck @@@@@@@@@@@@@@@@", vendorObject);
+
+
+                                    Vendor.saveData(vendorObject, function (err, vendorSave) {
                                         if (err) {
-                                            console.log("********** Error in ProjectExpense saveData **********", err);
+                                            console.log("********** Error in Vendor saveData **********", err);
                                         } else {
-                                            console.log("********* Following ProjectExpense Data submitted **********", projectExpenseSave);
+                                            console.log("********** Following Vendor Data submitted **********", vendorSave);
 
-                                            async.eachSeries(projectExp.institutetoVendors, function (instituteVendor, callback) {
+                                            var projectExpObj = {
+                                                // vendor: projectExp.name, //id is there in database & we need it in transaction as well
+                                                vendor: vendorSave._id,
+                                                project: projectSave._id,
+                                                allocatedAmount: projectExp.amount,
+                                                orderIssueDate: projectExp.orderIssueDate,
+                                                orderDueDate: projectExp.orderDueDate
+                                                // vendorpan: projectExp.vendorpan,
+                                                // tintan: projectExp.tintan,
 
-                                                var transactionObj = {
-                                                    components: comSave._id,
-                                                    name: projectExpenseSave.vendorName,
-                                                    installment: instituteVendor.installmentNo,
-                                                    amount: instituteVendor.amount,
-                                                    type: "Institute To Vendor",
-                                                    remarks: instituteVendor.remarks,
-                                                    file: instituteVendor.file,
-                                                    transactionSent: instituteVendor.transactionSent,
-                                                    transactionReceived: instituteVendor.transactionRecieved,
-                                                };
+                                                // orderFile: projectExp.orderFile
+                                            };
 
-                                                Transaction.saveData(transactionObj, function (err, instToVen) {
-                                                    if (err) {
-                                                        console.log("********** Error in Transaction saveData **********", err);
-                                                    } else if (instToVen) {
-                                                        console.log("********** Following Transaction from Institute To Vendor is submitted **********", instToVen);
+                                            ProjectExpense.saveData(projectExpObj, function (err, projectExpenseSave) {
+                                                if (err) {
+                                                    console.log("********** Error in ProjectExpense saveData **********", err);
+                                                } else {
+                                                    console.log("********* Following ProjectExpense Data submitted **********", projectExpenseSave);
 
+                                                    async.eachSeries(projectExp.institutetoVendors, function (instituteVendor, callback) {
 
-                                                        projectExpenseSave.transaction.push(instToVen._id); // current transaction id
-                                                        projectExpenseSave.save(function (err, updateTransProjectExpens) {
+                                                        var transactionObj = {
+                                                            components: comSave._id,
+                                                            name: projectExpenseSave.vendorName,
+                                                            installment: instituteVendor.installmentNo,
+                                                            amount: instituteVendor.amount,
+                                                            type: "Institute To Vendor",
+                                                            remarks: instituteVendor.remarks,
+                                                            file: instituteVendor.file,
+                                                            transactionSent: instituteVendor.transactionSent,
+                                                            transactionReceived: instituteVendor.transactionRecieved,
+                                                        };
+
+                                                        Transaction.saveData(transactionObj, function (err, instToVen) {
                                                             if (err) {
-                                                                console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
-                                                            } else {
-                                                                console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateTransProjectExpens);
+                                                                console.log("********** Error in Transaction saveData **********", err);
+                                                            } else if (instToVen) {
+                                                                console.log("********** Following Transaction from Institute To Vendor is submitted **********", instToVen);
 
-                                                                comSave.amountUtilized.push(instituteVendor.amount);
-                                                                // comSave.amountUtilized.push(instToVen._id);
-                                                                comSave.save(function (err, updateAmountUtilizedComp) {
+
+                                                                projectExpenseSave.transaction.push(instToVen._id); // current transaction id
+                                                                projectExpenseSave.save(function (err, updateTransProjectExpens) {
                                                                     if (err) {
-                                                                        console.log("********** Error in comSave save (when  updating transaction in project table) **********", err);
+                                                                        console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
                                                                     } else {
-                                                                        console.log("********** Following comSave save (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
-                                                                    }
-                                                                    callback();
-                                                                });
-                                                            }
+                                                                        console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateTransProjectExpens);
 
+                                                                        comSave.amountUtilized.push(instituteVendor.amount);
+                                                                        // comSave.amountUtilized.push(instToVen._id);
+                                                                        comSave.save(function (err, updateAmountUtilizedComp) {
+                                                                            if (err) {
+                                                                                console.log("********** Error in comSave save (when  updating transaction in project table) **********", err);
+                                                                            } else {
+                                                                                console.log("********** Following comSave save (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
+                                                                            }
+                                                                            callback();
+                                                                        });
+                                                                    }
+
+                                                                });
+
+                                                                // comSave.amountUtilized.push(instituteVendor.amount);
+                                                                // // comSave.amountUtilized.push(instToVen._id);
+                                                                // comSave.save(function (err, updateAmountUtilizedComp) {
+                                                                //     if (err) {
+                                                                //         console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
+                                                                //     } else {
+                                                                //         console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
+                                                                //     }
+                                                                //     callback();
+                                                                // });
+                                                                // callback();
+                                                            }
                                                         });
 
-                                                        // comSave.amountUtilized.push(instituteVendor.amount);
-                                                        // // comSave.amountUtilized.push(instToVen._id);
-                                                        // comSave.save(function (err, updateAmountUtilizedComp) {
-                                                        //     if (err) {
-                                                        //         console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
-                                                        //     } else {
-                                                        //         console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
-                                                        //     }
-                                                        //     callback();
-                                                        // });
-                                                        // callback();
-                                                    }
-                                                });
 
 
+                                                    }, function (err) {
+                                                        if (err) {
+                                                            console.log(" ######## Following error in async.each of institutetoVendors ######## ", err);
+                                                        } else {
+                                                            console.log(" ####### Data of institutetoVendors is stored successfully ####### ");
+                                                            callback();
+                                                        }
+                                                    });
 
-                                            }, function (err) {
-                                                if (err) {
-                                                    console.log(" ######## Following error in async.each of institutetoVendors ######## ", err);
-                                                } else {
-                                                    console.log(" ####### Data of institutetoVendors is stored successfully ####### ");
-                                                    callback();
                                                 }
                                             });
-
                                         }
                                     });
 
@@ -365,6 +442,7 @@ var model = {
                             } else if (instToVen) {
                                 console.log('####  stateToInstitute data stored successfully ####');
                                 console.log('####  instituteToVendor data ####', instToVen);
+                                callback();
                             }
                         });
                     }, function (err) {
@@ -373,6 +451,7 @@ var model = {
                             console.log('#### error inside asynch.each of stateToInstitute ####', err);
                         } else {
                             console.log('#### Done with stateToInstitute data ####');
+                            callback();
                         }
                     });
                 },
@@ -397,6 +476,7 @@ var model = {
                             } else if (cenToState) {
                                 console.log('#### centerToState expense data stored successfully ####');
                                 console.log('####  instituteToVendor data ####', cenToState);
+                                callback();
                             }
                         });
                     }, function (err) {
@@ -405,7 +485,7 @@ var model = {
                             console.log('#### error inside asynch.each of centerToState ####');
                         } else {
                             console.log('#### Done with centerToState data ####');
-
+                            callback();
                         }
                     });
                 }
