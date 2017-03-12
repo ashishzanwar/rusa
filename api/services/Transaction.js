@@ -607,6 +607,7 @@ var model = {
 
     },
 
+    // mobile application API for Component --> fundflow screen
     componentFundflowPipeLine: function (data) {
 
         var FundflowPipeLine = [
@@ -900,8 +901,8 @@ var model = {
         }, callback);
     },
 
-    componentProjects: function (data, callback) {
-    },
+
+
 
     componentMedia: function (data, callback) {
     }

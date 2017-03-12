@@ -170,7 +170,6 @@ var model = {
             });
     },
 
-
     findOneProjectExpense: function (data, callback) {
 
 
@@ -270,6 +269,208 @@ var model = {
             }
         });
 
-    }
+    },
+
+    // mobile application API for Component --> projects screen
+    componentProjects: function (data, callback) {
+        ProjectExpense.aggregate(
+
+            // Pipeline
+            [
+                // Stage 1
+                {
+                    $lookup: {
+                        "from": "projects",
+                        "localField": "project",
+                        "foreignField": "_id",
+                        "as": "projects_data"
+                    }
+                },
+
+                // Stage 2
+                {
+                    $unwind: {
+                        path: "$projects_data",
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                },
+
+                // Stage 3
+                {
+                    $lookup: {
+                        "from": "components",
+                        "localField": "projects_data.components",
+                        "foreignField": "_id",
+                        "as": "components_data"
+                    }
+                },
+
+                // Stage 4
+                {
+                    $unwind: {
+                        path: "$components_data",
+                        preserveNullAndEmptyArrays: false // optional
+                    }
+                },
+
+                // Stage 5
+                {
+                    $match: {
+                        "components_data._id": ObjectId(data.component)
+                    }
+                },
+
+                // Stage 6
+                {
+                    $lookup: {
+                        "from": "vendors",
+                        "localField": "vendor",
+                        "foreignField": "_id",
+                        "as": "vendor_data"
+                    }
+                },
+
+                // Stage 7
+                {
+                    $unwind: {
+                        path: "$vendor_data",
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                },
+
+                // Stage 8
+                {
+                    $lookup: {
+                        "from": "transactions",
+                        "localField": "transaction",
+                        "foreignField": "_id",
+                        "as": "transaction_data"
+                    }
+                },
+
+                // Stage 9
+                {
+                    $unwind: {
+                        path: "$transaction_data",
+                        preserveNullAndEmptyArrays: true // optional
+                    }
+                },
+
+                // Stage 10
+                {
+                    $lookup: {
+                        "from": "projecttypes",
+                        "localField": "projects_data.projectType",
+                        "foreignField": "_id",
+                        "as": "projectType_data"
+                    }
+                },
+
+                // Stage 11
+                {
+                    $unwind: {
+                        path: "$projectType_data",
+                        preserveNullAndEmptyArrays: false // optional
+                    }
+                },
+
+                // Stage 12
+                {
+                    $lookup: {
+                        "from": "assettypes",
+                        "localField": "projects_data.assetType",
+                        "foreignField": "_id",
+                        "as": "assetType_data"
+                    }
+                },
+
+                // Stage 13
+                {
+                    $unwind: {
+                        path: "$assetType_data",
+                        preserveNullAndEmptyArrays: false // optional
+                    }
+                },
+
+                // Stage 14
+                {
+                    $group: {
+                        "_id": {
+                            projectExpense: "$_id",
+                            componentName: "$components_data.name",
+                            projectStatus: "$projects_data.status",
+                            projectType: "$projectType_data.name",
+                            assetType: "$assetType_data.name",
+                            projectId: "$project",
+                            vendorId: "$vendor_data._id",
+                            dueDate: "$projects_data.dueDate",
+                            totalValue: "$projects_data.valueOfProject",
+                            amountOfWork: "$projects_data.amountOfWork",
+                            vendorName: "$vendor_data.name",
+                            vendorAllocation: "$allocatedAmount",
+                        },
+                        vendorReleased: {
+                            $sum: "$transaction_data.amount"
+                        }
+                    }
+                },
+
+            ], function (err, compProjects) {
+                if (err) {
+                    callback(null, err);
+                } else if (_.isEmpty(compProjects)) {
+                    callback(null, "No Data Found");
+                } else {
+                    var newData = _.map(compProjects, function (n) {
+                        n._id.vendorReleased = n.vendorReleased;
+                        return n._id;
+                    });
+                    newData = _.groupBy(newData, "projectId");
+                    newData = _.map(newData, function (n) {
+                        var obj = _.groupBy(n, "vendorId");
+                        return obj;
+                    });
+                    newData = _.map(newData, function (projectObj) {
+                        var projectDetails = {};
+                        var vendors = [];
+                        _.each(projectObj, function (projectArr) {
+                            var single = projectArr[0];
+                            projectDetails = single;
+                            vendors.push(_.pick(single, ["vendorId", "vendorName", "vendorAllocation", "vendorReleased"]));
+                            projectDetails = _.omit(projectDetails, ["vendorId", "vendorName", "vendorAllocation", "vendorReleased"]);
+                        });
+                        projectDetails.vendor = vendors;
+                        return projectDetails;
+                    });
+
+                    callback(null, newData);
+                }
+            });
+
+    },
 };
 module.exports = _.assign(module.exports, exports, model);
+
+
+
+
+// console.log("i = ", i);
+// console.log("j = ", j);
+// console.log("----------------");
+// console.log("    project._id.projectId", project._id.projectId);
+// console.log("projectCopy._id.projectId", projectCopy._id.projectId);
+// console.log("    project._id.vendorName", project._id.vendorName);
+// console.log("projectCopy._id.vendorName", projectCopy._id.vendorName);
+// console.log("    project._id.vendorAllocation", project._id.vendorAllocation);
+// console.log("projectCopy._id.vendorAllocation", projectCopy._id.vendorAllocation);
+
+
+
+// console.log("####################################", "match found", "##########################################", projectCopy);
+
+// console.log("    project._id.projectId", project._id.projectId);
+// console.log("projectCopy._id.projectId", projectCopy._id.projectId);
+// console.log("---------------------------------------------------");
+
+// console.log("#########################################", "match found", "##################################################");
+// console.log("--------------------------------------------------------------------------------------------------------------");

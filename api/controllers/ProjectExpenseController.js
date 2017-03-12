@@ -40,7 +40,6 @@ var controller = {
         }
     },
 
-
     removeProjectExpensePhotos: function (req, res) {
         if (req.body) {
             ProjectExpense.removeProjectExpensePhotos(req.body, res.callback);
@@ -58,6 +57,20 @@ var controller = {
         // console.log("#############$$$$$ inside getAllprojectOfComponent controller  $$$$$#############");
         if (req.body) {
             ProjectExpense.getAllprojectOfComponent(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+
+    // mobile application API for Component --> projects screen
+    componentProjects: function (req, res) {
+        if (req.body) {
+            ProjectExpense.componentProjects(req.body, res.callback);
         } else {
             res.json({
                 value: false,
