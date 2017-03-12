@@ -253,7 +253,7 @@ var model = {
                     async.eachSeries(json.projects, function (project, callback) {
 
                         var projectObj = {
-                            name: comSave.name,
+                            // name: comSave.name,
                             components: comSave._id, //not available in json
                             projectType: project.projectType,
                             assetType: project.assetType,
@@ -264,7 +264,8 @@ var model = {
                                 photo: project.photo2
                             }],
                             status: "Active",
-                            dueDate: project.dueDate
+                            dueDate: project.dueDate,
+                            remarks: project.remarks
                         };
 
                         Project.saveData(projectObj, function (err, projectSave) {

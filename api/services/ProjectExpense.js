@@ -398,12 +398,14 @@ var model = {
                         "_id": {
                             projectExpense: "$_id",
                             componentName: "$components_data.name",
+                            componentAllocation: "$components_data.allocation",
                             projectStatus: "$projects_data.status",
                             projectType: "$projectType_data.name",
                             assetType: "$assetType_data.name",
                             projectId: "$project",
                             vendorId: "$vendor_data._id",
                             dueDate: "$projects_data.dueDate",
+                            projectRemarks: "$projects_data.remarks",
                             totalValue: "$projects_data.valueOfProject",
                             amountOfWork: "$projects_data.amountOfWork",
                             vendorName: "$vendor_data.name",
@@ -442,6 +444,26 @@ var model = {
                         projectDetails.vendor = vendors;
                         return projectDetails;
                     });
+
+                    var releasedAmountPerProject = 0;
+
+                    _.each(newData, function (data) {
+                        _.each(data.vendor, function (ven) {
+                            releasedAmountPerProject = releasedAmountPerProject + ven.vendorReleased;
+                        });
+                        data.totalAmountReleased = releasedAmountPerProject;
+                        releasedAmountPerProject = 0;
+                    });
+
+                    // in case of --> calculate component release & utilize % and keep it into separate object & remove repeated fields
+
+                    // var compoPro = {};
+                    // compoPro.Projects = [];
+                    // compoPro.CompDetail = {
+                    //     componentName: newData[0].componentName,
+                    //     componentAllocation: newData[0].componentAllocation
+                    // };
+                    // compoPro.Projects = newData;
 
                     callback(null, newData);
                 }

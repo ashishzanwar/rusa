@@ -85,8 +85,6 @@ var schema = new Schema({
             type: String
         }
     }
-
-
     ],
 
     dueDate: {
@@ -97,6 +95,10 @@ var schema = new Schema({
         type: Number,
         default: 10
     },
+
+    remarks: {
+        type: String
+    }
 
 });
 
