@@ -69,6 +69,9 @@ schema.plugin(deepPopulate, {
         },
         'users': {
             select: 'name _id'
+        },
+        'vendor': {
+            select: ""
         }
     }
 });
@@ -76,7 +79,7 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Institute', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'project users state Project', 'project users state Project'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'project users state Project vendor', 'project users state Project vendor'));
 var model = {
     findOneInstituteUser: function (data, callback) {
 

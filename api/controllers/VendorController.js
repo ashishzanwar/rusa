@@ -53,7 +53,7 @@ var controller = {
     },
 
 
-    // add vendors 
+    // add vendors from application
     addVendor: function (req, res) {
         if (req.body) {
             Vendor.addVendor(req.body, res.callback);
@@ -67,9 +67,9 @@ var controller = {
         }
     },
 
-    // get all vendor list for navigation menu & project--> add expense --> select vendor
+    // get all vendor list for vendor list in navigation menu & project--> add expense --> select vendor
     // use same API for both 
-    getAllVendorList: function (req, re) {
+    getAllVendorList: function (req, res) {
         if (req.body) {
             Vendor.getAllVendorList(req.body, res.callback);
         } else {
@@ -80,21 +80,7 @@ var controller = {
                 }
             });
         }
-    }
-
-    // get all vendor belongings to a user mobile API component--> projects --> project --> addexpense --> select vendor
-    // ProjectVendors: function (req, res) {
-    //     if (req.body) {
-    //         Vendor.ProjectVendors(req.body, res.callback);
-    //     } else {
-    //         res.json({
-    //             value: false,
-    //             data: {
-    //                 message: "Invalid Request"
-    //             }
-    //         });
-    //     }
-    // }
+    },
 
 };
 module.exports = _.assign(module.exports, controller);

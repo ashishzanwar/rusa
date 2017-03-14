@@ -252,33 +252,29 @@ var model = {
                 })
         },
 
+        // data --> type (state,institute), type_id
+        // make sure type is in proper format State & Institute
         getAllVendorList: function (data, callback) {
-                //
+                console.log("data type:", data);
+
+                global[data.type].findOne({
+                        _id: data.type_id
+                }).populate("vendor").exec(function (err, found) {
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+                                if (found) {
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+                })
+
         }
-
-
-
-        // get all vendor belongings to a user
-        // ProjectVendors: function (data, callback) {
-        //         // operation
-        //         Vendor.find({
-        //                 user: data.userId // verify it
-        //         }).select("vendor_name _id").exec(function (err, ProVen) {
-        //                 if (err) {
-        //                         callback(err, null);
-        //                 } else {
-        //                         if (ProVen) {
-        //                                 callback(null, ProVen);
-        //                         } else {
-        //                                 callback(null, {
-        //                                         message: "No Data Found"
-        //                                 });
-        //                         }
-        //                 }
-        //         })
-        // }
-
-
 
 };
 module.exports = _.assign(module.exports, exports, model);

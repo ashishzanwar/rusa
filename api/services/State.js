@@ -57,7 +57,7 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('State', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'users Project _id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status institute.name', 'users Project _id project_approved_board_no title component centerPercent statePercent institute.name totalAmount institute subStatus status'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'users Project _id project_approved_board_no title component centerPercent statePercent totalAmount institute subStatus status institute.name vendor', 'users Project _id project_approved_board_no title component centerPercent statePercent institute.name totalAmount institute subStatus status vendor'));
 var model = {
 
         findOneStateUser: function (data, callback) {
@@ -255,7 +255,7 @@ var model = {
         },
 
 
-        // mobile app api 
+        // mobile app api navigation menu-->get all vendors of state
         addStateVendor: function (data, callback) {
                 State.findOne({
                         _id: data.state_id

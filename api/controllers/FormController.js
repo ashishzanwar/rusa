@@ -56,11 +56,31 @@ var controller = {
         });
     },
 
+
+
+    // to change the status of all form
+    changeStatusOfAllForm: function (req, res) {
+        Form.update({
+            status: "Moderation Completed"
+        }, {
+                status: "To Be Moderated"
+            }, { multi: true }).exec(function (err, data) {
+                if (err) {
+                    res.callback(err);
+                } else if (_.isEmpty(data)) {
+                    res.callback(null, "No Data Found");
+                } else {
+                    res.callback(null, data);
+                }
+
+            });
+    },
+
     // checkVendor: function (req, res) {
     //     if (req.body) {
     //         Form.checkVendor(req.body, res.callback);
     //     } else {
-    //         res.json({
+    //         res.json({ 
     //             value: false,
     //             data: {
     //                 message: "Invalid Request"
