@@ -83,8 +83,23 @@ var controller = {
 
     // mobile API component--> projects --> Project --> update --> status
     changeStatus: function (req, res) {
+        console.log("data", req.body);
         if (req.body) {
-            Vendor.changeStatus(req.body, res.callback);
+            Project.changeStatus(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+
+    updateProject: function (req, res) {
+        console.log("data", req);
+        if (req.body) {
+            Project.updateProject(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -94,6 +109,7 @@ var controller = {
             });
         }
     }
+
 
 };
 

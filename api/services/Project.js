@@ -56,7 +56,7 @@ var schema = new Schema({
 
     status: {
         type: String,
-        enum: ["Active", "Complete", "Cancelled", "OnHold"]
+        enum: ["Active", "Completed", "Cancelled", "OnHold"]
     },
     notes: [{
 
@@ -875,19 +875,47 @@ var model = {
     },
 
     // mobile API component--> projects --> Project --> update --> status
+    // data --> _id (project_id), status(Completed)
     changeStatus: function (data, callback) {
         // operation
+        console.log("inside data", data);
 
-        proObj = {
-            project_id: data.project_id,
-            status: data.status // completed
+        var proObj = {
+            "_id": data.project_id,
+            "status": data.status // Completed
         };
 
-        Project.saveData(proObj, function (err, projectExpenseSave) {
+        Project.saveData(proObj, function (err, proChangedStatus) {
             if (err) {
-
+                callback(err, null);
+            } else if (_.isEmpty(proChangedStatus)) {
+                callback(null, "No Data Found");
             } else {
+                callback(null, proChangedStatus);
+            }
+        });
+    },
 
+    //mobile api for compnent --> project --> edit project details
+    updateProject: function (data, callback) {
+        console.log("inside data", data);
+        var proObj = {
+            "_id": data.project_id,
+            "components": data.components,
+            "assetType": data.assetType,
+            "projectType": data.projectType,
+            "valueOfProject": data.valueOfProject,
+            "dueDate": data.dueDate,
+            "amountOfWork": data.amountOfWork
+        }
+
+        Project.saveData(proObj, function (err, proUpdate) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(proUpdate)) {
+                callback(null, "No Data Found");
+            } else {
+                callback(null, proUpdate);
             }
         });
     }

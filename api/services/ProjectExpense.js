@@ -122,6 +122,7 @@ var model = {
 
             })
     },
+
     removeProjectExpensePhotos: function (data, callback) {
 
         console.log("DATA", data);
