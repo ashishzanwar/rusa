@@ -30,7 +30,12 @@ var schema = new Schema({
         },
         stateShare: {
                 type: Number
-        }
+        },
+        vendor: [{
+                type: Schema.Types.ObjectId,
+                ref: 'Vendor',
+                index: true
+        }]
 
 });
 
@@ -42,6 +47,9 @@ schema.plugin(deepPopulate, {
                 },
                 'users': {
                         select: 'name _id'
+                },
+                'vendor': {
+                        select: ''
                 }
         }
 });
@@ -77,7 +85,6 @@ var model = {
                 })
         },
 
-
         findOneStateMod: function (data, callback) {
 
 
@@ -102,8 +109,6 @@ var model = {
 
                 })
         },
-
-
 
         addUserToState: function (data, callback) {
 
@@ -138,8 +143,6 @@ var model = {
                         })
         },
 
-
-
         removeUserFromState: function (data, callback) {
 
                 console.log(data);
@@ -169,8 +172,6 @@ var model = {
                         })
         },
 
-
-
         findOneState: function (data, callback) {
                 State.findOne({
                         _id: data._id
@@ -190,6 +191,7 @@ var model = {
                         }
                 })
         },
+
         findAllState: function (data, callback) {
                 State.find().select("name _id centerShare stateShare").exec(function (err, found) {
                         if (err) {
@@ -207,6 +209,7 @@ var model = {
                         }
                 })
         },
+
         findOneSelectedState: function (data, callback) {
                 State.findOne({
                         _id: data.state
@@ -226,7 +229,6 @@ var model = {
                         }
                 })
         },
-
 
         updateUser: function (data, callback) {
                 console.log("DATA", data);
@@ -250,6 +252,53 @@ var model = {
                                 }
                         });
 
+        },
+
+
+        // mobile app api 
+        addStateVendor: function (data, callback) {
+                State.findOne({
+                        _id: data.state_id
+                }).populate("vendor").exec(function (err, found) {
+
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+
+                                if (found) {
+
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+                })
+        },
+
+        // wohlig.io/api/state/getStateVendors
+        // mobile app api navigation menu --> add vendor 
+        // data --> state_id
+        getStateVendors: function (data, callback) {
+                State.findOne({
+                        _id: data.state_id
+                }).select("name vendor").exec(function (err, found) {
+                        if (err) {
+                                // console.log(err);
+                                callback(err, null);
+                        } else {
+                                if (found) {
+                                        console.log("IN  STATE FOUND", found);
+                                        callback(null, found);
+                                } else {
+                                        callback(null, {
+                                                message: "No Data Found"
+                                        });
+                                }
+                        }
+                })
         },
 
 

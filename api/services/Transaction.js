@@ -902,8 +902,6 @@ var model = {
     },
 
 
-
-
     componentMedia: function (data, callback) {
     }
 };

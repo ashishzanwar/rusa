@@ -470,6 +470,52 @@ var model = {
             });
 
     },
+
+    // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
+    vendorAllocation: function (data, callback) {
+        // operation
+
+        ProjectExpense.findOneAndUpdate({ project: data.project_id, vendor: data.vendor_id }, { allocatedAmount: data.allocation }).exec(function (err, mydata) {
+            if (err) {
+                console.log("inside vendorAllocation err");
+            } else {
+                console.log("inside vendorAllocation success", mydata);
+                callback(null, mydata);
+            }
+        });
+
+
+
+        // console.log("mydata", mydata);
+        // if (err) {
+        //     console.log("inside vendorAllocation err");
+        // } else {
+        //     console.log("inside vendorAllocation success", mydata);
+
+        //     proExpObj = {
+        //         _id: mydata._id,
+        //         project: data.project_id,
+        //         vendor: data.vendor_id,
+        //         allocatedAmount: data.allocation
+        //     };
+
+        //     ProjectExpense.update(proExpObj, function (err, projectExpenseSave) {
+        //         if (err) {
+        //             console.log("inside vendorAllocation err");
+        //         } else {
+        //             console.log("inside vendorAllocation success");
+        //         }
+        //     });
+        // }
+
+        // });
+
+
+
+
+
+
+    }
 };
 module.exports = _.assign(module.exports, exports, model);
 

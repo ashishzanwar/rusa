@@ -19,6 +19,7 @@ var schema = new Schema({
         index: true,
     }],
 
+
 });
 
 schema.plugin(deepPopulate, {});
@@ -65,31 +66,31 @@ var model = {
         Center.findOneAndUpdate({
             _id: data._id
         }, {
-            $addToSet: {
-                // $push: {
-                users: data.user_id
-                // }
-            },
-        }, {
-            upsert: true
-        }).exec(function (err, found) {
+                $addToSet: {
+                    // $push: {
+                    users: data.user_id
+                    // }
+                },
+            }, {
+                upsert: true
+            }).exec(function (err, found) {
 
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
-
-                if (found) {
-
-                    callback(null, found);
+                if (err) {
+                    // console.log(err);
+                    callback(err, null);
                 } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
-                }
-            }
 
-        })
+                    if (found) {
+
+                        callback(null, found);
+                    } else {
+                        callback(null, {
+                            message: "No Data Found"
+                        });
+                    }
+                }
+
+            })
     },
 
     removeUserFromCenter: function (data, callback) {
@@ -98,24 +99,24 @@ var model = {
         Center.findOneAndUpdate({
             _id: data._id
         }, {
-            $pull: {
-                users: data.user_id
-            }
-        }).exec(function (err, found) {
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
-                if (found) {
-                    callback(null, found);
-                } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
+                $pull: {
+                    users: data.user_id
                 }
-            }
+            }).exec(function (err, found) {
+                if (err) {
+                    // console.log(err);
+                    callback(err, null);
+                } else {
+                    if (found) {
+                        callback(null, found);
+                    } else {
+                        callback(null, {
+                            message: "No Data Found"
+                        });
+                    }
+                }
 
-        })
+            })
     },
 
 
@@ -149,21 +150,21 @@ var model = {
             _id: data._id,
             "users": data.user_id
         }, {
-            $set: {
-                // $set: {
-                "users.$": data.change_id
-                // }
-            }
-        }, function (err, data) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else if (data) {
-                callback(null, data);
-            } else {
-                callback(null, "Invalid data");
-            }
-        });
+                $set: {
+                    // $set: {
+                    "users.$": data.change_id
+                    // }
+                }
+            }, function (err, data) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else if (data) {
+                    callback(null, data);
+                } else {
+                    callback(null, "Invalid data");
+                }
+            });
 
     },
 

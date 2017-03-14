@@ -81,6 +81,20 @@ var controller = {
         }
     },
 
+    // mobile API component--> projects --> Project --> update --> status
+    changeStatus: function (req, res) {
+        if (req.body) {
+            Vendor.changeStatus(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    }
+
 };
 
 module.exports = _.assign(module.exports, controller);

@@ -145,5 +145,21 @@ var controller = {
         }
     },
 
+
+    // wohlig.io/api/institute/getInstituteVendors
+    // mobile app api navigation menu --> add vendor 
+    getInstituteVendors: function (req, res) {
+        if (req.body) {
+            Institute.getInstituteVendors(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            })
+        }
+    }
+
 };
 module.exports = _.assign(module.exports, controller);

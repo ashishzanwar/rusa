@@ -11,7 +11,7 @@ autoIncrement.initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    name: String,
+    // name: String,
     components: {
         type: Schema.Types.ObjectId,
         ref: 'Components',
@@ -29,6 +29,15 @@ var schema = new Schema({
     },
     valueOfProject: {
         type: Number
+    },
+    amountOfWork: {
+        type: Number
+    },
+    dueDate: {
+        type: Date
+    },
+    remarks: {
+        type: String
     },
     transaction: [{
         type: Schema.Types.ObjectId,
@@ -87,18 +96,9 @@ var schema = new Schema({
     }
     ],
 
-    dueDate: {
-        type: Date
-    },
 
-    amountOfWork: {
-        type: Number,
-        default: 10
-    },
 
-    remarks: {
-        type: String
-    }
+
 
 });
 
@@ -873,6 +873,24 @@ var model = {
         }, callback);
 
     },
+
+    // mobile API component--> projects --> Project --> update --> status
+    changeStatus: function (data, callback) {
+        // operation
+
+        proObj = {
+            project_id: data.project_id,
+            status: data.status // completed
+        };
+
+        Project.saveData(proObj, function (err, projectExpenseSave) {
+            if (err) {
+
+            } else {
+
+            }
+        });
+    }
 
 
 };

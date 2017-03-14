@@ -79,6 +79,20 @@ var controller = {
                 }
             });
         }
+    },
+
+    // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
+    vendorAllocation: function (req, res) {
+        if (req.body) {
+            ProjectExpense.vendorAllocation(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
     }
 
 };

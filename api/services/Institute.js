@@ -44,6 +44,11 @@ var schema = new Schema({
             "Autonomous Colleges"
         ]
     },
+    vendor: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Vendor',
+        index: true
+    }]
 
 });
 
@@ -151,7 +156,6 @@ var model = {
 
     },
 
-
     addUserToInstitute: function (data, callback) {
 
         console.log(data);
@@ -184,8 +188,6 @@ var model = {
 
             })
     },
-
-
 
     findOneInstitute: function (data, callback) {
 
@@ -304,7 +306,6 @@ var model = {
             });
     },
 
-
     findAllInstitute: function (data, callback) {
         Institute.find({
             district: data.district,
@@ -326,7 +327,6 @@ var model = {
         })
     },
 
-
     findAllInstituteDashBoard: function (data, callback) {
         Institute.find().select("name _id").exec(function (err, found) {
             if (err) {
@@ -344,6 +344,47 @@ var model = {
             }
         })
     },
+
+
+    // wohlig.io/api/institute/getInstituteVendors
+    // mobile app api navigation menu --> add vendor 
+    // data --> institute_id
+    getInstituteVendors: function (data, callback) {
+        Institute.findOne({
+            _id: data.institute_id
+        }).select("name vendor").exec(function (err, found) {
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (found) {
+                    console.log("IN  STATE FOUND", found);
+                    callback(null, found);
+                } else {
+                    callback(null, {
+                        message: "No Data Found"
+                    });
+                }
+            }
+        })
+    },
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     //  findAllInstituteDashBoard: function (data, callback) {
     //     Institute.find({

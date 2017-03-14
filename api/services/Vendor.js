@@ -30,13 +30,15 @@ var schema = new Schema({
         },
         tintan: String,
 
-        organization: String,
+        organization: {
+                type: String
+        },
 
-        users: [{
-                type: Schema.Types.ObjectId,
-                ref: 'User',
-                index: true,
-        }]
+        // users: [{
+        //         type: Schema.Types.ObjectId,
+        //         ref: 'User',
+        //         index: true,
+        // }]
 
 });
 
@@ -163,6 +165,120 @@ var model = {
                         });
 
         },
+
+
+        //called from addVendor
+        addVendorToState: function (data, callback) {
+                State.findOneAndUpdate({ _id: data.added_by_id }, { $push: { vendor: data.vendor } }).exec(function (err, mydata) {
+                        if (err) {
+                                console.log("inside addVendorToState err");
+                                callback(null, err);
+                        } else {
+                                console.log("inside addVendorToState success", mydata);
+                                callback(null, mydata);
+                        }
+                });
+        },
+
+        //called from addVendor
+        addVendorToInstitute: function (data, callback) {
+                Institute.findOneAndUpdate({ _id: data.added_by_id }, { $push: { vendor: data.vendor } }).exec(function (err, mydata) {
+                        if (err) {
+                                console.log("inside addVendorToInstitute err");
+                        } else {
+                                console.log("inside addVendorToInstitute success", mydata);
+                                callback(null, mydata);
+                        }
+                });
+        },
+
+        // data --> compnay_name, contact_person, pan_no, mobile, email, added_by(state,institute), added_by_id
+        addVendor: function (data, callback) {
+                // console.log("inside addVEndor & data is :", data);
+                Vendor.find({
+                        pan: data.pan_no
+                }).select("_id").exec(function (err, ProVen) {
+
+                        console.log("ProVen 1st  :", ProVen);
+
+                        if (err) {
+                                callback(err, null);
+                        } else {
+                                // if ProVen is empty/null means vendor is not there in vendor table, then add it in vendor table & update vendor id in state or Institute table as well 
+                                if (_.isEmpty(ProVen)) {
+                                        console.log("inside empty proVen");
+                                        // save it 
+                                        vendorObj = {
+                                                name: data.contact_person,
+                                                username: data.contact_person,
+                                                email: data.email,
+                                                mobile: data.mobile,
+                                                pan: data.pan_no,
+                                                organization: data.compnay_name
+                                        }
+                                        Vendor.saveData(vendorObj, function (err, getAddedVendor) {
+                                                console.log("inside vendor saveData getAddedVendor", getAddedVendor);
+                                                if (err) {
+                                                        callback(null, err);
+                                                } else {
+                                                        if (_.isEmpty(getAddedVendor)) {
+                                                                callback(null, "No Data Found");
+                                                        } else {
+                                                                data.vendor = getAddedVendor._id;
+
+                                                                // update getAddedVendor._id into state or intitute
+                                                                if (data.added_by == "State") {
+                                                                        Vendor.addVendorToState(data, callback);
+                                                                } else if (data.added_by == "Institute") {
+                                                                        Vendor.addVendorToInstitute(data, callback);
+                                                                }
+                                                        }
+                                                }
+                                        });
+
+                                        // callback(null, ProVen);
+                                } else {
+                                        data.vendor = ProVen[0]._id;
+                                        console.log("data if vendor available", data);
+                                        if (data.added_by == "State") {
+                                                Vendor.addVendorToState(data, callback);
+                                        } else if (data.added_by == "Institute") {
+                                                Vendor.addVendorToInstitute(data, callback);
+                                        }
+
+                                        // callback(null, ProVen);
+                                }
+                        }
+                })
+        },
+
+        getAllVendorList: function (data, callback) {
+                //
+        }
+
+
+
+        // get all vendor belongings to a user
+        // ProjectVendors: function (data, callback) {
+        //         // operation
+        //         Vendor.find({
+        //                 user: data.userId // verify it
+        //         }).select("vendor_name _id").exec(function (err, ProVen) {
+        //                 if (err) {
+        //                         callback(err, null);
+        //                 } else {
+        //                         if (ProVen) {
+        //                                 callback(null, ProVen);
+        //                         } else {
+        //                                 callback(null, {
+        //                                         message: "No Data Found"
+        //                                 });
+        //                         }
+        //                 }
+        //         })
+        // }
+
+
 
 };
 module.exports = _.assign(module.exports, exports, model);
