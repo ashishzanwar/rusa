@@ -49,9 +49,9 @@ var schema = new Schema({
         photo: String,
         types: {
             type: String,
-            enum: ["Payment", "Instage Work", "Completed Work", "Others"]
+            enum: ["Payment", "InstageWork", "CompletedWork", "Others"],
+            default: "Others"
         }
-
     }],
 
     status: {
@@ -927,21 +927,100 @@ var model = {
         });
     },
 
+    // mobile API component --> project --> notes --> add
+    // data --> project_id, componentId, from, added_by, text  
     addProjectNotes: function (data, callback) {
-        Project.findOneAndUpdate({ _id: data.projectId, components: data.componentId }, { $push: { from: data.Center, added_by: data.added_by, text: data.text } }).exec(function (err, addNotesData) {
+        console.log("addProjectNotes", data.projectId);
+
+        Project.findOneAndUpdate({ _id: data.projectId, components: data.componentId }, {
+            $push: {
+                notes: {
+                    $each: [{
+                        from: data.from,
+                        added_by: data.added_by,
+                        text: data.text
+                    }]
+                }
+            }
+        }).exec(function (err, addNotesData) {
             if (err) {
-                console.log("inside addNotes err");
+                callback(err, null);
+            } else if (_.isEmpty(addNotesData)) {
+                callback(null, "No Data Found");
             } else {
-                console.log("inside addNotes success", addNotesData);
                 callback(null, addNotesData);
+            }
+
+        });
+    },
+
+    // mobile API component --> project --> notes 
+    // data --> project_id 
+    getProjectAllNotes: function (data, callback) {
+        // console.log("inside getProjectAllNotes data", data);
+        Project.find({ _id: data.projectId, components: data.componentId }).select("_id components notes").exec(function (err, getProNotes) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(getProNotes)) {
+                callback(null, "No Data Found");
+            } else {
+                callback(null, getProNotes);
             }
         });
     },
 
-    getProjectAllNotes: function (data, callback) {
-        console.log("inside getProjectAllNotes data", data);
-    }
+    // mobile API component --> projects --> project --> photos --> addNew photos
+    // data --> projectId, componentId, 
+    addProjectPhotos: function (data, callback) {
+        // console.log("inside addProjectPhotos data", data);
+        Project.findOneAndUpdate({ _id: data.projectId, components: data.componentId }, {
+            $push: {
+                photos: {
+                    $each: data.photos
+                },
+            }
+        }).exec(function (err, addNotesData) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(addNotesData)) {
+                callback(null, "No Data Found");
+            } else {
+                callback(null, addNotesData);
+            }
 
+        });
 
+    },
+
+    // mobile API component --> project --> photos 
+    // data --> projectId & componentId
+    getProjectAllPhotos: function (data, callback) {
+        // console.log("inside getProjectAllPhotos data", data);
+        Project.find({ _id: data.projectId, components: data.componentId }).select("_id components photos").exec(function (err, getProPhotos) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(getProPhotos)) {
+                callback(null, "No Data Found");
+            } else {
+                var onlyPhotos = _.groupBy(getProPhotos[0].photos, "types");
+                callback(null, onlyPhotos);
+            }
+        });
+    },
+
+    // mobile API component --> media --> photos 
+    // data --> componentId 
+    getComponentAllPhotos: function (data, callback) {
+        // console.log("inside getProjectAllPhotos data", data);
+        Project.find({ components: data.componentId }).select("_id components photos").exec(function (err, getProPhotos) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(getProPhotos)) {
+                callback(null, "No Data Found");
+            } else {
+                callback(null, getProPhotos);
+            }
+        });
+    },
 };
 module.exports = _.assign(module.exports, exports, model);

@@ -111,10 +111,46 @@ var controller = {
     },
 
     // mobile API component --> projects --> project --> notes --> addNew notes
+    // data --> project_id, componentId, from, added_by, text  
     addProjectNotes: function (req, res) {
-        console.log("#################### inside addProjectNotes: ###########################", req);
+        // console.log("#################### inside addProjectNotes: ###########################", req.body);
         if (req.body) {
             Project.addProjectNotes(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+            // res.callback("Invalid Data");
+        }
+    },
+
+    // mobile API component --> project --> notes 
+    // data --> project_id 
+    getProjectAllNotes: function (req, res) {
+        console.log("inside getProjectAllNotes: ", req.body);
+        if (req.body) {
+            Project.getProjectAllNotes(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+            // res.callback("Invalid Data");
+        }
+    },
+
+
+    // mobile API component --> projects --> project --> photos --> addNew photos
+    // data --> project_id, componentId
+    addProjectPhotos: function (req, res) {
+        console.log("inside addProjectPhotos: ", req.body);
+        if (req.body) {
+            Project.addProjectPhotos(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -125,10 +161,24 @@ var controller = {
         }
     },
 
-    getProjectAllNotes: function (req, res) {
-        console.log("inside getProjectAllNotes: ", req);
+    getProjectAllPhotos: function (req, res) {
+        // console.log("inside getProjectAllNotes: ", req.body);
         if (req.body) {
-            Project.getProjectAllNotes(req.body, res.callback);
+            Project.getProjectAllPhotos(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+
+    getComponentAllPhotos: function (req, res) {
+        // console.log("inside getProjectAllNotes: ", req.body);
+        if (req.body) {
+            Project.getComponentAllPhotos(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -138,6 +188,8 @@ var controller = {
             });
         }
     }
+
+
 };
 
 module.exports = _.assign(module.exports, controller);
