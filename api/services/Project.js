@@ -64,35 +64,42 @@ var schema = new Schema({
             type: Date,
             default: Date.now
         },
-
-        fromCenter: {
-            type: Schema.Types.ObjectId,
-            ref: 'Center',
-            index: true,
-            text: String
+        from: {
+            type: String,
+            enum: ["Center", "State", "Institute", "Vendor"]
         },
-        fromState: {
-            type: Schema.Types.ObjectId,
-            ref: 'State',
-            index: true,
-            text: String
-        },
-        fromInstitute: {
-            type: Schema.Types.ObjectId,
-            ref: 'Institute',
-            index: true,
-            text: String
-        },
-
-        fromVendor: {
-            type: Schema.Types.ObjectId,
-            ref: 'Vendor',
-            index: true,
-            text: String
+        added_by: {
+            type: Schema.Types.ObjectId
         },
         text: {
             type: String
         }
+
+        // fromCenter: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Center',
+        //     index: true,
+        //     text: String
+        // },
+        // fromState: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'State',
+        //     index: true,
+        //     text: String
+        // },
+        // fromInstitute: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Institute',
+        //     index: true,
+        //     text: String
+        // },
+        // fromVendor: {
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Vendor',
+        //     index: true,
+        //     text: String
+        // },
+
     }
     ],
 
@@ -898,7 +905,7 @@ var model = {
 
     //mobile api for compnent --> project --> edit project details
     updateProject: function (data, callback) {
-        console.log("inside data", data);
+        console.log("inside updateProject data", data);
         var proObj = {
             "_id": data.project_id,
             "components": data.components,
@@ -918,6 +925,21 @@ var model = {
                 callback(null, proUpdate);
             }
         });
+    },
+
+    addProjectNotes: function (data, callback) {
+        Project.findOneAndUpdate({ _id: data.projectId, components: data.componentId }, { $push: { from: data.Center, added_by: data.added_by, text: data.text } }).exec(function (err, addNotesData) {
+            if (err) {
+                console.log("inside addNotes err");
+            } else {
+                console.log("inside addNotes success", addNotesData);
+                callback(null, addNotesData);
+            }
+        });
+    },
+
+    getProjectAllNotes: function (data, callback) {
+        console.log("inside getProjectAllNotes data", data);
     }
 
 

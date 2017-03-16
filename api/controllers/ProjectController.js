@@ -108,9 +108,36 @@ var controller = {
                 }
             });
         }
+    },
+
+    // mobile API component --> projects --> project --> notes --> addNew notes
+    addProjectNotes: function (req, res) {
+        console.log("#################### inside addProjectNotes: ###########################", req);
+        if (req.body) {
+            Project.addProjectNotes(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+
+    getProjectAllNotes: function (req, res) {
+        console.log("inside getProjectAllNotes: ", req);
+        if (req.body) {
+            Project.getProjectAllNotes(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
     }
-
-
 };
 
 module.exports = _.assign(module.exports, controller);
