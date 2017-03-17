@@ -145,11 +145,11 @@
         </div>
     </div>
     <div class="row"><br></div>
-    <div class="row table_row ">
-        <div class="col-md-12">
+    <div class="row table_row " ng-if="emptyData">
+        <div class="col-md-12" ng-if="noDashboardData">
             <p><br></p>
             <p class="text-right text-muted">
-                All amount in INR Lacs
+                All amount in INR Lacs {{nodata}}
             </p><br><br>
             <table class="table table-hover">
                 <thead class="active">
@@ -180,24 +180,71 @@
                 </thead>
                 <tbody>
                     <tr class="table_data" ng-repeat="i in DashboardAllData.institute">
-                        <td>{{i._id.pab}}</td>
-                        <td>{{i._id.institute}}</td>
-                        <td>{{i._id.stateName}}</td>
-                        <td>{{i._id.component}}</td>
-                        <td>{{i.totalComponentProjects}}</td>
-                        <td>{{i.totalDelayedProjectsPerComponent}}</td>
-                        <td>{{i.totalComponentAllocation * (i._id.centerShare/100) | number:2}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i._id.pab}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i._id.institute}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i._id.stateName}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i._id.component}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i.totalComponentProjects}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i.totalDelayedProjectsPerComponent}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i.totalComponentAllocation * (i._id.centerShare/100) | number:2}}</td>
                         <!-- i._id.state.centerShare have % & we are calculating state share amount i.e. totalComponentAllocation * stateShare %-->
-                        <td>{{i.totalComponentAllocation * (i._id.stateShare/100) | number:2}}</td>
-                        <td>{{i.centerReleasePerComponent | number:2}}</td>
-                        <td>{{i.stateReleasePerComponent | number:2}}</td>
-                        <td>{{i.amountUtilizedPerComponent | number:2}}</td>
-                        <td>{{i.amountUtilizedPercentagePerComponent| number:2}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i.totalComponentAllocation * (i._id.stateShare/100) | number:2}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i.centerReleasePerComponent | number:2}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i.stateReleasePerComponent | number:2}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i.amountUtilizedPerComponent | number:2}}</td>
+                        <td ng-click="getOneComponentDetails(i)">{{i.amountUtilizedPercentagePerComponent| number:2}}</td>
                     </tr>
-
                 </tbody>
             </table>
         </div>
     </div>
-    <div class="row"><br><br><br></div>
+    <div class="row"><br></div>
+    <div class="row table_row " ng-if="!emptyData">
+        <div class="col-md-12">
+            <p><br></p>
+            <p class="text-right text-muted">
+                All amount in INR Lacs {{nodata}}
+            </p><br><br>
+            <table class="table table-hover">
+                <thead class="active">
+                    <tr class="table_head borderbottom_transparant">
+                        <th></th>
+                        <th></th>
+                        <th colspan="2" class="text-center">Value</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                    <tr class="table_head">
+                        <th>Item</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th> &nbsp;&nbsp;%&nbsp;&nbsp;</th>
+                        <th>Due Date</th>
+                        <th>Payment Made</th>
+                        <th>Work Completed</th>
+                        <th>Status</th>
+                        <th>Sub Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table_data" ng-repeat="i in getAllprojectOfComponent">
+                        <td>{{i.assetType}}</td>
+                        <td>{{i.projectType}}</td>
+                        <td>{{i.amountOfWork}}</td>
+                        <td>{{i.amountOfWork}} %</td>
+                        <td>{{i.dueDate}}</td>
+                        <td>{{i.vendor.length}}</td>
+                        <td>-</td>
+                        <td>{{i.projectStatus}}</td>
+                        <td>-</td>
+                        <!--<td>{{i.projectSubStatus}}</td>-->
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row"><br></div>
 </div>

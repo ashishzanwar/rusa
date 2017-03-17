@@ -1,7 +1,7 @@
 var globalfunction = {};
 angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', "jsonservicemod", 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable', "ngclipboard"])
 
-  .controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+  .controller('DashboardCtrl', function ($scope, $rootScope, TemplateService, NavigationService, $timeout, $state) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("dashboard");
     $scope.menutitle = NavigationService.makeactive("Dashboard");
@@ -22,10 +22,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       institute: ""
     };
     $scope.DashboardAllData = {};
+    $rootScope.emptyData = true;
+    $rootScope.noDashboardData = true;
 
 
     function loadData(dropDownData) {
-      console.log("inside loadData");
+      // console.log("inside loadData");
 
       NavigationService.boxCall("Project/getProjectReport", dropDownData, function (data) {
         $scope.filteredComponents = data.data;
@@ -33,17 +35,25 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.boxCall("Transaction/getTransactionReport", dropDownData, function (data) {
           $scope.filteredComponentsNew = data.data;
 
-          console.log("filteredComponents", $scope.filteredComponents);
-          console.log("filteredComponentsNew", $scope.filteredComponentsNew);
+          // console.log("filteredComponents", $scope.filteredComponents);
+          // console.log("filteredComponentsNew", $scope.filteredComponentsNew);
 
           $scope.DashboardAllData = angular.extend({}, $scope.filteredComponents, $scope.filteredComponentsNew);
+          console.log("DashboardAllData", $scope.DashboardAllData);
+
+          // console.log($scope.DashboardAllData.institute);
+
+          if ($scope.DashboardAllData.institute == "No data founds") {
+            console.log("inside $scope.DashboardAllData.institute");
+            $rootScope.noDashboardData = false;
+          }
+
 
           // console.log("filteredComponentsNew", $scope.filteredComponentsNew);
           $scope.centerReleasePerComp = $scope.DashboardAllData.centerReleasePerComponent;
           $scope.stateReleasePerComp = $scope.DashboardAllData.stateReleasePerComponent;
           $scope.delayedProPerComp = $scope.DashboardAllData.totalDelayedProjectsPerComponent;
           $scope.transactionPerComp = $scope.DashboardAllData.transactionsPerComponents;
-
 
           // to get totalDelayedProjectsPerComponent in institute array 
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
@@ -90,7 +100,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
           });
 
-
           // to get stateReleasePerComponent in institute array 
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
             if ($scope.stateReleasePerComp != "No data founds") {
@@ -110,7 +119,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
               inst.stateReleasePerComponent = 0;
             }
           });
-
 
           // to get transactionsPerComponents in institute array 
           angular.forEach($scope.DashboardAllData.institute, function (inst, index) {
@@ -140,16 +148,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             }
 
           });
+
           // console.log("Updated object", $scope.DashboardAllData);
-
-
-
         });
       });
     }
-
     loadData(dropDownData);
-
 
     $scope.getAllDashboardData = function (item) {
       console.log(item);
@@ -199,6 +203,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.AllInstitutes = data.data;
       $scope.generateField = true;
     });
+
+    $scope.getOneComponentDetails = function (object) {
+      $rootScope.emptyData = false;
+      $scope.getAllprojectOfComponent = {};
+      $scope.compObject = {};
+      $scope.compObject.component = object._id.componentId;
+
+      NavigationService.boxCall("ProjectExpense/componentProjects", $scope.compObject, function (data) {
+        $scope.getAllprojectOfComponent = data.data;
+        console.log("getAllprojectOfComponent: ", $scope.getAllprojectOfComponent);
+      });
+      console.log("getAllprojectOfComponent: ", $scope.getAllprojectOfComponent);
+      // console.log("I got my selected object:", object._id.componentId);
+    }
 
   })
 

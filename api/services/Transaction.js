@@ -251,6 +251,7 @@ var model = {
         return pipeline;
     },
 
+    //
     getTransactionReport: function (data, callback) {
         var pipeLine = Transaction.getAggregatePipeLine(data);
         console.log(pipeLine);
@@ -497,6 +498,7 @@ var model = {
                             componentId: "$components_data._id",
                             component: "$components_data.name",
                             componentStatus: "$components_data.status",
+                            componentWorkStatus: "$components_data.workCompleted",
                             amountUtilizedPerComponent: "$components_data.amountUtilized",
                             amountUtilizedPercentagePerComponent: "$components_data.utilizationCertificates"
 
@@ -575,6 +577,7 @@ var model = {
             $group: { // we will get n records & then calculate what we want in following group
                 "_id": {
                     componentName: "$components_data.name",
+                    componentWorkStatus: "$components_data.workCompleted",
                     pabName: "$pab_data.name"
                 },
                 totalAmountRelease: {

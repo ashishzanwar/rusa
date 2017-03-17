@@ -572,6 +572,8 @@ var model = {
         return pipeline;
     },
 
+    // mobile API + Dashboard API 
+    // mobile --> app --> fund allocations
     getProjectReport: function (data, callback) {
         console.log("inside getProjectReport model");
         var pipeLine = Project.getAggregatePipeLine(data);
@@ -653,7 +655,7 @@ var model = {
                             stateShare: 0
                         };
 
-                        console.log("###############################datadatadatadata#########################################", data);
+                        // console.log("###############################datadatadatadata#########################################", data);
 
                         _.each(data, function (n) {
                             obj.centerShare += n._id.centerShare * n.totalAllocation / 100;
@@ -887,20 +889,90 @@ var model = {
         // operation
         console.log("inside data", data);
 
-        var proObj = {
-            "_id": data.project_id,
-            "status": data.status // Completed
-        };
+        // var proObj = {
+        //     "_id": data.project_id,
+        //     "status": data.status // Completed
+        // };
 
-        Project.saveData(proObj, function (err, proChangedStatus) {
+        Project.findOneAndUpdate({ _id: data.projectId }, { status: data.status }).exec(function (err, changeStat) {
             if (err) {
                 callback(err, null);
-            } else if (_.isEmpty(proChangedStatus)) {
+            } else if (_.isEmpty(changeStat)) {
                 callback(null, "No Data Found");
             } else {
-                callback(null, proChangedStatus);
+                // callback(null, changeStat);
+                console.log("changeStat", changeStat);
+
+                var pipeline = [
+                    // Stage 1
+                    {
+                        $match: {
+                            "components": ObjectId(changeStat.components)
+                        }
+                    },
+
+                    // Stage 2
+                    {
+                        $match: {
+                            "status": "Completed"
+                        }
+                    },
+
+                    // Stage 3
+                    {
+                        $group: {
+                            "_id": 1,
+                            "getAmountOfWork": {
+                                $sum: "$amountOfWork"
+                            }
+                        }
+                    },
+
+                ];
+                console.log("pipeline", pipeline);
+
+                Project.aggregate(pipeline, function (err, updatedCompStatus) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(updatedCompStatus)) {
+                            callback(null, "No data founds");
+                        } else {
+                            console.log("updatedCompStatus", updatedCompStatus[0].getAmountOfWork);
+                            // update completed
+                            Components.findOneAndUpdate({ _id: changeStat.components }, { workCompleted: updatedCompStatus[0].getAmountOfWork }).exec(function (err, updateWorkCompleted) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (_.isEmpty(updateWorkCompleted)) {
+                                    callback(null, "No Data Found");
+                                } else {
+                                    callback(null, updateWorkCompleted);
+                                }
+                            });
+
+                        }
+                    }
+                }
+                );
             }
+
         });
+
+        // Project.saveData(proObj, function (err, proChangedStatus) {
+        //     if (err) {
+        //         callback(err, null);
+        //     } else if (_.isEmpty(proChangedStatus)) {
+        //         callback(null, "No Data Found");
+        //     } else {
+
+        //         // get component of corresposnding project
+        //         // get total of amount of work allocated for  all projects
+        //         // get total amount of completed projects  
+
+
+        //         // callback(null, updatedCompStatus);
+        //     }
+        // });
     },
 
     //mobile api for compnent --> project --> edit project details

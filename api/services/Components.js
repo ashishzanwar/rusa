@@ -60,6 +60,10 @@ var schema = new Schema({
         date: Date,
         amount: Number
     }],
+    workCompleted: {
+        type: Number,
+        default: 0
+    },
     fundDelay: Boolean
 });
 

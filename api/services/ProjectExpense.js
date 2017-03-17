@@ -196,82 +196,6 @@ var model = {
         })
     },
 
-    getAllprojectOfComponent: function (data, callback) {
-
-        ProjectExpense.aggregate([
-            // Stage 1
-            {
-                $lookup: {
-                    "from": "projects",
-                    "localField": "project",
-                    "foreignField": "_id",
-                    "as": "project_data"
-                }
-            },
-
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$project_data",
-
-                }
-            },
-            {
-                $lookup: {
-                    "from": "projecttypes",
-                    "localField": "project_data.projectType",
-                    "foreignField": "_id",
-                    "as": "projectType_data"
-                }
-            },
-
-            // Stage 2.1
-            {
-                $unwind: {
-                    path: "$projectType_data",
-
-                }
-            },
-
-            // Stage 3.1
-            {
-                $lookup: {
-
-                    "from": "assettypes",
-                    "localField": "project_data.assetType",
-                    "foreignField": "_id",
-                    "as": "assetType_data"
-                }
-            },
-
-            // Stage 4.1
-            {
-                $unwind: {
-                    path: "$assetType_data",
-                }
-            },
-            // Stage 1
-            {
-                $match: {
-                    "project_data.components": ObjectId(data.id)
-                }
-            },
-
-        ]).exec(function (error, resObject) {
-            console.log(resObject);
-            if (error) {
-                callback(error, null)
-            } else {
-                if (_.isEmpty(resObject)) {
-                    callback(null, "No data founds");
-                } else {
-                    callback(null, resObject);
-                }
-            }
-        });
-
-    },
-
     // mobile application API for Component --> projects screen
     componentProjects: function (data, callback) {
         ProjectExpense.aggregate(
@@ -401,6 +325,7 @@ var model = {
                             componentName: "$components_data.name",
                             componentAllocation: "$components_data.allocation",
                             projectStatus: "$projects_data.status",
+                            // projectSubStatus: "$projects_data.status",
                             projectType: "$projectType_data.name",
                             assetType: "$assetType_data.name",
                             projectId: "$project",
@@ -455,6 +380,10 @@ var model = {
                         data.totalAmountReleased = releasedAmountPerProject;
                         releasedAmountPerProject = 0;
                     });
+
+
+
+
 
                     // in case of --> calculate component release & utilize % and keep it into separate object & remove repeated fields
 
@@ -516,7 +445,85 @@ var model = {
 
 
 
-    }
+    },
+
+    // getAllprojectOfComponent: function (data, callback) {
+
+    //     ProjectExpense.aggregate([
+    //         // Stage 1
+    //         {
+    //             $lookup: {
+    //                 "from": "projects",
+    //                 "localField": "project",
+    //                 "foreignField": "_id",
+    //                 "as": "project_data"
+    //             }
+    //         },
+
+    //         // Stage 2
+    //         {
+    //             $unwind: {
+    //                 path: "$project_data",
+
+    //             }
+    //         },
+    //         {
+    //             $lookup: {
+    //                 "from": "projecttypes",
+    //                 "localField": "project_data.projectType",
+    //                 "foreignField": "_id",
+    //                 "as": "projectType_data"
+    //             }
+    //         },
+
+    //         // Stage 2.1
+    //         {
+    //             $unwind: {
+    //                 path: "$projectType_data",
+
+    //             }
+    //         },
+
+    //         // Stage 3.1
+    //         {
+    //             $lookup: {
+
+    //                 "from": "assettypes",
+    //                 "localField": "project_data.assetType",
+    //                 "foreignField": "_id",
+    //                 "as": "assetType_data"
+    //             }
+    //         },
+
+    //         // Stage 4.1
+    //         {
+    //             $unwind: {
+    //                 path: "$assetType_data",
+    //             }
+    //         },
+    //         // Stage 1
+    //         {
+    //             $match: {
+    //                 "project_data.components": ObjectId(data.id)
+    //             }
+    //         },
+
+    //     ]).exec(function (error, resObject) {
+    //         console.log(resObject);
+    //         if (error) {
+    //             callback(error, null)
+    //         } else {
+    //             if (_.isEmpty(resObject)) {
+    //                 callback(null, "No data founds");
+    //             } else {
+    //                 callback(null, resObject);
+    //             }
+    //         }
+    //     });
+
+    // },
+
+
 };
 module.exports = _.assign(module.exports, exports, model);
 
