@@ -23,8 +23,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.DashboardAllData = {};
     $rootScope.emptyData = true;
-    $rootScope.noDashboardData = true;
-
 
     function loadData(dropDownData) {
       // console.log("inside loadData");
@@ -40,14 +38,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
           $scope.DashboardAllData = angular.extend({}, $scope.filteredComponents, $scope.filteredComponentsNew);
           console.log("DashboardAllData", $scope.DashboardAllData);
-
-          // console.log($scope.DashboardAllData.institute);
-
-          if ($scope.DashboardAllData.institute == "No data founds") {
-            console.log("inside $scope.DashboardAllData.institute");
-            $rootScope.noDashboardData = false;
-          }
-
 
           // console.log("filteredComponentsNew", $scope.filteredComponentsNew);
           $scope.centerReleasePerComp = $scope.DashboardAllData.centerReleasePerComponent;

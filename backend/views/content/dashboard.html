@@ -86,8 +86,9 @@
                     </div>
                     <div class="col-md-6 col-xs-6padding0 textright">
                         <p class="margin0 ">DELAYED</p>
-                        <p class="margin0 em1_1">{{DashboardAllData.totalComponents.count - DashboardAllData.inTimeComponents.inTimeComponentsCount
-                            | number:2}}</p>
+                        <p class="margin0 em1_1" ng-class="{'redColor': {{DashboardAllData.totalComponents.count - DashboardAllData.inTimeComponents.inTimeComponentsCount}} != 0}">{{DashboardAllData.totalComponents.count - DashboardAllData.inTimeComponents.inTimeComponentsCount
+                            | number:2 }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -146,7 +147,7 @@
     </div>
     <div class="row"><br></div>
     <div class="row table_row " ng-if="emptyData">
-        <div class="col-md-12" ng-if="noDashboardData">
+        <div class="col-md-12" ng-if="DashboardAllData.institute !== 'No data founds'">
             <p><br></p>
             <p class="text-right text-muted">
                 All amount in INR Lacs {{nodata}}
@@ -185,7 +186,7 @@
                         <td ng-click="getOneComponentDetails(i)">{{i._id.stateName}}</td>
                         <td ng-click="getOneComponentDetails(i)">{{i._id.component}}</td>
                         <td ng-click="getOneComponentDetails(i)">{{i.totalComponentProjects}}</td>
-                        <td ng-click="getOneComponentDetails(i)">{{i.totalDelayedProjectsPerComponent}}</td>
+                        <td ng-click="getOneComponentDetails(i)" ng-class="{'redColor': {{i.totalDelayedProjectsPerComponent}} != 0}">{{i.totalDelayedProjectsPerComponent}}</td>
                         <td ng-click="getOneComponentDetails(i)">{{i.totalComponentAllocation * (i._id.centerShare/100) | number:2}}</td>
                         <!-- i._id.state.centerShare have % & we are calculating state share amount i.e. totalComponentAllocation * stateShare %-->
                         <td ng-click="getOneComponentDetails(i)">{{i.totalComponentAllocation * (i._id.stateShare/100) | number:2}}</td>
@@ -230,11 +231,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="table_data" ng-repeat="i in getAllprojectOfComponent">
+                    <tr class="table_data" ng-repeat="i in getAllprojectOfComponent" ng-class="{'redColor': $index == 1}">
                         <td>{{i.assetType}}</td>
                         <td>{{i.projectType}}</td>
                         <td>{{i.amountOfWork}}</td>
-                        <td>{{i.amountOfWork}} %</td>
+                        <td>&nbsp;&nbsp;{{i.amountOfWork}} %&nbsp;&nbsp;</td>
                         <td>{{i.dueDate}}</td>
                         <td>{{i.vendor.length}}</td>
                         <td>-</td>
@@ -246,5 +247,5 @@
             </table>
         </div>
     </div>
-    <div class="row"><br></div>
+    <div class="row"><br><br><br></div>
 </div>
