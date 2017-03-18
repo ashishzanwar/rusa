@@ -116,7 +116,7 @@ var model = {
         var Model = this;
         var Const = this(data);
         var foreignKeys = Config.getForeignKeys(schema);
-        console.log("######### inside saveData  ###########", data);
+        console.log("######### saveData ###########", data);
 
         if (data._id) {
             Model.findOne({
@@ -153,7 +153,6 @@ var model = {
                 }
             });
         } else {
-
             Const.save(function (err, data2) {
                 if (err) {
                     callback(err, data2);
@@ -177,7 +176,6 @@ var model = {
     checkVendor: function (data) {
         console.log("##@@@@## inside checkVendor##@@@##", data);
 
-
         Vendor.findOne({ "pan": data }, function (err, vendor) {
             if (err) {
                 console.log("##@@@@## inside  check Vendor err ##@@@@##");
@@ -194,27 +192,6 @@ var model = {
             }
 
         })
-
-        // Vendor.findOne({ "pan": data }, function (err, vendor) {
-        //     if (err) {
-        //         return handleError(err);
-        //     } else if (_.isEmpty(vendor)) {
-        //         return "No Data Found";
-        //     } else {
-        //         return vendor;
-        //     }
-
-        // })
-
-        // Vendor.find({ "pan": data }).exec(function (err, vendor) {
-        //     if (err) {
-        //         return "err";
-        //     } else if (_.isEmpty(vendor)) {
-        //         return "No Data Found";
-        //     } else {
-        //         return vendor;
-        //     }
-        // })
     },
 
     compile: function (data, callback) {
@@ -250,6 +227,7 @@ var model = {
 
             async.parallel({
                 project: function (callback) {
+                    console.log("*********** inside project of async *******************");
                     async.eachSeries(json.projects, function (project, callback) {
 
                         var projectObj = {
@@ -275,127 +253,147 @@ var model = {
                                 console.log("********** Following project Data submitted **********", projectSave);
 
                                 async.eachSeries(project.projectExpenses, function (projectExp, callback) {
+                                    var vendorObject = {};
+                                    var tempVal = 0;
 
                                     // check whether vendor is already available or not on the base of PAN
-
-                                    var vendorObject = {};
-                                    // var vendorCheck = Form.checkVendor(projectExp.vendorpan);
-                                    // console.log("@@@@@@@@@@ vendorCheck 1st console @@@@@@@@@", Form.checkVendor(projectExp.vendorpan));
-
-                                    // if (vendorCheck == "No Data Found") {
-                                    //     vendorObject = {
-                                    //         name: projectExp.name,
-                                    //         pan: projectExp.vendorpan,
-                                    //         tintan: projectExp.tintan
-                                    //     };
-                                    // } else if (vendorCheck) {
-                                    vendorObject = {
-                                        // _id: vendorCheck._id,
-                                        name: projectExp.name,
-                                        pan: projectExp.vendorpan,
-                                        tintan: projectExp.tintan
-                                    };
-                                    // }
-
-                                    // console.log("@@@@@@@@@@@@@@@@@@ vendorCheck @@@@@@@@@@@@@@@@", vendorObject);
-
-
-                                    Vendor.saveData(vendorObject, function (err, vendorSave) {
+                                    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+                                    Vendor.findOne({ "pan": projectExp.vendorpan }, function (err, vendor) {
                                         if (err) {
-                                            console.log("********** Error in Vendor saveData **********", err);
+                                            console.log("##@@@@## inside  check Vendor err ##@@@@##");
+                                            // vendorObject = {
+                                            //     name: projectExp.name,
+                                            //     pan: projectExp.vendorpan,
+                                            //     tintan: projectExp.tintan
+                                            // };
                                         } else {
-                                            console.log("********** Following Vendor Data submitted **********", vendorSave);
+                                            if (_.isEmpty(vendor)) {
+                                                // vendor is not there
+                                                console.log("##@@@@## inside  check Vendor is empty ##@@@@##");
+                                                vendorObject = {
+                                                    // _id: vendor._id,
+                                                    name: projectExp.name,
+                                                    pan: projectExp.vendorpan,
+                                                    tintan: projectExp.tintan
+                                                };
+                                                console.log("#@@ inside check empty1 & vendorObject is:", vendorObject);
+                                            } else {
+                                                // vendor is already available
+                                                console.log("##@@@@## inside  check success ##@@@@##", vendor);
+                                                vendorObject = {
+                                                    _id: vendor._id,
+                                                    name: projectExp.name,
+                                                    // pan: projectExp.vendorpan,
+                                                    tintan: projectExp.tintan
+                                                };
+                                                tempVal++;
+                                                console.log("#@@ inside check success 1 & vendorObject is:", vendorObject);
+                                            }
 
-                                            var projectExpObj = {
-                                                // vendor: projectExp.name, //id is there in database & we need it in transaction as well
-                                                vendor: vendorSave._id,
-                                                project: projectSave._id,
-                                                allocatedAmount: projectExp.amount,
-                                                orderIssueDate: projectExp.orderIssueDate,
-                                                orderDueDate: projectExp.orderDueDate
-                                                // vendorpan: projectExp.vendorpan,
-                                                // tintan: projectExp.tintan,
-
-                                                // orderFile: projectExp.orderFile
-                                            };
-
-                                            ProjectExpense.saveData(projectExpObj, function (err, projectExpenseSave) {
+                                            Vendor.saveData(vendorObject, function (err, vendorSave) {
                                                 if (err) {
-                                                    console.log("********** Error in ProjectExpense saveData **********", err);
+                                                    console.log("********** Error in Vendor saveData **********", err);
                                                 } else {
-                                                    console.log("********* Following ProjectExpense Data submitted **********", projectExpenseSave);
+                                                    console.log("********** Following Vendor Data submitted **********", vendorSave);
 
-                                                    async.eachSeries(projectExp.institutetoVendors, function (instituteVendor, callback) {
+                                                    var projectExpObj = {
+                                                        // vendor: projectExp.name, //id is there in database & we need it in transaction as well
+                                                        // vendor: vendorSave._id,
+                                                        project: projectSave._id,
+                                                        allocatedAmount: projectExp.amount,
+                                                        orderIssueDate: projectExp.orderIssueDate,
+                                                        orderDueDate: projectExp.orderDueDate,
+                                                        orderFile: projectExp.orderFile
+                                                    };
 
-                                                        var transactionObj = {
-                                                            components: comSave._id,
-                                                            name: projectExpenseSave.vendorName,
-                                                            installment: instituteVendor.installmentNo,
-                                                            amount: instituteVendor.amount,
-                                                            type: "Institute To Vendor",
-                                                            remarks: instituteVendor.remarks,
-                                                            file: instituteVendor.file,
-                                                            transactionSent: instituteVendor.transactionSent,
-                                                            transactionReceived: instituteVendor.transactionRecieved,
-                                                        };
+                                                    if (tempVal == 1) {
+                                                        projectExpObj.vendor = vendor._id;
+                                                    } else {
+                                                        projectExpObj.vendor = vendorSave._id;
+                                                    }
 
-                                                        Transaction.saveData(transactionObj, function (err, instToVen) {
-                                                            if (err) {
-                                                                console.log("********** Error in Transaction saveData **********", err);
-                                                            } else if (instToVen) {
-                                                                console.log("********** Following Transaction from Institute To Vendor is submitted **********", instToVen);
+                                                    ProjectExpense.saveData(projectExpObj, function (err, projectExpenseSave) {
+                                                        if (err) {
+                                                            console.log("********** Error in ProjectExpense saveData **********", err);
+                                                        } else {
+                                                            console.log("********* Following ProjectExpense Data submitted **********", projectExpenseSave);
 
+                                                            async.eachSeries(projectExp.institutetoVendors, function (instituteVendor, callback) {
 
-                                                                projectExpenseSave.transaction.push(instToVen._id); // current transaction id
-                                                                projectExpenseSave.save(function (err, updateTransProjectExpens) {
+                                                                var transactionObj = {
+                                                                    components: comSave._id,
+                                                                    name: projectExpenseSave.vendorName,
+                                                                    installment: instituteVendor.installmentNo,
+                                                                    amount: instituteVendor.amount,
+                                                                    type: "Institute To Vendor",
+                                                                    remarks: instituteVendor.remarks,
+                                                                    file: instituteVendor.file,
+                                                                    transactionSent: instituteVendor.transactionSent,
+                                                                    transactionReceived: instituteVendor.transactionRecieved,
+                                                                };
+
+                                                                Transaction.saveData(transactionObj, function (err, instToVen) {
                                                                     if (err) {
-                                                                        console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
-                                                                    } else {
-                                                                        console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateTransProjectExpens);
+                                                                        console.log("********** Error in Transaction saveData **********", err);
+                                                                    } else if (instToVen) {
+                                                                        console.log("********** Following Transaction from Institute To Vendor is submitted **********", instToVen);
 
-                                                                        comSave.amountUtilized.push(instituteVendor.amount);
-                                                                        // comSave.amountUtilized.push(instToVen._id);
-                                                                        comSave.save(function (err, updateAmountUtilizedComp) {
+
+                                                                        projectExpenseSave.transaction.push(instToVen._id); // current transaction id
+                                                                        projectExpenseSave.save(function (err, updateTransProjectExpens) {
                                                                             if (err) {
-                                                                                console.log("********** Error in comSave save (when  updating transaction in project table) **********", err);
+                                                                                console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
                                                                             } else {
-                                                                                console.log("********** Following comSave save (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
-                                                                            }
-                                                                            callback();
-                                                                        });
-                                                                    }
+                                                                                console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateTransProjectExpens);
 
+                                                                                comSave.amountUtilized.push(instituteVendor.amount);
+                                                                                // comSave.amountUtilized.push(instToVen._id);
+                                                                                comSave.save(function (err, updateAmountUtilizedComp) {
+                                                                                    if (err) {
+                                                                                        console.log("********** Error in comSave save (when  updating transaction in project table) **********", err);
+                                                                                    } else {
+                                                                                        console.log("********** Following comSave save (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
+                                                                                    }
+                                                                                    callback();
+                                                                                });
+                                                                            }
+
+                                                                        });
+
+                                                                        // comSave.amountUtilized.push(instituteVendor.amount);
+                                                                        // // comSave.amountUtilized.push(instToVen._id);
+                                                                        // comSave.save(function (err, updateAmountUtilizedComp) {
+                                                                        //     if (err) {
+                                                                        //         console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
+                                                                        //     } else {
+                                                                        //         console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
+                                                                        //     }
+                                                                        //     callback();
+                                                                        // });
+                                                                        // callback();
+                                                                    }
                                                                 });
 
-                                                                // comSave.amountUtilized.push(instituteVendor.amount);
-                                                                // // comSave.amountUtilized.push(instToVen._id);
-                                                                // comSave.save(function (err, updateAmountUtilizedComp) {
-                                                                //     if (err) {
-                                                                //         console.log("********** Error in ProjectExpense saveData (when updating transaction in project table) **********", err);
-                                                                //     } else {
-                                                                //         console.log("********** Following ProjectExpense Data (updating transaction in ProjectExpense) submitted **********", updateAmountUtilizedComp);
-                                                                //     }
-                                                                //     callback();
-                                                                // });
-                                                                // callback();
-                                                            }
-                                                        });
 
 
+                                                            }, function (err) {
+                                                                if (err) {
+                                                                    console.log(" ######## Following error in async.each of institutetoVendors ######## ", err);
+                                                                } else {
+                                                                    console.log(" ####### Data of institutetoVendors is stored successfully ####### ");
+                                                                    callback();
+                                                                }
+                                                            });
 
-                                                    }, function (err) {
-                                                        if (err) {
-                                                            console.log(" ######## Following error in async.each of institutetoVendors ######## ", err);
-                                                        } else {
-                                                            console.log(" ####### Data of institutetoVendors is stored successfully ####### ");
-                                                            callback();
                                                         }
                                                     });
-
                                                 }
                                             });
                                         }
-                                    });
+                                    })
+                                    //^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^//
+
+
 
                                 }, function (err) {
                                     if (err) {

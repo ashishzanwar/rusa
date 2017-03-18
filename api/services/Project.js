@@ -484,10 +484,10 @@ var model = {
         //         }
         //     });
         // }
-        if (data.component) {  // In actual it is keycomponents
+        if (data.keyComponent) {  // In actual it is keycomponents
             pipeline.push({
                 $match: {
-                    "components_data.keycomponents": ObjectId(data.component)
+                    "components_data.keycomponents": ObjectId(data.keyComponent)
                 }
             });
         }

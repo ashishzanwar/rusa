@@ -61,6 +61,16 @@ var schema = new Schema({
         }
     }],
 
+    orderIssueDate: {
+        type: Date
+    },
+    orderDueDate: {
+        type: Date
+    },
+    orderFile: {
+        type: Date
+    },
+
     // extra filed added by Ashish
     // vendorName: {
     //     type: Date
@@ -68,15 +78,7 @@ var schema = new Schema({
     // installmentNo: {
     //     type: Number
     // },
-    // orderIssueDate: {
-    //     type: Date
-    // },
-    // orderDueDate: {
-    //     type: Date
-    // },
-    // orderFile: {
-    //     type: Date
-    // },
+
     // vendorpan: {
     //     type: String
     // },
@@ -235,7 +237,7 @@ var model = {
                 {
                     $unwind: {
                         path: "$components_data",
-                        preserveNullAndEmptyArrays: false // optional
+                        preserveNullAndEmptyArrays: true // optional
                     }
                 },
 
@@ -296,7 +298,7 @@ var model = {
                 {
                     $unwind: {
                         path: "$projectType_data",
-                        preserveNullAndEmptyArrays: false // optional
+                        preserveNullAndEmptyArrays: true // optional
                     }
                 },
 
@@ -314,7 +316,7 @@ var model = {
                 {
                     $unwind: {
                         path: "$assetType_data",
-                        preserveNullAndEmptyArrays: false // optional
+                        preserveNullAndEmptyArrays: true // optional
                     }
                 },
 
@@ -382,10 +384,6 @@ var model = {
                         releasedAmountPerProject = 0;
                     });
 
-
-
-
-
                     // in case of --> calculate component release & utilize % and keep it into separate object & remove repeated fields
 
                     // var compoPro = {};
@@ -397,6 +395,7 @@ var model = {
                     // compoPro.Projects = newData;
 
                     callback(null, newData);
+                    // callback(newData, null);
                 }
             });
 

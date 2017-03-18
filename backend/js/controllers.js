@@ -18,7 +18,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     var dropDownData = {
       pab: "",
       state: "",
-      component: "",
+      keyComponent: "",
       institute: ""
     };
     $scope.DashboardAllData = {};
@@ -157,7 +157,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         dropDownData.state = item._id;
         loadData(dropDownData);
       } else if (id == "component") {
-        dropDownData.component = item._id;
+        dropDownData.keyComponent = item._id;
         // console.log("dropDownData", dropDownData);
         loadData(dropDownData);
       } else if (id == "institute") {
