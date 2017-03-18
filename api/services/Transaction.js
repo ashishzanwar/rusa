@@ -219,10 +219,10 @@ var model = {
         //         }
         //     });
         // }
-        if (data.component) {  // In actial it is keycomponents
+        if (data.keyComponent) {  // In actial it is keycomponents
             pipeline.push({
                 $match: {
-                    "components_data.keycomponents": ObjectId(data.component)
+                    "components_data.keycomponents": ObjectId(data.keyComponent)
                 }
             });
         }
@@ -251,7 +251,6 @@ var model = {
         return pipeline;
     },
 
-    //
     getTransactionReport: function (data, callback) {
         var pipeLine = Transaction.getAggregatePipeLine(data);
         console.log(pipeLine);
@@ -551,6 +550,7 @@ var model = {
 
     },
 
+    // mobile application API for Component --> overview screen
     componentOverview: function (data, callback) {
         var pipeLine = Transaction.getAggregatePipeLine(data);
         console.log(pipeLine);
@@ -610,7 +610,6 @@ var model = {
 
     },
 
-    // mobile application API for Component --> fundflow screen
     componentFundflowPipeLine: function (data) {
 
         var FundflowPipeLine = [
@@ -643,7 +642,7 @@ var model = {
 
         return FundflowPipeLine;
     },
-
+    // mobile application API for Component --> fundflow screen
     componentFundflow: function (data, callback) {
         var FundflowPipeLine = Transaction.componentFundflowPipeLine(data);
         console.log("FundflowPipeLine", FundflowPipeLine);
@@ -903,7 +902,6 @@ var model = {
             }
         }, callback);
     },
-
 
     componentMedia: function (data, callback) {
     }

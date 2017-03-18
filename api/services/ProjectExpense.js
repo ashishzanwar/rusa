@@ -197,6 +197,7 @@ var model = {
     },
 
     // mobile application API for Component --> projects screen
+    // dashboard data --> component --> projects (Project details table)
     componentProjects: function (data, callback) {
         ProjectExpense.aggregate(
 
@@ -446,82 +447,6 @@ var model = {
 
 
     },
-
-    // getAllprojectOfComponent: function (data, callback) {
-
-    //     ProjectExpense.aggregate([
-    //         // Stage 1
-    //         {
-    //             $lookup: {
-    //                 "from": "projects",
-    //                 "localField": "project",
-    //                 "foreignField": "_id",
-    //                 "as": "project_data"
-    //             }
-    //         },
-
-    //         // Stage 2
-    //         {
-    //             $unwind: {
-    //                 path: "$project_data",
-
-    //             }
-    //         },
-    //         {
-    //             $lookup: {
-    //                 "from": "projecttypes",
-    //                 "localField": "project_data.projectType",
-    //                 "foreignField": "_id",
-    //                 "as": "projectType_data"
-    //             }
-    //         },
-
-    //         // Stage 2.1
-    //         {
-    //             $unwind: {
-    //                 path: "$projectType_data",
-
-    //             }
-    //         },
-
-    //         // Stage 3.1
-    //         {
-    //             $lookup: {
-
-    //                 "from": "assettypes",
-    //                 "localField": "project_data.assetType",
-    //                 "foreignField": "_id",
-    //                 "as": "assetType_data"
-    //             }
-    //         },
-
-    //         // Stage 4.1
-    //         {
-    //             $unwind: {
-    //                 path: "$assetType_data",
-    //             }
-    //         },
-    //         // Stage 1
-    //         {
-    //             $match: {
-    //                 "project_data.components": ObjectId(data.id)
-    //             }
-    //         },
-
-    //     ]).exec(function (error, resObject) {
-    //         console.log(resObject);
-    //         if (error) {
-    //             callback(error, null)
-    //         } else {
-    //             if (_.isEmpty(resObject)) {
-    //                 callback(null, "No data founds");
-    //             } else {
-    //                 callback(null, resObject);
-    //             }
-    //         }
-    //     });
-
-    // },
 
 
 };

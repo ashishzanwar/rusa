@@ -103,10 +103,6 @@ var schema = new Schema({
     }
     ],
 
-
-
-
-
 });
 
 schema.plugin(deepPopulate, {
@@ -122,8 +118,15 @@ schema.plugin(deepPopulate, {
 
         'components': {
             select: '_id name'
-        }
+        },
 
+        'assetType': {
+            select: '_id name'
+        },
+
+        'projectType': {
+            select: '_id name'
+        }
     }
 
 });
@@ -138,7 +141,7 @@ schema.plugin(autoIncrement.plugin, {
 });
 module.exports = mongoose.model('Project', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction components', 'user institute state transaction components'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'user institute state transaction components assetType projectType', 'user institute state transaction components assetType projectType'));
 var model = {
     findAllProject: function (data, callback) {
         Project.find().select("name _id").exec(function (err, found) {
@@ -305,70 +308,11 @@ var model = {
         });
     },
 
-    addNewProject: function (data, callback) {
-        var projectdata = data;
-        projectdata = this(projectdata);
-        projectdata.save(function (err, respo) {
-            if (err) {
-                callback(err, null);
-            } else {
-                console.log("respo", respo);
-                console.log("respo id --->", respo._id);
-
-                Institute.findOneAndUpdate({
-                    _id: data.institute
-                }, {
-                        $push: {
-                            project: respo._id
-                        }
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (found) {
-                                console.log("FOUND-->", found);
-                                State.findOneAndUpdate({
-                                    _id: data.state
-                                }, {
-                                        $push: {
-                                            project: respo._id
-                                        }
-                                    }).exec(function (err, found) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            if (found) {
-                                                console.log("FOUND-->", found);
-                                                callback(null, found);
-                                            } else {
-                                                callback(null, {
-                                                    message: "No Data Found"
-                                                });
-                                            }
-                                        }
-                                    });
-
-
-
-                                //  callback(null, found);
-                            } else {
-                                callback(null, {
-                                    message: "No Data Found"
-                                });
-                            }
-                        }
-                    });
-
-            }
-        });
-    },
-
     findOneProject: function (data, callback) {
-
 
         Project.findOne({
             _id: data._id
-        }).deepPopulate("photos").exec(function (err, found) {
+        }).deepPopulate("photos projectType assetType").exec(function (err, found) {
 
             if (err) {
 
@@ -702,7 +646,6 @@ var model = {
                 newPipeLine.push({
                     $group: {
                         "_id": {
-
                             componentId: "$_id",
                         },
                     },
@@ -979,7 +922,7 @@ var model = {
     updateProject: function (data, callback) {
         console.log("inside updateProject data", data);
         var proObj = {
-            "_id": data.project_id,
+            "_id": data._id,
             "components": data.components,
             "assetType": data.assetType,
             "projectType": data.projectType,
@@ -989,6 +932,7 @@ var model = {
         }
 
         Project.saveData(proObj, function (err, proUpdate) {
+            console.log("proUpdate", proUpdate);
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(proUpdate)) {
