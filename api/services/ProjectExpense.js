@@ -403,6 +403,7 @@ var model = {
 
     // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
     vendorAllocation: function (data, callback) {
+        console.log("data", data);
         // operation
 
         ProjectExpense.findOneAndUpdate({ project: data.project_id, vendor: data.vendor_id }, { allocatedAmount: data.allocation }).exec(function (err, mydata) {
