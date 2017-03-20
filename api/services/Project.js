@@ -980,7 +980,7 @@ var model = {
             } else if (_.isEmpty(getProNotes)) {
                 callback(null, "No Data Found");
             } else {
-                callback(null, getProNotes);
+                callback(null, getProNotes[0]);
             }
         });
     },

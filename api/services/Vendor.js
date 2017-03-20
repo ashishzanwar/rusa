@@ -229,14 +229,16 @@ var model = {
                                                                 // update getAddedVendor._id into state or intitute
                                                                 if (data.added_by == "State") {
                                                                         Vendor.addVendorToState(data, callback);
+                                                                        // callback(null, getAddedVendor);
                                                                 } else if (data.added_by == "Institute") {
                                                                         Vendor.addVendorToInstitute(data, callback);
+                                                                        // callback(null, getAddedVendor);
                                                                 }
                                                         }
+                                                        // send created vendor
                                                 }
+                                                // callback(null, getAddedVendor);
                                         });
-
-                                        // callback(null, ProVen);
                                 } else {
                                         data.vendor = ProVen[0]._id;
                                         console.log("data if vendor available", data);
@@ -246,7 +248,7 @@ var model = {
                                                 Vendor.addVendorToInstitute(data, callback);
                                         }
 
-                                        // callback(null, ProVen);
+                                        callback(null, ProVen);
                                 }
                         }
                 })

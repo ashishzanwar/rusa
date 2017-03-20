@@ -51,6 +51,7 @@ var schema = new Schema({
         enum: ["To Be Moderated", "Moderation Completed", "Trashed"],
         default: "To Be Moderated"
     }
+
 });
 
 schema.plugin(deepPopulate, {
