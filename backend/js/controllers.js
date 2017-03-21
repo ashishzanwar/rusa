@@ -33,8 +33,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.boxCall("Transaction/getTransactionReport", dropDownData, function (data) {
           $scope.filteredComponentsNew = data.data;
 
-          // console.log("filteredComponents", $scope.filteredComponents);
-          // console.log("filteredComponentsNew", $scope.filteredComponentsNew);
+          console.log("filteredComponents", $scope.filteredComponents);
+          console.log("filteredComponentsNew", $scope.filteredComponentsNew);
 
           $scope.DashboardAllData = angular.extend({}, $scope.filteredComponents, $scope.filteredComponentsNew);
           console.log("DashboardAllData", $scope.DashboardAllData);

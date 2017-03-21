@@ -292,9 +292,6 @@ var model = {
                                             }
                                         }
                                     });
-
-
-
                                 //  callback(null, found);
                             } else {
                                 callback(null, {
@@ -514,6 +511,64 @@ var model = {
         }
 
         return pipeline;
+    },
+
+    // mobile API --> component --> addProject 
+    // data --> components(id), assetType(id), projectType(id), valueOfProject (number), dueDate (date), amountOfWork(% number)
+    addProjectFromApp: function (data, callback) {
+        console.log("####################### inside addProjectFromApp project model ##########################");
+        Project.saveData(data, function (err, addedProject) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(addedProject)) {
+                callback(null, "No data founds");
+            } else {
+                console.log("addedProject", addedProject);
+
+                var proExObj = {
+                    project: addedProject._id
+                };
+
+                ProjectExpense.saveData(proExObj, function (err, addedProEx) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(addedProEx)) {
+                        callback(null, "No data founds");
+                    } else {
+                        console.log("addedProEx", addedProEx);
+                        callback(null, addedProEx);
+                    }
+                });
+                // callback(null, addedProject);
+            }
+        });
+
+    },
+
+
+    //mobile api for compnent --> project --> edit project details
+    updateProject: function (data, callback) {
+        console.log("inside updateProject data", data);
+        var proObj = {
+            "_id": data._id,
+            "components": data.components,
+            "assetType": data.assetType,
+            "projectType": data.projectType,
+            "valueOfProject": data.valueOfProject,
+            "dueDate": data.dueDate,
+            "amountOfWork": data.amountOfWork
+        }
+
+        Project.saveData(proObj, function (err, proUpdate) {
+            console.log("proUpdate", proUpdate);
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(proUpdate)) {
+                callback(null, "No Data Found");
+            } else {
+                callback(null, proUpdate);
+            }
+        });
     },
 
     // mobile API + Dashboard API 
@@ -887,7 +942,7 @@ var model = {
                                 if (err) {
                                     callback(err, null);
                                 } else if (_.isEmpty(updateWorkCompleted)) {
-                                    callback(null, "No Data Found");
+                                    callback(null, "No data founds");
                                 } else {
                                     callback(null, updateWorkCompleted);
                                 }
@@ -916,31 +971,6 @@ var model = {
         //         // callback(null, updatedCompStatus);
         //     }
         // });
-    },
-
-    //mobile api for compnent --> project --> edit project details
-    updateProject: function (data, callback) {
-        console.log("inside updateProject data", data);
-        var proObj = {
-            "_id": data._id,
-            "components": data.components,
-            "assetType": data.assetType,
-            "projectType": data.projectType,
-            "valueOfProject": data.valueOfProject,
-            "dueDate": data.dueDate,
-            "amountOfWork": data.amountOfWork
-        }
-
-        Project.saveData(proObj, function (err, proUpdate) {
-            console.log("proUpdate", proUpdate);
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(proUpdate)) {
-                callback(null, "No Data Found");
-            } else {
-                callback(null, proUpdate);
-            }
-        });
     },
 
     // mobile API component --> project --> notes --> add
@@ -1018,8 +1048,8 @@ var model = {
             } else if (_.isEmpty(getProPhotos)) {
                 callback(null, "No Data Found");
             } else {
-                var onlyPhotos = _.groupBy(getProPhotos[0].photos, "types");
-                callback(null, onlyPhotos);
+                // var onlyPhotos = _.groupBy(getProPhotos[0].photos, "types");
+                callback(null, getProPhotos[0]);
             }
         });
     },
@@ -1028,7 +1058,7 @@ var model = {
     // data --> componentId 
     getComponentAllPhotos: function (data, callback) {
         // console.log("inside getProjectAllPhotos data", data);
-        Project.find({ components: data.componentId }).select("_id components photos").exec(function (err, getProPhotos) {
+        Project.find({ components: data.componentId }).deepPopulate("photos projectType assetType").exec(function (err, getProPhotos) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(getProPhotos)) {
@@ -1037,6 +1067,16 @@ var model = {
                 callback(null, getProPhotos);
             }
         });
+
+        //  Project.find({ components: data.componentId }).select("_id name components photos ").exec(function (err, getProPhotos) {
+        //     if (err) {
+        //         callback(err, null);
+        //     } else if (_.isEmpty(getProPhotos)) {
+        //         callback(null, "No Data Found");
+        //     } else {
+        //         callback(null, getProPhotos);
+        //     }
+        // });
     },
 };
 module.exports = _.assign(module.exports, exports, model);

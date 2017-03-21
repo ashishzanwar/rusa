@@ -81,6 +81,20 @@ var controller = {
         }
     },
 
+    addProjectFromApp: function (req, res) {
+        console.log("####################### inside addProjectFromApp project controller ##########################");
+        if (req.body) {
+            Project.addProjectFromApp(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+
     // mobile API component--> projects --> Project --> update --> status
     changeStatus: function (req, res) {
         console.log("data", req.body);

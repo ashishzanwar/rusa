@@ -134,8 +134,6 @@ var model = {
         });
 
     },
-
-
     existsSocial: function (user, callback) {
         var Model = this;
         Model.findOne({
@@ -184,7 +182,7 @@ var model = {
                 delete data.forgotPassword;
                 delete data.otp;
                 data.googleAccessToken = user.googleAccessToken;
-                data.save(function () {});
+                data.save(function () { });
                 console.log(data);
                 callback(err, data);
             }
@@ -212,7 +210,7 @@ var model = {
             "_id": id
         }).exec(function (err, data) {
             data.googleAccessToken = accessToken;
-            data.save(function () {});
+            data.save(function () { });
         });
     },
     findAllUser: function (data, callback) {
