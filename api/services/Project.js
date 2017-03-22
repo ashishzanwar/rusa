@@ -778,6 +778,7 @@ var model = {
                             pab: "$pab_data.name",
                             institute: "$institutes_data.name",
                             componentStatus: "$components_data.status",
+                            componentWorkStatus: "$components_data.workCompleted",
                             state: "$states_data._id",
                             stateName: "$states_data.name",
                             centerShare: "$states_data.centerShare",

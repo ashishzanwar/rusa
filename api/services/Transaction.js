@@ -399,7 +399,8 @@ var model = {
                             componentStatus: "$components_data.status",
                         },
                         centerComponentRelease: {
-                            $sum: "$amount"
+                            $first: "$amount"
+                            // $sum: "$amount"
                         }
                         // totalComponentAmountUtlization: {
                         //     $sum: "$components_data.amountUtilized"
@@ -444,9 +445,11 @@ var model = {
                             componentId: "$components_data._id",
                             component: "$components_data.name",
                             componentStatus: "$components_data.status",
+                            componentWorkStatus: "$components_data.workCompleted",
                         },
                         stateComponentRelease: {
-                            $sum: "$amount"
+                            $first: "$amount"
+                            // $sum: "$amount"
                         }
                         // totalComponentAmountUtlization: {
                         //     $sum: "$components_data.amountUtilized"
