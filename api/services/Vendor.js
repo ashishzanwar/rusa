@@ -262,6 +262,7 @@ var model = {
                 global[data.type].findOne({
                         _id: data.type_id
                 }).populate("vendor").exec(function (err, found) {
+                        console.log("found", found);
                         if (err) {
                                 // console.log(err);
                                 callback(err, null);

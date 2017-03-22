@@ -352,10 +352,14 @@ var model = {
                 } else if (_.isEmpty(compProjects)) {
                     callback(null, "No Data Found");
                 } else {
+                    console.log("componentProjects --> final response compProjects", compProjects);
                     var newData = _.map(compProjects, function (n) {
                         n._id.vendorReleased = n.vendorReleased;
                         return n._id;
                     });
+
+                    console.log("componentProjects --> final response 1st newData", newData);
+
                     newData = _.groupBy(newData, "projectId");
                     newData = _.map(newData, function (n) {
                         var obj = _.groupBy(n, "vendorId");
@@ -374,6 +378,8 @@ var model = {
                         return projectDetails;
                     });
 
+                    console.log("componentProjects --> final response 2nd newData", newData);
+
                     var releasedAmountPerProject = 0;
 
                     _.each(newData, function (data) {
@@ -383,6 +389,8 @@ var model = {
                         data.totalAmountReleased = releasedAmountPerProject;
                         releasedAmountPerProject = 0;
                     });
+
+                    console.log("componentProjects --> final response 3rd newData", newData);
 
                     // in case of --> calculate component release & utilize % and keep it into separate object & remove repeated fields
 
