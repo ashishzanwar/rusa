@@ -187,7 +187,7 @@ var model = {
                 }
             },
 
-            // Stage 5
+            // Stage 9
             {
                 $unwind: {
                     path: "$components_data.utilizationCertificates",
@@ -195,7 +195,7 @@ var model = {
                 }
             },
 
-            // Stage 6
+            // Stage 10
             {
                 $unwind: {
                     path: "$components_data.amountUtilized",
@@ -579,12 +579,14 @@ var model = {
         newPipeLine.push({ // to remove all repeated data & filter wanted data 
             $group: { // we will get n records & then calculate what we want in following group
                 "_id": {
+                    keyComp: "$components_data.keycomponents",
                     componentName: "$components_data.name",
                     componentWorkStatus: "$components_data.workCompleted",
                     pabName: "$pab_data.name"
                 },
                 totalAmountRelease: {
-                    $sum: "$amount"
+                    // $sum: "$amount"
+                    $first: "$amount"
                 },
                 latestAmountRelease: {
                     $last: "$amount"

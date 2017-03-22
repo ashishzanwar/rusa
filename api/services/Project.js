@@ -624,7 +624,6 @@ var model = {
                     }
                 });
             },
-
             // rusaDashboard.js pipeline 11 & 12
             totalCenterAndStateAllocation: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
@@ -779,6 +778,7 @@ var model = {
                             institute: "$institutes_data.name",
                             componentStatus: "$components_data.status",
                             componentWorkStatus: "$components_data.workCompleted",
+                            keyComponent: "$components_data.keycomponents",
                             state: "$states_data._id",
                             stateName: "$states_data.name",
                             centerShare: "$states_data.centerShare",
