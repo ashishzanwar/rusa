@@ -553,9 +553,113 @@ var model = {
 
     },
 
+    componentOverviewPipeLine: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "components",
+                    "localField": "components",
+                    "foreignField": "_id",
+                    "as": "components_data"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$components_data",
+                    "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "institutes",
+                    "localField": "components_data.institute",
+                    "foreignField": "_id",
+                    "as": "institutes_data"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$institutes_data",
+                    "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "states",
+                    "localField": "institutes_data.state",
+                    "foreignField": "_id",
+                    "as": "states_data"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$states_data",
+                    "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 7
+            {
+                $lookup: {
+                    "from": "pabs",
+                    "localField": "components_data.pabno",
+                    "foreignField": "_id",
+                    "as": "pab_data"
+                }
+            },
+
+            // Stage 8
+            {
+                $unwind: {
+                    path: "$pab_data",
+                    "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 9
+            {
+                $unwind: {
+                    path: "$components_data.utilizationCertificates",
+                    "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 10
+            {
+                $unwind: {
+                    path: "$components_data.amountUtilized",
+                    "preserveNullAndEmptyArrays": true
+                }
+            },
+
+        ];
+
+        if (data.component) {
+            pipeline.push({
+                $match: {
+                    "components_data._id": ObjectId(data.component)
+                }
+            });
+        }
+
+        return pipeline;
+    },
+
     // mobile application API for Component --> overview screen
     componentOverview: function (data, callback) {
-        var pipeLine = Transaction.getAggregatePipeLine(data);
+        var pipeLine = Transaction.componentOverviewPipeLine(data);
         console.log(pipeLine);
 
         var newPipeLine = _.cloneDeep(pipeLine);
