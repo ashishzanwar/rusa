@@ -3,7 +3,7 @@
     "name": "Vendor",
     "jsonPage": "viewVendor",
     "desciption": "",
-    "pageType": "vendoredit",
+    "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
             "name": "PAN No.",

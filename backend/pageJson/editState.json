@@ -3,7 +3,7 @@
     "name": "State",
     "jsonPage": "viewState",
     "desciption": "",
-    "pageType": "stateedit",
+    "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
             "name": "State Name",

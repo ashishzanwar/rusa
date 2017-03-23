@@ -39,24 +39,28 @@
                                                             <tr>
                                                                 <th>No.</th>
                                                                 <th>Images</th>
+                                                                <th>Amount</th>
                                                                 <th width="150px ">Actions</th>
                                                             </tr>
-                                                            <thead>
-                                                                <tr ng-repeat="photo in tableData.utilizationCertificates">
-                                                                    <td>{{$index+1}}</td>
-                                                                    <td>
-                                                                        <img ng-src="http://wohlig.io/api/upload/readFile?file={{photo.images}}" style="width:150px;height:100px;"></td>
-                                                                    <td>
-                                                                        <a class="btn btn-primary" ng-click="editBoxCustomComponentsPhotos(photo)">
-                                                                            <i class="fa fa-pencil"></i>
-                                                                        </a>
-                                                                        <a class="btn btn-danger" ng-click="removeComponentsPhotos(photo.images,json.keyword._id)">
-                                                                            <i class="fa fa-trash"></i>
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                                <tbody>
-                                                                </tbody>
+                                                        </thead>
+                                                        <tr ng-repeat="photo in tableData.utilizationCertificates">
+                                                            <td>{{$index+1}}</td>
+                                                            <td>
+                                                                <img ng-src="http://wohlig.io/api/upload/readFile?file={{photo.images}}" style="width:150px;height:100px;"></td>
+                                                            <td>
+                                                                {{photo.amount}}
+                                                            </td>
+                                                            <td>
+                                                                <a class="btn btn-primary" ng-click="editBoxCustomComponentsPhotos(photo)">
+                                                                    <i class="fa fa-pencil"></i>
+                                                                </a>
+                                                                <a class="btn btn-danger" ng-click="removeComponentsPhotos(photo.images,json.keyword._id)">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                        <tbody>
+                                                        </tbody>
                                                     </table>
                                                 </div>
                                             </div>

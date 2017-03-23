@@ -2113,6 +2113,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.saveData = function (formData) {
       console.log("in save");
+      delete formData.photos;
       console.log("ABC", formData);
       // console.log("PIC",formData.photos[0].photo);
       NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
@@ -2537,6 +2538,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     $scope.saveData = function (formData) {
       console.log("in save");
+      delete formData.photos;
       console.log("ABC", formData);
       // console.log("PIC",formData.photos[0].photo);
       NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
