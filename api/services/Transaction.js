@@ -630,9 +630,9 @@ var model = {
 
             // Stage 9
             {
-                $unwind: {
-                    path: "$components_data.utilizationCertificates",
-                    "preserveNullAndEmptyArrays": true
+                $match: {
+                    "components_data._id": ObjectId(data.component)
+                    // "components_data._id": ObjectId("58d22a60abf7eb15aa4a4120")
                 }
             },
 
@@ -644,15 +644,63 @@ var model = {
                 }
             },
 
-        ];
-
-        if (data.component) {
-            pipeline.push({
+            // Stage 11
+            {
                 $match: {
-                    "components_data._id": ObjectId(data.component)
+                    $or: [{
+                        "type": "Center To State"
+                    }, {
+                        "type": "Center To Institute"
+                    }, {
+                        "type": "Center To Vendor"
+                    }, {
+                        "type": "State To Institute"
+                    }, {
+                        "type": "State To Vendor"
+                    }]
                 }
-            });
-        }
+            },
+
+            // Stage 12
+            {
+                $group: {
+                    "_id": {
+                        _id: "$_id",
+                        componentName1: "$components_data.name",
+                        componentWorkStatus1: "$components_data.workCompleted",
+                        pabName1: "$pab_data.name"
+                    },
+                    totalAmountRelease1: {
+                        //$sum: "$amount"
+                        $first: "$amount"
+                    },
+                    totalAllocationForComponent1: {
+                        $first: "$components_data.allocation"
+                    },
+                    totalUtilizationForComponent1: {
+                        $sum: "$components_data.amountUtilized"
+                    }
+                }
+
+            },
+
+            // Stage 13
+            {
+                $group: {
+                    "_id": {
+                        totalAllocationForComponent: "$totalAllocationForComponent1",
+                        totalUtilizationForComponent: "$totalUtilizationForComponent1",
+                        componentName: "$_id.componentName1",
+                        componentWorkStatus: "$_id.componentWorkStatus1",
+                        pabName: "$_id.pabName1",
+                    },
+                    totalAmountRelease: {
+                        $sum: "$totalAmountRelease1"
+                    }
+                }
+            },
+
+        ];
 
         return pipeline;
     },
@@ -662,61 +710,73 @@ var model = {
         var pipeLine = Transaction.componentOverviewPipeLine(data);
         console.log(pipeLine);
 
-        var newPipeLine = _.cloneDeep(pipeLine);
+        async.parallel({
+            componentDetail: function (callback) {
 
-        newPipeLine.push({
-            $match: { // to get the records of state & center release only (institute to vendor is also there & we don't want)             
-                $or: [{
-                    "type": "Center To State"
-                }, {
-                    "type": "Center To Institute"
-                }, {
-                    "type": "Center To Vendor"
-                }, {
-                    "type": "State To Institute"
-                }, {
-                    "type": "State To Vendor"
-                }]
+                var newPipeLine = _.cloneDeep(pipeLine);
+
+                Transaction.aggregate(newPipeLine, function (err, totalData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(totalData)) {
+                            callback(null, "No data founds");
+                        } else {
+                            callback(null, totalData);
+                        }
+                    }
+                });
+            },
+
+            componentLatestFundFlow: function (callback) {
+                Transaction.aggregate(
+                    // Pipeline
+                    [
+                        // Stage 1
+                        {
+                            $match: {
+                                "components": ObjectId(data.component)
+                                // "components": ObjectId("58d22a60abf7eb15aa4a4120")
+                            }
+                        },
+                        // Stage 2
+                        {
+                            $match: {
+                                $or: [{
+                                    "type": "Center To State"
+                                }, {
+                                    "type": "Center To Institute"
+                                }, {
+                                    "type": "Center To Vendor"
+                                }, {
+                                    "type": "State To Institute"
+                                }, {
+                                    "type": "State To Vendor"
+                                }]
+                            }
+                        },
+                        // Stage 3
+                        {
+                            $group: {
+                                _id: 1,
+                                latestReleasedAmount: { $last: "$amount" }
+                            }
+
+                        },
+
+                    ], function (err, compLatstFundFlow) {
+                        if (err) {
+                            callback(null, err);
+                        } else {
+                            if (_.isEmpty(compLatstFundFlow)) {
+                                callback(null, "No data founds");
+                            } else {
+                                callback(null, compLatstFundFlow);
+                            }
+                        }
+                    });
             }
-        });
-
-        newPipeLine.push({ // to remove all repeated data & filter wanted data 
-            $group: { // we will get n records & then calculate what we want in following group
-                "_id": {
-                    keyComp: "$components_data.keycomponents",
-                    componentName: "$components_data.name",
-                    componentWorkStatus: "$components_data.workCompleted",
-                    pabName: "$pab_data.name"
-                },
-                totalAmountRelease: {
-                    // $sum: "$amount"
-                    $first: "$amount"
-                },
-                latestAmountRelease: {
-                    $last: "$amount"
-                },
-                totalAllocationForComponent: {
-                    $first: "$components_data.allocation"
-                },
-                totalUtilizationForComponent: {
-                    $first: "$components_data.amountUtilized"
-                }
-
-
-            }
-        });
-        Transaction.aggregate(newPipeLine, function (err, totalData) {
-            if (err) {
-                callback(null, err);
-            } else {
-                if (_.isEmpty(totalData)) {
-                    callback(null, "No data founds");
-                } else {
-                    callback(null, totalData[0]);
-                }
-            }
-        });
-
+        }, callback);
     },
 
     componentFundflowPipeLine: function (data) {
