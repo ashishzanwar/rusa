@@ -110,6 +110,39 @@ var model = {
         })
     },
 
+    // save component & add map it with project (make entry in project as well)
+    saveComponent: function (data, callback) {
+        console.log("inside saveComponent of Components, data:", data);
+
+        Components.saveData(data, function (err, addedComponent) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(addedComponent)) {
+                callback(null, "No data founds");
+            } else {
+                console.log("addComponent", addedComponent);
+
+                // note: we are creating a project with component ID only 
+                // because we want all component in project table when we fire getProjectReport (for dashboard)
+                var proExObj = {
+                    components: addedComponent._id
+                };
+
+                Project.saveData(proExObj, function (err, addedProEx) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(addedProEx)) {
+                        callback(null, "No data founds");
+                    } else {
+                        console.log("addedProEx", addedProEx);
+                        callback(null, addedProEx);
+                    }
+                });
+                // callback(null, addedProject);
+            }
+        });
+    },
+
     removeComponentsPhotos: function (data, callback) {
 
         console.log("DATA", data);

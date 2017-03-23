@@ -4,14 +4,21 @@
     "jsonPage": "viewComponents",
     "desciption": "",
     "pageType": "create",
-    "urlFields": ["Components"],
-    "fields": [{
+    "urlFields": [
+        "Components"
+    ],
+    "fields": [
+        {
             "name": "Name",
             "type": "text",
             "tableRef": "name",
             "placeholder": "Enter  Component Name",
             "id": "component",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": ""
         },
         {
@@ -22,7 +29,11 @@
             "tableRef": "institute",
             "placeholder": "Enter Institute Name",
             "id": "input1",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": "Institute/search"
         },
         {
@@ -33,7 +44,11 @@
             "tableRef": "pabno",
             "placeholder": "Enter PAB ",
             "id": "input1",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": "Pab/search"
         },
         {
@@ -44,7 +59,11 @@
             "tableRef": "keycomponents",
             "placeholder": "Enter Key Components ",
             "id": "input1",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": "KeyComponents/search"
         },
         {
@@ -53,30 +72,52 @@
             "tableRef": "allocation",
             "placeholder": "Enter Allocation",
             "id": "allocation",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": ""
-        }, {
+        },
+        {
             "name": "Status",
             "type": "tags",
             "tableRef": "status",
             "placeholder": "Enter Status",
             "id": "status",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": "",
             "dropDownField": "",
             "dropDownType": "single",
-            "dropDown": ["Active", "Complete", "Cancelled", "OnHold"]
-        }, {
+            "dropDown": [
+                "Active",
+                "Complete",
+                "Cancelled",
+                "OnHold"
+            ]
+        },
+        {
             "name": "Sub Status",
             "type": "tags",
             "tableRef": "subStatus",
             "placeholder": "Enter Sub Status",
             "id": "status",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": "",
             "dropDownField": "",
             "dropDownType": "single",
-            "dropDown": ["InTime", "Delay"]
+            "dropDown": [
+                "InTime",
+                "Delay"
+            ]
         },
         {
             "name": "Tags",
@@ -84,40 +125,50 @@
             "tableRef": "tags",
             "placeholder": "Enter Tags",
             "id": "tags",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": ""
-        }, {
+        },
+        {
             "name": "Fund Delay",
             "type": "checkbox",
             "tableRef": "fundDelay",
             "placeholder": "Enter Fund Delay",
             "id": "fundDelay",
-            "validation": ["", "trim", ""],
+            "validation": [
+                "",
+                "trim",
+                ""
+            ],
             "url": ""
         }
-
-
     ],
-    "action": [{
-        "name": "submit",
-        "action": "submitComponents",
-        "stateName": {
-            "page": "page",
-            "json": {
-                "id": "viewComponents"
+    "action": [
+        {
+            "name": "submit",
+            "action": "submitComponents",
+            "stateName": {
+                "page": "page",
+                "json": {
+                    "id": "viewComponents"
+                }
+            }
+        },
+        {
+            "name": "cancel",
+            "sideMenuRedirect": true,
+            "stateName": {
+                "page": "page",
+                "json": {
+                    "id": "viewComponents"
+                }
             }
         }
-    }, {
-        "name": "cancel",
-        "sideMenuRedirect": true,
-        "stateName": {
-            "page": "page",
-            "json": {
-                "id": "viewComponents"
-            }
-        }
-    }],
+    ],
     "apiCall": {
-        "url": "Components/save"
+        "url": "Components/saveComponent"
     }
 }
