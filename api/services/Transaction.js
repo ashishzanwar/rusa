@@ -722,7 +722,7 @@ var model = {
                         if (_.isEmpty(totalData)) {
                             callback(null, "No data founds");
                         } else {
-                            callback(null, totalData);
+                            callback(null, totalData[0]);
                         }
                     }
                 });
@@ -771,7 +771,7 @@ var model = {
                             if (_.isEmpty(compLatstFundFlow)) {
                                 callback(null, "No data founds");
                             } else {
-                                callback(null, compLatstFundFlow);
+                                callback(null, compLatstFundFlow[0]);
                             }
                         }
                     });

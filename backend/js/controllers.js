@@ -2317,7 +2317,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       console.log("in save");
       console.log("ABC", formData);
       // console.log("PIC",formData.photos[0].photo);
-      NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+      // NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+      NavigationService.apiCall("Components/saveComponent", formData, function (data) {
         if (data.value === true) {
           $scope.json.json.action[0].stateName.json.keyword = "";
           $scope.json.json.action[0].stateName.json.page = "";
