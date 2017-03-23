@@ -3,7 +3,7 @@
     "name": "Institute",
     "jsonPage": "viewInstitute",
     "desciption": "",
-    "pageType": "customedit",
+    "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
         "name": "Institute Name",

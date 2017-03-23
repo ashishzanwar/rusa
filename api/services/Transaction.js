@@ -17,11 +17,11 @@ var schema = new Schema({
         ref: 'Components',
         index: true
     },
-    // project: {
-    //     type: Schema.Types.ObjectId,
-    //     ref: 'Project',
-    //     index: true
-    // },
+    project: {
+        type: Schema.Types.ObjectId,
+        ref: 'Project',
+        index: true
+    },
     status: {
         type: String,
         enum: ["Pending", "Completed"]
@@ -29,6 +29,7 @@ var schema = new Schema({
 
     type: {
         type: String,
+        required: true,
         enum: ["Center To State", "State To Institute", "Institute To Vendor", "Vendor To Institute", "Institute To State", "Institute To Center", "State To Vendor", "State To Center", "Center To Institute"]
     },
 
@@ -219,7 +220,7 @@ var model = {
         //         }
         //     });
         // }
-        if (data.keyComponent) {  // In actial it is keycomponents
+        if (data.keyComponent) { // In actial it is keycomponents
             pipeline.push({
                 $match: {
                     "components_data.keycomponents": ObjectId(data.keyComponent)
@@ -759,12 +760,15 @@ var model = {
                         {
                             $group: {
                                 _id: 1,
-                                latestReleasedAmount: { $last: "$amount" }
+                                latestReleasedAmount: {
+                                    $last: "$amount"
+                                }
                             }
 
                         },
 
-                    ], function (err, compLatstFundFlow) {
+                    ],
+                    function (err, compLatstFundFlow) {
                         if (err) {
                             callback(null, err);
                         } else {
@@ -866,10 +870,18 @@ var model = {
                 newCFFP.push({
                     $group: {
                         _id: null,
-                        componentDetail: { $first: "$_id.component._id" },
-                        componentName: { $first: "$_id.component.name" },
-                        totalAllocation: { $first: "$totalAllocation" },
-                        totalFundRelease: { $first: "$totalFundRelease" },
+                        componentDetail: {
+                            $first: "$_id.component._id"
+                        },
+                        componentName: {
+                            $first: "$_id.component.name"
+                        },
+                        totalAllocation: {
+                            $first: "$totalAllocation"
+                        },
+                        totalFundRelease: {
+                            $first: "$totalFundRelease"
+                        },
                         totalUtilizedFund: {
                             $sum: "$totalUtilizedFund1"
                         }
@@ -1072,7 +1084,6 @@ var model = {
         }, callback);
     },
 
-    componentMedia: function (data, callback) {
-    }
+    componentMedia: function (data, callback) {}
 };
 module.exports = _.assign(module.exports, exports, model);
