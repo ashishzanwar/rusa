@@ -3,7 +3,7 @@
     "name": "TransactionDue",
     "jsonPage": "viewTransactionDue",
     "desciption": "",
-    "pageType": "edit",
+    "pageType": "trasactiondueedit",
     "urlFields": ["_id"],
     "fields": [{
         "name": "TransactionDue Name",
@@ -131,33 +131,6 @@
         "id": "name",
         "validation": ["", "trim", ""],
         "url": ""
-    }, {
-        "name": "Photos",
-        "type": "box",
-        "tableRef": "photos",
-        "validation": ["", "trim", ""],
-        "fields": [{
-            "name": "Tags",
-            "type": "text",
-            "tableRef": "tags",
-            "placeholder": "Enter Tags",
-            "id": "input1",
-            "onView": true,
-            "validation": ["", "trim", ""]
-        }, {
-            "name": "Photo",
-            "type": "image",
-            "tableRef": "photo",
-            "option": "single",
-            "size": "width = 413",
-            "placeholder": "Enter Photo",
-            "id": "input1",
-            "onView": true,
-            "validation": ["", "trim", ""],
-            "url": ""
-
-        }]
-
     }],
     "action": [{
         "name": "submit",
