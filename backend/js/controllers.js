@@ -2369,6 +2369,204 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   })
 
 
+  .controller('TrasactionDueCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+    $scope.json = JsonService;
+    JsonService.setKeyword($stateParams.keyword);
+    $scope.template = TemplateService;
+    $scope.data = {};
+    console.log("IN PROJECT controller");
+    console.log("SCOPE JSON", $scope.json);
+    $scope.tableData = {};
+    $scope.stateData = {};
+    $scope.projectDATA = {};
+    $scope.stateName = [];
+    $scope.stateIds = [];
+    $scope.STATE;
+
+    $scope.projectID = {};
+
+
+    $scope.findComponents = function () {
+      console.log('datttttttta1111');
+      NavigationService.apiCall("TransactionDue/findOneComponents", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        // var mydata = _.cloneDeep(data.data);
+        // console.log('mydatatttttttttttt',mydata);
+        $scope.projectDATA = data.data;
+        $scope.tableData = data.data;
+        $scope.generateField = true;
+        console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
+      });
+    }
+
+
+
+    $scope.findComponents();
+    // $scope.findState();
+    //  START FOR EDIT
+    if ($scope.json.json.preApi) {
+
+      NavigationService.apiCall($scope.json.json.preApi.url, {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.data = data.data;
+        $scope.generateField = true;
+        console.log("DATA IS FOUND HERE-->", $scope.data);
+
+      });
+    } else {
+      $scope.generateField = true;
+    }
+
+
+    //  END FOR EDIT
+    $scope.editBoxCustomComponentsPhotos = function (data) {
+
+      console.log("DATADATA", data);
+      $scope.datainfo = data;
+      $scope.newinfo = {};
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/image-edit-trasactionDue.html',
+        size: 'lg',
+        scope: $scope,
+
+      });
+    };
+
+
+    $scope.addBoxComponentsImage = function (data) {
+      console.log("DATADATA", data);
+
+      $scope.projectinfo = {
+        _id: data
+
+      };
+
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/image-add-trasactionDue.html',
+        size: 'lg',
+        scope: $scope,
+        tableData: $scope.tableData
+      });
+    };
+
+
+    $scope.onCancel = function (sendTo) {
+      $scope.json.json.action[1].stateName.json.keyword = "";
+      $scope.json.json.action[1].stateName.json.page = "";
+      $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
+    };
+
+
+    $scope.saveTransactionDuePhotos = function (value) {
+      console.log("DATA", value);
+
+      console.log("INSIDE SPP");
+      NavigationService.boxCall("TransactionDue/saveComponentsPhotos", value, function (data) {
+        $scope.projectData = data.data;
+        $scope.generateField = true;
+        $scope.modalInstance.close();
+        $scope.findComponents();
+        toastr.success(value.name + " Project" + " " + "added" + " successfully.");
+      })
+
+    };
+
+    // $scope.updateProjectPhotos = function (value) {
+    //   console.log("DATA", value);
+    //   NavigationService.boxCall("Project/save", value, function (data) {
+    //     $scope.projectData = data.data;
+    //     $scope.generateField = true;
+    //     $scope.modalInstance.close();
+    //     $scope.findProject();
+    //     toastr.success(" Project" + " " + "updated" + " successfully.");
+    //   })
+
+    // };
+
+
+    $scope.saveEditTransactionDuePhotos = function (value) {
+      console.log("DATA", value);
+      NavigationService.boxCall("TransactionDue/save", value, function (data) {
+        $scope.projectData = data.data;
+        $scope.generateField = true;
+        $scope.modalInstance.close();
+        $scope.findProject();
+        toastr.success(" Project" + " " + "updated" + " successfully.");
+      })
+
+    };
+
+
+    // $scope.addNewProject = function (value) {
+
+    //   console.log("DATA", value);
+    //   NavigationService.boxCall("Institute/addNewProject", value, function (data) {
+    //     $scope.newProjectData = data.data;
+    //     $scope.generateField = true;
+    //     $scope.modalInstance.close();
+    //     $state.reload();
+    //   })
+
+    // };
+
+    $scope.removeComponentsPhotos = function (value, project) {
+
+      var abc = {};
+
+      abc._id = project;
+      abc.photo = value
+      // abc = value;
+      // abc.project=project;
+      // console.log("PROJECT ",project);
+      console.log("PROJECT IMAGE afdadfdaTA", abc);
+
+      NavigationService.boxCall("TransactionDue/removeComponentsPhotos", abc, function (data) {
+        $scope.newProjectData = data.data;
+        $scope.generateField = true;
+        // $state.reload();
+        $scope.findComponents();
+      })
+
+    };
+
+    $scope.closeBox = function () {
+      $scope.modalInstance.close();
+      $scope.findProject();
+    };
+
+
+    $scope.saveData = function (formData) {
+      console.log("in save");
+      delete formData.photos;
+      console.log("ABC", formData);
+      // console.log("PIC",formData.photos[0].photo);
+      // NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+      NavigationService.apiCall("TransactionDue/saveComponent", formData, function (data) {
+        if (data.value === true) {
+          $scope.json.json.action[0].stateName.json.keyword = "";
+          $scope.json.json.action[0].stateName.json.page = "";
+          $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
+          var messText = "created";
+          if ($scope.json.keyword._id) {
+            messText = "edited";
+          }
+          toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
+        } else {
+          var messText = "creating";
+          if ($scope.json.keyword._id) {
+            messText = "editing";
+          }
+          toastr.error("Failed " + messText + " " + $scope.json.json.name);
+        }
+      });
+    };
+  })
+
+
   .controller('ProjectExpenseDetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);

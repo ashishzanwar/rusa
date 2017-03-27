@@ -69,6 +69,12 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
             TemplateService.changecontent("components-detail");
           }
           break;
+        case "trasactiondueedit":
+          {
+            console.log("IN components EDIT");
+            TemplateService.changecontent("trasactionDueImage");
+          }
+          break;
         case "centreedit":
           {
             console.log("IN Centre EDIT");
