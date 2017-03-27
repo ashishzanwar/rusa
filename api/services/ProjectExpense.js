@@ -410,6 +410,9 @@ var model = {
     },
 
     // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
+    // check whether vendor is available into the corresponding project or not --> 
+    // if yes --> then update the document  
+    // if no  --> then create a new document with vendor id & allocation amount
     vendorAllocation: function (data, callback) {
         console.log("data", data);
         // operation
@@ -417,6 +420,9 @@ var model = {
         ProjectExpense.findOneAndUpdate({ project: data.project_id, vendor: data.vendor_id }, { allocatedAmount: data.allocation }).exec(function (err, mydata) {
             if (err) {
                 console.log("inside vendorAllocation err");
+            } else if (_.isEmpty(mydata)) {
+                console.log("inside vendorAllocation null");
+                // create a new document & save vendor id & alllocation
             } else {
                 console.log("inside vendorAllocation success", mydata);
                 callback(null, mydata);

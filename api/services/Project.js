@@ -31,7 +31,8 @@ var schema = new Schema({
         type: Number
     },
     amountOfWork: {
-        type: Number
+        type: Number,
+        default: 0
     },
     dueDate: {
         type: Date
