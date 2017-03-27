@@ -13,20 +13,6 @@ var controller = {
         }
     },
 
-    saveComponent: function (req, res) {
-        console.log("inside saveComponent of ComponentsController, data:", req);
-        if (req.body) {
-            Components.saveComponent(req.body, res.callback);
-        } else {
-            res.json({
-                value: false,
-                data: {
-                    message: "Invalid Request"
-                }
-            })
-        }
-    },
-
     removeComponentsPhotos: function (req, res) {
         if (req.body) {
             Components.removeComponentsPhotos(req.body, res.callback);

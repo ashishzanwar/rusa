@@ -1,7 +1,7 @@
 <!--<div class="pull-right btn-form">
     <button class="btn btn-primary" ng-disabled="formName.$invalid">Submit</button>
 </div>-->
-<pre class="hidden">{{formData|json}}</pre>
+<pre class="hidden tempcheckclass">{{formData|json}}</pre>
 <!--<h3>Institute Form</h3>-->
 <form ng-submit="submitForm(formData);" ng-if="!formSubmitted">
 
@@ -11,25 +11,25 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Name</label>
-                    <input type="text" class="form-control" ng-model="formData.contact.name">
+                    <input type="text" class="form-control" ng-model="formData.contact.name" required>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Designation</label>
-                    <input type="text" class="form-control" ng-model="formData.contact.designation">
+                    <input type="text" class="form-control" ng-model="formData.contact.designation" required>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Mobile</label>
-                    <input type="text" class="form-control" cleave="options.mobile" ng-model="formData.contact.mobile">
+                    <input type="text" class="form-control" cleave="options.mobile" ng-model="formData.contact.mobile" required>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Email</label>
-                    <input type="email" class="form-control" ng-model="formData.contact.email">
+                    <input type="email" class="form-control" ng-model="formData.contact.email" required>
                 </div>
             </div>
             <div class="col-md-12">
@@ -47,20 +47,20 @@
                 <div class="form-group">
                     <label>State</label>
                     <select ng-options="state as state.name for state in stateData track by state._id" class="form-control" ng-model="formData.stateId"
-                        ng-change="searchData(formData.stateId);"></select>
+                        ng-change="searchData(formData.stateId);" required></select>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>District</label>
                     <select ng-options="district as district.name for district in districtData track by district._id" class="form-control" ng-model="formData.districtId"
-                        ng-change="createDistrict(formData.districtId);"></select>
+                        ng-change="createDistrict(formData.districtId);" required></select>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Institute Type</label>
-                    <select class="form-control" ng-model="formData.instituteType" ng-change="createInstituteType(instituteType);">
+                    <select class="form-control" ng-model="formData.instituteType" ng-change="createInstituteType(instituteType);" required>
                     <option value="Central Universities" >Central Universities</option>
                     <option value="State Universities" >State Universities</option>
                     <option value="Institutes of National Importance" >Institutes of National Importance</option>
@@ -75,13 +75,13 @@
                 <div class="form-group">
                     <label>Institute Name</label>
                     <select ng-options="institute as institute.name for institute in instituteData track by institute._id" class="form-control"
-                        ng-model="formData.instituteId" ng-change="createInstitute(instituteId);"></select>
+                        ng-model="formData.instituteId" ng-change="createInstitute(instituteId);" required></select>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
                     <label>State as an Unit</label>
-                    <select class="form-control" ng-model="formData.stateAsUnit">
+                    <select class="form-control" ng-model="formData.stateAsUnit" required>
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
                 </select>
@@ -98,21 +98,23 @@
                     <!--<select class="form-control" ng-model="formData.pabId" ng-change="createPab(pabId);">
                     <option value="{{name._id}}" ng-repeat="name in pabData">{{name.name}}</option>
                 </select>-->
-                    <select ng-options="pab as pab.name for pab in pabData track by pab._id" class="form-control" ng-model="formData.pabId" ng-change="createPab(pabId);"></select>
+                    <select ng-options="pab as pab.name for pab in pabData track by pab._id" class="form-control" ng-model="formData.pabId" ng-change="createPab(pabId);"
+                        required></select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Key Component</label>
                     <select ng-options="keyComponents as keyComponents.name for keyComponents in keycomponentsData track by keyComponents._id"
-                        class="form-control" ng-model="formData.keyComponentsId" ng-change="createKeyComponents(keycomponentsId);"></select>
+                        class="form-control" ng-model="formData.keyComponentsId" ng-change="createKeyComponents(keycomponentsId);"
+                        required></select>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
                     <label>Amount Approved by PAB (in INR)</label>
                     <input type="text" class="form-control" ng-model="formData.allocation" ng-change="calcShareAmount(formData.allocation);"
-                        cleave="options.indian">
+                        cleave="options.indian" required>
                 </div>
             </div>
             <div class=" col-md-4">
@@ -142,7 +144,7 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Project Type</label>
-                        <select class="form-control" ng-model="project.projectType" ng-change="createProjectType(formData.projectTypeId);">
+                        <select class="form-control" ng-model="project.projectType" ng-change="createProjectType(formData.projectTypeId);" required>
                     <option value="{{name._id}}" ng-repeat="name in projectType">{{name.name}}</option>
                     </select>
                     </div>
@@ -150,8 +152,8 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Asset Type</label>
-                        <select class="form-control" ng-model="project.assetType" ng-change="createAssetType(formData.assetTypeId);">
-                    <option value="{{name._id}}" ng-repeat="name in assetType">{{name.name}}</option>
+                        <select class="form-control" ng-model="project.assetType" ng-change="createAssetType(formData.assetTypeId);" required>
+                    <option value="{{name._id}}" ng-repeat="name in assetType" >{{name.name}}</option>
                     </select>
                     </div>
                 </div>
@@ -175,14 +177,14 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Value of Project (in INR)</label>
-                        <input type="text" cleave="options.indian" ng-model="project.valueProject" class="form-control">
+                        <input type="text" cleave="options.indian" ng-model="project.valueProject" class="form-control" required>
                     </div>
                 </div>
                 <!--{{formData.project[$index].valueProject}}fdsaaf-->
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Due Date</label>
-                        <input-date ng-model="project.dueDate">
+                        <input-date ng-model="project.dueDate" required>
                         </input-date>
                     </div>
                 </div>
@@ -191,7 +193,8 @@
                 <div class="col-md-12">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <textarea ng-model="project.remarks" placeholder="If you have any other issues please mention here" class="form-control"></textarea>
+                        <textarea ng-model="project.remarks" placeholder="If you have any other issues please mention here" class="form-control"
+                            required></textarea>
                     </div>
                 </div>
             </div>
@@ -208,32 +211,32 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor Name</label>
-                                <input type="text" ng-model="projectExpense.name" class="form-control">
+                                <input type="text" ng-model="projectExpense.name" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor PAN</label>
-                                <input type="text" ng-model="projectExpense.vendorpan" class="form-control">
+                                <input type="text" ng-model="projectExpense.vendorpan" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Vendor TIN/TAN</label>
-                                <input type="text" ng-model="projectExpense.tintan" class="form-control">
+                                <input type="text" ng-model="projectExpense.tintan" class="form-control" required>
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Allocated Amount (in INR)</label>
-                                <input type="text" cleave="options.indian" ng-model="projectExpense.amount" class="form-control">
+                                <input type="text" cleave="options.indian" ng-model="projectExpense.amount" class="form-control" required>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Order Issue Date</label>
-                                <input-date ng-model="projectExpense.orderIssueDate"></input-date>
+                                <input-date ng-model="projectExpense.orderIssueDate" required></input-date>
 
                             </div>
                         </div>
@@ -241,7 +244,7 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label>Due Date</label>
-                                <input-date ng-model="projectExpense.orderDueDate"></input-date>
+                                <input-date ng-model="projectExpense.orderDueDate" required></input-date>
                             </div>
                         </div>
 
@@ -266,31 +269,31 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Installment No.</label>
-                                        <input type="text" class="form-control" ng-model="institutetoVendor.installmentNo">
+                                        <input type="text" class="form-control" ng-model="institutetoVendor.installmentNo" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Amount (in INR)</label>
-                                        <input type="text" class="form-control" ng-model="institutetoVendor.amount" cleave="options.indian">
+                                        <input type="text" class="form-control" ng-model="institutetoVendor.amount" cleave="options.indian" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Transaction Sent</label>
-                                        <input-date ng-model="institutetoVendor.transactionSent"></input-date>
+                                        <input-date ng-model="institutetoVendor.transactionSent" required></input-date>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Transaction Recieved</label>
-                                        <input-date ng-model="institutetoVendor.transactionRecieved"></input-date>
+                                        <input-date ng-model="institutetoVendor.transactionRecieved" required></input-date>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Remarks</label>
-                                        <input type="text" class="form-control" ng-model="institutetoVendor.remarks">
+                                        <input type="text" class="form-control" ng-model="institutetoVendor.remarks" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
@@ -303,11 +306,11 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <br>
     <div class="section-1">
@@ -321,13 +324,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Installment No.</label>
-                        <input type="text" class="form-control" ng-model="state.installmentno">
+                        <input type="text" class="form-control" ng-model="state.installmentno" required>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Amount (in INR)</label>
-                        <input type="text" class="form-control" cleave="options.indian" ng-model="state.amount">
+                        <input type="text" class="form-control" cleave="options.indian" ng-model="state.amount" required>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -339,13 +342,13 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Received by Entity Releasing Funds to Institute</label>
-                        <input-date ng-model="state.transactionRecieved"></input-date>
+                        <input-date ng-model="state.transactionRecieved" required></input-date>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" ng-model="state.remarks">
+                        <input type="text" class="form-control" ng-model="state.remarks" required>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -372,31 +375,31 @@
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Installment No.</label>
-                        <input type="text" class="form-control" ng-model="institute.installmentno">
+                        <input type="text" class="form-control" ng-model="institute.installmentno" required>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Amount (in INR)</label>
-                        <input type="text" class="form-control" cleave="options.indian" ng-model="institute.amount">
+                        <input type="text" class="form-control" cleave="options.indian" ng-model="institute.amount" required>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Sent</label>
-                        <input-date ng-model="institute.transactionSent"></input-date>
+                        <input-date ng-model="institute.transactionSent" required></input-date>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Transaction Received</label>
-                        <input-date ng-model="institute.transactionRecieved"></input-date>
+                        <input-date ng-model="institute.transactionRecieved" required></input-date>
                     </div>
                 </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <label>Remarks</label>
-                        <input type="text" class="form-control" ng-model="institute.remarks">
+                        <input type="text" class="form-control" ng-model="institute.remarks" required>
                     </div>
                 </div>
                 <div class="col-md-4">
@@ -421,14 +424,14 @@
             <div class="col-md-3">
                 <div class="form-group">
                     <label>Date of UC</label>
-                    <input-date ng-model="formData.utilization.date1">
+                    <input-date ng-model="formData.utilization.date1" required>
                     </input-date>
                 </div>
             </div>
             <div class=" col-md-3 ">
                 <div class="form-group ">
                     <label>Value (in INR)</label>
-                    <input type="text " class="form-control" cleave="options.indian" ng-model="formData.utilization.value1">
+                    <input type="text " class="form-control" cleave="options.indian" ng-model="formData.utilization.value1" required>
                 </div>
             </div>
             <div class="col-md-3 ">
@@ -446,14 +449,14 @@
             <div class="col-md-3 ">
                 <div class="form-group ">
                     <label>Date of UC</label>
-                    <input-date ng-model="formData.utilization.date2">
+                    <input-date ng-model="formData.utilization.date2" required>
                     </input-date>
                 </div>
             </div>
             <div class=" col-md-3 ">
                 <div class="form-group ">
                     <label>Value (in INR)</label>
-                    <input type="text " class="form-control" cleave="options.indian" ng-model="formData.utilization.value2">
+                    <input type="text " class="form-control" cleave="options.indian" ng-model="formData.utilization.value2" required>
                 </div>
             </div>
             <div class="col-md-3 ">
@@ -495,7 +498,7 @@
         <a class="btn btn-default " ng-if="isEdit " ng-click="printForm() ">Print</a>
         <a class="btn btn-success " ng-disabled="formName.$invalid " ng-if="isEdit && isModerator " ng-click="submitForm(formData,
                         'Moderation') ">Moderation Completed</a>
-        <a class="btn btn-danger " ng-disabled="formName.$invalid " ng-if="isEdit && isModerator " ng-click="submitForm(formData,
+            <a class="btn btn-danger " ng-disabled="formName.$invalid " ng-if="isEdit && isModerator " ng-click="submitForm(formData,
                         'Trash') ">Trash</a>
 
     </div>

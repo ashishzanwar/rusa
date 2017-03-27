@@ -81,66 +81,33 @@ var model = {
         Components.update({
             _id: data._id
         }, {
-            $push: {
+                $push: {
 
-                utilizationCertificates: {
-                    $each: [{
-                        images: data.images,
-                        amount: data.amount
-                    }]
-                }
-            }
-        }).exec(function (err, found) {
-
-            if (err) {
-                // console.log(err);
-                callback(err, null);
-            } else {
-
-                if (found) {
-
-                    callback(null, found);
-                } else {
-                    callback(null, {
-                        message: "No Data Found"
-                    });
-                }
-            }
-
-        })
-    },
-
-    // save component & add map it with project (make entry in project as well)
-    saveComponent: function (data, callback) {
-        console.log("inside saveComponent of Components, data:", data);
-
-        Components.saveData(data, function (err, addedComponent) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(addedComponent)) {
-                callback(null, "No data founds");
-            } else {
-                console.log("addComponent", addedComponent);
-
-                // note: we are creating a project with component ID only 
-                // because we want all component in project table when we fire getProjectReport (for dashboard)
-                var proExObj = {
-                    components: addedComponent._id
-                };
-
-                Project.saveData(proExObj, function (err, addedProEx) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(addedProEx)) {
-                        callback(null, "No data founds");
-                    } else {
-                        console.log("addedProEx", addedProEx);
-                        callback(null, addedProEx);
+                    utilizationCertificates: {
+                        $each: [{
+                            images: data.images,
+                            amount: data.amount
+                        }]
                     }
-                });
-                // callback(null, addedProject);
-            }
-        });
+                }
+            }).exec(function (err, found) {
+
+                if (err) {
+                    // console.log(err);
+                    callback(err, null);
+                } else {
+
+                    if (found) {
+
+                        callback(null, found);
+                    } else {
+                        callback(null, {
+                            message: "No Data Found"
+                        });
+                    }
+                }
+
+            })
     },
 
     removeComponentsPhotos: function (data, callback) {
@@ -150,23 +117,23 @@ var model = {
 
             "_id": data._id
         }, {
-            $pull: {
-                utilizationCertificates: {
+                $pull: {
+                    utilizationCertificates: {
 
-                    images: data.images
+                        images: data.images
+                    }
                 }
-            }
-        }, function (err, updated) {
-            console.log(updated);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
+            }, function (err, updated) {
+                console.log(updated);
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
 
 
-                callback(null, updated);
-            }
-        });
+                    callback(null, updated);
+                }
+            });
         console.log("DATA", data);
     },
 
@@ -243,6 +210,8 @@ var model = {
 
         })
     },
+
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

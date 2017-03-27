@@ -54,6 +54,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.JSON = {};
         $scope.state;
 
+
         $scope.printForm = function () {
             print();
         };
@@ -187,8 +188,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             institutetoVendors: [_.cloneDeep(institutetoVendors)]
         };
 
-
-
         var institute = {
             name: "State to Institute 1",
             installmentNo: "",
@@ -229,7 +228,6 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         };
 
-
         NavigationService.boxCall("State/findAllState", function (data) {
             $scope.stateData = data.data;
             $scope.generateField = true;
@@ -242,16 +240,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         });
 
-
-
-
-
         NavigationService.boxCall("Institute/findAllInstitute", function (data) {
             $scope.instituteData = data.data;
             $scope.generateField = true;
 
         });
-
 
         NavigationService.boxCall("Keycomponents/findAllKeycomponents", function (data) {
             $scope.keycomponentsData = data.data;
@@ -366,11 +359,12 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             console.log("JSON", JSON);
         };
 
-
         $scope.submitForm = function (data, otherValue) {
             // JSON.assetType = data;
             $scope.submitText = "Form Sent for Submission.";
             console.log("FINAL BIG JSOn", data);
+
+
             // var jsonData = {};
             // jsonData.json = data;
             json = {};
@@ -505,4 +499,4 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     })
 
-;
+    ;

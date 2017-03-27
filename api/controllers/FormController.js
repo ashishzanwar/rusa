@@ -56,8 +56,6 @@ var controller = {
         });
     },
 
-
-
     // to change the status of all form
     changeStatusOfAllForm: function (req, res) {
         Form.update({
