@@ -7,12 +7,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.menutitle = NavigationService.makeactive("Dashboard");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.AllStates = "";
+    $scope.AllPABs = "";
+    $scope.AllComponents = "";
+    $scope.AllInstitutes = "";
     $scope.selectedPab = "";
     $scope.selectedState = "";
     $scope.AllComponents = "";
     $scope.AllInstitutes = "";
     $scope.filteredComponents = {};
     $scope.filteredComponentsNew = {};
+    $scope.getNewComponents = {};
     $scope.totalUtilizedPercentage = 0;
     $scope.count = 0;
     var dropDownData = {
@@ -140,6 +145,25 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
           });
 
           // console.log("Updated object", $scope.DashboardAllData);
+
+          NavigationService.boxCall("Project/getComponentsNotAvailInProject", dropDownData, function (data) {
+            $scope.getNewComponents = data.data;
+
+            angular.forEach($scope.getNewComponents, function (getNewComp, index) {
+
+              getNewComp.amountUtilizedPerComponent = 0;
+              getNewComp.amountUtilizedPercentagePerComponent = 0;
+              getNewComp.centerReleasePerComponent = 0;
+              getNewComp.stateReleasePerComponent = 0;
+              getNewComp.totalComponentProjects = 0;
+              getNewComp.totalDelayedProjectsPerComponent = 0;
+
+              $scope.DashboardAllData.institute.push(getNewComp);
+            });
+
+          });
+          console.log("DashboardAllData.institute", $scope.DashboardAllData.institute);
+
         });
       });
     }
@@ -156,16 +180,19 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       } else if (id == "state") {
         dropDownData.state = item._id;
         loadData(dropDownData);
+
+        NavigationService.boxCall("Institute/findAllInstituteDashBoard", dropDownData, function (data) {
+          $scope.AllInstitutes = data.data;
+          $scope.generateField = true;
+        });
+
       } else if (id == "component") {
         dropDownData.keyComponent = item._id;
-        // console.log("dropDownData", dropDownData);
         loadData(dropDownData);
       } else if (id == "institute") {
         dropDownData.institute = item._id;
         loadData(dropDownData);
       }
-
-      // console.log(dropDownData);
     };
 
     NavigationService.callApi("Pab/findAllPab", function (data) {
@@ -178,10 +205,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.generateField = true;
     });
 
-    // NavigationService.callApi("Components/findAllComponents", function (data) {
-    //   $scope.AllComponents = data.data;
-    //   $scope.generateField = true;
-    // });
+    NavigationService.callApi("Institute/findAllInstituteDashBoard", function (data) {
+      $scope.AllInstitutes = data.data;
+      $scope.generateField = true;
+    });
 
     NavigationService.callApi("KeyComponents/findAllKeyComponents", function (data) {
       $scope.AllComponents = data.data;
@@ -189,23 +216,20 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       console.log("AllComponents", $scope.AllComponents);
     });
 
-    NavigationService.callApi("Institute/findAllInstituteDashBoard", function (data) {
-      $scope.AllInstitutes = data.data;
-      $scope.generateField = true;
-    });
-
     $scope.getOneComponentDetails = function (object) {
-      $rootScope.emptyData = false;
-      $scope.getAllprojectOfComponent = {};
-      $scope.compObject = {};
-      $scope.compObject.component = object._id.componentId;
+      if (object.totalComponentProjects != 0) {
+        $rootScope.emptyData = false;
+        $scope.getAllprojectOfComponent = {};
+        $scope.compObject = {};
+        $scope.compObject.component = object._id.componentId;
 
-      NavigationService.boxCall("ProjectExpense/componentProjects", $scope.compObject, function (data) {
-        $scope.getAllprojectOfComponent = data.data;
+        NavigationService.boxCall("ProjectExpense/componentProjects", $scope.compObject, function (data) {
+          $scope.getAllprojectOfComponent = data.data;
+          console.log("getAllprojectOfComponent: ", $scope.getAllprojectOfComponent);
+        });
         console.log("getAllprojectOfComponent: ", $scope.getAllprojectOfComponent);
-      });
-      console.log("getAllprojectOfComponent: ", $scope.getAllprojectOfComponent);
-      // console.log("I got my selected object:", object._id.componentId);
+        // console.log("I got my selected object:", object._id.componentId);
+      }
     }
 
   })
@@ -448,7 +472,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     console.log("JSONSERVICE START get");
     console.log("ORGIN-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
     console.log("JSONSERVICE END get");
 
     globalfunction.confDel = function (callback) {
@@ -501,7 +525,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN CUSTOM PAGE CTRLLER");
     console.log("CUSTOM JSONSERVICE START get");
     console.log("CUSTOM-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
 
     console.log("CUSTOM JSONSERVICE END get");
     globalfunction.confDel = function (callback) {
@@ -555,7 +579,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN CUSTOM PAGE CTRLLER");
     console.log("CUSTOM JSONSERVICE START get");
     console.log("CUSTOM-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
 
     console.log("CUSTOM JSONSERVICE END get");
     globalfunction.confDel = function (callback) {
@@ -635,9 +659,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.currentPage = 1;
       }
       NavigationService.search($scope.json.json.apiCall.url, {
-          page: $scope.currentPage,
-          keyword: $scope.search.keyword
-        }, ++i,
+        page: $scope.currentPage,
+        keyword: $scope.search.keyword
+      }, ++i,
         function (data, ini) {
           if (ini == i) {
             $scope.items = data.data.results;
@@ -765,16 +789,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("Institute/findOneInstituteUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.instituteUserData = data.data;
-          // $scope.generateField = true;
-          console.log("instituteUserDATA IS FOUND HERE-->", $scope.instituteUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("Institute/findOneInstituteUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.instituteUserData = data.data;
+        // $scope.generateField = true;
+        console.log("instituteUserDATA IS FOUND HERE-->", $scope.instituteUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
       $scope.getUser();
     $scope.removeUser = function (value) {
       console.log("USER REMOVE DATA", $scope.json.keyword._id);
@@ -1131,16 +1155,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("State/findOneStateUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.stateUserData = data.data;
-          // $scope.generateField = true;
-          console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("State/findOneStateUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.stateUserData = data.data;
+        // $scope.generateField = true;
+        console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
 
       $scope.getUser();
 
@@ -1449,16 +1473,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("Vendor/findOneVendorUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.vendorUserData = data.data;
-          // $scope.generateField = true;
-          console.log("vendorUserDATA IS FOUND HERE-->", $scope.stateUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("Vendor/findOneVendorUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.vendorUserData = data.data;
+        // $scope.generateField = true;
+        console.log("vendorUserDATA IS FOUND HERE-->", $scope.stateUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
 
       $scope.getUser();
 
@@ -2345,6 +2369,204 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
   })
 
 
+  .controller('TrasactionDueCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
+    $scope.json = JsonService;
+    JsonService.setKeyword($stateParams.keyword);
+    $scope.template = TemplateService;
+    $scope.data = {};
+    console.log("IN PROJECT controller");
+    console.log("SCOPE JSON", $scope.json);
+    $scope.tableData = {};
+    $scope.stateData = {};
+    $scope.projectDATA = {};
+    $scope.stateName = [];
+    $scope.stateIds = [];
+    $scope.STATE;
+
+    $scope.projectID = {};
+
+
+    $scope.findComponents = function () {
+      console.log('datttttttta1111');
+      NavigationService.apiCall("TransactionDue/findOneComponents", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        // var mydata = _.cloneDeep(data.data);
+        // console.log('mydatatttttttttttt',mydata);
+        $scope.projectDATA = data.data;
+        $scope.tableData = data.data;
+        $scope.generateField = true;
+        console.log("TABLEDATA IS FOUND HERE-->", $scope.tableData);
+      });
+    }
+
+
+
+    $scope.findComponents();
+    // $scope.findState();
+    //  START FOR EDIT
+    if ($scope.json.json.preApi) {
+
+      NavigationService.apiCall($scope.json.json.preApi.url, {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.data = data.data;
+        $scope.generateField = true;
+        console.log("DATA IS FOUND HERE-->", $scope.data);
+
+      });
+    } else {
+      $scope.generateField = true;
+    }
+
+
+    //  END FOR EDIT
+    $scope.editBoxCustomComponentsPhotos = function (data) {
+
+      console.log("DATADATA", data);
+      $scope.datainfo = data;
+      $scope.newinfo = {};
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/image-edit-trasactionDue.html',
+        size: 'lg',
+        scope: $scope,
+
+      });
+    };
+
+
+    $scope.addBoxComponentsImage = function (data) {
+      console.log("DATADATA", data);
+
+      $scope.projectinfo = {
+        _id: data
+
+      };
+
+      $scope.modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/image-add-trasactionDue.html',
+        size: 'lg',
+        scope: $scope,
+        tableData: $scope.tableData
+      });
+    };
+
+
+    $scope.onCancel = function (sendTo) {
+      $scope.json.json.action[1].stateName.json.keyword = "";
+      $scope.json.json.action[1].stateName.json.page = "";
+      $state.go($scope.json.json.action[1].stateName.page, $scope.json.json.action[1].stateName.json);
+    };
+
+
+    $scope.saveTransactionDuePhotos = function (value) {
+      console.log("DATA", value);
+
+      console.log("INSIDE SPP");
+      NavigationService.boxCall("TransactionDue/saveComponentsPhotos", value, function (data) {
+        $scope.projectData = data.data;
+        $scope.generateField = true;
+        $scope.modalInstance.close();
+        $scope.findComponents();
+        toastr.success(value.name + " Project" + " " + "added" + " successfully.");
+      })
+
+    };
+
+    // $scope.updateProjectPhotos = function (value) {
+    //   console.log("DATA", value);
+    //   NavigationService.boxCall("Project/save", value, function (data) {
+    //     $scope.projectData = data.data;
+    //     $scope.generateField = true;
+    //     $scope.modalInstance.close();
+    //     $scope.findProject();
+    //     toastr.success(" Project" + " " + "updated" + " successfully.");
+    //   })
+
+    // };
+
+
+    $scope.saveEditTransactionDuePhotos = function (value) {
+      console.log("DATA", value);
+      NavigationService.boxCall("TransactionDue/save", value, function (data) {
+        $scope.projectData = data.data;
+        $scope.generateField = true;
+        $scope.modalInstance.close();
+        $scope.findProject();
+        toastr.success(" Project" + " " + "updated" + " successfully.");
+      })
+
+    };
+
+
+    // $scope.addNewProject = function (value) {
+
+    //   console.log("DATA", value);
+    //   NavigationService.boxCall("Institute/addNewProject", value, function (data) {
+    //     $scope.newProjectData = data.data;
+    //     $scope.generateField = true;
+    //     $scope.modalInstance.close();
+    //     $state.reload();
+    //   })
+
+    // };
+
+    $scope.removeComponentsPhotos = function (value, project) {
+
+      var abc = {};
+
+      abc._id = project;
+      abc.photo = value
+      // abc = value;
+      // abc.project=project;
+      // console.log("PROJECT ",project);
+      console.log("PROJECT IMAGE afdadfdaTA", abc);
+
+      NavigationService.boxCall("TransactionDue/removeComponentsPhotos", abc, function (data) {
+        $scope.newProjectData = data.data;
+        $scope.generateField = true;
+        // $state.reload();
+        $scope.findComponents();
+      })
+
+    };
+
+    $scope.closeBox = function () {
+      $scope.modalInstance.close();
+      $scope.findProject();
+    };
+
+
+    $scope.saveData = function (formData) {
+      console.log("in save");
+      delete formData.photos;
+      console.log("ABC", formData);
+      // console.log("PIC",formData.photos[0].photo);
+      // NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+      NavigationService.apiCall("TransactionDue/saveComponent", formData, function (data) {
+        if (data.value === true) {
+          $scope.json.json.action[0].stateName.json.keyword = "";
+          $scope.json.json.action[0].stateName.json.page = "";
+          $state.go($scope.json.json.action[0].stateName.page, $scope.json.json.action[0].stateName.json);
+          var messText = "created";
+          if ($scope.json.keyword._id) {
+            messText = "edited";
+          }
+          toastr.success($scope.json.json.name + " " + formData.name + " " + messText + " successfully.");
+        } else {
+          var messText = "creating";
+          if ($scope.json.keyword._id) {
+            messText = "editing";
+          }
+          toastr.error("Failed " + messText + " " + $scope.json.json.name);
+        }
+      });
+    };
+  })
+
+
   .controller('ProjectExpenseDetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, $uibModal, toastr) {
     $scope.json = JsonService;
     JsonService.setKeyword($stateParams.keyword);
@@ -2694,17 +2916,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
     };
     $scope.editBox = function (state, data) {
-        $scope.state = state;
-        $scope.data = data;
-        $scope.formData[$scope.type.tableRef] = data;
-        var modalInstance = $uibModal.open({
-          animation: $scope.animationsEnabled,
-          templateUrl: '/backend/views/modal/modal.html',
-          size: 'lg',
-          scope: $scope,
-          formData: $scope.data
-        });
-      },
+      $scope.state = state;
+      $scope.data = data;
+      $scope.formData[$scope.type.tableRef] = data;
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/modal.html',
+        size: 'lg',
+        scope: $scope,
+        formData: $scope.data
+      });
+    },
 
       $scope.editBox2 = function (state, data) {
         $scope.state = state;
@@ -3252,84 +3474,84 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     $scope.collectionTypes = ["Table View", "Table View Drag and Drop", "Grid View", "Grid View Drag and Drop"];
     $scope.schema = [{
-        "schemaType": "Boolean",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Color",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Date",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Email",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "File",
-        "Input1": "MB Limit",
-        "Input2": ""
-      }, {
-        "schemaType": "Image",
-        "Input1": "pixel x",
-        "Input2": "pixel y "
-      }, {
-        "schemaType": "Location",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Mobile",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Multiple Select",
-        "Input1": "Enum",
-        "Input2": ""
-      }, {
-        "schemaType": "Multiple Select From Table",
-        "Input1": "Collection",
-        "Input2": "Field"
-      }, {
-        "schemaType": "Number",
-        "Input1": "min ",
-        "Input2": "max"
-      }, {
-        "schemaType": "Single Select ",
-        "Input1": "Enum",
-        "Input2": ""
-      },
+      "schemaType": "Boolean",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Color",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Date",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Email",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "File",
+      "Input1": "MB Limit",
+      "Input2": ""
+    }, {
+      "schemaType": "Image",
+      "Input1": "pixel x",
+      "Input2": "pixel y "
+    }, {
+      "schemaType": "Location",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Mobile",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Multiple Select",
+      "Input1": "Enum",
+      "Input2": ""
+    }, {
+      "schemaType": "Multiple Select From Table",
+      "Input1": "Collection",
+      "Input2": "Field"
+    }, {
+      "schemaType": "Number",
+      "Input1": "min ",
+      "Input2": "max"
+    }, {
+      "schemaType": "Single Select ",
+      "Input1": "Enum",
+      "Input2": ""
+    },
 
-      {
-        "schemaType": "Single Select From Table",
-        "Input1": "Collection",
-        "Input2": "Field"
-      }, {
-        "schemaType": "Telephone",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Text",
-        "Input1": "min length",
-        "Input2": "max length"
-      }, {
-        "schemaType": "TextArea",
-        "Input1": "min length",
-        "Input2": "max length"
-      }, {
-        "schemaType": "URL",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "WYSIWYG",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Youtube",
-        "Input1": "",
-        "Input2": ""
-      }
+    {
+      "schemaType": "Single Select From Table",
+      "Input1": "Collection",
+      "Input2": "Field"
+    }, {
+      "schemaType": "Telephone",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Text",
+      "Input1": "min length",
+      "Input2": "max length"
+    }, {
+      "schemaType": "TextArea",
+      "Input1": "min length",
+      "Input2": "max length"
+    }, {
+      "schemaType": "URL",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "WYSIWYG",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Youtube",
+      "Input1": "",
+      "Input2": ""
+    }
     ];
 
 

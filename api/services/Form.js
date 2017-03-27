@@ -78,8 +78,11 @@ schema.plugin(deepPopulate, {
     }
 
 });
+
 schema.plugin(uniqueValidator);
-schema.plugin(timestamps);
+// schema.plugin(timestamps);
+// const Ajv = require('ajv');
+// const ajv = new Ajv({ allErrors: true });
 module.exports = mongoose.model('Form', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "json.stateId json.districtId json.pabId json.instituteId json.keyComponentsId", "json.stateId json.districtId json.pabId json.instituteId json.keyComponentsId"));
@@ -196,10 +199,11 @@ var model = {
     },
 
     compile: function (data, callback) {
+        console.log("##############inside compile of form.js#################", data);
+
         var json = {};
         json = data.json;
 
-        console.log("##############inside compile of form.js#################", json);
         var componentObj = {
             name: json.keyComponentsId.name,
             // institute: json.instituteId._id,        // we are not getting it don't know why
@@ -220,7 +224,6 @@ var model = {
             }],
             fundDelay: false
         };
-
 
         var compo = Components(componentObj);
         compo.save(function (err, comSave) {
@@ -491,6 +494,8 @@ var model = {
                 }
             });
         });
+
+
     },
 
     search: function (data, status, callback) {

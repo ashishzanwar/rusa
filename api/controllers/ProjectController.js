@@ -158,7 +158,6 @@ var controller = {
         }
     },
 
-
     // mobile API component --> projects --> project --> photos --> addNew photos
     // data --> project_id, componentId
     addProjectPhotos: function (req, res) {
@@ -193,6 +192,20 @@ var controller = {
         // console.log("inside getProjectAllNotes: ", req.body);
         if (req.body) {
             Project.getComponentAllPhotos(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+
+    getComponentsNotAvailInProject: function (req, res) {
+        console.log("inside getComponentsNotAvailInProject controller");
+        if (req.body) {
+            Project.getComponentsNotAvailInProject(req.body, res.callback);
         } else {
             res.json({
                 value: false,

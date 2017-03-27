@@ -65,39 +65,6 @@
             "validation": ["", "trim", ""],
             "url": ""
         }, {
-            "name": "Photos",
-            "type": "box",
-            "tableRef": "photos",
-            "validation": ["", "trim", ""],
-            "onView": true,
-            "fields": [{
-                "name": "Status",
-                "type": "tags",
-                "tableRef": "types",
-                "placeholder": "Enter Status",
-                "id": "status",
-                "validation": ["", "trim", ""],
-                "url": "",
-                "dropDownField": "",
-                "onView": true,
-                "dropDownType": "single",
-                "dropDown": [
-                    "Payment", "Instage Work", "Completed Work", "Others"
-                ]
-            }, {
-
-                "name": "Image",
-                "type": "image",
-                "size": "100 x 100",
-                "option": "single",
-                "tableRef": "photo",
-                "placeholder": "Enter Image",
-                "id": "input1",
-                "onView": true,
-                "validation": ["", "trim", ""],
-                "url": ""
-            }]
-        }, {
             "name": "Status",
             "type": "tags",
             "tableRef": "status",

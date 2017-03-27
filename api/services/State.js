@@ -193,6 +193,7 @@ var model = {
         },
 
         findAllState: function (data, callback) {
+                console.log("inside findAllState data", data);
                 State.find().select("name _id centerShare stateShare").exec(function (err, found) {
                         if (err) {
                                 // console.log(err);

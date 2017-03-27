@@ -169,6 +169,6 @@
         }
     ],
     "apiCall": {
-        "url": "Components/saveComponent"
+        "url": "Components/save"
     }
 }
