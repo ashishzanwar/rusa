@@ -25,17 +25,11 @@ module.exports = {
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-<<<<<<< HEAD
   port: 85,
   // realHost: "https://rusabeta.wohlig.co.in",
   realHost: "http://rusabeta.wohlig.com",
   emails: ["chintan@wohlig.com", "ashish.zanwar@wohlig.com", "jagruti@wohlig.com", "tushar@wohlig.com", "chirag@wohlig.com", "harsh@wohlig.com", "sohan@wohlig.com", "pratik.gawand@wohlig.com"]
-=======
-  port: 81,
-  // realHost: "https://rusa.wohlig.co.in",
-  realHost: "https://rusa.thegraylab.com",
-  emails: ["chintan@wohlig.com", "ashish.zanwar@wohlig.com", "jagruti@wohlig.com", "tushar@wohlig.com", "chirag@wohlig.com", "harsh@wohlig.com", "sohan@wohlig.com", "aditya.ghag@wohlig.com"]
->>>>>>> d6851673a5561ceb0120a428087efe46783353ed
+
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
