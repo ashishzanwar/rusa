@@ -472,7 +472,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     console.log("JSONSERVICE START get");
     console.log("ORGIN-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () { });
+    JsonService.getJson($stateParams.id, function () {});
     console.log("JSONSERVICE END get");
 
     globalfunction.confDel = function (callback) {
@@ -525,7 +525,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN CUSTOM PAGE CTRLLER");
     console.log("CUSTOM JSONSERVICE START get");
     console.log("CUSTOM-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () { });
+    JsonService.getJson($stateParams.id, function () {});
 
     console.log("CUSTOM JSONSERVICE END get");
     globalfunction.confDel = function (callback) {
@@ -579,7 +579,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN CUSTOM PAGE CTRLLER");
     console.log("CUSTOM JSONSERVICE START get");
     console.log("CUSTOM-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () { });
+    JsonService.getJson($stateParams.id, function () {});
 
     console.log("CUSTOM JSONSERVICE END get");
     globalfunction.confDel = function (callback) {
@@ -659,9 +659,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.currentPage = 1;
       }
       NavigationService.search($scope.json.json.apiCall.url, {
-        page: $scope.currentPage,
-        keyword: $scope.search.keyword
-      }, ++i,
+          page: $scope.currentPage,
+          keyword: $scope.search.keyword
+        }, ++i,
         function (data, ini) {
           if (ini == i) {
             $scope.items = data.data.results;
@@ -789,16 +789,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-      NavigationService.apiCall("Institute/findOneInstituteUser", {
-        [$scope.json.json.preApi.params]: $scope.json.keyword._id
-      }, function (data) {
-        $scope.instituteUserData = data.data;
-        // $scope.generateField = true;
-        console.log("instituteUserDATA IS FOUND HERE-->", $scope.instituteUserData);
-        // console.log("STATEID", $scope.tableData.state._id);
-        // console.log("STATEID", $scope.tableData.state.name);
-      });
-    },
+        NavigationService.apiCall("Institute/findOneInstituteUser", {
+          [$scope.json.json.preApi.params]: $scope.json.keyword._id
+        }, function (data) {
+          $scope.instituteUserData = data.data;
+          // $scope.generateField = true;
+          console.log("instituteUserDATA IS FOUND HERE-->", $scope.instituteUserData);
+          // console.log("STATEID", $scope.tableData.state._id);
+          // console.log("STATEID", $scope.tableData.state.name);
+        });
+      },
       $scope.getUser();
     $scope.removeUser = function (value) {
       console.log("USER REMOVE DATA", $scope.json.keyword._id);
@@ -1155,16 +1155,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-      NavigationService.apiCall("State/findOneStateUser", {
-        [$scope.json.json.preApi.params]: $scope.json.keyword._id
-      }, function (data) {
-        $scope.stateUserData = data.data;
-        // $scope.generateField = true;
-        console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
-        // console.log("STATEID", $scope.tableData.state._id);
-        // console.log("STATEID", $scope.tableData.state.name);
-      });
-    },
+        NavigationService.apiCall("State/findOneStateUser", {
+          [$scope.json.json.preApi.params]: $scope.json.keyword._id
+        }, function (data) {
+          $scope.stateUserData = data.data;
+          // $scope.generateField = true;
+          console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
+          // console.log("STATEID", $scope.tableData.state._id);
+          // console.log("STATEID", $scope.tableData.state.name);
+        });
+      },
 
       $scope.getUser();
 
@@ -1473,16 +1473,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-      NavigationService.apiCall("Vendor/findOneVendorUser", {
-        [$scope.json.json.preApi.params]: $scope.json.keyword._id
-      }, function (data) {
-        $scope.vendorUserData = data.data;
-        // $scope.generateField = true;
-        console.log("vendorUserDATA IS FOUND HERE-->", $scope.stateUserData);
-        // console.log("STATEID", $scope.tableData.state._id);
-        // console.log("STATEID", $scope.tableData.state.name);
-      });
-    },
+        NavigationService.apiCall("Vendor/findOneVendorUser", {
+          [$scope.json.json.preApi.params]: $scope.json.keyword._id
+        }, function (data) {
+          $scope.vendorUserData = data.data;
+          // $scope.generateField = true;
+          console.log("vendorUserDATA IS FOUND HERE-->", $scope.stateUserData);
+          // console.log("STATEID", $scope.tableData.state._id);
+          // console.log("STATEID", $scope.tableData.state.name);
+        });
+      },
 
       $scope.getUser();
 
@@ -2916,17 +2916,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
     };
     $scope.editBox = function (state, data) {
-      $scope.state = state;
-      $scope.data = data;
-      $scope.formData[$scope.type.tableRef] = data;
-      var modalInstance = $uibModal.open({
-        animation: $scope.animationsEnabled,
-        templateUrl: '/backend/views/modal/modal.html',
-        size: 'lg',
-        scope: $scope,
-        formData: $scope.data
-      });
-    },
+        $scope.state = state;
+        $scope.data = data;
+        $scope.formData[$scope.type.tableRef] = data;
+        var modalInstance = $uibModal.open({
+          animation: $scope.animationsEnabled,
+          templateUrl: '/backend/views/modal/modal.html',
+          size: 'lg',
+          scope: $scope,
+          formData: $scope.data
+        });
+      },
 
       $scope.editBox2 = function (state, data) {
         $scope.state = state;
@@ -3474,84 +3474,84 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     $scope.collectionTypes = ["Table View", "Table View Drag and Drop", "Grid View", "Grid View Drag and Drop"];
     $scope.schema = [{
-      "schemaType": "Boolean",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "Color",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "Date",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "Email",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "File",
-      "Input1": "MB Limit",
-      "Input2": ""
-    }, {
-      "schemaType": "Image",
-      "Input1": "pixel x",
-      "Input2": "pixel y "
-    }, {
-      "schemaType": "Location",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "Mobile",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "Multiple Select",
-      "Input1": "Enum",
-      "Input2": ""
-    }, {
-      "schemaType": "Multiple Select From Table",
-      "Input1": "Collection",
-      "Input2": "Field"
-    }, {
-      "schemaType": "Number",
-      "Input1": "min ",
-      "Input2": "max"
-    }, {
-      "schemaType": "Single Select ",
-      "Input1": "Enum",
-      "Input2": ""
-    },
+        "schemaType": "Boolean",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "Color",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "Date",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "Email",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "File",
+        "Input1": "MB Limit",
+        "Input2": ""
+      }, {
+        "schemaType": "Image",
+        "Input1": "pixel x",
+        "Input2": "pixel y "
+      }, {
+        "schemaType": "Location",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "Mobile",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "Multiple Select",
+        "Input1": "Enum",
+        "Input2": ""
+      }, {
+        "schemaType": "Multiple Select From Table",
+        "Input1": "Collection",
+        "Input2": "Field"
+      }, {
+        "schemaType": "Number",
+        "Input1": "min ",
+        "Input2": "max"
+      }, {
+        "schemaType": "Single Select ",
+        "Input1": "Enum",
+        "Input2": ""
+      },
 
-    {
-      "schemaType": "Single Select From Table",
-      "Input1": "Collection",
-      "Input2": "Field"
-    }, {
-      "schemaType": "Telephone",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "Text",
-      "Input1": "min length",
-      "Input2": "max length"
-    }, {
-      "schemaType": "TextArea",
-      "Input1": "min length",
-      "Input2": "max length"
-    }, {
-      "schemaType": "URL",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "WYSIWYG",
-      "Input1": "",
-      "Input2": ""
-    }, {
-      "schemaType": "Youtube",
-      "Input1": "",
-      "Input2": ""
-    }
+      {
+        "schemaType": "Single Select From Table",
+        "Input1": "Collection",
+        "Input2": "Field"
+      }, {
+        "schemaType": "Telephone",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "Text",
+        "Input1": "min length",
+        "Input2": "max length"
+      }, {
+        "schemaType": "TextArea",
+        "Input1": "min length",
+        "Input2": "max length"
+      }, {
+        "schemaType": "URL",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "WYSIWYG",
+        "Input1": "",
+        "Input2": ""
+      }, {
+        "schemaType": "Youtube",
+        "Input1": "",
+        "Input2": ""
+      }
     ];
 
 
@@ -3638,6 +3638,92 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         scope: $scope,
       });
     };
+  })
+  //controller 'masterReformCtrl' added by nargis
+  .controller('masterReformCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $stateParams, $state, toastr, $uibModal) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("master-reform");
+    $scope.menutitle = NavigationService.makeactive("master-reform");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.Questionindex = null;
+    $scope.dataList = {
+      answers: [{}]
+    };
+    console.log("$stateParams---", JSON.stringify($stateParams.keyword));
+    if (!_.isEmpty($stateParams.keyword)) {
+      $scope.json = JsonService;
+      JsonService.setKeyword($stateParams.keyword);
+      console.log("$scope.json.keyword._id", $scope.json.keyword.id);
+      NavigationService.getOneMasterReform($scope.json.keyword.id, function (data) {
+        $scope.formData = data.data;
+        if (_.isEmpty($scope.formData.questionAnswerList)) {
+          $scope.formData.questionAnswerList = [];
+
+        } else {
+          $scope.dataList = $scope.formData.questionAnswerList;
+        }
+        console.log('formData-----', $scope.formData);
+
+      });
+    } else {
+      $scope.formData = {};
+      $scope.formData.questionAnswerList = [];
+    }
+
+    $scope.addAnswer = function () {
+      $scope.dataList.answers.push({});
+    };
+    $scope.addQuestion = function (dataList) {
+      if ($scope.Questionindex != null) {
+        $scope.formData.questionAnswerList[$scope.Questionindex] = dataList;
+      } else {
+        $scope.formData.questionAnswerList.push(dataList);
+      }
+      $scope.dataList = {
+        answers: [{}]
+      };
+    };
+    $scope.saveMasterReform = function (formData) {
+      console.log($scope.formData); //MasterReform/save
+      NavigationService.boxCall("MasterReform/save", $scope.formData, function (data) {
+        console.log("data---", data);
+        if (data.value === true) {
+          $state.go('page', {
+            "id": "viewMasterReform"
+          });
+          toastr.success("Master Reform  created successfully.", "Master Reform Created");
+        } else {
+          toastr.error("Master Reform creation failed.", "Master Reform creation error");
+        }
+      });
+    };
+
+    $scope.modalQuestion = function (data) {
+      if (data != null) {
+        if (!_.isEmpty($scope.formData.questionAnswerList)) {
+          $scope.Questionindex = $scope.formData.questionAnswerList.indexOf(data);
+          console.log("$scope.Questionindex--", $scope.Questionindex)
+        }
+        $scope.dataList = data;
+      } else {
+        $scope.dataList = {
+          answers: [{}]
+        };
+      }
+
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/add-question.html',
+        size: 'lg',
+        scope: $scope
+      });
+    };
+    $scope.deleteAnswer = function (indexItem) {
+      $scope.dataList.answers.splice(indexItem, 1);
+    };
+
+
   })
 
   .controller('headerctrl', function ($scope, TemplateService, $uibModal) {

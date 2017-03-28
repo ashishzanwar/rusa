@@ -88,6 +88,11 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
             TemplateService.changecontent("vendor-detail");
           }
           break;
+        case "master-reform":
+          {
+            TemplateService.changecontent("master-reform");
+          }
+          break;
       }
       callback();
     });
@@ -175,6 +180,15 @@ jsonservicemod.service('JsonService', function ($http, TemplateService, $state, 
         console.log("IN Vendor TYPE");
         $state.go("vendorpage", sendTo);
 
+      } else if (action && action.type == "master-reform") {
+        if (action.fieldsToSend) {
+          var keyword = {};
+          _.each(action.fieldsToSend, function (n, key) {
+            keyword[key] = value[n];
+          });
+          sendTo.keyword = JSON.stringify(keyword);
+        }
+        $state.go("master-reform", sendTo);
       } else if (action && action.type == "apiCallConfirm") {
         globalfunction.confDel(function (value2) {
           if (value2) {

@@ -1,0 +1,36 @@
+{
+    "title": "Create MasterReform",
+    "name": "MasterReform",
+    "jsonPage": "viewMasterReform",
+    "desciption": "",
+    "pageType": "master-reform",
+    "urlFields": [
+        "MasterReform"
+    ],
+    "fields": [],
+    "action": [
+        {
+            "name": "submit",
+            "action": "submitMasterReform",
+            "stateName": {
+                "page": "page",
+                "json": {
+                    "id": "viewMasterReform"
+                }
+            }
+        },
+        {
+            "name": "cancel",
+            "sideMenuRedirect": true,
+            "stateName": {
+                "page": "page",
+                "json": {
+                    "id": "viewMasterReform"
+                }
+            }
+        }
+    ],
+    "apiCall": {
+        "url": "MasterReform/save"
+    }
+}
