@@ -1,0 +1,43 @@
+{
+    "title": "Answered Refor​m",
+    "description": "List of Answered Refor​ms",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": [
+        "_id"
+    ],
+    "fields": [{
+        "name": "category",
+        "isSort": "",
+        "tableRef": "category"
+    }],
+    "action": [{
+            "name": "edit",
+            "icon": "fa-pencil",
+            "buttonClass": "btn-primary",
+            "type": "master-reform",
+            "action": "editAnsweredRefor​m",
+            "fieldsToSend": {
+                "id": "_id"
+            }
+        },
+        {
+            "name": "delete",
+            "icon": "fa-trash",
+            "buttonClass": "btn-danger",
+            "type": "apiCallConfirm",
+            "title": "Delete AnsweredRefor​m",
+            "content": "Are you sure you want to delete AnsweredRefor​m?",
+            "api": "AnsweredRefor​m/delete",
+            "fieldsToSend": {
+                "name": "_id",
+                "value": "_id"
+            }
+        }
+    ],
+    "button": [],
+    "apiCall": {
+        "url": "AnsweredRefor​m/search",
+        "params": "_id"
+    }
+}

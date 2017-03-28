@@ -127,7 +127,12 @@ firstapp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $lo
       url: "/jagz",
       templateUrl: "views/jagz.html",
       controller: 'JagzCtrl'
-    });
+    })
+    .state('master-reform', {
+      url: "/master-reform/:id/{page:.*}/{keyword:.*}",
+      templateUrl: "views/template.html",
+      controller: 'masterReformCtrl'
+    }); //this state is added by nargis
 
   $urlRouterProvider.otherwise("/dashboard");
   $locationProvider.html5Mode(isproduction);

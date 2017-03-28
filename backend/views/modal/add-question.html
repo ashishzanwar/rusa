@@ -1,0 +1,47 @@
+<form name="modalForm">
+    <div class="modal-header">
+        <h4 class="modal-title">Questions &amp; Answers</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-10">
+                <div class="form-group">
+                    <label>Question</label>
+                    <input type="text" name="question" ng-model="dataList.question" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Points</label>
+                    <input type="text" name="points" ng-model="dataList.points" class="form-control" required>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-primary pull-right" type="button" ng-click="addAnswer();">Add Answer</button>
+        <h5>Add Answer</h5>
+        <hr>
+        <div class="row" ng-repeat="ans in dataList.answers">
+            <!--<div class="" ng-repeat="item in formData.questionAnswerList">-->
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Answer #{{$index+1}}</label>
+                    <input type="text" name="answer{{$index}}" ng-model="ans.answer" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label>Weightage</label>
+                    <input type="text" name="weightage{{$index}}" max="{{dataList.points}}" ng-model="ans.points" class="form-control" required>
+                </div>
+            </div>
+            <div class="col-md-2">
+                <label>Action</label> <br>
+                <button class="btn btn-danger" ng-click="deleteAnswer($index)">Delete Answer</button>
+            </div>
+            <!--</div>-->
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button class="btn btn-primary" type="button" ng-disabled="modalForm.$invalid" ng-click="addQuestion(dataList);$dismiss();">Save Question</button>
+    </div>
+</form>

@@ -1,0 +1,63 @@
+{
+    "title": "Edit MasterReform",
+    "name": "MasterReform",
+    "jsonPage": "viewMasterReform",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": [
+        "_id"
+    ],
+    "fields": [
+        {
+            "name": "category",
+            "type": "text",
+            "tableRef": "category",
+            "placeholder": "Enter category",
+            "id": "category",
+            "validation": [
+                "required",
+                "trim",
+                "unique"
+            ],
+            "url": ""
+        },
+        {
+            "name": "questionAnswerList",
+            "type": "text",
+            "tableRef": "questionAnswerList",
+            "placeholder": "Enter questionAnswerList",
+            "id": "questionAnswerList",
+            "url": ""
+        }
+    ],
+    "action": [
+        {
+            "name": "submit",
+            "action": "submitMasterReform",
+            "stateName": {
+                "page": "page",
+                "json": {
+                    "id": "viewMasterReform"
+                }
+            }
+        },
+        {
+            "name": "cancel",
+            "sideMenuRedirect": true,
+            "stateName": {
+                "page": "page",
+                "json": {
+                    "id": "viewMasterReform"
+                }
+            }
+        }
+    ],
+    "apiCall": {
+        "url": "MasterReform/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "MasterReform/getOne",
+        "params": "_id"
+    }
+}
