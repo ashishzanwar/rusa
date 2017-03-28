@@ -234,11 +234,16 @@
                     <tr class="table_data" ng-repeat="i in getAllprojectOfComponent" ng-class="{'': $index == 1}">
                         <td>{{i.assetType}}</td>
                         <td>{{i.projectType}}</td>
-                        <td>{{i.amountOfWork}}</td>
-                        <td>&nbsp;&nbsp;{{i.amountOfWork}} %&nbsp;&nbsp;</td>
-                        <td>{{i.dueDate}}</td>
-                        <td>{{i.vendor.length}}</td>
-                        <td>-</td>
+                        <td>{{i.totalValue}}</td>
+                        <td>&nbsp;&nbsp;{{(i.totalValue / i.componentAllocation) * 100 | number:2}} %&nbsp;&nbsp;</td>
+                        <td>{{i.dueDate | date: 'yyyy-MM-dd'}}</td>
+                        <!--<td>{{i.vendor.length}}</td>-->
+                        <td>{{i.totalAmountReleased}} &nbsp;
+                            <span ng-if="i.totalAmountReleased != 0" class="projectPlusSign">+</span>
+                        </td>
+                        <td>{{i.amountOfWork}} %
+                            <span ng-if="i.totalAmountReleased != 0" class="projectPlusSign">+</span>
+                        </td>
                         <td>{{i.projectStatus}}</td>
                         <td>-</td>
                         <!--<td>{{i.projectSubStatus}}</td>-->

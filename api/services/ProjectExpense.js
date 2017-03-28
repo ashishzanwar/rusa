@@ -201,8 +201,9 @@ var model = {
     // mobile application API for Component --> projects screen
     // dashboard data --> component --> projects (Project details table)
     componentProjects: function (data, callback) {
-        ProjectExpense.aggregate(
 
+        console.log("inside componentProjects & data is:", data);
+        ProjectExpense.aggregate(
             // Pipeline
             [
                 // Stage 1
@@ -347,10 +348,12 @@ var model = {
                 },
 
             ], function (err, compProjects) {
+
+                console.log("inside the response of ProjectExpense.aggregate & the result is", compProjects);
                 if (err) {
                     callback(null, err);
                 } else if (_.isEmpty(compProjects)) {
-                    callback(null, "No Data Found");
+                    callback(null, []);
                 } else {
                     console.log("componentProjects --> final response compProjects", compProjects);
                     var newData = _.map(compProjects, function (n) {
@@ -392,21 +395,143 @@ var model = {
 
                     console.log("componentProjects --> final response 3rd newData", newData);
 
-                    // in case of --> calculate component release & utilize % and keep it into separate object & remove repeated fields
-
-                    // var compoPro = {};
-                    // compoPro.Projects = [];
-                    // compoPro.CompDetail = {
-                    //     componentName: newData[0].componentName,
-                    //     componentAllocation: newData[0].componentAllocation
-                    // };
-                    // compoPro.Projects = newData;
+                    // we have all projects available in projectExpense 
 
                     callback(null, newData);
-                    // callback(newData, null);
+
                 }
             });
 
+    },
+
+    getProjectsNotAvailInProjectExpense: function (data, callback) {
+        console.log("inside getProjectsNotAvailInProjectExpense & data is :", data);
+        var tempProId = [];
+        ProjectExpense.find({}).select("project").exec(function (err, getAllProj) {
+            if (err) {
+                console.log("error", err);
+                //callback(err, null);
+            } else if (_.isEmpty(getAllProj)) {
+                console.log("getProComp", getAllProj);
+                callback(null, "No data founds");
+            } else {
+                _.forEach(getAllProj, function (getPro, key) {
+                    tempProId.push(ObjectId(getPro.project));
+                });
+
+                console.log("tempCompId", tempProId);
+
+                var pipeline = [
+
+                    // Stage 1
+                    {
+                        $lookup: {
+                            "from": "components",
+                            "localField": "components",
+                            "foreignField": "_id",
+                            "as": "components_data"
+                        }
+                    },
+
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$components_data",
+                            "preserveNullAndEmptyArrays": true
+                        }
+                    },
+
+                    // Stage 3
+                    {
+                        $match: {
+                            "components_data._id": ObjectId(data.component)
+                        }
+                    },
+
+                    // Stage 4
+                    {
+                        $lookup: {
+                            "from": "projecttypes",
+                            "localField": "projectType",
+                            "foreignField": "_id",
+                            "as": "projectType_data"
+                        }
+                    },
+
+                    // Stage 5
+                    {
+                        $unwind: {
+                            path: "$projectType_data",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+
+                    // Stage 6
+                    {
+                        $lookup: {
+                            "from": "assettypes",
+                            "localField": "assetType",
+                            "foreignField": "_id",
+                            "as": "assetType_data"
+                        }
+                    },
+
+                    // Stage 7
+                    {
+                        $unwind: {
+                            path: "$assetType_data",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+
+                    // Stage 8
+                    {
+                        $match: {
+                            "_id": { $nin: tempProId }
+                        }
+                    },
+
+                    // Stage 9
+                    {
+                        $group: {
+                            "_id": {
+                                componentName: "$components_data.name",
+                                componentAllocation: "$components_data.allocation",
+                                projectStatus: "$status",
+                                // projectSubStatus: "$projects_data.status",
+                                projectType: "$projectType_data.name",
+                                assetType: "$assetType_data.name",
+                                projectId: "$_id",
+                                dueDate: "$dueDate",
+                                projectRemarks: "$remarks",
+                                totalValue: "$valueOfProject",
+                                amountOfWork: "$amountOfWork"
+                            }
+                        }
+                    }
+                ];
+
+                Project.aggregate(pipeline, function (err, compData) {
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(compData)) {
+                            console.log("compData", compData);
+                            callback(null, []);
+                        } else {
+                            console.log("compData", compData);
+
+                            var newData = _.map(compData, function (n) {
+                                return n._id;
+                            });
+
+                            callback(null, newData);
+
+                        }
+                    }
+                });
+            }
+        });
     },
 
     // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
@@ -461,6 +586,7 @@ var model = {
 
 
     },
+
 
 
 };

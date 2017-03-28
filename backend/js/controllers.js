@@ -217,17 +217,46 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     });
 
     $scope.getOneComponentDetails = function (object) {
+
+      // console.log("--------------------------------------------------------------------------------------------");
+      // console.log("object", object);
+      // console.log("--------------------------------------------------------------------------------------------");
+
       if (object.totalComponentProjects != 0) {
         $rootScope.emptyData = false;
-        $scope.getAllprojectOfComponent = {};
+        $scope.getAllprojectOfComponent = [];
+        // $scope.projectInProExpense = {};
+        $scope.projectNotInProExpense = {};
         $scope.compObject = {};
         $scope.compObject.component = object._id.componentId;
 
+
+        //get filterd dashboard data after selecting a component 
+        dropDownData.keyComponent = object._id.keyComponent;
+        console.log("--------------------------------------------------------------------------------------------");
+        console.log("dropDownData.keyComponent", dropDownData.keyComponent);
+        console.log("--------------------------------------------------------------------------------------------");
+        loadData(dropDownData);
+
         NavigationService.boxCall("ProjectExpense/componentProjects", $scope.compObject, function (data) {
           $scope.getAllprojectOfComponent = data.data;
+          console.log("getAllprojectOfComponent 1st api call: ", $scope.getAllprojectOfComponent);
+        });
+
+        NavigationService.boxCall("ProjectExpense/getProjectsNotAvailInProjectExpense", $scope.compObject, function (data) {
+          $scope.projectNotInProExpense = data.data;
+          console.log("projectNotInProExpense 2nd api call: ", $scope.projectNotInProExpense);
+
+          angular.forEach($scope.projectNotInProExpense, function (getNewPro, index) {
+            getNewPro.totalAmountReleased = 0;
+            getNewPro.vendor = [];
+            $scope.getAllprojectOfComponent.push(getNewPro);
+          });
+
           console.log("getAllprojectOfComponent: ", $scope.getAllprojectOfComponent);
         });
-        console.log("getAllprojectOfComponent: ", $scope.getAllprojectOfComponent);
+
+        // $scope.getAllprojectOfComponent = $scope.projectInProExpense + $scope.projectNotInProExpense;
         // console.log("I got my selected object:", object._id.componentId);
       }
     }

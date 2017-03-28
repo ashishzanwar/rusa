@@ -1,3 +1,12 @@
+.projectPlusSign{
+    color: #7d7b7b;
+    font-size: 1.3em;
+    font-weight: 600;
+    padding: 0px 5px;
+    background-color: #e0dcdc;
+}
+
+
 .redColor{
     color: red;
 }

@@ -24,7 +24,7 @@ process.chdir(__dirname);
 var mongoose;
 mongoose = require('mongoose');
 
-global["database"] = "rusa2";
+global["database"] = "rusa";
 mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
     if (err) {
         console.log(err);

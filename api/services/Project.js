@@ -525,20 +525,21 @@ var model = {
             } else {
                 console.log("addedProject", addedProject);
 
-                var proExObj = {
-                    project: addedProject._id
-                };
+                // this is not right approach at all
+                // var proExObj = {
+                //     project: addedProject._id
+                // };
 
-                ProjectExpense.saveData(proExObj, function (err, addedProEx) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(addedProEx)) {
-                        callback(null, "No data founds");
-                    } else {
-                        console.log("addedProEx", addedProEx);
-                        callback(null, addedProEx);
-                    }
-                });
+                // ProjectExpense.saveData(proExObj, function (err, addedProEx) {
+                //     if (err) {
+                //         callback(err, null);
+                //     } else if (_.isEmpty(addedProEx)) {
+                //         callback(null, "No data founds");
+                //     } else {
+                //         console.log("addedProEx", addedProEx);
+                //         callback(null, addedProEx);
+                //     }
+                // });
                 // callback(null, addedProject);
             }
         });
@@ -1135,7 +1136,6 @@ var model = {
                         }
                     },
 
-                    // Stage 3
                     {
                         $lookup: {
                             "from": "institutes",
@@ -1145,7 +1145,6 @@ var model = {
                         }
                     },
 
-                    // Stage 4
                     {
                         $unwind: {
                             path: "$institutes_data",
@@ -1153,7 +1152,6 @@ var model = {
                         }
                     },
 
-                    // Stage 5
                     {
                         $lookup: {
                             "from": "states",
@@ -1163,7 +1161,6 @@ var model = {
                         }
                     },
 
-                    // Stage 6
                     {
                         $unwind: {
                             path: "$states_data",
@@ -1171,7 +1168,6 @@ var model = {
                         }
                     },
 
-                    // Stage 7
                     {
                         $lookup: {
                             "from": "pabs",
@@ -1181,7 +1177,6 @@ var model = {
                         }
                     },
 
-                    // Stage 8
                     {
                         $unwind: {
                             path: "$pab_data",
@@ -1227,8 +1222,6 @@ var model = {
                 }
 
 
-                // async.parallel({
-                // componetDetail: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeline);
 
                 newPipeLine.push({
@@ -1265,18 +1258,8 @@ var model = {
                         }
                     }
                 });
-                // },
-                // componentAllocation: function (callback) {
-                //     var newPipeLine = _.cloneDeep(pipeline);
-                // }
-                // }, callback);
-
-
 
                 console.log("pipeline", pipeline);
-
-
-
 
             }
         });

@@ -67,6 +67,11 @@ var controller = {
         }
     },
 
+
+
+    // we are merging following two APIs to get all the projects belongs to a component
+    // componentProjects + getProjectsNotAvailInProjectExpense
+
     // mobile application API for Component --> projects screen
     componentProjects: function (req, res) {
         if (req.body) {
@@ -80,6 +85,25 @@ var controller = {
             });
         }
     },
+    // mobile application API for Component --> projects screen
+    getProjectsNotAvailInProjectExpense: function (req, res) {
+        console.log("inside getProjectsNotAvailInProjectExpense controller");
+        if (req.body) {
+            ProjectExpense.getProjectsNotAvailInProjectExpense(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: {
+                    message: "Invalid Request"
+                }
+            });
+        }
+    },
+
+
+
+
+
 
     // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
     vendorAllocation: function (req, res) {
@@ -94,7 +118,8 @@ var controller = {
             // });
             res.callback("Invalid Data");
         }
-    }
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);
