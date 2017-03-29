@@ -1,3 +1,5 @@
-<input ui-date ng-if="data.model" ng-model="data.model" class="form-control" ng-change="changeDate(data.model)" />
+<input ui-date ng-if="data.model" ui-date-format="DD, d MM, yy" ng-model="data.model" class="form-control" ng-change="changeDate(data.model)"
+/>
 
-<input ui-date ng-if="!data.model" ng-model="data.model" class="form-control" ng-change="changeDate(data.model)" />
+<input ui-date ng-if="!data.model" ui-date-format="DD, d MM, yy" ng-model="data.model" class="form-control" ng-change="changeDate(data.model)"
+/>
