@@ -285,6 +285,9 @@ firstapp.directive('inputDate', function ($compile, $parse) {
             console.log("This is loaded atlease");
             $scope.data = {};
             console.log($scope.value);
+            $scope.dateOptions = {
+                dateFormat: "DD, d MM, yy"
+            };
             if (!_.isEmpty($scope.value)) {
                 $scope.data.model = moment($scope.value).toDate();
             }

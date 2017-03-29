@@ -54,9 +54,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.JSON = {};
         $scope.state;
 
-        $scope.dateFormat = {
-            dateFormat: "DD, d MM, yy"
-        };
+
 
         $scope.printForm = function () {
             print();
