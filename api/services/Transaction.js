@@ -213,13 +213,13 @@ var model = {
                 }
             });
         }
-        // if (data.component) {
-        //     pipeline.push({
-        //         $match: {
-        //             "components_data._id": ObjectId(data.component)
-        //         }
-        //     });
-        // }
+        if (data.component) {
+            pipeline.push({
+                $match: {
+                    "components_data._id": ObjectId(data.component)
+                }
+            });
+        }
         if (data.keyComponent) { // In actial it is keycomponents
             pipeline.push({
                 $match: {
@@ -1084,6 +1084,6 @@ var model = {
         }, callback);
     },
 
-    componentMedia: function (data, callback) {}
+    componentMedia: function (data, callback) { }
 };
 module.exports = _.assign(module.exports, exports, model);

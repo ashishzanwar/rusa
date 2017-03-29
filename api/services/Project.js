@@ -474,13 +474,13 @@ var model = {
                 }
             });
         }
-        // if (data.component) {
-        //     pipeline.push({
-        //         $match: {
-        //             "components_data._id": ObjectId(data.component)
-        //         }
-        //     });
-        // }
+        if (data.component) {
+            pipeline.push({
+                $match: {
+                    "components_data._id": ObjectId(data.component)
+                }
+            });
+        }
         if (data.keyComponent) { // In actual it is keycomponents
             pipeline.push({
                 $match: {
@@ -1203,6 +1203,13 @@ var model = {
                     pipeline.push({
                         $match: {
                             "institutes_data._id": ObjectId(data.institute)
+                        }
+                    });
+                }
+                if (data.component) {
+                    pipeline.push({
+                        $match: {
+                            "_id": ObjectId(data.component)
                         }
                     });
                 }

@@ -150,7 +150,7 @@
         <div class="col-md-12" ng-if="DashboardAllData.institute !== 'No data founds'">
             <p><br></p>
             <p class="text-right text-muted">
-                All amount in INR Lacs {{nodata}}
+                All amount in INR
             </p><br><br>
             <table class="table table-hover">
                 <thead class="active">
@@ -204,7 +204,7 @@
         <div class="col-md-12">
             <p><br></p>
             <p class="text-right text-muted">
-                All amount in INR Lacs {{nodata}}
+                All amount in INR
             </p><br><br>
             <table class="table table-hover">
                 <thead class="active">
@@ -239,10 +239,10 @@
                         <td>{{i.dueDate | date: 'yyyy-MM-dd'}}</td>
                         <!--<td>{{i.vendor.length}}</td>-->
                         <td>{{i.totalAmountReleased}} &nbsp;
-                            <span ng-if="i.totalAmountReleased != 0" class="projectPlusSign">+</span>
+                            <span ng-if="i.totalAmountReleased != 0" data-id="vendorTable" class="projectPlusSign" ng-click="getOneProjectDetails(i, $event, $index)">+</span>
                         </td>
                         <td>{{i.amountOfWork}} %
-                            <span ng-if="i.totalAmountReleased != 0" class="projectPlusSign">+</span>
+                            <span ng-if="i.totalAmountReleased != 0" data-id="photoTable" class="projectPlusSign" ng-click="getOneProjectDetails(i, $event, $index)">+</span>
                         </td>
                         <td>{{i.projectStatus}}</td>
                         <td>-</td>
@@ -250,6 +250,50 @@
                     </tr>
                 </tbody>
             </table>
+        </div>
+    </div>
+    <div class="row"><br><br><br><br><br><br></div>
+    <div class="row table_row" ng-if="!emptyData && vendorTable">
+        <div class="col-md-12">
+            <p><br></p>
+            <p class="text-right text-muted">
+                All amount in INR
+            </p><br><br>
+            <table class="table table-hover">
+                <thead class="active">
+                    <tr class="table_head borderbottom_transparant">
+                        <th>Venodr Name</th>
+                        <th>Total Allocation</th>
+                        <th>Total Released</th>
+                        <th>Issue Date</th>
+                        <th>Due Date</th>
+                        <!--<th>Description</th>-->
+                        <th>Photo</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table_data" ng-repeat="i in getAllprojectOfComponent[getProjectIndex].vendor" ng-class="{'': $index == 1}">
+                        <td>{{i.vendorName}}</td>
+                        <td>{{i.vendorAllocation}}</td>
+                        <td>{{i.vendorReleased}}</td>
+                        <td>{{i.vendorOrderIssueDate | date: 'yyyy-MM-dd'}}</td>
+                        <td>{{i.vendorOrderDueDate | date: 'yyyy-MM-dd'}}</td>
+                        <!--<td>{{i.description}}</td>-->
+                        <td>{{i.vendorOrderPhoto.length}}
+                            <span ng-if="i.vendorOrderPhoto.length != 0" class="projectPlusSign" ng-click="getImageOfVendorTransaction(i)">+</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row table_row" ng-if="!emptyData && photoTable">
+        <div class="col-md-12">
+            <p>Photos here</p>
+            <span ng-repeat="p in projectPhotos">
+                <!--<img src="{{baseUrl + Image path from DB}}" alt="{{p.types}}" />-->
+                <img src="http://farm6.staticflickr.com/5444/17679973232_568353a624_m.jpg" alt="" title="{{p.types}}"/>
+            </span>
         </div>
     </div>
     <div class="row"><br><br><br><br><br><br></div>

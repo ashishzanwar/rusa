@@ -19,6 +19,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.filteredComponentsNew = {};
     $scope.getNewComponents = {};
     $scope.totalUtilizedPercentage = 0;
+    $rootScope.getProjectIndex = "";
     $scope.count = 0;
     var dropDownData = {
       pab: "",
@@ -28,6 +29,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     };
     $scope.DashboardAllData = {};
     $rootScope.emptyData = true;
+    $rootScope.vendorTable = false;
+    $rootScope.photoTable = false;
 
     function loadData(dropDownData) {
       // console.log("inside loadData");
@@ -122,16 +125,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
                 if (inst._id.componentId == tpc._id.componentId) {
                   inst.amountUtilizedPerComponent = tpc._id.amountUtilizedPerComponent;
                   // inst.amountUtilizedPercentagePerComponent = tpc._id.amountUtilizedPercentagePerComponent;
-                  console.log("totalComponentRelease", tpc.totalComponentRelease);
+                  // console.log("totalComponentRelease", tpc.totalComponentRelease);
                   inst.amountUtilizedPercentagePerComponent = (tpc._id.amountUtilizedPerComponent * 100) / tpc.totalComponentRelease;
-                  console.log("count", $scope.count);
+                  // console.log("count", $scope.count);
                 } else {
                   if (inst.amountUtilizedPerComponent != null && inst.amountUtilizedPercentagePerComponent != null) {
                     // console.log("test");
                   } else {
                     inst.amountUtilizedPerComponent = 0;
                     inst.amountUtilizedPercentagePerComponent = 0;
-                    console.log("count inside", $scope.count);
+                    // console.log("count inside", $scope.count);
                   }
                 }
               });
@@ -170,9 +173,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     loadData(dropDownData);
 
     $scope.getAllDashboardData = function (item) {
-      console.log(item);
+      // console.log(item);
       var id = angular.element(event.target).data('id');
-      console.log(id);
+      // console.log(id);
 
       if (id == "pab") {
         dropDownData.pab = item._id;
@@ -213,14 +216,14 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     NavigationService.callApi("KeyComponents/findAllKeyComponents", function (data) {
       $scope.AllComponents = data.data;
       $scope.generateField = true;
-      console.log("AllComponents", $scope.AllComponents);
+      // console.log("AllComponents", $scope.AllComponents);
     });
 
     $scope.getOneComponentDetails = function (object) {
 
-      // console.log("--------------------------------------------------------------------------------------------");
-      // console.log("object", object);
-      // console.log("--------------------------------------------------------------------------------------------");
+      console.log("--------------------------------------------------------------------------------------------");
+      console.log("getOneComponentDetails object", object);
+      console.log("--------------------------------------------------------------------------------------------");
 
       if (object.totalComponentProjects != 0) {
         $rootScope.emptyData = false;
@@ -232,9 +235,10 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
         //get filterd dashboard data after selecting a component 
-        dropDownData.keyComponent = object._id.keyComponent;
+        // dropDownData.keyComponent = object._id.keyComponent;
+        dropDownData.component = object._id.componentId;
         console.log("--------------------------------------------------------------------------------------------");
-        console.log("dropDownData.keyComponent", dropDownData.keyComponent);
+        console.log("dropDownData.component", dropDownData.component);
         console.log("--------------------------------------------------------------------------------------------");
         loadData(dropDownData);
 
@@ -253,7 +257,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
             $scope.getAllprojectOfComponent.push(getNewPro);
           });
 
-          console.log("getAllprojectOfComponent: ", $scope.getAllprojectOfComponent);
+          console.log("getAllprojectOfComponent final merged data: ", $scope.getAllprojectOfComponent);
         });
 
         // $scope.getAllprojectOfComponent = $scope.projectInProExpense + $scope.projectNotInProExpense;
@@ -261,6 +265,38 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       }
     }
 
+    $scope.getOneProjectDetails = function (object, event, index) {
+      // console.log("---------------");
+      // console.log("inside getOneProjectTransactions object is:", object);
+      // console.log("inside getOneProjectTransactions index", index);
+      // console.log("---------------");
+
+      $rootScope.getProjectIndex = index;
+
+      var getTable = angular.element(event.target).data('id');
+      // console.log("---------------");
+      // console.log("getTable is --> getTable", getTable);
+      // console.log("---------------");
+
+      if (getTable == "vendorTable") {
+        // console.log("---------------");
+        // console.log("inside if--> vendorTable");
+        // console.log("---------------");
+        $rootScope.photoTable = false;
+        $rootScope.vendorTable = true;
+      } else if (getTable == "photoTable") {
+
+        $scope.projectPhotos = object.projectPhotos;
+
+        console.log("---------------");
+        console.log("inside if--> photoTable & photos are ", $scope.projectPhotos);
+        console.log("---------------");
+
+        $rootScope.vendorTable = false;
+        $rootScope.photoTable = true;
+      }
+
+    }
   })
 
   .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
@@ -501,7 +537,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     console.log("JSONSERVICE START get");
     console.log("ORGIN-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
     console.log("JSONSERVICE END get");
 
     globalfunction.confDel = function (callback) {
@@ -554,7 +590,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN CUSTOM PAGE CTRLLER");
     console.log("CUSTOM JSONSERVICE START get");
     console.log("CUSTOM-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
 
     console.log("CUSTOM JSONSERVICE END get");
     globalfunction.confDel = function (callback) {
@@ -608,7 +644,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     console.log("IN CUSTOM PAGE CTRLLER");
     console.log("CUSTOM JSONSERVICE START get");
     console.log("CUSTOM-------->", $stateParams.id);
-    JsonService.getJson($stateParams.id, function () {});
+    JsonService.getJson($stateParams.id, function () { });
 
     console.log("CUSTOM JSONSERVICE END get");
     globalfunction.confDel = function (callback) {
@@ -688,9 +724,9 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.currentPage = 1;
       }
       NavigationService.search($scope.json.json.apiCall.url, {
-          page: $scope.currentPage,
-          keyword: $scope.search.keyword
-        }, ++i,
+        page: $scope.currentPage,
+        keyword: $scope.search.keyword
+      }, ++i,
         function (data, ini) {
           if (ini == i) {
             $scope.items = data.data.results;
@@ -818,16 +854,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("Institute/findOneInstituteUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.instituteUserData = data.data;
-          // $scope.generateField = true;
-          console.log("instituteUserDATA IS FOUND HERE-->", $scope.instituteUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("Institute/findOneInstituteUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.instituteUserData = data.data;
+        // $scope.generateField = true;
+        console.log("instituteUserDATA IS FOUND HERE-->", $scope.instituteUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
       $scope.getUser();
     $scope.removeUser = function (value) {
       console.log("USER REMOVE DATA", $scope.json.keyword._id);
@@ -1184,16 +1220,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("State/findOneStateUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.stateUserData = data.data;
-          // $scope.generateField = true;
-          console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("State/findOneStateUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.stateUserData = data.data;
+        // $scope.generateField = true;
+        console.log("stateUserDATA IS FOUND HERE-->", $scope.stateUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
 
       $scope.getUser();
 
@@ -1502,16 +1538,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
 
     $scope.getUser = function () {
-        NavigationService.apiCall("Vendor/findOneVendorUser", {
-          [$scope.json.json.preApi.params]: $scope.json.keyword._id
-        }, function (data) {
-          $scope.vendorUserData = data.data;
-          // $scope.generateField = true;
-          console.log("vendorUserDATA IS FOUND HERE-->", $scope.stateUserData);
-          // console.log("STATEID", $scope.tableData.state._id);
-          // console.log("STATEID", $scope.tableData.state.name);
-        });
-      },
+      NavigationService.apiCall("Vendor/findOneVendorUser", {
+        [$scope.json.json.preApi.params]: $scope.json.keyword._id
+      }, function (data) {
+        $scope.vendorUserData = data.data;
+        // $scope.generateField = true;
+        console.log("vendorUserDATA IS FOUND HERE-->", $scope.stateUserData);
+        // console.log("STATEID", $scope.tableData.state._id);
+        // console.log("STATEID", $scope.tableData.state.name);
+      });
+    },
 
       $scope.getUser();
 
@@ -2945,17 +2981,17 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
     };
     $scope.editBox = function (state, data) {
-        $scope.state = state;
-        $scope.data = data;
-        $scope.formData[$scope.type.tableRef] = data;
-        var modalInstance = $uibModal.open({
-          animation: $scope.animationsEnabled,
-          templateUrl: '/backend/views/modal/modal.html',
-          size: 'lg',
-          scope: $scope,
-          formData: $scope.data
-        });
-      },
+      $scope.state = state;
+      $scope.data = data;
+      $scope.formData[$scope.type.tableRef] = data;
+      var modalInstance = $uibModal.open({
+        animation: $scope.animationsEnabled,
+        templateUrl: '/backend/views/modal/modal.html',
+        size: 'lg',
+        scope: $scope,
+        formData: $scope.data
+      });
+    },
 
       $scope.editBox2 = function (state, data) {
         $scope.state = state;
@@ -3503,84 +3539,84 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $scope.navigation = NavigationService.getnav();
     $scope.collectionTypes = ["Table View", "Table View Drag and Drop", "Grid View", "Grid View Drag and Drop"];
     $scope.schema = [{
-        "schemaType": "Boolean",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Color",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Date",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Email",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "File",
-        "Input1": "MB Limit",
-        "Input2": ""
-      }, {
-        "schemaType": "Image",
-        "Input1": "pixel x",
-        "Input2": "pixel y "
-      }, {
-        "schemaType": "Location",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Mobile",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Multiple Select",
-        "Input1": "Enum",
-        "Input2": ""
-      }, {
-        "schemaType": "Multiple Select From Table",
-        "Input1": "Collection",
-        "Input2": "Field"
-      }, {
-        "schemaType": "Number",
-        "Input1": "min ",
-        "Input2": "max"
-      }, {
-        "schemaType": "Single Select ",
-        "Input1": "Enum",
-        "Input2": ""
-      },
+      "schemaType": "Boolean",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Color",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Date",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Email",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "File",
+      "Input1": "MB Limit",
+      "Input2": ""
+    }, {
+      "schemaType": "Image",
+      "Input1": "pixel x",
+      "Input2": "pixel y "
+    }, {
+      "schemaType": "Location",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Mobile",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Multiple Select",
+      "Input1": "Enum",
+      "Input2": ""
+    }, {
+      "schemaType": "Multiple Select From Table",
+      "Input1": "Collection",
+      "Input2": "Field"
+    }, {
+      "schemaType": "Number",
+      "Input1": "min ",
+      "Input2": "max"
+    }, {
+      "schemaType": "Single Select ",
+      "Input1": "Enum",
+      "Input2": ""
+    },
 
-      {
-        "schemaType": "Single Select From Table",
-        "Input1": "Collection",
-        "Input2": "Field"
-      }, {
-        "schemaType": "Telephone",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Text",
-        "Input1": "min length",
-        "Input2": "max length"
-      }, {
-        "schemaType": "TextArea",
-        "Input1": "min length",
-        "Input2": "max length"
-      }, {
-        "schemaType": "URL",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "WYSIWYG",
-        "Input1": "",
-        "Input2": ""
-      }, {
-        "schemaType": "Youtube",
-        "Input1": "",
-        "Input2": ""
-      }
+    {
+      "schemaType": "Single Select From Table",
+      "Input1": "Collection",
+      "Input2": "Field"
+    }, {
+      "schemaType": "Telephone",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Text",
+      "Input1": "min length",
+      "Input2": "max length"
+    }, {
+      "schemaType": "TextArea",
+      "Input1": "min length",
+      "Input2": "max length"
+    }, {
+      "schemaType": "URL",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "WYSIWYG",
+      "Input1": "",
+      "Input2": ""
+    }, {
+      "schemaType": "Youtube",
+      "Input1": "",
+      "Input2": ""
+    }
     ];
 
 
