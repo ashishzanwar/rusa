@@ -1,4 +1,8 @@
-
+.modal.in .modal-dialog
+{
+    width: 60%;
+    margin-top: 5%;
+}
 .black-drop{
     opacity:0.9;
 }

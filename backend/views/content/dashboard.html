@@ -289,10 +289,9 @@
     </div>
     <div class="row table_row" ng-if="!emptyData && photoTable">
         <div class="col-md-12">
-            <p>Photos here</p>
             <span ng-repeat="p in projectPhotos">
                 <!--<img src="{{baseUrl + Image path from DB}}" ng-click="getProjectImages()" alt="{{p.types}}" />-->
-                <img src="http://farm6.staticflickr.com/5444/17679973232_568353a624_m.jpg" ng-click="getProjectImages(p)" alt="" title="{{p.types}}"/>
+                <img src="http://farm6.staticflickr.com/5444/17679973232_568353a624_m.jpg" ng-click="getProjectImages(p, $index)" alt="" title="{{p.types}}"/>
             </span>
 
             <!--<script type="text/ng-template" id="myProjectImage">

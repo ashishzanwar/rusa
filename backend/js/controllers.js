@@ -31,6 +31,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     $rootScope.emptyData = true;
     $rootScope.vendorTable = false;
     $rootScope.photoTable = false;
+    $rootScope.tempIndex = "";
+    $rootScope.projectPhotos = "";
 
     function loadData(dropDownData) {
       // console.log("inside loadData");
@@ -263,7 +265,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         // $scope.getAllprojectOfComponent = $scope.projectInProExpense + $scope.projectNotInProExpense;
         // console.log("I got my selected object:", object._id.componentId);
       }
-    }
+    };
 
     $scope.getOneProjectDetails = function (object, event, index) {
       // console.log("---------------");
@@ -286,28 +288,52 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $rootScope.vendorTable = true;
       } else if (getTable == "photoTable") {
 
-        $scope.projectPhotos = object.projectPhotos;
+        $rootScope.projectPhotos = object.projectPhotos;
 
         console.log("---------------");
-        console.log("inside if--> photoTable & photos are ", $scope.projectPhotos);
+        console.log("inside if--> photoTable & photos are ", $rootScope.projectPhotos);
         console.log("---------------");
 
         $rootScope.vendorTable = false;
         $rootScope.photoTable = true;
       }
 
-    }
+    };
+
+    $scope.nextImage = function () {
+
+      if ($rootScope.tempIndex < $rootScope.projectPhotos.length - 1) {
+        $rootScope.tempIndex++;
+        $scope.getProjectImages(null, $rootScope.tempIndex);
+      }
+
+    };
+
+    $scope.prevImage = function () {
+
+      if ($rootScope.tempIndex != 0) {
+        $rootScope.tempIndex--;
+        $scope.getProjectImages(null, $rootScope.tempIndex);
+      }
+    };
 
     // to get all project imgaes 
-    $scope.getProjectImages = function (object) {
+    $scope.getProjectImages = function (object, index) {
 
+      $rootScope.tempIndex = index;
+      console.log("$rootScope.tempIndex", $rootScope.tempIndex);
+      console.log(" $rootScope.projectPhotos", $rootScope.projectPhotos);
+      $scope.projectPhoto = $rootScope.projectPhotos[index].photo;
+      console.log("---------------");
+      console.log("projectPhoto", $scope.projectPhoto);
+      console.log("---------------");
       // $scope.projectPhoto = object.photo;
-      $scope.projectPhoto = "http://www.planwallpaper.com/static/images/4-Nature-Wallpapers-2014-1_cDEviqY.jpg";
-      console.log("******************************* I am inside getProjectImages ********************************************");
-      console.log("******************************* object ********************************************", object);
-      console.log("-----------------------------------------------------------------------------------------------");
-      console.log("******************************* index ********************************************", $scope.projectPhoto);
-      console.log("-----------------------------------------------------------------------------------------------");
+      // $scope.projectPhoto = "http://www.planwallpaper.com/static/images/4-Nature-Wallpapers-2014-1_cDEviqY.jpg";
+      // console.log("******************************* I am inside getProjectImages ********************************************");
+      // console.log("******************************* object ********************************************", object);
+      // console.log("-----------------------------------------------------------------------------------------------");
+      // console.log("******************************* index ********************************************", $scope.projectPhoto);
+      // console.log("-----------------------------------------------------------------------------------------------");
 
       // ngDialog.open({ template: 'myProjectImage' });
 
