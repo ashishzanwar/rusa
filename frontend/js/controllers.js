@@ -55,6 +55,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         $scope.state;
 
 
+
         $scope.printForm = function () {
             print();
         };
@@ -499,4 +500,4 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     })
 
-    ;
+;
