@@ -280,7 +280,7 @@
                         <td>{{i.vendorOrderDueDate | date: 'yyyy-MM-dd'}}</td>
                         <!--<td>{{i.description}}</td>-->
                         <td>{{i.vendorOrderPhoto.length}}
-                            <span ng-if="i.vendorOrderPhoto.length != 0" class="projectPlusSign" ng-click="getImageOfVendorTransaction(i)">+</span>
+                            <span ng-if="i.vendorOrderPhoto.length != 1" class="projectPlusSign" ng-click="projectExpenseImage(i)">+</span>
                         </td>
                     </tr>
                 </tbody>
@@ -291,9 +291,16 @@
         <div class="col-md-12">
             <p>Photos here</p>
             <span ng-repeat="p in projectPhotos">
-                <!--<img src="{{baseUrl + Image path from DB}}" alt="{{p.types}}" />-->
-                <img src="http://farm6.staticflickr.com/5444/17679973232_568353a624_m.jpg" alt="" title="{{p.types}}"/>
+                <!--<img src="{{baseUrl + Image path from DB}}" ng-click="getProjectImages()" alt="{{p.types}}" />-->
+                <img src="http://farm6.staticflickr.com/5444/17679973232_568353a624_m.jpg" ng-click="getProjectImages(p)" alt="" title="{{p.types}}"/>
             </span>
+
+            <!--<script type="text/ng-template" id="myProjectImage">
+                <img src="{{projectPhoto}}" alt="">-->
+            <!--<img src="http://farm6.staticflickr.com/5444/17679973232_568353a624_m.jpg" class="myProjectImage">-->
+            <!--<img src="http://www.planwallpaper.com/static/images/4-Nature-Wallpapers-2014-1_cDEviqY.jpg" class="myProjectImage">-->
+            <!--</script>-->
+
         </div>
     </div>
     <div class="row"><br><br><br><br><br><br></div>

@@ -1,7 +1,7 @@
 var globalfunction = {};
-angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', "jsonservicemod", 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable', "ngclipboard"])
+angular.module('phonecatControllers', ['templateservicemod', 'navigationservice', "jsonservicemod", 'ui.bootstrap', 'ui.select', 'ngAnimate', 'toastr', 'ngSanitize', 'angular-flexslider', 'ui.tinymce', 'imageupload', 'ngMap', 'toggle-switch', 'cfp.hotkeys', 'ui.sortable', "ngclipboard", 'ngDialog'])
 
-  .controller('DashboardCtrl', function ($scope, $rootScope, TemplateService, NavigationService, $timeout, $state) {
+  .controller('DashboardCtrl', function ($scope, $rootScope, TemplateService, NavigationService, $timeout, $state, ngDialog, $uibModal) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("dashboard");
     $scope.menutitle = NavigationService.makeactive("Dashboard");
@@ -297,6 +297,52 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
       }
 
     }
+
+    // to get all project imgaes 
+    $scope.getProjectImages = function (object) {
+
+      // $scope.projectPhoto = object.photo;
+      $scope.projectPhoto = "http://www.planwallpaper.com/static/images/4-Nature-Wallpapers-2014-1_cDEviqY.jpg";
+      console.log("******************************* I am inside getProjectImages ********************************************");
+      console.log("******************************* object ********************************************", object);
+      console.log("-----------------------------------------------------------------------------------------------");
+      console.log("******************************* index ********************************************", $scope.projectPhoto);
+      console.log("-----------------------------------------------------------------------------------------------");
+
+      // ngDialog.open({ template: 'myProjectImage' });
+
+      $uibModal.open({
+        animation: true,
+        templateUrl: "../backend/views/modal/project-image.html",
+        scope: $scope,
+        windowClass: 'upload-pic',
+        backdropClass: 'black-drop',
+        size: 'md'
+      });
+
+    };
+
+    // to get all project expense Image
+    $scope.projectExpenseImage = function (object) {
+
+      // $scope.projectPhoto = object.photo;
+      $scope.projectExpenseOneImage = "http://www.planwallpaper.com/static/images/4-Nature-Wallpapers-2014-1_cDEviqY.jpg";
+      console.log("******************************* I am inside projectExpenseImage ********************************************");
+      console.log("******************************* object ********************************************", object);
+      console.log("-----------------------------------------------------------------------------------------------");
+
+      // ngDialog.open({ template: 'myProjectImage' });
+
+      $uibModal.open({
+        animation: true,
+        templateUrl: "../backend/views/modal/projectExpensePhoto.html",
+        scope: $scope,
+        windowClass: 'upload-pic',
+        backdropClass: 'black-drop',
+        size: 'md'
+      });
+    };
+
   })
 
   .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {

@@ -198,6 +198,7 @@ var model = {
         })
     },
 
+    //-----------------------------------------------------------------------------------------------------//
     // mobile application API for Component --> projects screen
     // dashboard data --> component --> projects (Project details table)
     componentProjects: function (data, callback) {
@@ -542,6 +543,8 @@ var model = {
             }
         });
     },
+
+    //-----------------------------------------------------------------------------------------------------//
 
     // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
     // check whether vendor is available into the corresponding project or not --> 

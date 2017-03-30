@@ -67,12 +67,21 @@ var schema = new Schema({
     fundDelay: Boolean
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        'components': {
+            select: ''
+        },
+        'pabno': {
+            select: '_id name'
+        }
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Components', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'pabno', 'pabno'));
 var model = {
 
     saveComponentsPhotos: function (data, callback) {
@@ -190,7 +199,6 @@ var model = {
 
         Components.findOne({
             _id: data._id
-
         }).deepPopulate("project").populate("institute").populate("pabno").populate("keycomponents").exec(function (err, found) {
 
             if (err) {
