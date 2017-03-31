@@ -303,7 +303,7 @@ var model = {
                     $group: {
                         "_id": null,
                         totalFundRelease1: {
-                            $sum: "$totalFundRelease"
+                            $first: "$totalFundRelease"
                         },
                         totalUtilization1: {
                             $sum: "$totalUtilization"

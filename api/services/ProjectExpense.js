@@ -560,6 +560,30 @@ var model = {
             } else if (_.isEmpty(mydata)) {
                 console.log("inside vendorAllocation null");
                 // create a new document & save vendor id & alllocation
+
+                var proTransObject = {
+                    project: data.project_id,
+                    vendor: data.vendor_id,
+                    allocatedAmount: data.allocation
+                };
+
+                console.log("******************************************************************************************");
+                console.log("proTransObject", proTransObject);
+                console.log("******************************************************************************************");
+
+                ProjectExpense.saveData(proTransObject, function (err, getAddedVendor) {
+                    console.log("inside vendor saveData getAddedVendor", getAddedVendor);
+                    if (err) {
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(getAddedVendor)) {
+                            callback(null, "No Data Found");
+                        } else {
+                            callback(null, getAddedVendor);
+                        }
+                    }
+                });
+
             } else {
                 console.log("inside vendorAllocation success", mydata);
                 callback(null, mydata);

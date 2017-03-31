@@ -404,13 +404,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
         };
 
-
-
-
-
         $scope.abc = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
-
-
 
         $scope.addNewProject = function () {
             $scope.formData.projects.push(_.cloneDeep(project));
@@ -500,4 +494,4 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
     })
 
-;
+    ;
