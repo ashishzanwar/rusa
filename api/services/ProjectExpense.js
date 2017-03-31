@@ -198,11 +198,13 @@ var model = {
         })
     },
 
+    //-----------------------------------------------------------------------------------------------------//
     // mobile application API for Component --> projects screen
     // dashboard data --> component --> projects (Project details table)
     componentProjects: function (data, callback) {
-
+        console.log("*************************************************************************");
         console.log("inside componentProjects & data is:", data);
+        console.log("*************************************************************************");
         ProjectExpense.aggregate(
             // Pipeline
             [
@@ -336,8 +338,13 @@ var model = {
                             vendorId: "$vendor_data._id",
                             dueDate: "$projects_data.dueDate",
                             projectRemarks: "$projects_data.remarks",
+                            projectPhotos: "$projects_data.photos",
                             totalValue: "$projects_data.valueOfProject",
                             amountOfWork: "$projects_data.amountOfWork",
+                            vendorDescription: "$description",
+                            vendorOrderIssueDate: "$orderIssueDate",
+                            vendorOrderDueDate: "$orderDueDate",
+                            vendorOrderPhoto: "$photos",
                             vendorName: "$vendor_data.name",
                             vendorAllocation: "$allocatedAmount",
                         },
@@ -349,7 +356,9 @@ var model = {
 
             ], function (err, compProjects) {
 
+                console.log("**************************************************************************************************");
                 console.log("inside the response of ProjectExpense.aggregate & the result is", compProjects);
+                console.log("**************************************************************************************************");
                 if (err) {
                     callback(null, err);
                 } else if (_.isEmpty(compProjects)) {
@@ -374,14 +383,14 @@ var model = {
                         _.each(projectObj, function (projectArr) {
                             var single = projectArr[0];
                             projectDetails = single;
-                            vendors.push(_.pick(single, ["vendorId", "vendorName", "vendorAllocation", "vendorReleased"]));
-                            projectDetails = _.omit(projectDetails, ["vendorId", "vendorName", "vendorAllocation", "vendorReleased"]);
+                            vendors.push(_.pick(single, ["vendorId", "vendorName", "vendorAllocation", "vendorReleased", "vendorOrderIssueDate", "vendorOrderDueDate", "vendorOrderPhoto"]));
+                            projectDetails = _.omit(projectDetails, ["vendorId", "vendorName", "vendorAllocation", "vendorReleased", "vendorOrderIssueDate", "vendorOrderDueDate", "vendorOrderPhoto"]);
                         });
                         projectDetails.vendor = vendors;
                         return projectDetails;
                     });
 
-                    console.log("componentProjects --> final response 2nd newData", newData);
+                    // console.log("componentProjects --> final response 2nd newData", newData);
 
                     var releasedAmountPerProject = 0;
 
@@ -393,9 +402,10 @@ var model = {
                         releasedAmountPerProject = 0;
                     });
 
-                    console.log("componentProjects --> final response 3rd newData", newData);
-
-                    // we have all projects available in projectExpense 
+                    // console.log("componentProjects --> final response 3rd newData", newData);
+                    console.log("--------------------------------------------------------------------------------------------------");
+                    console.log("component projects 1st API data: ", newData);
+                    console.log("--------------------------------------------------------------------------------------------------");
 
                     callback(null, newData);
 
@@ -533,6 +543,8 @@ var model = {
             }
         });
     },
+
+    //-----------------------------------------------------------------------------------------------------//
 
     // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
     // check whether vendor is available into the corresponding project or not --> 

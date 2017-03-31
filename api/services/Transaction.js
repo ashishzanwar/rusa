@@ -105,12 +105,18 @@ var schema = new Schema({
     }]
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        'components': {
+            select: ''
+        }
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Transaction', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'project center institute state', 'project center institute state'));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'project center institute state components', 'project center institute state components'));
 var model = {
 
     getAggregatePipeLine: function (data) {
@@ -213,13 +219,13 @@ var model = {
                 }
             });
         }
-        // if (data.component) {
-        //     pipeline.push({
-        //         $match: {
-        //             "components_data._id": ObjectId(data.component)
-        //         }
-        //     });
-        // }
+        if (data.component) {
+            pipeline.push({
+                $match: {
+                    "components_data._id": ObjectId(data.component)
+                }
+            });
+        }
         if (data.keyComponent) { // In actial it is keycomponents
             pipeline.push({
                 $match: {
@@ -251,7 +257,7 @@ var model = {
 
         return pipeline;
     },
-
+    //-----------------------------------------------------------------------------------------------------//
     getTransactionReport: function (data, callback) {
         var pipeLine = Transaction.getAggregatePipeLine(data);
         console.log(pipeLine);
@@ -553,7 +559,7 @@ var model = {
         }, callback);
 
     },
-
+    //-----------------------------------------------------------------------------------------------------//
     componentOverviewPipeLine: function (data) {
 
         var pipeline = [
@@ -572,6 +578,14 @@ var model = {
                 $unwind: {
                     path: "$components_data",
                     "preserveNullAndEmptyArrays": true
+                }
+            },
+
+            // Stage 9
+            {
+                $match: {
+                    "components_data._id": ObjectId(data.component)
+                    // "components_data._id": ObjectId("58d22a60abf7eb15aa4a4120")
                 }
             },
 
@@ -629,13 +643,6 @@ var model = {
                 }
             },
 
-            // Stage 9
-            {
-                $match: {
-                    "components_data._id": ObjectId(data.component)
-                    // "components_data._id": ObjectId("58d22a60abf7eb15aa4a4120")
-                }
-            },
 
             // Stage 10
             {
@@ -682,7 +689,6 @@ var model = {
                         $sum: "$components_data.amountUtilized"
                     }
                 }
-
             },
 
             // Stage 13
@@ -705,84 +711,134 @@ var model = {
 
         return pipeline;
     },
-
     // mobile application API for Component --> overview screen
     componentOverview: function (data, callback) {
         var pipeLine = Transaction.componentOverviewPipeLine(data);
         console.log(pipeLine);
 
-        async.parallel({
-            componentDetail: function (callback) {
+        // check comp_id is available in transaction or not
+        // if available --> put aasynch.parallel 
+        // if no i.e. else --> send all required component data 
 
-                var newPipeLine = _.cloneDeep(pipeLine);
-
-                Transaction.aggregate(newPipeLine, function (err, totalData) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(totalData)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, totalData[0]);
-                        }
-                    }
-                });
-            },
-
-            componentLatestFundFlow: function (callback) {
-                Transaction.aggregate(
-                    // Pipeline
-                    [
-                        // Stage 1
-                        {
-                            $match: {
-                                "components": ObjectId(data.component)
-                                // "components": ObjectId("58d22a60abf7eb15aa4a4120")
-                            }
-                        },
-                        // Stage 2
-                        {
-                            $match: {
-                                $or: [{
-                                    "type": "Center To State"
-                                }, {
-                                    "type": "Center To Institute"
-                                }, {
-                                    "type": "Center To Vendor"
-                                }, {
-                                    "type": "State To Institute"
-                                }, {
-                                    "type": "State To Vendor"
-                                }]
-                            }
-                        },
-                        // Stage 3
-                        {
-                            $group: {
-                                _id: 1,
-                                latestReleasedAmount: {
-                                    $last: "$amount"
-                                }
-                            }
-
-                        },
-
-                    ],
-                    function (err, compLatstFundFlow) {
+        Transaction.findOne({
+            components: data.component
+        }).exec(function (err, found) {
+            console.log("found", found);
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (_.isEmpty(found)) {
+                    // callback(null, []);
+                    // send corresponding component with all details 
+                    Components.findOne({
+                        _id: data.component
+                    }).deepPopulate("pabno").exec(function (err, getOneComp) {
+                        console.log("found", getOneComp);
                         if (err) {
-                            callback(null, err);
+                            // console.log(err);
+                            callback(err, null);
                         } else {
-                            if (_.isEmpty(compLatstFundFlow)) {
-                                callback(null, "No data founds");
+                            if (_.isEmpty(getOneComp)) {
+                                callback(null, []);
                             } else {
-                                callback(null, compLatstFundFlow[0]);
+
+                                var data = {};
+                                data.componentDetail = {};
+                                data.componentDetail._id = {};
+                                data.componentDetail._id.totalAllocationForComponent = getOneComp.allocation;
+                                data.componentDetail._id.totalUtilizationForComponent = 0;
+                                data.componentDetail._id.componentName = getOneComp.name;
+                                data.componentDetail._id.componentWorkStatus = 0;
+                                data.componentDetail._id.pabName = getOneComp.pabno.name;
+                                data.componentDetail.totalAmountRelease = 0;
+                                data.componentLatestFundFlow = {};
+                                data.componentLatestFundFlow = {};
+                                data.componentLatestFundFlow._id = 0;
+                                data.componentLatestFundFlow.latestReleasedAmount = 0;
+
+                                callback(null, data);
                             }
                         }
-                    });
-            }
-        }, callback);
-    },
+                    })
+                } else {
+                    // callback(null, found);
+                    async.parallel({
+                        componentDetail: function (callback) {
 
+                            var newPipeLine = _.cloneDeep(pipeLine);
+
+                            Transaction.aggregate(newPipeLine, function (err, totalData) {
+                                if (err) {
+                                    callback(null, err);
+                                } else {
+                                    if (_.isEmpty(totalData)) {
+                                        callback(null, "No data founds");
+                                    } else {
+                                        callback(null, totalData[0]);
+                                    }
+                                }
+                            });
+                        },
+
+                        componentLatestFundFlow: function (callback) {
+                            Transaction.aggregate(
+                                // Pipeline
+                                [
+                                    // Stage 1
+                                    {
+                                        $match: {
+                                            "components": ObjectId(data.component)
+                                            // "components": ObjectId("58d22a60abf7eb15aa4a4120")
+                                        }
+                                    },
+                                    // Stage 2
+                                    {
+                                        $match: {
+                                            $or: [{
+                                                "type": "Center To State"
+                                            }, {
+                                                "type": "Center To Institute"
+                                            }, {
+                                                "type": "Center To Vendor"
+                                            }, {
+                                                "type": "State To Institute"
+                                            }, {
+                                                "type": "State To Vendor"
+                                            }]
+                                        }
+                                    },
+                                    // Stage 3
+                                    {
+                                        $group: {
+                                            _id: 1,
+                                            latestReleasedAmount: {
+                                                $last: "$amount"
+                                            }
+                                        }
+
+                                    },
+
+                                ],
+                                function (err, compLatstFundFlow) {
+                                    if (err) {
+                                        callback(null, err);
+                                    } else {
+                                        if (_.isEmpty(compLatstFundFlow)) {
+                                            callback(null, "No data founds");
+                                        } else {
+                                            callback(null, compLatstFundFlow[0]);
+                                        }
+                                    }
+                                });
+                        }
+                    }, callback);
+                }
+            }
+        })
+
+    },
+    //-----------------------------------------------------------------------------------------------------//
     componentFundflowPipeLine: function (data) {
 
         var FundflowPipeLine = [
@@ -820,270 +876,319 @@ var model = {
         var FundflowPipeLine = Transaction.componentFundflowPipeLine(data);
         console.log("FundflowPipeLine", FundflowPipeLine);
 
-        async.parallel({
-            totalFundAllocationReleaseUlitize: function (callback) {
-                var newCFFP = _.cloneDeep(FundflowPipeLine);
-                // new component fund flow pipeLine 
 
-                newCFFP.push({
-                    $match: {
-                        $or: [{
-                            "type": "Center To State"
-                        }, {
-                            "type": "Center To Institute"
-                        }, {
-                            "type": "Center To Vendor"
-                        }, {
-                            "type": "State To Institute"
-                        }, {
-                            "type": "State To Vendor"
-                        }]
-                    }
-                });
-
-                newCFFP.push({
-                    $unwind: {
-                        path: "$components_data.amountUtilized",
-
-                    }
-                });
-
-                newCFFP.push({
-                    $group: {
-                        "_id": {
-                            _id: "$components",
-                            component: "$components_data"
-                        },
-                        totalAllocation: {
-                            $first: "$components_data.allocation"
-                        },
-                        totalFundRelease: {
-                            $sum: "$amount"
-                        },
-                        totalUtilizedFund1: {
-                            $first: "$components_data.amountUtilized"
-                        }
-
-                    }
-                });
-
-                newCFFP.push({
-                    $group: {
-                        _id: null,
-                        componentDetail: {
-                            $first: "$_id.component._id"
-                        },
-                        componentName: {
-                            $first: "$_id.component.name"
-                        },
-                        totalAllocation: {
-                            $first: "$totalAllocation"
-                        },
-                        totalFundRelease: {
-                            $first: "$totalFundRelease"
-                        },
-                        totalUtilizedFund: {
-                            $sum: "$totalUtilizedFund1"
-                        }
-                    }
-                });
-
-                Transaction.aggregate(newCFFP, function (err, tfaru) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(tfaru)) {
-                            callback(null, "No data founds");
+        Transaction.findOne({
+            components: data.component
+        }).exec(function (err, found) {
+            console.log("found", found);
+            if (err) {
+                // console.log(err);
+                callback(err, null);
+            } else {
+                if (_.isEmpty(found)) {
+                    // callback(null, []);
+                    // send corresponding component with all details 
+                    Components.findOne({
+                        _id: data.component
+                    }).exec(function (err, getOneComp) {
+                        console.log("found", getOneComp);
+                        if (err) {
+                            // console.log(err);
+                            callback(err, null);
                         } else {
+                            if (_.isEmpty(getOneComp)) {
+                                callback(null, []);
+                            } else {
 
-                            callback(null, tfaru[0]);
+                                var data = {};
+                                data.totalCenterRelease = {};
+
+                                data.totalFundAllocationReleaseUlitize = {};
+                                data.totalFundAllocationReleaseUlitize.componentName = getOneComp.name;
+                                data.totalFundAllocationReleaseUlitize.totalAllocation = getOneComp.allocation;
+                                data.totalFundAllocationReleaseUlitize.totalFundRelease = 0;
+                                data.totalFundAllocationReleaseUlitize.totalUtilizedFund = 0;
+
+                                data.totalStateRelease = {};
+                                data.allCenterTransaction = {};
+                                data.allStateTransaction = {};
+
+
+                                callback(null, data);
+                            }
                         }
-                    }
-                });
+                    })
+                } else {
+                    // callback(null, found);
+                    async.parallel({
+                        totalFundAllocationReleaseUlitize: function (callback) {
+                            var newCFFP = _.cloneDeep(FundflowPipeLine);
+                            // new component fund flow pipeLine 
 
-            },
-            totalCenterRelease: function (callback) {
-                var newCFFP = _.cloneDeep(FundflowPipeLine);
+                            newCFFP.push({
+                                $match: {
+                                    $or: [{
+                                        "type": "Center To State"
+                                    }, {
+                                        "type": "Center To Institute"
+                                    }, {
+                                        "type": "Center To Vendor"
+                                    }, {
+                                        "type": "State To Institute"
+                                    }, {
+                                        "type": "State To Vendor"
+                                    }]
+                                }
+                            });
 
-                newCFFP.push({
-                    $match: {
-                        $or: [{
-                            "type": "Center To State"
-                        }, {
-                            "type": "Center To Institute"
-                        }, {
-                            "type": "Center To Vendor"
-                        }]
-                    }
-                });
+                            newCFFP.push({
+                                $unwind: {
+                                    path: "$components_data.amountUtilized",
 
-                newCFFP.push({
-                    $group: {
-                        _id: {
-                            "_id": "$components",
-                            "amount": "$amount",
-                            "transactionSent": "$transactionSent",
-                            "transactionReceived": "$transactionReceived",
-                            "transactionPhoto": "$photos",
-                            "type": "$type"
+                                }
+                            });
+
+                            newCFFP.push({
+                                $group: {
+                                    "_id": {
+                                        _id: "$components",
+                                        component: "$components_data"
+                                    },
+                                    totalAllocation: {
+                                        $first: "$components_data.allocation"
+                                    },
+                                    totalFundRelease: {
+                                        $sum: "$amount"
+                                    },
+                                    totalUtilizedFund1: {
+                                        $first: "$components_data.amountUtilized"
+                                    }
+
+                                }
+                            });
+
+                            newCFFP.push({
+                                $group: {
+                                    _id: null,
+                                    componentId: {
+                                        $first: "$_id.component._id"
+                                    },
+                                    componentName: {
+                                        $first: "$_id.component.name"
+                                    },
+                                    totalAllocation: {
+                                        $first: "$totalAllocation"
+                                    },
+                                    totalFundRelease: {
+                                        $first: "$totalFundRelease"
+                                    },
+                                    totalUtilizedFund: {
+                                        $sum: "$totalUtilizedFund1"
+                                    }
+                                }
+                            });
+
+                            Transaction.aggregate(newCFFP, function (err, tfaru) {
+                                if (err) {
+                                    callback(null, err);
+                                } else {
+                                    if (_.isEmpty(tfaru)) {
+                                        callback(null, "No data founds");
+                                    } else {
+
+                                        callback(null, tfaru[0]);
+                                    }
+                                }
+                            });
+
+                        },
+                        totalCenterRelease: function (callback) {
+                            var newCFFP = _.cloneDeep(FundflowPipeLine);
+
+                            newCFFP.push({
+                                $match: {
+                                    $or: [{
+                                        "type": "Center To State"
+                                    }, {
+                                        "type": "Center To Institute"
+                                    }, {
+                                        "type": "Center To Vendor"
+                                    }]
+                                }
+                            });
+
+                            newCFFP.push({
+                                $group: {
+                                    _id: {
+                                        "_id": "$components",
+                                        "amount": "$amount",
+                                        "transactionSent": "$transactionSent",
+                                        "transactionReceived": "$transactionReceived",
+                                        "transactionPhoto": "$photos",
+                                        "type": "$type"
+                                    }
+                                }
+                            });
+
+                            newCFFP.push({
+                                $group: {
+                                    _id: null,
+                                    totalCenterRelease: {
+                                        $sum: "$_id.amount"
+                                    }
+                                }
+                            });
+
+                            Transaction.aggregate(newCFFP, function (err, totalCR) {
+                                if (err) {
+                                    callback(null, err);
+                                } else {
+                                    if (_.isEmpty(totalCR)) {
+                                        callback(null, "No data founds");
+                                    } else {
+
+                                        callback(null, totalCR[0]);
+                                    }
+                                }
+                            });
+                        },
+                        totalStateRelease: function (callback) {
+                            var newCFFP = _.cloneDeep(FundflowPipeLine);
+
+                            newCFFP.push({
+                                $match: {
+                                    $or: [{
+                                        "type": "State To Institute"
+                                    }, {
+                                        "type": "State To Vendor"
+                                    }]
+                                }
+                            });
+
+                            newCFFP.push({
+                                $group: {
+                                    _id: {
+                                        "_id": "$components",
+                                        "amount": "$amount",
+                                        "transactionSent": "$transactionSent",
+                                        "transactionReceived": "$transactionReceived",
+                                        "transactionPhoto": "$photos",
+                                        "type": "$type"
+                                    }
+                                }
+                            });
+
+                            newCFFP.push({
+                                $group: {
+                                    _id: null,
+                                    totalStateRelease: {
+                                        $sum: "$_id.amount"
+                                    }
+                                }
+                            });
+
+                            Transaction.aggregate(newCFFP, function (err, totalSR) {
+                                if (err) {
+                                    callback(null, err);
+                                } else {
+                                    if (_.isEmpty(totalSR)) {
+                                        callback(null, "No data founds");
+                                    } else {
+                                        callback(null, totalSR[0]);
+                                    }
+                                }
+                            });
+
+                        },
+                        allCenterTransaction: function (callback) {
+                            var newCFFP = _.cloneDeep(FundflowPipeLine);
+
+                            newCFFP.push({
+                                $match: {
+                                    $or: [{
+                                        "type": "Center To State"
+                                    }, {
+                                        "type": "Center To Institute"
+                                    }, {
+                                        "type": "Center To Vendor"
+                                    }]
+                                }
+                            });
+
+                            newCFFP.push({
+                                $group: {
+                                    _id: {
+                                        "_id": "$components",
+                                        "amount": "$amount",
+                                        "transactionSent": "$transactionSent",
+                                        "transactionReceived": "$transactionReceived",
+                                        "transactionPhoto": "$photos",
+                                        "type": "$type"
+                                    }
+                                }
+                            });
+
+                            Transaction.aggregate(newCFFP, function (err, allCT) {
+                                if (err) {
+                                    callback(null, err);
+                                } else {
+                                    if (_.isEmpty(allCT)) {
+                                        callback(null, "No data founds");
+                                    } else {
+                                        callback(null, allCT);
+                                    }
+                                }
+                            });
+
+                        },
+                        allStateTransaction: function (callback) {
+                            var newCFFP = _.cloneDeep(FundflowPipeLine);
+
+                            newCFFP.push({
+                                $match: {
+                                    $or: [{
+                                        "type": "State To Institute"
+                                    }, {
+                                        "type": "State To Vendor"
+                                    }]
+                                }
+                            });
+
+                            newCFFP.push({
+                                $group: {
+                                    _id: {
+                                        "_id": "$components",
+                                        "amount": "$amount",
+                                        "transactionSent": "$transactionSent",
+                                        "transactionReceived": "$transactionReceived",
+                                        "transactionPhoto": "$photos",
+                                        "type": "$type"
+                                    }
+                                }
+                            });
+
+                            Transaction.aggregate(newCFFP, function (err, allST) {
+                                if (err) {
+                                    callback(null, err);
+                                } else {
+                                    if (_.isEmpty(allST)) {
+                                        callback(null, "No data founds");
+                                    } else {
+
+                                        callback(null, allST);
+                                    }
+                                }
+                            });
+
                         }
-                    }
-                });
-
-                newCFFP.push({
-                    $group: {
-                        _id: null,
-                        totalCenterRelease: {
-                            $sum: "$_id.amount"
-                        }
-                    }
-                });
-
-                Transaction.aggregate(newCFFP, function (err, totalCR) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(totalCR)) {
-                            callback(null, "No data founds");
-                        } else {
-
-                            callback(null, totalCR[0]);
-                        }
-                    }
-                });
-            },
-            totalStateRelease: function (callback) {
-                var newCFFP = _.cloneDeep(FundflowPipeLine);
-
-                newCFFP.push({
-                    $match: {
-                        $or: [{
-                            "type": "State To Institute"
-                        }, {
-                            "type": "State To Vendor"
-                        }]
-                    }
-                });
-
-                newCFFP.push({
-                    $group: {
-                        _id: {
-                            "_id": "$components",
-                            "amount": "$amount",
-                            "transactionSent": "$transactionSent",
-                            "transactionReceived": "$transactionReceived",
-                            "transactionPhoto": "$photos",
-                            "type": "$type"
-                        }
-                    }
-                });
-
-                newCFFP.push({
-                    $group: {
-                        _id: null,
-                        totalStateRelease: {
-                            $sum: "$_id.amount"
-                        }
-                    }
-                });
-
-                Transaction.aggregate(newCFFP, function (err, totalSR) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(totalSR)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, totalSR[0]);
-                        }
-                    }
-                });
-
-            },
-            allCenterTransaction: function (callback) {
-                var newCFFP = _.cloneDeep(FundflowPipeLine);
-
-                newCFFP.push({
-                    $match: {
-                        $or: [{
-                            "type": "Center To State"
-                        }, {
-                            "type": "Center To Institute"
-                        }, {
-                            "type": "Center To Vendor"
-                        }]
-                    }
-                });
-
-                newCFFP.push({
-                    $group: {
-                        _id: {
-                            "_id": "$components",
-                            "amount": "$amount",
-                            "transactionSent": "$transactionSent",
-                            "transactionReceived": "$transactionReceived",
-                            "transactionPhoto": "$photos",
-                            "type": "$type"
-                        }
-                    }
-                });
-
-                Transaction.aggregate(newCFFP, function (err, allCT) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(allCT)) {
-                            callback(null, "No data founds");
-                        } else {
-                            callback(null, allCT);
-                        }
-                    }
-                });
-
-            },
-            allStateTransaction: function (callback) {
-                var newCFFP = _.cloneDeep(FundflowPipeLine);
-
-                newCFFP.push({
-                    $match: {
-                        $or: [{
-                            "type": "State To Institute"
-                        }, {
-                            "type": "State To Vendor"
-                        }]
-                    }
-                });
-
-                newCFFP.push({
-                    $group: {
-                        _id: {
-                            "_id": "$components",
-                            "amount": "$amount",
-                            "transactionSent": "$transactionSent",
-                            "transactionReceived": "$transactionReceived",
-                            "transactionPhoto": "$photos",
-                            "type": "$type"
-                        }
-                    }
-                });
-
-                Transaction.aggregate(newCFFP, function (err, allST) {
-                    if (err) {
-                        callback(null, err);
-                    } else {
-                        if (_.isEmpty(allST)) {
-                            callback(null, "No data founds");
-                        } else {
-
-                            callback(null, allST);
-                        }
-                    }
-                });
-
+                    }, callback);
+                }
             }
-        }, callback);
-    },
+        })
 
-    componentMedia: function (data, callback) {}
+
+    },
+    //-----------------------------------------------------------------------------------------------------//
+    componentMedia: function (data, callback) { }
 };
 module.exports = _.assign(module.exports, exports, model);

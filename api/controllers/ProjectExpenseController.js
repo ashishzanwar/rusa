@@ -68,6 +68,7 @@ var controller = {
     },
 
 
+    //-----------------------------------------------------------------------------------------------------//
 
     // we are merging following two APIs to get all the projects belongs to a component
     // componentProjects + getProjectsNotAvailInProjectExpense
@@ -99,11 +100,7 @@ var controller = {
             });
         }
     },
-
-
-
-
-
+    //-----------------------------------------------------------------------------------------------------//
 
     // mobile application API for Component --> projects --> project --> add expense --> update projectExpense table
     vendorAllocation: function (req, res) {

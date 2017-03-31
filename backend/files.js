@@ -36,7 +36,7 @@ module.exports = [
     "bower_components/international-phone-number/releases/international-phone-number.js",
     "bower_components/clipboard/dist/clipboard.js",
     "bower_components/ngclipboard/dist/ngclipboard.js",
-
+    "bower_components/ng-dialog/js/ngDialog.min.js",
 
     'backend/js/app.js',
     'backend/js/language.js',

@@ -1,3 +1,23 @@
+.modal.in .modal-dialog
+{
+    width: 60%;
+    margin-top: 5%;
+}
+.black-drop{
+    opacity:0.9;
+}
+.ngdialog.ngdialog-theme-default .ngdialog-content
+{
+    width: 40% !important;
+}
+
+.myProjectImage
+{
+    width: 100%;
+    opacity: 10;
+    z-index: 100;
+}
+
 .projectPlusSign{
     color: #7d7b7b;
     font-size: 1.3em;

@@ -10,6 +10,9 @@ $output-bourbon-deprecation-warnings: false;
 @import "../../bower_components/angular-toastr/dist/angular-toastr";
 @import "../../bower_components/angular-hotkeys/build/hotkeys";
 @import "../../bower_components/intl-tel-input/build/css/intlTelInput";
+@import "../../bower_components/ng-dialog/css/ngDialog.min";
+@import "../../bower_components/ng-dialog/css/ngDialog-theme-default";
+
 @import "icons";
 $blue: #1fc8ec;
 $orange: #f29c2c;
