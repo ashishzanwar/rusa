@@ -199,6 +199,7 @@
                 </div>
             </div>
             <br>
+
             <div class="section-2">
                 <button class="btn btn-primary pull-right" type="button" ng-click="addNewProjectExpense(project.projectExpenses);">Add Project Expense</button>
                 <h4>Project Expense</h4>
@@ -306,11 +307,11 @@
                                     </div>
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
     <br>
     <div class="section-1">
@@ -492,13 +493,20 @@
             </div>
         </div>
     </div>
+    <br>
+    <div class="row">
+        <div class="col-md-12">
+            <p style="color:#999;font-size:12px;">Please upload all files below 5 MB</p>
+        </div>
+    </div>
+    <br>
     <div class="text-center btn-form " ng-if="!submitText ">
         <button class="btn btn-primary " ng-disabled="!formData.stateId " ng-if="!isEdit ">Submit</button>
         <button class="btn btn-primary " ng-disabled="formName.$invalid " ng-if="isEdit ">Save</button>
         <a class="btn btn-default " ng-if="isEdit " ng-click="printForm() ">Print</a>
         <a class="btn btn-success " ng-disabled="formName.$invalid " ng-if="isEdit && isModerator " ng-click="submitForm(formData,
                         'Moderation') ">Moderation Completed</a>
-            <a class="btn btn-danger " ng-disabled="formName.$invalid " ng-if="isEdit && isModerator " ng-click="submitForm(formData,
+        <a class="btn btn-danger " ng-disabled="formName.$invalid " ng-if="isEdit && isModerator " ng-click="submitForm(formData,
                         'Trash') ">Trash</a>
 
     </div>
