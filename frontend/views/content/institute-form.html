@@ -6,7 +6,12 @@
 <form ng-submit="submitForm(formData);" ng-if="!formSubmitted">
 
     <div class="section-1">
+        <div class="pull-right" style="padding: 10px;
+    background: #ffffff;
+    box-shadow: 1px 2px 12px 1px #afafaf;"><b>Incomplete<b> &nbsp;&nbsp;&nbsp;<input type="checkbox" ng-model="formData.contact.incomplete"></label>
+        </div>
         <h4>Contact Details of RUSA co-ordinator</h4>
+
         <div class="row">
             <div class="col-md-3">
                 <div class="form-group">
