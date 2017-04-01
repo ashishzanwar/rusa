@@ -175,7 +175,6 @@ var model = {
 
     findOneProjectExpense: function (data, callback) {
 
-
         ProjectExpense.findOne({
             _id: data._id
         }).deepPopulate("photos").exec(function (err, found) {

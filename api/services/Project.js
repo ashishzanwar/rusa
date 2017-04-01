@@ -803,7 +803,8 @@ var model = {
                         callback(null, err);
                     } else {
                         if (_.isEmpty(datacomp)) {
-                            callback(null, "No data founds");
+                            // callback(null, "No daghgfhta founds");
+                            callback(null, []);
                         } else {
                             console.log("###############################.....institute....#########################################", datacomp);
 
@@ -1253,19 +1254,22 @@ var model = {
                     }
                 });
 
+                console.log("************************************************************************************");
+                console.log("pipeline", pipeline);
+                console.log("************************************************************************************");
+
                 Components.aggregate(newPipeLine, function (err, compData) {
                     if (err) {
                         callback(null, err);
                     } else {
                         if (_.isEmpty(compData)) {
-                            callback(null, "No data founds");
+                            callback(null, []);
                         } else {
                             callback(null, compData);
                         }
                     }
                 });
 
-                console.log("pipeline", pipeline);
 
             }
         });

@@ -193,23 +193,21 @@ var model = {
                     "preserveNullAndEmptyArrays": true
                 }
             },
-
             // Stage 9
-            {
-                $unwind: {
-                    path: "$components_data.utilizationCertificates",
-                    "preserveNullAndEmptyArrays": true
-                }
-            },
+            // {
+            //     $unwind: {
+            //         path: "$components_data.utilizationCertificates",
+            //         "preserveNullAndEmptyArrays": true
+            //     }
+            // },
 
             // Stage 10
-            {
-                $unwind: {
-                    path: "$components_data.amountUtilized",
-                    "preserveNullAndEmptyArrays": true
-                }
-            },
-
+            // {
+            //     $unwind: {
+            //         path: "$components_data.amountUtilized",
+            //         "preserveNullAndEmptyArrays": true
+            //     }
+            // },
         ];
 
         if (data.pab) {
@@ -263,12 +261,102 @@ var model = {
         console.log(pipeLine);
         async.parallel({
 
-            //Release & Utilized block data  (pipe line 1-6  13-15)
+            // it is right no need to change it & it is not using amountutilise & ulilizationCertificate
+            // totalRelease: function (callback) {
+            //     var newPipeLine = _.cloneDeep(pipeLine);
+
+            //     newPipeLine.push({
+            //         $match: { // to get the records of state & center release only (institute to vendor is also there )
+            //             $or: [{
+            //                 "type": "Center To State"
+            //             }, {
+            //                 "type": "Center To Institute"
+            //             }, {
+            //                 "type": "Center To Vendor"
+            //             }, {
+            //                 "type": "State To Institute"
+            //             }, {
+            //                 "type": "State To Vendor"
+            //             }]
+            //         }
+            //     });
+
+            //     newPipeLine.push({ // to remove all repeated data & filter wanted data 
+            //         $group: { // we will get n records & then calculate what we want in following group
+            //             "_id": "1",
+            //             totalFundRelease: {
+            //                 $sum: "$amount"
+            //             }
+            //             // totalUtilization: {
+            //             //     $first: "$components_data.amountUtilized"
+            //             // },
+            //             // totalfundUtizedPercent: {
+            //             //     $first: "$components_data.utilizationCertificates"
+            //             // }
+
+            //         }
+            //     });
+
+            //     // newPipeLine.push({ // calculate sum from all records 
+            //     //     $group: {
+            //     //         "_id": null,
+            //     //         totalFundRelease1: {
+            //     //             $first: "$totalFundRelease"
+            //     //         },
+            //     //         totalUtilization1: {
+            //     //             $sum: "$totalUtilization"
+            //     //         },
+            //     //         totalfundUtizedPercent1: {
+            //     //             $avg: {
+            //     //                 $sum: "$totalfundUtizedPercent"
+            //     //             }
+            //     //         }
+            //     //     }
+            //     // });
+
+            //     // newPipeLine.push({
+            //     //     $group: {
+
+            //     //         "_id": 1,
+            //     //         totalFundRelease: { // it is write 
+            //     //             $sum: "$amount"
+            //     //         },
+            //     //         totalUtilization: {
+            //     //             $sum: "$components_data.amountUtilized"
+            //     //         },
+            //     //         totalfundUtizedPercent: {
+            //     //             $avg: {
+            //     //                 $sum: "$components_data.utilizationCertificates"
+            //     //             }
+            //     //         }
+            //     //     }
+            //     // });
+
+            //     Transaction.aggregate(newPipeLine, function (err, totalData) {
+            //         if (err) {
+            //             callback(null, err);
+            //         } else {
+            //             if (_.isEmpty(totalData)) {
+            //                 callback(null, "No data founds");
+            //             } else {
+            //                 totalData[0].totalfundUtizedPercent1 = (totalData[0].totalUtilization1 / totalData[0].totalFundRelease1) * 100
+            //                 callback(null, totalData[0]);
+            //             }
+            //         }
+            //     });
+            // },
+
             totalReleaseAndUtilization: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
 
                 newPipeLine.push({
-                    $match: { // to get the records of state & center release only (institute to vendor is also there )
+                    $unwind: {
+                        path: "$components_data.amountUtilized",
+                        "preserveNullAndEmptyArrays": true
+                    }
+                });
+                newPipeLine.push({
+                    $match: {
                         $or: [{
                             "type": "Center To State"
                         }, {
@@ -282,57 +370,37 @@ var model = {
                         }]
                     }
                 });
-
-                newPipeLine.push({ // to remove all repeated data & filter wanted data 
-                    $group: { // we will get n records & then calculate what we want in following group
-                        "_id": "$components",
-                        totalFundRelease: {
-                            $sum: "$amount"
-                        },
-                        totalUtilization: {
-                            $first: "$components_data.amountUtilized"
-                        },
-                        totalfundUtizedPercent: {
-                            $first: "$components_data.utilizationCertificates"
-                        }
-
-                    }
-                });
-
-                newPipeLine.push({ // calculate sum from all records 
+                newPipeLine.push({
                     $group: {
-                        "_id": null,
-                        totalFundRelease1: {
-                            $first: "$totalFundRelease"
+                        "_id": {
+                            _id: "$_id",
+                            componentName1: "$components_data.name",
+                            componentWorkStatus1: "$components_data.workCompleted",
+                            pabName1: "$pab_data.name"
                         },
-                        totalUtilization1: {
-                            $sum: "$totalUtilization"
+                        totalAmountRelease1: {
+                            //$sum: "$amount"
+                            $first: "$amount"
                         },
-                        totalfundUtizedPercent1: {
-                            $avg: {
-                                $sum: "$totalfundUtizedPercent"
-                            }
+                        totalAllocationForComponent1: {
+                            $first: "$components_data.allocation"
+                        },
+                        totalUtilizationForComponent1: {
+                            $sum: "$components_data.amountUtilized"
                         }
                     }
                 });
 
-                // newPipeLine.push({
-                //     $group: {
-
-                //         "_id": 1,
-                //         totalFundRelease: { // it is write 
-                //             $sum: "$amount"
-                //         },
-                //         totalUtilization: {
-                //             $sum: "$components_data.amountUtilized"
-                //         },
-                //         totalfundUtizedPercent: {
-                //             $avg: {
-                //                 $sum: "$components_data.utilizationCertificates"
-                //             }
-                //         }
-                //     }
-                // });
+                newPipeLine.push({
+                    $group: {
+                        "_id": {
+                            totalUtilizationForComponent: "$totalUtilizationForComponent1"
+                        },
+                        totalAmountRelease: {
+                            $sum: "$totalAmountRelease1"
+                        }
+                    }
+                });
 
                 Transaction.aggregate(newPipeLine, function (err, totalData) {
                     if (err) {
@@ -341,12 +409,31 @@ var model = {
                         if (_.isEmpty(totalData)) {
                             callback(null, "No data founds");
                         } else {
-                            totalData[0].totalfundUtizedPercent1 = (totalData[0].totalUtilization1 / totalData[0].totalFundRelease1) * 100
-                            callback(null, totalData[0]);
+                            var temp = {};
+                            temp.totalFundRelease1 = 0;
+                            temp.totalUtilization1 = 0;
+                            temp.totalfundUtizedPercent1 = 0;
+
+                            _.forEach(totalData, function (oneData) {
+                                temp.totalFundRelease1 = temp.totalFundRelease1 + oneData.totalAmountRelease;
+                                temp.totalUtilization1 = temp.totalUtilization1 + oneData._id.totalUtilizationForComponent;
+
+                            });
+
+                            temp.totalfundUtizedPercent1 = (temp.totalUtilization1 / temp.totalFundRelease1) * 100;
+
+                            console.log("*********************************************************************************");
+                            console.log(temp);
+                            console.log("*********************************************************************************");
+
+                            callback(null, temp);
                         }
                     }
                 });
+
+
             },
+            // it is right no need to change it & it is not using amountutilise & ulilizationCertificate
             totalCenterRelease: function (callback) {
                 var newPipeLine = _.cloneDeep(pipeLine);
                 newPipeLine.push({
@@ -364,7 +451,7 @@ var model = {
                     $group: {
                         _id: "1",
                         totalCenterRelease: {
-                            $first: "$amount"
+                            $sum: "$amount"
                         }
 
                     }
@@ -381,6 +468,7 @@ var model = {
                     }
                 });
             },
+            // it is right no need to change it & it is not using amountutilise & ulilizationCertificate
             centerReleasePerComponent: function (callback) {
 
                 // var typeData = [];
@@ -432,6 +520,7 @@ var model = {
                 });
 
             },
+            // it is right no need to change it & it is not using amountutilise & ulilizationCertificate
             stateReleasePerComponent: function (callback) {
 
                 var newPipeLine = _.cloneDeep(pipeLine);
@@ -481,9 +570,25 @@ var model = {
                 });
 
             },
+
             transactionsPerComponents: function (callback) {
 
                 var newPipeLine = _.cloneDeep(pipeLine);
+
+                // newPipeLine.push({
+                //     $unwind: {
+                //         path: "$components_data.utilizationCertificates",
+                //         "preserveNullAndEmptyArrays": true
+                //     }
+                // });
+
+                newPipeLine.push({
+                    $unwind: {
+                        path: "$components_data.amountUtilized",
+                        "preserveNullAndEmptyArrays": true
+                    }
+                });
+
                 newPipeLine.push({
                     $match: { // to get the records of state & center release only (institute to vendor is also there )
                         $or: [{
@@ -509,7 +614,7 @@ var model = {
                             componentStatus: "$components_data.status",
                             componentWorkStatus: "$components_data.workCompleted",
                             amountUtilizedPerComponent: "$components_data.amountUtilized",
-                            amountUtilizedPercentagePerComponent: "$components_data.utilizationCertificates"
+                            // amountUtilizedPercentagePerComponent: "$components_data.utilizationCertificates"
 
                         },
                         totalComponentRelease: {

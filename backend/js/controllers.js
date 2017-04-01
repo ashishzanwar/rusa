@@ -43,11 +43,11 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         NavigationService.boxCall("Transaction/getTransactionReport", dropDownData, function (data) {
           $scope.filteredComponentsNew = data.data;
 
-          console.log("filteredComponents", $scope.filteredComponents);
-          console.log("filteredComponentsNew", $scope.filteredComponentsNew);
+          console.log("Dashboadr Data 1st API, filteredComponents", $scope.filteredComponents);
+          console.log("Dashboadr Data 2nd API,  filteredComponentsNew", $scope.filteredComponentsNew);
 
           $scope.DashboardAllData = angular.extend({}, $scope.filteredComponents, $scope.filteredComponentsNew);
-          console.log("DashboardAllData", $scope.DashboardAllData);
+          console.log("after extending 1st & 2nd APIs.  DashboardAllData --> filteredComponents + filteredComponentsNew", $scope.DashboardAllData);
 
           // console.log("filteredComponentsNew", $scope.filteredComponentsNew);
           $scope.centerReleasePerComp = $scope.DashboardAllData.centerReleasePerComponent;
@@ -149,10 +149,16 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
 
           });
 
-          // console.log("Updated object", $scope.DashboardAllData);
+          console.log("after merge 1st & 2nd APIs.  DashboardAllData --> filteredComponents + filteredComponentsNew", $scope.DashboardAllData);
 
+          // when component is not available in project & transaction table 
           NavigationService.boxCall("Project/getComponentsNotAvailInProject", dropDownData, function (data) {
             $scope.getNewComponents = data.data;
+
+            console.log("Dashboadr Data 3rd API, getComponentsNotAvailInProject", $scope.getNewComponents);
+
+            $scope.totCompFundAllo = 0;
+            $scope.totCenterAllocation = 0;
 
             angular.forEach($scope.getNewComponents, function (getNewComp, index) {
 
@@ -163,13 +169,37 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
               getNewComp.totalComponentProjects = 0;
               getNewComp.totalDelayedProjectsPerComponent = 0;
 
+              $scope.totCompFundAllo = $scope.totCompFundAllo + getNewComp.totalComponentAllocation;
+              $scope.totCenterAllocation = $scope.totCenterAllocation + getNewComp._id.centerShare;
+
               // it may give push eror in case of no data found 
               // we have to send [] in callback instead of "NO data founds"
+
               $scope.DashboardAllData.institute.push(getNewComp);
+
             });
 
+            $scope.DashboardAllData.totalComponentsFundAllocation.totalFundAllocation = $scope.DashboardAllData.totalComponentsFundAllocation.totalFundAllocation + $scope.totCompFundAllo;
+
+            $scope.DashboardAllData.totalCenterAndStateAllocation.centerShare = $scope.DashboardAllData.totalCenterAndStateAllocation.centerShare + $scope.totCenterAllocation;
+
+            $scope.DashboardAllData.totalCenterAndStateAllocation.stateShare = $scope.DashboardAllData.totalCenterAndStateAllocation.stateShare + $scope.totCompFundAllo - $scope.totCenterAllocation;
+
+            $scope.DashboardAllData.totalComponents.count = $scope.DashboardAllData.totalComponents.count + $scope.getNewComponents.length;
+
           });
-          console.log("DashboardAllData.institute", $scope.DashboardAllData.institute);
+
+
+
+
+          // console.log("DashboardAllData after updating allocation", $scope.DashboardAllData);
+          // console.log("$scope.DashboardAllData.totalComponentsFundAllocation.totalFundAllocation", $scope.DashboardAllData.totalComponentsFundAllocation.totalFundAllocation);
+
+          // console.log("$scope.DashboardAllData.totalCenterAndStateAllocation.centerShare", $scope.DashboardAllData.totalCenterAndStateAllocation.centerShare);
+
+          // console.log("$scope.DashboardAllData.totalCenterAndStateAllocation.stateShare", $scope.DashboardAllData.totalCenterAndStateAllocation.stateShare);
+
+          console.log("after merge  DashboardAllData with --> 3rd API getComponentsNotAvailInProject", $scope.DashboardAllData);
 
         });
       });
@@ -177,7 +207,7 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
     loadData(dropDownData);
 
     $scope.getAllDashboardData = function (item) {
-      // console.log(item);
+      console.log("filter selected item", item);
       var id = angular.element(event.target).data('id');
       // console.log(id);
 
