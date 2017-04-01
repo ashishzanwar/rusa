@@ -1104,7 +1104,7 @@ var model = {
 
     // get all filtered (PAB, Institute, state & keyComponent) components which are not available in project collection 
     getComponentsNotAvailInProject: function (data, callback) {
-        console.log("inside getComponentsNotAvailInProject model");
+        console.log("inside getComponentsNotAvailInProject model & request data is", data);
         var tempCompId = [];
 
         // get all components which are not available in project table
@@ -1227,7 +1227,6 @@ var model = {
                         }
                     });
                 }
-
 
                 var newPipeLine = _.cloneDeep(pipeline);
 

@@ -364,7 +364,7 @@ var model = {
                     $group: {
                         _id: "1",
                         totalCenterRelease: {
-                            $sum: "$amount"
+                            $first: "$amount"
                         }
 
                     }

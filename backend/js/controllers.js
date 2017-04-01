@@ -163,6 +163,8 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
               getNewComp.totalComponentProjects = 0;
               getNewComp.totalDelayedProjectsPerComponent = 0;
 
+              // it may give push eror in case of no data found 
+              // we have to send [] in callback instead of "NO data founds"
               $scope.DashboardAllData.institute.push(getNewComp);
             });
 
@@ -198,6 +200,42 @@ angular.module('phonecatControllers', ['templateservicemod', 'navigationservice'
         dropDownData.institute = item._id;
         loadData(dropDownData);
       }
+    };
+
+    $scope.resetFilters = function () {
+      console.log("Hey there ");
+      dropDownData.pab = "";
+      dropDownData.state = "";
+      dropDownData.keyComponent = "";
+      dropDownData.institute = "";
+      loadData(dropDownData);
+      $scope.AllStates = "";
+      $scope.AllPABs = "";
+      $scope.AllComponents = "";
+      $scope.AllInstitutes = "";
+      NavigationService.callApi("Pab/findAllPab", function (data) {
+        $scope.AllPABs = data.data;
+        $scope.generateField = true;
+      });
+
+      NavigationService.callApi("State/findAllState", function (data) {
+        $scope.AllStates = data.data;
+        $scope.generateField = true;
+      });
+
+      NavigationService.callApi("Institute/findAllInstituteDashBoard", function (data) {
+        $scope.AllInstitutes = data.data;
+        $scope.generateField = true;
+      });
+
+      NavigationService.callApi("KeyComponents/findAllKeyComponents", function (data) {
+        $scope.AllComponents = data.data;
+        $scope.generateField = true;
+        // console.log("AllComponents", $scope.AllComponents);
+      });
+
+      // $route.reload();
+      // $state.reload();
     };
 
     NavigationService.callApi("Pab/findAllPab", function (data) {

@@ -27,9 +27,9 @@ module.exports = {
 
   // port: 81,
   port: 85,
-  realHost: "https://rusabeta.wohlig.com",
+  // realHost: "https://rusabeta.wohlig.com",
   // realHost: "https://rusabeta.wohlig.co.in",
-  // realHost: "https://rusa.thegraylab.com",
+  realHost: "https://rusa.thegraylab.com",
 
   emails: ["chintan@wohlig.com", "ashish.zanwar@wohlig.com", "jagruti@wohlig.com", "tushar@wohlig.com", "chirag@wohlig.com", "harsh@wohlig.com", "sohan@wohlig.com", "pratik.gawand@wohlig.com"]
 

@@ -1,3 +1,7 @@
+.resetFilters{
+    float:right;
+    padding-right: 2.2%
+}
 .modal.in .modal-dialog
 {
     width: 60%;
