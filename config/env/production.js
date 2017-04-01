@@ -25,8 +25,8 @@ module.exports = {
    * Set the port in the production environment to 80                        *
    ***************************************************************************/
 
-  // port: 81,
-  port: 85,
+  port: 81,
+  // port: 85,
   // realHost: "https://rusabeta.wohlig.com",
   // realHost: "https://rusabeta.wohlig.co.in",
   realHost: "https://rusa.thegraylab.com",
