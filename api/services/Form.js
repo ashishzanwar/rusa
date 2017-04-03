@@ -146,9 +146,9 @@ var model = {
                             w: 1
                         }, callback);
                         Model.saveName(data._id);
-                        // if (data.status == "Moderation Completed") {
-                        //     Form.compile(data);
-                        // }`
+                        if (data.status == "Moderation Completed") {
+                             Form.compile(data);
+                         }
                     });
 
 
